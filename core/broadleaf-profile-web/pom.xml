@@ -7,7 +7,7 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>ultracommerce-profile-web</artifactId>
     <name>UltraCommerce Profile Web</name>
-    <description>BroadleafCommerce Profile Web</description>
+    <description>UltraCommerce Profile Web</description>
     <url>https://ultracommerce.co</url>
     <properties>
         <project.uri>${project.baseUri}/../../</project.uri>

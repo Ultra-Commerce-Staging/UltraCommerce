@@ -8,7 +8,7 @@
     <artifactId>core</artifactId>
     <packaging>pom</packaging>
     <name>UltraCommerce Core</name>
-    <description>BroadleafCommerce Core Mid Level Project</description>
+    <description>UltraCommerce Core Mid Level Project</description>
     <url>https://ultracommerce.co</url>
     <properties>
         <project.uri>${project.baseUri}/../</project.uri>

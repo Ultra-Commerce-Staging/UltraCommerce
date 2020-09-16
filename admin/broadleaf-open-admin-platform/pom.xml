@@ -8,7 +8,7 @@
     <artifactId>ultracommerce-open-admin-platform</artifactId>
     <packaging>jar</packaging>
     <name>UltraCommerce Open Admin Platform</name>
-    <description>BroadleafCommerce Open Admin Platform</description>
+    <description>UltraCommerce Open Admin Platform</description>
     <url>https://ultracommerce.co</url>
     <properties>
         <project.uri>${project.baseUri}/../../</project.uri>

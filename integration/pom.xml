@@ -7,7 +7,7 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>integration</artifactId>
     <name>UltraCommerce Integration</name>
-    <description>BroadleafCommerce Integration</description>
+    <description>UltraCommerce Integration</description>
     <url>https://ultracommerce.co</url>
     <properties>
         <project.uri>${project.baseUri}/../</project.uri>

@@ -1,0 +1,1 @@
+com.ultracommerce.common.config.FrameworkCommonClasspathPropertySource=com.ultracommerce.openadmin.config.properties.OpenAdminProperties

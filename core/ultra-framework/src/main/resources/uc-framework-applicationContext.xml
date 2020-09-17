@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  #%L
+  UltraCommerce Framework
+  %%
+  Copyright (C) 2009 - 2016 Ultra Commerce
+  %%
+  Licensed under the Ultra Fair Use License Agreement, Version 1.0
+  (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+  unless the restrictions on use therein are violated and require payment to Ultra in which case
+  the Ultra End User License Agreement (EULA), Version 1.1
+  (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
+  shall apply.
+  
+  Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
+  between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
+  #L%
+  -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+    
+    <import resource="classpath:uc-framework-applicationContext-persistence.xml"/>
+    <import resource="classpath:uc-framework-applicationContext-workflow.xml"/>
+    
+    <context:component-scan base-package="com.ultracommerce.core">
+        <context:exclude-filter type="regex" expression="com.ultracommerce.core.web.*"/> 
+    </context:component-scan>
+
+    <!-- Bean for encrypting PCI data -->
+    <bean id="ucEncryptionModule" class="com.ultracommerce.common.encryption.PassthroughEncryptionModule"/>
+    
+    <bean id="ucAccountNumberMask" class="com.ultracommerce.common.payment.AccountNumberMask">
+        <constructor-arg index="0">
+            <list>
+                <bean class="com.ultracommerce.common.payment.UnmaskRange">
+                    <constructor-arg value="0"/>
+                    <constructor-arg value="0"/>
+                </bean>
+                <bean class="com.ultracommerce.common.payment.UnmaskRange">
+                    <constructor-arg value="1"/>
+                    <constructor-arg value="4"/>
+                </bean>
+            </list>
+        </constructor-arg>
+        <constructor-arg index="1" value="X"/>
+    </bean>
+
+    <bean id="ucContentCartRuleProcessor" class="com.ultracommerce.core.order.service.StructuredContentCartRuleProcessor">
+        <property name="orderDao" ref="ucOrderDao"/>
+        <property name="contextClassNames">
+            <map>
+                <entry key="discreteOrderItem" value="com.ultracommerce.core.order.domain.DiscreteOrderItem" />
+            </map>
+        </property>
+    </bean>
+
+    <!-- Append the content rule processor that checks for cart contents -->
+    <bean id="ucContentRuleProcessors" class="org.springframework.beans.factory.config.ListFactoryBean">
+        <property name="sourceList">
+            <list>
+                <ref bean="ucContentCartRuleProcessor"/>
+            </list>
+        </property>
+    </bean>
+    
+    <bean id="ucPageCartRuleProcessor" class="com.ultracommerce.core.order.service.PageCartRuleProcessor">
+        <property name="orderDao" ref="ucOrderDao"/>
+        <property name="contextClassNames">
+            <map>
+                <entry key="discreteOrderItem" value="com.ultracommerce.core.order.domain.DiscreteOrderItem" />
+            </map>
+        </property>
+    </bean>
+
+    <!-- Append the content rule processor that checks for cart contents -->
+    <bean id="ucPageRuleProcessors" class="org.springframework.beans.factory.config.ListFactoryBean">
+        <property name="sourceList">
+            <list>
+                <ref bean="ucPageCartRuleProcessor"/>
+            </list>
+        </property>
+    </bean>    
+
+    <bean id="ucConverters" class="org.springframework.beans.factory.config.SetFactoryBean">
+        <property name="sourceSet">
+            <set>
+                <bean class="com.ultracommerce.common.locale.util.LocaleConverter" />
+            </set>
+        </property>
+    </bean>
+    
+    <bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
+        <property name="converters" ref="ucConverters" />
+    </bean>
+    
+    <bean id="ucFrameworkSiteMapGenerators" class="org.springframework.beans.factory.config.ListFactoryBean">
+        <property name="sourceList">
+            <list>
+                <ref bean="ucCategorySiteMapGenerator" />
+                <ref bean="ucProductSiteMapGenerator" />
+                <ref bean="ucSkuSiteMapGenerator" />
+            </list>
+        </property>
+    </bean>
+
+    <bean class="com.ultracommerce.common.extensibility.context.merge.LateStageMergeBeanPostProcessor">
+        <property name="collectionRef" value="ucFrameworkSiteMapGenerators" />
+        <property name="targetRef" value="ucSiteMapGenerators" />
+    </bean>
+
+    <bean id="ucFrameworkEntityExtensionManagers" class="org.springframework.beans.factory.config.MapFactoryBean">
+        <property name="sourceMap">
+            <map>
+            </map>
+        </property>
+    </bean>
+
+    <bean class="com.ultracommerce.common.extensibility.context.merge.LateStageMergeBeanPostProcessor">
+        <property name="collectionRef" value="ucFrameworkEntityExtensionManagers"/>
+        <property name="targetRef" value="ucEntityExtensionManagers"/>
+    </bean>
+
+    <!-- Add a default implementation for payments of type PaymentGatewayType.PASSTHROUGH -->
+    <bean id="ucPassthroughPaymentConfigurationServiceList" class="org.springframework.beans.factory.config.ListFactoryBean" >
+        <property name="sourceList">
+            <list>
+                <ref bean="ucPassthroughPaymentConfigurationService"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean class="com.ultracommerce.common.extensibility.context.merge.LateStageMergeBeanPostProcessor">
+        <property name="collectionRef" value="ucPassthroughPaymentConfigurationServiceList"/>
+        <property name="targetRef" value="ucPaymentGatewayConfigurationServices"/>
+    </bean>
+
+    <bean class="com.ultracommerce.core.search.service.solr.FileSystemSolrIndexStatusProviderImpl" name="ucFileSystemSolrIndexStatusProvider"/>
+
+    <bean id="ucSolrIndexStatusProviders" class="org.springframework.beans.factory.config.ListFactoryBean" >
+        <property name="sourceList">
+            <list>
+                <ref bean="ucFileSystemSolrIndexStatusProvider"/>
+            </list>
+        </property>
+    </bean>
+
+    <!-- Begin Section Custom Criteria -->
+    <bean id="ucProductSectionCustomCriteria" class="org.springframework.beans.factory.config.ListFactoryBean">
+        <property name="sourceList">
+            <list>
+                <value>productDirectEdit</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="ucCategorySectionCustomCriteria" class="org.springframework.beans.factory.config.ListFactoryBean">
+        <property name="sourceList">
+            <list>
+                <value>categoryDirectEdit</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="ucAdvancedPageSectionCustomCriteria" class="org.springframework.beans.factory.config.ListFactoryBean">
+        <property name="sourceList">
+            <list>
+                <value>advancedPage</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="ucSectionCustomCriteriaMap" class="org.springframework.beans.factory.config.MapFactoryBean">
+        <property name="sourceMap">
+            <map>
+                <entry key="com.ultracommerce.core.catalog.domain.Product" value-ref="ucProductSectionCustomCriteria"/>
+                <entry key="com.ultracommerce.core.catalog.domain.Category" value-ref="ucCategorySectionCustomCriteria"/>
+                <entry key="com.ultracommerce.cms.page.domain.Page" value-ref="ucAdvancedPageSectionCustomCriteria"/>
+            </map>
+        </property>
+    </bean>
+    <!-- End Section Custom Criteria -->
+
+    <bean id="ucOptionalFrameworkTokenMap" class="org.springframework.beans.factory.config.MapFactoryBean">
+        <property name="sourceMap">
+            <map>
+                <entry key="optionalOfferUsesFields" value="com.ultracommerce.core.offer.weave.WeaveLegacyOfferUses"/>
+                <entry key="optionalSkuMinOrderQuantityField" value="com.ultracommerce.core.catalog.domain.WeaveSkuMinOrderQuantity"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean class="com.ultracommerce.common.extensibility.context.merge.EarlyStageMergeBeanPostProcessor">
+        <property name="collectionRef" value="ucOptionalFrameworkTokenMap"/>
+        <property name="targetRef" value="ucDirectCopyTransformTokenMap"/>
+    </bean>
+
+    <bean id="ucOfferUsesConditionalDirectCopyTransformerMember" class="com.ultracommerce.common.weave.ConditionalDirectCopyTransformMemberDto">
+        <property name="templateTokens">
+            <util:constant static-field="com.ultracommerce.core.offer.service.type.OfferOptionalDirectCopyTransformTypes.OPTIONAL_OFFER_USES_FIELDS"/>
+        </property>
+        <property name="conditionalProperty" value="enable.optional.offer.uses.fields"/>
+    </bean>
+
+    <bean id="ucSkuMinOrderQuantityConditionalDirectCopyTransformerMember" class="com.ultracommerce.common.weave.ConditionalDirectCopyTransformMemberDto">
+        <property name="templateTokens" value="optionalSkuMinOrderQuantityField"/>
+        <property name="conditionalProperty" value="enable.sku.minOrderQuantity.field"/>
+    </bean>
+
+    <bean id="ucFrameworkConditionalDirectCopyTransformers" class="org.springframework.beans.factory.config.MapFactoryBean">
+        <property name="sourceMap">
+            <map>
+                <entry key="com.ultracommerce.core.offer.domain.OfferImpl" value-ref="ucOfferUsesConditionalDirectCopyTransformerMember" />
+                <entry key="com.ultracommerce.core.catalog.domain.SkuImpl" value-ref="ucSkuMinOrderQuantityConditionalDirectCopyTransformerMember" />
+            </map>
+        </property>
+    </bean>
+
+    <bean class="com.ultracommerce.common.extensibility.context.merge.EarlyStageMergeBeanPostProcessor">
+        <property name="collectionRef" value="ucFrameworkConditionalDirectCopyTransformers"/>
+        <property name="targetRef" value="ucConditionalDirectCopyTransformers"/>
+    </bean>
+
+    <bean id="ucPromotionMessageGenerators" class="org.springframework.beans.factory.config.ListFactoryBean">
+        <property name="sourceList">
+            <list>
+            </list>
+        </property>
+    </bean>
+
+	<bean id="ucEntityIdentifierUtil" class="com.ultracommerce.core.util.EntityIdentifierUtil" />
+
+    <bean id="ucEntityDuplicationHelpers"
+          class="org.springframework.beans.factory.config.ListFactoryBean" scope="prototype">
+        <property name="sourceList">
+            <list>
+                <ref bean="ucOfferDuplicateModifier"/>
+            </list>
+        </property>
+    </bean>
+</beans>

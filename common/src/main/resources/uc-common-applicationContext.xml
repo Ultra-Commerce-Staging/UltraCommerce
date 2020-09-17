@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  #%L
+  UltraCommerce Common Libraries
+  %%
+  Copyright (C) 2009 - 2016 Ultra Commerce
+  %%
+  Licensed under the Ultra Fair Use License Agreement, Version 1.0
+  (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+  unless the restrictions on use therein are violated and require payment to Ultra in which case
+  the Ultra End User License Agreement (EULA), Version 1.1
+  (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
+  shall apply.
+  
+  Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
+  between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
+  #L%
+  -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:util="http://www.springframework.org/schema/util"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+           http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <import resource="uc-common-applicationContext-persistence.xml"/>
+    <import resource="uc-common-applicationContext-wrapper.xml"/>
+    <context:component-scan base-package="com.ultracommerce.common">
+        <context:exclude-filter type="regex" expression="com.ultracommerce.common.web.controller.*"/>
+        <context:exclude-filter type="regex" expression="com.ultracommerce.common.web.site.*"/>
+        <context:exclude-filter type="regex" expression="com.ultracommerce.common.web.api.*"/>
+        <context:exclude-filter type="regex" expression="com.ultracommerce.common.web.config.*"/>
+    </context:component-scan>
+    
+    <!-- Ensures the @Value annotations are resolved -->
+    <bean id="ucPropertyPlaceholderConfigurer" class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
+        <property name="ignoreUnresolvablePlaceholders" value="true" />
+    </bean>
+    
+    <!-- Override Spring's default ApplicationEventMultiCaster with one that is a little smarter about asynchronous -->
+    <bean id="applicationEventMulticaster" class="com.ultracommerce.common.event.UltraApplicationEventMulticaster"/>
+
+    <bean id="ucMessageCreator" class="com.ultracommerce.common.email.service.message.NullMessageCreator">
+        <constructor-arg ref="ucMailSender"/>
+    </bean>
+
+    <bean id="ucDirectCopyIgnorePatterns" class="org.springframework.beans.factory.config.ListFactoryBean">
+        <property name="sourceList">
+            <list>
+                <bean class="com.ultracommerce.common.extensibility.jpa.copy.DirectCopyIgnorePattern">
+                    <property name="patterns">
+                        <array>
+                            <value>org\.apache.*</value>
+                            <value>org\.springframework.*</value>
+                            <value>javassist.*</value>
+                            <value>javax.*</value>
+                            <value>com.ultracommerce.openadmin.web.compatibility.JSCompatibilityRequestWrapper</value>
+                            <value>org\.hibernate.*</value>
+                            <value>org\.quartz.*</value>
+                        </array>
+                    </property>
+                </bean>
+            </list>
+        </property>
+    </bean>
+    
+    <bean id="ucBaseUrlResolver" class="com.ultracommerce.common.web.BaseUrlResolverImpl" />
+
+    <bean id="ucDirectCopyTransformTokenMap" class="org.springframework.beans.factory.config.MapFactoryBean">
+        <property name="sourceMap">
+            <map>
+                <entry key="archiveOnly" value="com.ultracommerce.common.weave.WeaveArchiveStatus"/>
+            </map>
+        </property>
+    </bean>
+    
+    <!-- With WebLogic 12c and JRockit 1.6, there seems to be a problem with the instrumentation of domain clases related 
+         to the fact that certain support classes are either not loaded or not initialized when they are referenced from DirectCopyClassTransformer, 
+         EntityMarkerClassTransformer, and others.  These include javassist classes and certain Ultra enums and Annotations.
+         The solution is to pre-load those classes before trying to use them.  This factory provides a list to support this mechanism. -->
+    <bean id="ucDirectCopyClassPreLoadPatterns" class="org.springframework.beans.factory.config.ListFactoryBean">
+        <property name="sourceList">
+            <list>
+            	<value>javassist.ClassPool</value>
+            	<value>javassist.CtClass</value>
+            	<value>javassist.CtConstructor</value>
+            	<value>javassist.CtField</value>
+            	<value>javassist.CtMethod</value>
+            	<value>javassist.LoaderClassPath</value>
+            	<value>javassist.NotFoundException</value>
+            	<value>javassist.bytecode.AnnotationsAttribute</value>
+            	<value>javassist.bytecode.ClassFile</value>
+            	<value>javassist.bytecode.ConstPool</value>
+            	<value>javassist.bytecode.annotation.Annotation</value>
+            	<value>javassist.bytecode.annotation.AnnotationMemberValue</value>
+            	<value>javassist.bytecode.annotation.ArrayMemberValue</value>
+            	<value>javassist.bytecode.annotation.BooleanMemberValue</value>
+            	<value>javassist.bytecode.annotation.MemberValue</value>
+            	<value>javassist.bytecode.annotation.StringMemberValue</value>
+            	<value>javax.annotation.Resource</value>
+            	<value>javax.persistence.EntityListeners</value>
+            	<value>javax.persistence.Embeddable</value>
+            	<value>javax.persistence.Entity</value>
+            	<value>javax.persistence.MappedSuperclass</value>
+            	<value>org.apache.commons.lang3.StringUtils</value>
+            	<value>com.ultracommerce.common.logging.LifeCycleEvent</value>
+            	<value>com.ultracommerce.common.logging.SupportLogManager</value>
+            	<value>com.ultracommerce.common.logging.SupportLogger</value>
+            	<value>com.ultracommerce.common.extensibility.jpa.copy.NonCopied</value>
+            </list>
+        </property>
+    </bean> 
+
+    <!--This class transformer is responsible for picking up @DirectCopyTransform annotations on entities -->
+    <bean id="ucAnnotationDirectCopyClassTransformer" class="com.ultracommerce.common.extensibility.jpa.copy.DirectCopyClassTransformer">
+        <constructor-arg name="moduleName" value="Annotated Transformation" />
+        <property name="templateTokens" ref="ucDirectCopyTransformTokenMap"/>
+        <property name="preLoadClassNamePatterns" ref="ucDirectCopyClassPreLoadPatterns"/>
+    </bean>
+
+    <bean id="ucEntityMarkerClassTransformer" class="com.ultracommerce.common.extensibility.jpa.convert.EntityMarkerClassTransformer" >
+    	<property name="preLoadClassNamePatterns" ref="ucDirectCopyClassPreLoadPatterns"/>
+    </bean>
+    
+    <bean id="ucConditionalFieldAnnotationClassTransformer" class="com.ultracommerce.common.extensibility.jpa.copy.ConditionalFieldAnnotationsClassTransformer">
+        <constructor-arg name="moduleName" value="Conditional Field Annotation Transformation" />
+    </bean>
+
+    <!-- to be overriden by 3rd party modules -->
+    <bean id="ucMergedClassTransformers" class="org.springframework.beans.factory.config.ListFactoryBean">
+        <property name="sourceList">
+            <list>
+                <ref bean="ucAnnotationDirectCopyClassTransformer"/>
+                <ref bean="ucEntityMarkerClassTransformer"/>
+                <ref bean="ucConditionalFieldAnnotationClassTransformer"/>
+                <ref bean="ucMaterializedClobTypeClassTransformer"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="ucServerInfo" class="com.ultracommerce.common.email.service.info.ServerInfo">
+        <property name="serverName" value="localhost"/>
+        <property name="serverPort" value="8080"/>
+    </bean>
+
+    <bean id="ucMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host"><value>localhost</value></property>
+        <property name="port"><value>25</value></property>
+        <property name="protocol"><value>smtp</value></property>
+        <property name="javaMailProperties">
+            <props>
+                <prop key="mail.smtp.starttls.enable">true</prop>
+                <prop key="mail.smtp.timeout">25000</prop>
+            </props>
+        </property>
+    </bean>
+    
+    <bean id="ucSpringCacheManager" class="org.springframework.cache.jcache.JCacheCacheManager">
+        <property name="cacheManager" ref="ucCacheManager"/>
+    </bean>    
+    
+    <bean id="messageSource" class="com.ultracommerce.common.util.UltraMergeResourceBundleMessageSource">
+        <property name="useCodeAsDefaultMessage" value="${messages.useCodeAsDefaultMessage}" />
+        <property name="cacheSeconds" value="${messages.cacheSeconds}" />
+    </bean>
+    
+    <bean id="ucMessageSourceBaseNames" class="org.springframework.beans.factory.config.ListFactoryBean" scope="prototype">
+        <property name="sourceList">
+            <list>
+            </list>
+        </property>
+    </bean>
+    <!-- This mail sender will log the html content generated for the email to the console  -->
+    <!-- To enable logging set log level in Log4j to INFO  -->
+    <bean id="ucLoggingMailSender" class="com.ultracommerce.common.email.service.LoggingMailSender" />
+    
+    <bean id="ucEmailInfo" class="com.ultracommerce.common.email.service.info.EmailInfo" />
+    <bean id="ucNullEmailInfo" class="com.ultracommerce.common.email.service.info.NullEmailInfo" />
+    
+    <bean id="ucSiteResolver" class="com.ultracommerce.common.web.NullUltraSiteResolver" />
+    <bean id="ucThemeResolver" class="com.ultracommerce.common.web.NullUltraThemeResolver" />
+    
+    <!-- Resource Resolver Chains  -->
+    <bean id="ucSiteResourceResolvers" class="org.springframework.beans.factory.config.ListFactoryBean" >
+        <property name="sourceList">
+            <list>
+                <ref bean="ucUCJSUrlPathResolver" />                         
+                <ref bean="ucCacheResourceResolver" />                
+                <ref bean="ucVersionResourceResolver" />
+                <ref bean="ucBundleResourceResolver" />
+                <ref bean="ucUCJSResolver" />
+                <ref bean="ucSystemPropertyJSResolver" />              
+                <ref bean="ucPathResourceResolver" />
+            </list>
+        </property>
+    </bean>     
+    
+    <!--  Spring 4.1 Resource Handling -->
+    <bean id="ucJsLocations" class="org.springframework.beans.factory.config.ListFactoryBean" >
+        <property name="sourceList">
+            <list>
+                <value>classpath:/common_style/js/</value>
+                <value>classpath:/extensions/js/</value><!-- To allow a common place for modules or extensions to put js files. -->
+            </list>
+        </property>
+    </bean>
+    
+    <bean id="ucCssLocations" class="org.springframework.beans.factory.config.ListFactoryBean" >
+        <property name="sourceList">
+            <list>
+                <value>classpath:/common_style/css/</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="ucFontLocations" class="org.springframework.beans.factory.config.ListFactoryBean" >
+        <property name="sourceList">
+            <list>
+                <value>classpath:/common_style/fonts/</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="ucImageLocations" class="org.springframework.beans.factory.config.ListFactoryBean" >
+        <property name="sourceList">
+            <list>
+                <value>classpath:/common_style/img/</value>
+            </list>
+        </property>
+    </bean>
+    
+    <bean id="ucJsFileList" class="org.springframework.beans.factory.config.ListFactoryBean" >
+        <property name="sourceList">
+            <list>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="ucAdminJsLibFileList" class="org.springframework.beans.factory.config.ListFactoryBean" >
+        <property name="sourceList">
+            <list>
+            </list>
+        </property>
+    </bean>
+    
+    <bean id="ucCssFileList" class="org.springframework.beans.factory.config.ListFactoryBean" >
+        <property name="sourceList">
+            <list>
+            </list>
+        </property>
+    </bean>
+    
+    <bean id="ucAdditionalBundleFiles" class="org.springframework.beans.factory.config.MapFactoryBean">
+        <property name="sourceMap">
+            <map value-type="java.util.List">
+            </map>
+        </property>  
+    </bean>
+
+    <!--  Spring 4.1 Resource Resolvers -->
+    <bean id="ucJsResourceResolvers" class="org.springframework.beans.factory.config.ListFactoryBean" >
+        <property name="sourceList">
+            <list>             
+            </list>
+        </property>
+    </bean>
+    
+    <bean id="ucCssResourceResolvers" class="org.springframework.beans.factory.config.ListFactoryBean" >
+        <property name="sourceList">
+            <list>         
+            </list>
+        </property>
+    </bean>
+
+    <!--  Spring 4.1 Resource Transformers -->
+    <bean id="ucJsResourceTransformers" class="org.springframework.beans.factory.config.ListFactoryBean" >
+        <property name="sourceList">
+            <list>
+                <ref bean="ucCachingResourceTransformer" />
+                <ref bean="ucMinifyResourceTransformer" />                
+            </list>
+        </property>
+    </bean>
+    
+    <bean id="ucCssResourceTransformers" class="org.springframework.beans.factory.config.ListFactoryBean" >
+        <property name="sourceList">
+            <list>
+                <ref bean="ucCachingResourceTransformer" />
+                <ref bean="ucMinifyResourceTransformer" />
+            </list>
+        </property>
+    </bean>
+
+    <bean id="ucFileServiceProviders" class="org.springframework.beans.factory.config.ListFactoryBean" >
+        <property name="sourceList">
+            <list>
+            </list>
+        </property>
+    </bean>   
+     
+    
+    <bean id="ucPaymentGatewayConfigurationServices" class="org.springframework.beans.factory.config.ListFactoryBean" >
+        <property name="sourceList">
+            <list>
+            </list>
+        </property>
+    </bean>
+    
+    <bean id="ucSiteMapGenerators" class="org.springframework.beans.factory.config.ListFactoryBean">
+        <property name="sourceList">
+            <list>
+                <ref bean="ucCustomSiteMapGenerator" />
+            </list>
+        </property>
+    </bean>
+
+    <bean id="ucLinkedDataGenerators" class="org.springframework.beans.factory.config.ListFactoryBean">
+        <property name="sourceList">
+            <list>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="ucStatisticsServiceLogAdapter" class="com.ultracommerce.common.cache.NoOpStatisticsServiceLogAdapter"/>
+
+    <bean id="ucEntityExtensionManagers" class="org.springframework.beans.factory.config.MapFactoryBean">
+        <property name="sourceMap">
+            <map>
+            </map>
+        </property>
+    </bean>
+    
+    <bean id="ucTranslationExceptionProperties" class="org.springframework.beans.factory.config.ListFactoryBean" >
+        <property name="sourceList">
+            <list>
+                <value>pageTemplate.*</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="ucConditionalDirectCopyTransformers" class="org.springframework.beans.factory.config.MapFactoryBean">
+        <property name="sourceMap">
+            <map>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="ucConditionalEntities" class="org.springframework.beans.factory.config.MapFactoryBean">
+        <property name="sourceMap">
+            <map>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="ucConditionalOrmFiles" class="org.springframework.beans.factory.config.MapFactoryBean">
+        <property name="sourceMap">
+            <map>
+            </map>
+        </property>
+    </bean>
+    
+    <bean id="ucConditionalFieldAnnotationCopyTransformers" class="org.springframework.beans.factory.config.MapFactoryBean">
+        <property name="sourceMap">
+            <map>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="ucPrecompressedArtifactFileExtensionWhitelist" class="org.springframework.beans.factory.config.ListFactoryBean" scope="prototype">
+        <property name="sourceList">
+            <list>
+                <value>.html</value>
+                <value>.js</value>
+                <value>.css</value>
+                <value>.ico</value>
+                <value>.woff</value>
+                <value>.txt</value>
+            </list>
+        </property>
+    </bean>
+
+</beans>

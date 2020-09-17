@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  #%L
+  UltraCommerce CMS Module
+  %%
+  Copyright (C) 2009 - 2016 Ultra Commerce
+  %%
+  Licensed under the Ultra Fair Use License Agreement, Version 1.0
+  (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+  unless the restrictions on use therein are violated and require payment to Ultra in which case
+  the Ultra End User License Agreement (EULA), Version 1.1
+  (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
+  shall apply.
+  
+  Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
+  between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
+  #L%
+  -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:component-scan base-package="com.ultracommerce.cms">
+        <context:exclude-filter type="regex" expression="com.ultracommerce.cms.admin.*"/>
+    </context:component-scan>
+    <context:component-scan base-package="com.ultracommerce.common.locale"/>
+
+    <bean id="ucMergedPersistenceXmlLocations-cms" class="org.springframework.beans.factory.config.ListFactoryBean">
+        <property name="sourceList">
+            <list>
+                <value>classpath*:/META-INF/persistence-cms.xml</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean class="com.ultracommerce.common.extensibility.context.merge.EarlyStageMergeBeanPostProcessor">
+        <property name="collectionRef" value="ucMergedPersistenceXmlLocations-cms"/>
+        <property name="targetRef" value="ucMergedPersistenceXmlLocations"/>
+    </bean>
+
+    <bean id="ucEntityManagerFactoryAssetStorageInfo" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean" depends-on="ucCacheManager">
+        <property name="jpaVendorAdapter" ref="ucJpaVendorAdapter"/>
+        <property name="persistenceUnitManager" ref="ucPersistenceUnitManager" />
+        <property name="persistenceUnitName" value="ucCMSStorage"/>
+    </bean>
+
+    <bean id="ucTransactionManagerAssetStorageInfo" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="ucEntityManagerFactoryAssetStorageInfo" />
+    </bean>
+
+    <bean id="ucMergedCacheConfigLocations-cms" class="org.springframework.beans.factory.config.ListFactoryBean">
+        <property name="sourceList">
+            <list>
+                <value>classpath:uc-cms-ehcache.xml</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean class="com.ultracommerce.common.extensibility.context.merge.EarlyStageMergeBeanPostProcessor">
+        <property name="collectionRef" value="ucMergedCacheConfigLocations-cms"/>
+        <property name="targetRef" value="ucMergedCacheConfigLocations"/>
+    </bean>
+
+    <bean id="ucMergedEntityContexts-cms" class="org.springframework.beans.factory.config.ListFactoryBean">
+        <property name="sourceList">
+            <list>
+                <value>classpath:uc-cms-applicationContext-entity.xml</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean class="com.ultracommerce.common.extensibility.context.merge.EarlyStageMergeBeanPostProcessor">
+        <property name="collectionRef" value="ucMergedEntityContexts-cms"/>
+        <property name="targetRef" value="ucMergedEntityContexts"/>
+    </bean>
+
+    <bean id="ucContentRuleProcessors-cms" class="org.springframework.beans.factory.config.ListFactoryBean">
+        <property name="sourceList">
+            <list>
+                <ref bean="ucContentDefaultRuleProcessor"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean class="com.ultracommerce.common.extensibility.context.merge.LateStageMergeBeanPostProcessor">
+        <property name="collectionRef" value="ucContentRuleProcessors-cms" />
+        <property name="targetRef" value="ucContentRuleProcessors" />
+    </bean>
+
+    <bean id="ucPageRuleProcessors-cms" class="org.springframework.beans.factory.config.ListFactoryBean">
+        <property name="sourceList">
+            <list>
+                <ref bean="ucPageDefaultRuleProcessor"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean class="com.ultracommerce.common.extensibility.context.merge.LateStageMergeBeanPostProcessor">
+        <property name="collectionRef" value="ucPageRuleProcessors-cms" />
+        <property name="targetRef" value="ucPageRuleProcessors" />
+    </bean>
+
+    <bean id="ucNamedOperationManager" class="com.ultracommerce.cms.file.service.operation.NamedOperationManagerImpl">
+        <property name="namedOperationComponents">
+            <list>
+                <ref bean="ucStaticMapNamedOperationComponent"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="ucStaticMapNamedOperations" class="org.springframework.beans.factory.config.MapFactoryBean">
+        <property name="sourceMap">
+            <map>
+                <entry key="smallAdminThumbnail">
+                    <map>
+                        <entry key="resize-width-amount" value="30"/>
+                        <entry key="resize-height-amount" value="30"/>
+                        <entry key="resize-high-quality" value="false"/>
+                        <entry key="resize-maintain-aspect-ratio" value="true"/>
+                        <entry key="resize-reduce-only" value="true"/>
+                    </map>
+                </entry>
+                <entry key="largeAdminThumbnail">
+                    <map>
+                        <entry key="resize-width-amount" value="60"/>
+                        <entry key="resize-height-amount" value="60"/>
+                        <entry key="resize-high-quality" value="false"/>
+                        <entry key="resize-maintain-aspect-ratio" value="true"/>
+                        <entry key="resize-reduce-only" value="true"/>
+                    </map>
+                </entry>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="ucStaticMapNamedOperationComponent" class="com.ultracommerce.cms.file.service.operation.StaticMapNamedOperationComponent"/>
+    
+    <bean id="ucContentDeepLinkService" class="com.ultracommerce.cms.web.deeplink.ContentDeepLinkServiceImpl">
+        <property name="structuredContentAdminPath" value="structured-content/" />
+    </bean>
+
+    <bean id="ucCMSSiteMapGenerators" class="org.springframework.beans.factory.config.ListFactoryBean">
+        <property name="sourceList">
+            <list>
+                <ref bean="ucPageSiteMapGenerator" />
+            </list>
+        </property>
+    </bean>
+
+    <bean class="com.ultracommerce.common.extensibility.context.merge.LateStageMergeBeanPostProcessor">
+        <property name="collectionRef" value="ucCMSSiteMapGenerators" />
+        <property name="targetRef" value="ucSiteMapGenerators" />
+    </bean>
+
+</beans>

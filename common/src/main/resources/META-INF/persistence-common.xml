@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
   #%L
-  BroadleafCommerce Common Libraries
+  UltraCommerce Common Libraries
   %%
-  Copyright (C) 2009 - 2016 Broadleaf Commerce
+  Copyright (C) 2009 - 2016 Ultra Commerce
   %%
-  Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
-  (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
-  unless the restrictions on use therein are violated and require payment to Broadleaf in which case
-  the Broadleaf End User License Agreement (EULA), Version 1.1
-  (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+  Licensed under the Ultra Fair Use License Agreement, Version 1.0
+  (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+  unless the restrictions on use therein are violated and require payment to Ultra in which case
+  the Ultra End User License Agreement (EULA), Version 1.1
+  (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
   shall apply.
   
   Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
-  between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+  between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
   #L%
   -->
 
@@ -21,42 +21,42 @@
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
              version="2.0">
-    <persistence-unit name="blPU" transaction-type="RESOURCE_LOCAL">
+    <persistence-unit name="ucPU" transaction-type="RESOURCE_LOCAL">
         <mapping-file>config/bc/jpa/domain/SystemProperty.orm.xml</mapping-file>
         <mapping-file>config/bc/jpa/domain/ModuleConfiguration.orm.xml</mapping-file>
-        <mapping-file>config/bc/jpa/domain/BroadleafCurrency.orm.xml</mapping-file>
+        <mapping-file>config/bc/jpa/domain/UltraCurrency.orm.xml</mapping-file>
         <mapping-file>config/bc/jpa/domain/Locale.orm.xml</mapping-file>
         <mapping-file>config/bc/jpa/domain/ISOCountry.orm.xml</mapping-file>
         <mapping-file>config/bc/jpa/domain/IdGeneration.orm.xml</mapping-file>
-        <class>org.broadleafcommerce.common.currency.domain.BroadleafCurrencyImpl</class>
-        <class>org.broadleafcommerce.common.email.domain.EmailTrackingClicksImpl</class>
-        <class>org.broadleafcommerce.common.email.domain.EmailTrackingImpl</class>
-        <class>org.broadleafcommerce.common.email.domain.EmailTrackingOpensImpl</class>
-        <class>org.broadleafcommerce.common.i18n.domain.ISOCountryImpl</class>
-        <class>org.broadleafcommerce.common.i18n.domain.TranslationImpl</class>
-        <class>org.broadleafcommerce.common.locale.domain.LocaleImpl</class>
-        <class>org.broadleafcommerce.common.media.domain.MediaImpl</class>
-        <class>org.broadleafcommerce.common.sandbox.domain.SandBoxImpl</class>
-        <class>org.broadleafcommerce.common.sandbox.domain.SandBoxManagementImpl</class>
-        <class>org.broadleafcommerce.common.site.domain.SiteImpl</class>
-        <class>org.broadleafcommerce.common.site.domain.CatalogImpl</class>
-        <class>org.broadleafcommerce.common.site.domain.SiteCatalogXrefImpl</class>
-        <class>org.broadleafcommerce.common.enumeration.domain.DataDrivenEnumerationImpl</class>
-        <class>org.broadleafcommerce.common.enumeration.domain.DataDrivenEnumerationValueImpl</class>
-        <class>org.broadleafcommerce.common.config.domain.SystemPropertyImpl</class>
-        <class>org.broadleafcommerce.common.config.domain.AbstractModuleConfiguration</class>
-        <class>org.broadleafcommerce.common.sitemap.domain.SiteMapConfigurationImpl</class>
-        <class>org.broadleafcommerce.common.sitemap.domain.SiteMapGeneratorConfigurationImpl</class>
-        <class>org.broadleafcommerce.common.sitemap.domain.SiteMapUrlEntryImpl</class>
-        <class>org.broadleafcommerce.common.sitemap.domain.CustomUrlSiteMapGeneratorConfigurationImpl</class>
-        <class>org.broadleafcommerce.common.id.domain.IdGenerationImpl</class>
+        <class>com.ultracommerce.common.currency.domain.UltraCurrencyImpl</class>
+        <class>com.ultracommerce.common.email.domain.EmailTrackingClicksImpl</class>
+        <class>com.ultracommerce.common.email.domain.EmailTrackingImpl</class>
+        <class>com.ultracommerce.common.email.domain.EmailTrackingOpensImpl</class>
+        <class>com.ultracommerce.common.i18n.domain.ISOCountryImpl</class>
+        <class>com.ultracommerce.common.i18n.domain.TranslationImpl</class>
+        <class>com.ultracommerce.common.locale.domain.LocaleImpl</class>
+        <class>com.ultracommerce.common.media.domain.MediaImpl</class>
+        <class>com.ultracommerce.common.sandbox.domain.SandBoxImpl</class>
+        <class>com.ultracommerce.common.sandbox.domain.SandBoxManagementImpl</class>
+        <class>com.ultracommerce.common.site.domain.SiteImpl</class>
+        <class>com.ultracommerce.common.site.domain.CatalogImpl</class>
+        <class>com.ultracommerce.common.site.domain.SiteCatalogXrefImpl</class>
+        <class>com.ultracommerce.common.enumeration.domain.DataDrivenEnumerationImpl</class>
+        <class>com.ultracommerce.common.enumeration.domain.DataDrivenEnumerationValueImpl</class>
+        <class>com.ultracommerce.common.config.domain.SystemPropertyImpl</class>
+        <class>com.ultracommerce.common.config.domain.AbstractModuleConfiguration</class>
+        <class>com.ultracommerce.common.sitemap.domain.SiteMapConfigurationImpl</class>
+        <class>com.ultracommerce.common.sitemap.domain.SiteMapGeneratorConfigurationImpl</class>
+        <class>com.ultracommerce.common.sitemap.domain.SiteMapUrlEntryImpl</class>
+        <class>com.ultracommerce.common.sitemap.domain.CustomUrlSiteMapGeneratorConfigurationImpl</class>
+        <class>com.ultracommerce.common.id.domain.IdGenerationImpl</class>
         <exclude-unlisted-classes/>
         <properties>
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.transaction.flush_before_completion" value="false"/>
             <property name="hibernate.cache.region.factory_class" value="org.hibernate.cache.jcache.JCacheRegionFactory"/>
             <property name="hibernate.javax.cache.provider" value="org.ehcache.jsr107.EhcacheCachingProvider"/>
-            <!-- See org.broadleafcommerce.common.extensibility.jpa.JCachePersistenceUnitPostProcessor for more information on the jcache.xml location -->
+            <!-- See com.ultracommerce.common.extensibility.jpa.JCachePersistenceUnitPostProcessor for more information on the jcache.xml location -->
             <property name="hibernate.cache.use_second_level_cache" value="true"/>
             <property name="hibernate.cache.use_query_cache" value="true"/>
             <property name="hibernate.generate_statistics" value="false" />

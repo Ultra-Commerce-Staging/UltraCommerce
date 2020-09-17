@@ -16,9 +16,9 @@
     
     
     <modules>
-        <module>broadleaf-profile</module>
-        <module>broadleaf-profile-web</module>
-        <module>broadleaf-framework</module>
-        <module>broadleaf-framework-web</module>
+        <module>ultra-profile</module>
+        <module>ultra-profile-web</module>
+        <module>ultra-framework</module>
+        <module>ultra-framework-web</module>
   </modules>
 </project>

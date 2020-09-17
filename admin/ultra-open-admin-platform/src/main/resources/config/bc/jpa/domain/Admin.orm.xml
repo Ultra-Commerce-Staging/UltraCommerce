@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  #%L
+  UltraCommerce Open Admin Platform
+  %%
+  Copyright (C) 2009 - 2016 Ultra Commerce
+  %%
+  Licensed under the Ultra Fair Use License Agreement, Version 1.0
+  (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+  unless the restrictions on use therein are violated and require payment to Ultra in which case
+  the Ultra End User License Agreement (EULA), Version 1.1
+  (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
+  shall apply.
+  
+  Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
+  between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
+  #L%
+  -->
+
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_2_0.xsd" version="2.0">
+
+    <named-query name="UC_READ_ADMIN_USER_BY_USERNAME" >
+        <query>SELECT adminUser FROM com.ultracommerce.openadmin.server.security.domain.AdminUser adminUser
+               WHERE  adminUser.login = :userName
+        </query>
+    </named-query>
+
+    <named-query name="UC_READ_ALL_ADMIN_USERS">
+        <query>SELECT adminUser FROM com.ultracommerce.openadmin.server.security.domain.AdminUser adminUser</query>
+    </named-query>
+
+    <named-query name="UC_READ_ADMIN_USER_BY_EMAIL">
+        <query>SELECT adminUser FROM com.ultracommerce.openadmin.server.security.domain.AdminUser adminUser
+               WHERE  adminUser.email = :email
+        </query>
+    </named-query>
+
+    <named-query name="UC_READ_ALL_ADMIN_PERMISSIONS">
+        <query>SELECT adminPermission FROM com.ultracommerce.openadmin.server.security.domain.AdminPermission adminPermission</query>
+    </named-query>
+
+    <named-query name="UC_READ_ALL_ADMIN_ROLES">
+        <query>SELECT adminRole FROM com.ultracommerce.openadmin.server.security.domain.AdminRole adminRole</query>
+    </named-query>
+
+    <named-query name="UC_READ_ALL_ADMIN_MODULES">
+        <query>SELECT adminModule FROM com.ultracommerce.openadmin.server.security.domain.AdminModule adminModule</query>
+    </named-query>
+
+    <named-query name="UC_READ_ALL_ADMIN_SECTIONS">
+        <query>SELECT adminSection FROM com.ultracommerce.openadmin.server.security.domain.AdminSection adminSection</query>
+    </named-query>
+
+    <named-query name="UC_READ_ADMIN_SECTION_BY_URI">
+        <query>SELECT adminSection FROM com.ultracommerce.openadmin.server.security.domain.AdminSection adminSection
+                WHERE adminSection.url = :uri
+        </query>
+    </named-query>
+
+    <named-query name="UC_READ_ADMIN_SECTION_BY_SECTION_KEY">
+        <query>SELECT adminSection FROM com.ultracommerce.openadmin.server.security.domain.AdminSection adminSection
+            WHERE adminSection.sectionKey = :sectionKey
+        </query>
+    </named-query>
+
+    <named-query name="UC_COUNT_PERMISSIONS_FOR_USER_BY_TYPE_AND_CEILING_ENTITY" >
+        <query>SELECT COUNT(adminPermission)
+               FROM com.ultracommerce.openadmin.server.security.domain.AdminPermission adminPermission
+               LEFT OUTER JOIN adminPermission.allChildPermissions childPermission
+               LEFT OUTER JOIN childPermission.qualifiedEntities childQualifiedEntity
+               LEFT OUTER JOIN adminPermission.qualifiedEntities qualifiedEntity
+               LEFT OUTER JOIN adminPermission.allRoles role
+               LEFT OUTER JOIN role.allUsers roleUser
+               LEFT OUTER JOIN adminPermission.allUsers permissionUser
+               WHERE (roleUser = :adminUser OR permissionUser = :adminUser) AND
+                     (adminPermission.type = :type OR adminPermission.type = 'ALL' OR 
+                     childPermission.type = :type OR childPermission.type = 'ALL') AND
+                     (qualifiedEntity.ceilingEntityFullyQualifiedName = :ceilingEntity OR childQualifiedEntity.ceilingEntityFullyQualifiedName = :ceilingEntity)
+        </query>
+    </named-query>
+
+    <named-query name="UC_COUNT_BY_PERMISSION_AND_CEILING_ENTITY" >
+        <query>SELECT COUNT(adminPermission)
+               FROM com.ultracommerce.openadmin.server.security.domain.AdminPermission adminPermission
+               LEFT OUTER JOIN adminPermission.allChildPermissions childPermission
+               LEFT OUTER JOIN childPermission.qualifiedEntities childQualifiedEntity
+               LEFT OUTER JOIN adminPermission.qualifiedEntities qualifiedEntity
+               WHERE adminPermission.name IN (:permissionNames) AND
+                     (qualifiedEntity.ceilingEntityFullyQualifiedName = :ceilingEntity OR childQualifiedEntity.ceilingEntityFullyQualifiedName = :ceilingEntity)
+        </query>
+    </named-query>
+
+    <named-query name="UC_COUNT_PERMISSIONS_BY_TYPE_AND_CEILING_ENTITY" >
+        <query>SELECT COUNT(adminPermission)
+               FROM com.ultracommerce.openadmin.server.security.domain.AdminPermission adminPermission
+               LEFT OUTER JOIN adminPermission.allChildPermissions childPermission
+               LEFT OUTER JOIN childPermission.qualifiedEntities childQualifiedEntity
+               JOIN adminPermission.qualifiedEntities qualifiedEntity
+               WHERE (adminPermission.type = :type OR adminPermission.type = 'ALL' OR
+                     childPermission.type = :type OR childPermission.type = 'ALL') AND
+                     (qualifiedEntity.ceilingEntityFullyQualifiedName = :ceilingEntity OR childQualifiedEntity.ceilingEntityFullyQualifiedName = :ceilingEntity)
+        </query>
+    </named-query>
+
+</entity-mappings>

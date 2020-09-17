@@ -1,0 +1,153 @@
+/*
+ * #%L
+ * UltraCommerce Framework
+ * %%
+ * Copyright (C) 2009 - 2016 Ultra Commerce
+ * %%
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
+ * shall apply.
+ * 
+ * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
+ * #L%
+ */
+package com.ultracommerce.core.catalog.domain;
+
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import com.ultracommerce.common.copy.CreateResponse;
+import com.ultracommerce.common.copy.MultiTenantCopyContext;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransform;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransformMember;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransformTypes;
+import com.ultracommerce.common.presentation.AdminPresentationClass;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+/**
+ * @author Jeff Fischer
+ */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
+@Table(name = "UC_PRODUCT_OPTION_XREF")
+@AdminPresentationClass(excludeFromPolymorphism = false)
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region="ucProducts")
+@DirectCopyTransform({
+        @DirectCopyTransformMember(templateTokens = DirectCopyTransformTypes.SANDBOX, skipOverlaps=true),
+        @DirectCopyTransformMember(templateTokens = DirectCopyTransformTypes.MULTITENANT_CATALOG)
+})
+public class ProductOptionXrefImpl implements ProductOptionXref {
+
+    /** The Constant serialVersionUID. */
+    private static final long serialVersionUID = 1L;
+
+    @Id
+    @GeneratedValue(generator= "ProductOptionXrefId")
+    @GenericGenerator(
+        name="ProductOptionXrefId",
+        strategy="com.ultracommerce.common.persistence.IdOverrideTableGenerator",
+        parameters = {
+            @Parameter(name="segment_value", value="ProductOptionXrefImpl"),
+            @Parameter(name="entity_name", value="com.ultracommerce.core.catalog.domain.ProductOptionXrefImpl")
+        }
+    )
+    @Column(name = "PRODUCT_OPTION_XREF_ID")
+    protected Long id;
+
+    @ManyToOne(targetEntity = ProductImpl.class, optional=false, cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "PRODUCT_ID")
+    protected Product product = new ProductImpl();
+
+    @ManyToOne(targetEntity = ProductOptionImpl.class, optional=false)
+    @JoinColumn(name = "PRODUCT_OPTION_ID")
+    protected ProductOption productOption = new ProductOptionImpl();
+
+    @Override
+    public Long getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    @Override
+    public Product getProduct() {
+        return product;
+    }
+
+    @Override
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    @Override
+    public ProductOption getProductOption() {
+        return productOption;
+    }
+
+    @Override
+    public void setProductOption(ProductOption productOption) {
+        this.productOption = productOption;
+    }
+
+    @Override
+    public <G extends ProductOptionXref> CreateResponse<G> createOrRetrieveCopyInstance(MultiTenantCopyContext context) throws CloneNotSupportedException {
+        CreateResponse<G> createResponse = context.createOrRetrieveCopyInstance(this);
+        if (createResponse.isAlreadyPopulated()) {
+            return createResponse;
+        }
+        ProductOptionXref cloned = createResponse.getClone();
+        if (product != null) {
+            cloned.setProduct(product.createOrRetrieveCopyInstance(context).getClone());
+        }
+        if (productOption != null) {
+            cloned.setProductOption(productOption.createOrRetrieveCopyInstance(context).getClone());
+        }
+        return createResponse;
+    }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (obj == null || !getClass().isAssignableFrom(obj.getClass())) {
+            return false;
+        }
+        ProductOptionXrefImpl rhs = (ProductOptionXrefImpl) obj;
+        return new EqualsBuilder()
+                .append(this.id, rhs.id)
+                .append(this.product, rhs.product)
+                .append(this.productOption, rhs.productOption)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+                .append(id)
+                .append(product)
+                .append(productOption)
+                .toHashCode();
+    }
+}

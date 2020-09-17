@@ -1,0 +1,244 @@
+/*
+ * #%L
+ * UltraCommerce Open Admin Platform
+ * %%
+ * Copyright (C) 2009 - 2016 Ultra Commerce
+ * %%
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
+ * shall apply.
+ * 
+ * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
+ * #L%
+ */
+/**
+ * @author Nick Crum
+ */
+
+(function($, UCAdmin) {
+
+    var pingInterval = 1000;
+    var sessionTimeoutInterval = Number.MAX_VALUE; // the actual value for sessionTimeoutInterval get set by way of an ajax request
+    var sessionTimeLeft = sessionTimeoutInterval;
+    var EXPIRE_MESSAGE_TIME = 60000;
+    
+    var activityPingInterval = 30000;
+    var activityCount = 0;
+    
+    /*
+     * Here we define the path for the `sessionResetTime` cookie to be `/` if this is the root servlet context
+     */
+    var resetTimeCookiePath = (UC.servletContext) ? UC.servletContext : '/';
+    
+    /*
+     * Here we define that key presses to indicate activity by incrementing the activityCount variable.
+     */
+    $(document).keypress(function(e) {
+        activityCount++;
+    });
+
+
+    UCAdmin.sessionTimer = {
+
+        /*
+         * This function is used to reset the session timer on the server and update the page's session time.
+         */
+        resetTimer : function() {
+            /*
+             * The session time is temporarily set to a high value to prevent a request that takes an inordinate
+             * amount of time from causing the session to expire prematurely.
+             */
+            
+            UC.get({
+                url : UC.servletContext + "/sessionTimerReset",
+                trackAnalytics : false,
+                error: function(err) {
+                    UCAdmin.sessionTimer.invalidateSession();
+                }
+            }, function(data) {
+                /*
+                 * We deduct one minute from the actual session timeout interval to ensure that the server-side session
+                 * doesn't expire before the client session
+                 */
+                sessionTimeoutInterval = data.serverSessionTimeoutInterval - 60000;
+               var resetTime = (new Date()).getTime();
+                $.cookie("sessionResetTime", resetTime - (resetTime % pingInterval) , { path : resetTimeCookiePath });
+                
+                UCAdmin.sessionTimer.updateTimeLeft();
+            });
+        },
+
+        getTimeLeft : function() { 
+            return sessionTimeLeft;
+        },
+        
+        getTimeLeftSeconds : function(){
+            return moment.duration(sessionTimeLeft/1000, 'seconds').format('m [min] s [sec]');
+        },
+
+        isExpired : function() {
+            return sessionTimeLeft <= 0;
+        },
+
+        getSessionTimeoutInterval : function() {
+            return sessionTimeoutInterval;
+        },
+
+        getActivityPingInterval : function() {
+            return activityPingInterval;
+        },
+
+        getPingInterval : function() {
+            return pingInterval;
+        },
+
+        getExpireMessageTime : function() {
+            return EXPIRE_MESSAGE_TIME;
+        },
+
+        timeSinceLastReset : function() {
+            return (new Date()).getTime() - $.cookie("sessionResetTime", { path: resetTimeCookiePath });
+        },
+
+        updateTimeLeft : function() {
+            var exactTimeLeft = (UCAdmin.sessionTimer.getSessionTimeoutInterval() - UCAdmin.sessionTimer.timeSinceLastReset());
+            exactTimeLeft = exactTimeLeft - (exactTimeLeft % pingInterval);
+
+            sessionTimeLeft = exactTimeLeft;
+        },
+
+        invalidateSession : function() {
+            $.doTimeout('update-admin-session');
+            $.removeCookie('sessionResetTime', { path: resetTimeCookiePath });
+
+            // Disable the entity form status check
+            if (UCAdmin.entityForm.status) {
+                UCAdmin.entityForm.status.setDidConfirmLeave(true);
+            }
+
+            UC.get({
+                url : UC.servletContext + "/adminLogout.htm",
+                error: function(err) {
+                    window.location.replace(UC.servletContext + "/login?sessionTimeout=true");
+                }
+            }, function(data) {
+                /*
+                 * After the logout occurs, we redirect to the login page with the sessionTimeout parameter being true.
+                 * This yield a red banner on the login screen that indicates the session expired to the user.
+                 */
+                window.location.replace(UC.servletContext + "/login?sessionTimeout=true");
+            });
+            return false;
+        },
+        
+        updateTimer : function() {
+            
+            UCAdmin.sessionTimer.updateTimeLeft();
+            /*
+             * If the time left is less than the expire message time, then we know to display the expire message.
+             */
+            if (UCAdmin.sessionTimer.getTimeLeft() < UCAdmin.sessionTimer.getExpireMessageTime()) {
+
+                /*
+                 * If the session is expired: invalidate the session, and end the timeout loop by returning false.
+                 */
+                if (UCAdmin.sessionTimer.isExpired()) {
+                    $("#lightbox").hide();
+                    UCAdmin.sessionTimer.invalidateSession();
+                    return false;
+                }
+
+                /*
+                 * If the session is not expired: update the session expiring text with the current time left, and
+                 * display the session expiration message lightbox.
+                 */
+                $("#expire-text").html(UCAdmin.messages.sessionCountdown
+                                        + UCAdmin.sessionTimer.getTimeLeftSeconds()
+                                        + UCAdmin.messages.sessionCountdownEnd);
+
+                /*
+                 * Here we make sure that the session expiring lightbox is displayed.
+                 */
+                $("#lightbox").show();
+                activityCount = 0;
+
+                return true;
+            } else if (UCAdmin.sessionTimer.getTimeLeft() % UCAdmin.sessionTimer.getActivityPingInterval() == 0) {
+                
+                /*
+                 * If activityCount is greater than 0, we know that at least one key has been pressed. This means there has
+                 * been activity and we should reset the timer.
+                 */
+                if (activityCount > 0) {
+                    UCAdmin.sessionTimer.resetTimer();
+                    activityCount = 0;
+                    return true;
+                }
+            }
+            
+            /*
+             * If our code has reached this point then the session time left is greater than the warning interval and
+             * the lightbox should not be showing.
+             */
+            $("#lightbox").hide();
+            return true;
+        }
+
+    };
+})(jQuery, UCAdmin);
+
+$(document).ready(function() {
+    
+    /*
+     * We must reset the timer when the page is loaded so we can update the last reset time and session timeout interval.
+     */
+    UCAdmin.sessionTimer.resetTimer();
+
+    /*
+     * This function provides the proper functionality for the "Stay Logged In" button on the expire message.
+     */
+    var stayLoggedIn = function() {
+        /*
+         * This is used to invalidate the old timeout thread
+         */
+        $.doTimeout('update-admin-session');
+        
+        $("#lightbox").hide();
+        activityCount = 0;
+        
+        /*
+         * We must reset the timer so we can stay logged in.
+         */
+        UCAdmin.sessionTimer.resetTimer();
+        
+        /*
+         * This is used to create a new timeout thread
+         */
+        $.doTimeout('update-admin-session', UCAdmin.sessionTimer.getPingInterval(), UCAdmin.sessionTimer.updateTimer);
+    };
+
+    $("#stay-logged-in").click(function() {
+        stayLoggedIn();
+        return false;
+    });
+    
+    var sessionLogout = function() {
+        $.doTimeout('update-admin-session');
+        $.removeCookie('sessionResetTime', {path: resetTimeCookiePath});
+    };
+    
+    $("#session-logout").click(function() {
+        sessionLogout();
+        return true;
+    });
+    
+    /*
+     * This is used to initiate the timeout thread that tracks the session time and listens for activity.
+     */
+    $.doTimeout('update-admin-session', UCAdmin.sessionTimer.getPingInterval(), UCAdmin.sessionTimer.updateTimer);
+
+});

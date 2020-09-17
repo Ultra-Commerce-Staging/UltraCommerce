@@ -8,7 +8,7 @@
     <artifactId>ultracommerce-common</artifactId>
     <packaging>jar</packaging>
     <name>UltraCommerce Common Libraries</name>
-    <description>A collection of classes shared by broadleaf profile, cms, admin, and core.</description>
+    <description>A collection of classes shared by ultra profile, cms, admin, and core.</description>
     <url>https://ultracommerce.co</url>
     <properties>
         <project.uri>${project.baseUri}/../</project.uri>
@@ -63,7 +63,7 @@
     </build>
     <profiles>
         <profile>
-            <id>blc-development</id>
+            <id>uc-development</id>
             <build>
                 <plugins>
                     <plugin>

@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  #%L
+  UltraCommerce Admin Module
+  %%
+  Copyright (C) 2009 - 2016 Ultra Commerce
+  %%
+  Licensed under the Ultra Fair Use License Agreement, Version 1.0
+  (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+  unless the restrictions on use therein are violated and require payment to Ultra in which case
+  the Ultra End User License Agreement (EULA), Version 1.1
+  (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
+  shall apply.
+  
+  Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
+  between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
+  #L%
+  -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mo="http://schema.ultracommerce.org/mo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+               http://www.springframework.org/schema/beans/spring-beans.xsd
+               http://www.springframework.org/schema/context
+               http://www.springframework.org/schema/context/spring-context.xsd
+               http://schema.ultracommerce.org/mo
+               http://schema.ultracommerce.org/mo/mo-3.0.xsd">
+
+    <context:component-scan base-package="com.ultracommerce.admin">
+        <context:exclude-filter type="regex" expression="com.ultracommerce.admin.web.controller.*"/>
+    </context:component-scan>
+
+    <bean id="ucFieldMetadataProviders-core-admin" class="com.ultracommerce.common.util.SortedListFactoryBean" scope="prototype">
+        <property name="sourceList">
+            <list>
+                <ref bean="ucCustomerUsernameFieldMetadataProvider"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean class="com.ultracommerce.common.extensibility.context.merge.LateStageMergeBeanPostProcessor">
+        <property name="collectionRef" value="ucFieldMetadataProviders-core-admin"/>
+        <property name="targetRef" value="ucFieldMetadataProviders"/>
+    </bean>
+
+    <bean id="ucCustomPersistenceHandlers-core-admin" class="org.springframework.beans.factory.config.ListFactoryBean" scope="prototype">
+        <property name="sourceList">
+            <list>
+                <ref bean="ucCategoryCustomPersistenceHandler" />
+                <ref bean="ucCustomerPasswordCustomPersistenceHandler" />
+                <ref bean="ucCustomerCustomPersistenceHandler" />
+                <ref bean="ucCustomerPaymentCustomPersistenceHandler"/>
+                <ref bean="ucProductCustomPersistenceHandler" />
+                <ref bean="ucChildCategoriesCustomPersistenceHandler" />
+                <ref bean="ucSkuCustomPersistenceHandler" />
+                <ref bean="ucSkuLookupByProductCustomPersistenceHandler" />
+                <ref bean="ucISOCountryPersistenceHandler"/>
+                <ref bean="ucSkuBundleItemCustomPersistenceHandler" />
+                <ref bean="ucSearchFacetRangeCustomPersistenceHandler" />
+                <ref bean="ucIndexFieldCustomPersistenceHandler" />
+                <ref bean="ucProductOptionsCustomPersistenceHandler" />
+                <ref bean="ucFieldOnlyPropertiesCustomPersistenceHandler" />
+                <ref bean="ucSearchFacetCustomPersistenceHandler" />
+                <ref bean="ucOfferCustomPersistenceHandler" />
+                <ref bean="ucOfferCodeCustomPersistenceHandler" />
+                <ref bean="ucProductOptionValuesCustomPersistenceHandler" />
+            </list>
+        </property>
+    </bean>
+
+    <bean class="com.ultracommerce.common.extensibility.context.merge.LateStageMergeBeanPostProcessor">
+        <property name="collectionRef" value="ucCustomPersistenceHandlers-core-admin"/>
+        <property name="targetRef" value="ucCustomPersistenceHandlers"/>
+    </bean>
+
+    <mo:override id="ucMetadataOverrides">
+        <!-- Add required validation to some default Sku fields. These should not occur on the additionalSkus list, which
+            is why these are marked required in this fashion rather than in @AdminPresentation annotations on SkuImpl -->
+    
+        <mo:overrideItem configurationKey="promotionOrderItem">
+            <mo:field name="category">
+                <mo:property name="excluded" value="false"/>
+            </mo:field>
+            <mo:field name="id">
+                <mo:property name="excluded" value="true"/>
+            </mo:field>
+            <mo:field name="category.activeEndDate">
+                <mo:property name="excluded" value="true"/>
+            </mo:field>
+            <mo:field name="category.activeStartDate">
+                <mo:property name="excluded" value="true"/>
+            </mo:field>
+            <mo:field name="personalMessage">
+                <mo:property name="excluded" value="true"/>
+            </mo:field>
+        </mo:overrideItem>
+        <mo:overrideItem configurationKey="promotionCustomer">
+            <mo:field name="firstName">
+                <mo:property name="excluded" value="true"/>
+            </mo:field>
+            <mo:field name="lastName">
+                <mo:property name="excluded" value="true"/>
+            </mo:field>
+            <mo:field name="auditable.dateCreated">
+                <mo:property name="excluded" value="true"/>
+            </mo:field>
+            <mo:field name="auditable.dateUpdated">
+                <mo:property name="excluded" value="true"/>
+            </mo:field>
+        </mo:overrideItem>
+        <mo:overrideItem configurationKey="promotionFulfillmentGroup">
+            <mo:field name="personalMessage">
+                <mo:property name="excluded" value="true"/>
+            </mo:field>
+            <mo:field name="address.country">
+                <mo:property name="excluded" value="false"/>
+            </mo:field>
+            <mo:field name="address.state">
+                <mo:property name="excluded" value="false"/>
+            </mo:field>
+            <mo:field name="address.state.country">
+                <mo:property name="excluded" value="true"/>
+            </mo:field>
+            <mo:field name="address.id">
+                <mo:property name="excluded" value="true"/>
+            </mo:field>
+            <mo:field name="phone.id">
+                <mo:property name="excluded" value="true"/>
+            </mo:field>
+            <mo:field name="id">
+                <mo:property name="excluded" value="true"/>
+            </mo:field>
+        </mo:overrideItem>
+        <mo:overrideItem configurationKey="promotionOrder">
+            <mo:field name="customer">
+                <mo:property name="excluded" value="true"/>
+            </mo:field>
+            <mo:field name="id">
+                <mo:property name="excluded" value="true"/>
+            </mo:field>
+            <mo:field name="status">
+                <mo:property name="excluded" value="true"/>
+            </mo:field>
+            <mo:field name="name">
+                <mo:property name="excluded" value="true"/>
+            </mo:field>
+            <mo:field name="cityTax">
+                <mo:property name="excluded" value="true"/>
+            </mo:field>
+            <mo:field name="countyTax">
+                <mo:property name="excluded" value="true"/>
+            </mo:field>
+            <mo:field name="stateTax">
+                <mo:property name="excluded" value="true"/>
+            </mo:field>
+            <mo:field name="districtTax">
+                <mo:property name="excluded" value="true"/>
+            </mo:field>
+            <mo:field name="countryTax">
+                <mo:property name="excluded" value="true"/>
+            </mo:field>
+            <mo:field name="totalTax">
+                <mo:property name="excluded" value="true"/>
+            </mo:field>
+            <mo:field name="totalShipping">
+                <mo:property name="excluded" value="true"/>
+            </mo:field>
+            <mo:field name="total">
+                <mo:property name="excluded" value="true"/>
+            </mo:field>
+            <mo:field name="submitDate">
+                <mo:property name="excluded" value="true"/>
+            </mo:field>
+            <mo:field name="orderNumber">
+                <mo:property name="excluded" value="true"/>
+            </mo:field>
+            <mo:field name="emailAddress">
+                <mo:property name="excluded" value="true"/>
+            </mo:field>
+            <mo:field name="auditable.dateCreated">
+                <mo:property name="excluded" value="true"/>
+            </mo:field>
+            <mo:field name="auditable.dateUpdated">
+                <mo:property name="excluded" value="true"/>
+            </mo:field>
+        </mo:overrideItem>
+    </mo:override>
+
+    <bean id="ucMessageSourceBaseNames-core-admin" class="org.springframework.beans.factory.config.ListFactoryBean">
+        <property name="sourceList">
+            <list>
+                <value>classpath:/messages/CustomerCareMessages</value>
+                <value>classpath:/messages/MerchandisingMessages</value>
+                <value>classpath:/messages/PromotionMessages</value>
+                <value>classpath:/messages/RuleMessages</value>
+                <value>classpath:/messages/AbstractModuleMessages</value>
+                <value>classpath:/messages/UtilityMessages</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean class="com.ultracommerce.common.extensibility.context.merge.LateStageMergeBeanPostProcessor">
+        <property name="collectionRef" value="ucMessageSourceBaseNames-core-admin" />
+        <property name="targetRef" value="ucMessageSourceBaseNames" />
+    </bean>
+
+    <bean id="ucAdminExtendedRuleBuilderFieldServices" class="org.springframework.beans.factory.config.ListFactoryBean">
+        <property name="sourceList">
+            <list>
+                <ref bean="ucOrderItemFieldService"/>
+                <ref bean="ucCustomerFieldService"/>
+                <ref bean="ucCategoryFieldService"/>
+                <ref bean="ucTimeFieldService"/>
+                <ref bean="ucRequestFieldService"/>
+                <ref bean="ucOrderFieldService"/>
+                <ref bean="ucFulfillmentGroupFieldService"/>
+                <ref bean="ucLocaleFieldService"/>
+                <ref bean="ucSkuFieldService"/>
+                <ref bean="ucProductFieldService"/>
+            </list>
+        </property>
+    </bean>
+    <bean class="com.ultracommerce.common.extensibility.context.merge.LateStageMergeBeanPostProcessor">
+        <property name="collectionRef" value="ucAdminExtendedRuleBuilderFieldServices" />
+        <property name="targetRef" value="ucRuleBuilderFieldServices" />
+    </bean>
+    
+    <bean id="ucAdminExtendedRuleBuilderOptionsExtensionListeners" class="org.springframework.beans.factory.config.ListFactoryBean">
+        <property name="sourceList">
+            <list>
+                <ref bean="ucTimeOptionsExtensionListener" />
+                <ref bean="ucInventoryTypeOptionsExtensionListener" />
+                <ref bean="ucFulfillmentTypeOptionsExtensionListener" />
+                <ref bean="ucTemplateTypeOptionsExtensionListener" />       
+                <ref bean="ucWebRequestDeviceTypeEnumOptionsExtensionListener" />
+            </list>
+        </property>
+    </bean>
+    <bean class="com.ultracommerce.common.extensibility.context.merge.LateStageMergeBeanPostProcessor">
+        <property name="collectionRef" value="ucAdminExtendedRuleBuilderOptionsExtensionListeners" />
+        <property name="targetRef" value="ucRuleBuilderEnumOptionsExtensionListeners" />
+    </bean>
+    
+    <bean id="ucAdminExtendedPersistenceProviders" class="org.springframework.beans.factory.config.ListFactoryBean">
+        <property name="sourceList">
+            <list>
+                <ref bean="ucSkuPricingPersistenceProvider"/>
+                <ref bean="ucSkuFieldsPersistenceProvider"/>
+                <ref bean="ucForeignSkuFieldPersistenceProvider"/>
+                <ref bean="ucProductParentCategoryFieldPersistenceProvider"/>
+                <ref bean="ucCategoryParentCategoryFieldPersistenceProvider"/>
+                <ref bean="ucTypedEntityFieldPersistenceProvider"/>
+                <ref bean="ucProductUrlFieldPersistenceProvider"/>
+            </list>
+        </property>
+    </bean>
+    <bean class="com.ultracommerce.common.extensibility.context.merge.LateStageMergeBeanPostProcessor">
+        <property name="collectionRef" value="ucAdminExtendedPersistenceProviders" />
+        <property name="targetRef" value="ucPersistenceProviders" />
+    </bean>
+    
+    <bean id="ucAdminJsLocations" class="org.springframework.beans.factory.config.ListFactoryBean">
+        <property name="sourceList">
+            <list>
+                <value>classpath:/admin_style/js/</value>
+            </list>
+        </property>
+    </bean>
+    <bean class="com.ultracommerce.common.extensibility.context.merge.LateStageMergeBeanPostProcessor">
+        <property name="collectionRef" value="ucAdminJsLocations" />
+        <property name="targetRef" value="ucJsLocations" />
+    </bean>
+    
+    <bean id="ucAdminJsFileList" class="org.springframework.beans.factory.config.ListFactoryBean" >
+        <property name="sourceList">
+            <list>
+                <value>admin/catalog/product.js</value>
+                <value>admin/catalog/productBundle.js</value>
+                <value>admin/catalog/productOptions.js</value>
+                <value>admin/catalog/offer.js</value>
+                <value>admin/catalog/category.js</value>
+                <value>admin/catalog/skuMinOrderQuantity.js</value>
+                <value>admin/customers/customer.js</value>
+                <value>admin/users/adminUser.js</value>
+            </list>
+        </property>
+    </bean>
+    <bean class="com.ultracommerce.common.extensibility.context.merge.LateStageMergeBeanPostProcessor">
+        <property name="collectionRef" value="ucAdminJsFileList" />
+        <property name="targetRef" value="ucJsFileList" />
+    </bean>
+    
+</beans>

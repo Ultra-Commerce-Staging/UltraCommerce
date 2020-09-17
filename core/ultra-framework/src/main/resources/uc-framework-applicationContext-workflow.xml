@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  #%L
+  UltraCommerce Framework
+  %%
+  Copyright (C) 2009 - 2016 Ultra Commerce
+  %%
+  Licensed under the Ultra Fair Use License Agreement, Version 1.0
+  (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+  unless the restrictions on use therein are violated and require payment to Ultra in which case
+  the Ultra End User License Agreement (EULA), Version 1.1
+  (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
+  shall apply.
+  
+  Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
+  between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
+  #L%
+  -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/aop
+                           http://www.springframework.org/schema/aop/spring-aop.xsd">
+    
+    <bean id="ucTaxProviders" class="org.springframework.beans.factory.config.ListFactoryBean">
+        <property name="sourceList">
+            <list />
+        </property>
+    </bean>
+    
+    <bean id="ucFulfillmentLocationResolver" class="com.ultracommerce.core.pricing.service.fulfillment.SimpleFulfillmentLocationResolver" />
+
+    <bean id="ucFixedPriceFulfillmentPricingProvider"
+            class="com.ultracommerce.core.pricing.service.fulfillment.provider.FixedPriceFulfillmentPricingProvider" />
+    <bean id="ucBandedFulfillmentPricingProvider"
+            class="com.ultracommerce.core.pricing.service.fulfillment.provider.BandedFulfillmentPricingProvider" />
+
+    <bean id="ucFulfillmentPricingProviders" class="org.springframework.beans.factory.config.ListFactoryBean">
+        <property name="sourceList">
+            <list>
+               <ref bean="ucFixedPriceFulfillmentPricingProvider" />
+               <ref bean="ucBandedFulfillmentPricingProvider" />
+            </list>
+        </property>
+    </bean>
+    
+    <!-- Pricing Workflow configuration -->
+    <bean id="ucPricingWorkflow" class="com.ultracommerce.core.workflow.SequenceProcessor">
+        <property name="processContextFactory">
+            <bean class="com.ultracommerce.core.pricing.service.workflow.PricingProcessContextFactory"/>
+        </property>
+        <property name="activities" ref="ucPricingWorkflowActivities"/>
+        <property name="defaultErrorHandler">
+            <bean class="com.ultracommerce.core.workflow.DefaultErrorHandler">
+                <property name="unloggedExceptionClasses">
+                    <list>
+                        <value>org.hibernate.exception.LockAcquisitionException</value>
+                    </list>
+                </property>
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="ucPricingWorkflowActivities" class="org.springframework.beans.factory.config.ListFactoryBean">
+        <property name="sourceList">
+            <list>
+                <ref bean="ucOfferActivity" />
+                <ref bean="ucConsolidateFulfillmentFeesActivity" />
+                <ref bean="ucFulfillmentItemPricingActivity" />
+                <ref bean="ucFulfillmentGroupMerchandiseTotalActivity" />
+                <ref bean="ucFulfillmentGroupPricingActivity" />
+                <ref bean="ucShippingOfferActivity" />
+                <ref bean="ucTaxActivity" />
+                <ref bean="ucTotalActivity"/>
+                <ref bean="ucAdjustOrderPaymentsActivity"/>
+            </list>
+        </property>
+    </bean>
+    
+    <!-- Add Item Workflow Configuration -->
+    <bean id="ucAddItemWorkflow" class="com.ultracommerce.core.workflow.SequenceProcessor">
+        <property name="processContextFactory">
+            <bean class="com.ultracommerce.core.order.service.workflow.CartOperationProcessContextFactory"/>
+        </property>
+        <property name="activities" ref="ucAddItemWorkflowActivities"/>
+        <property name="defaultErrorHandler">
+            <bean class="com.ultracommerce.core.workflow.DefaultErrorHandler">
+                <property name="unloggedExceptionClasses">
+                    <list>
+                        <value>com.ultracommerce.core.order.service.exception.MinQuantityNotFulfilledException</value>
+                        <value>com.ultracommerce.core.inventory.service.InventoryUnavailableException</value>
+                        <value>com.ultracommerce.core.order.service.exception.RequiredAttributeNotProvidedException</value>
+                    </list>
+                </property>
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="ucAddItemWorkflowActivities" class="org.springframework.beans.factory.config.ListFactoryBean">
+        <property name="sourceList">
+            <list>
+                <ref bean="ucValidateAddRequestActivity" />
+                <ref bean="ucCheckAddAvailabilityActivity" />
+                <ref bean="ucAddOrderItemActivity" />
+                <ref bean="ucAddFulfillmentGroupItemActivity" />
+                <ref bean="ucAddWorkflowPriceOrderIfNecessaryActivity" />
+                <ref bean="ucAddWorkflowVerifyFulfillmentGroupItemsActivity" />
+            </list>
+        </property>
+    </bean>
+
+    <!-- Update Item Workflow Configuration -->
+    <bean id="ucUpdateItemWorkflow" class="com.ultracommerce.core.workflow.SequenceProcessor">
+        <property name="processContextFactory">
+            <bean class="com.ultracommerce.core.order.service.workflow.CartOperationProcessContextFactory"/>
+        </property>
+        <property name="activities" ref="ucUpdateItemWorkflowActivities"/>
+        <property name="defaultErrorHandler">
+            <bean class="com.ultracommerce.core.workflow.DefaultErrorHandler">
+                <property name="unloggedExceptionClasses">
+                    <list>
+                        <value>com.ultracommerce.core.order.service.exception.MinQuantityNotFulfilledException</value>
+                        <value>com.ultracommerce.core.inventory.service.InventoryUnavailableException</value>
+                        <value>com.ultracommerce.core.order.service.exception.RequiredAttributeNotProvidedException</value>
+                    </list>
+                </property>
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="ucUpdateItemWorkflowActivities" class="org.springframework.beans.factory.config.ListFactoryBean">
+        <property name="sourceList">
+            <list>
+                <ref bean="ucValidateUpdateRequestActivity" />
+                <ref bean="ucCheckUpdateAvailabilityActivity" />
+                <ref bean="ucUpdateOrderItemActivity" />
+                <ref bean="ucUdateOrderMultishipOptionActivity" />
+                <ref bean="ucUpdateFulfillmentGroupItemActivity" />
+                <ref bean="ucUpdateWorkflowPriceOrderIfNecessaryActivity" />
+                <ref bean="ucUpdateWorkflowVerifyFulfillmentGroupItemsActivity" />
+            </list>
+        </property>
+    </bean>
+
+    <!-- Update Item Workflow Configuration -->
+    <bean id="ucUpdateProductOptionsForItemWorkflow" class="com.ultracommerce.core.workflow.SequenceProcessor">
+        <property name="processContextFactory">
+            <bean class="com.ultracommerce.core.order.service.workflow.CartOperationProcessContextFactory"/>
+        </property>
+        <property name="activities" ref="ucUpdateProductOptionsForItemWorkflowActivities"/>
+        <property name="defaultErrorHandler" ref="ucDefaultErrorHandler"/>
+    </bean>
+
+    <bean id="ucUpdateProductOptionsForItemWorkflowActivities" class="org.springframework.beans.factory.config.ListFactoryBean">
+        <property name="sourceList">
+            <list>
+                <ref bean="ucValidateUpdateProductOptionsRequestActivity" />
+                <ref bean="ucUpdateProductOptionsOrderItemActivity" />
+            </list>
+        </property>
+    </bean>
+    
+    <!-- Remove Item Workflow Configuration -->
+    <bean id="ucRemoveItemWorkflow" class="com.ultracommerce.core.workflow.SequenceProcessor">
+        <property name="processContextFactory">
+            <bean class="com.ultracommerce.core.order.service.workflow.CartOperationProcessContextFactory"/>
+        </property>
+        <property name="activities" ref="ucRemoveItemWorkflowActivities"/>
+        <property name="defaultErrorHandler" ref="ucDefaultErrorHandler"/>
+    </bean>
+
+    <bean id="ucRemoveItemWorkflowActivities" class="org.springframework.beans.factory.config.ListFactoryBean">
+        <property name="sourceList">
+            <list>
+                <ref bean="ucValidateRemoveRequestActivity" />
+                <ref bean="ucRemoveOrderMultishipOptionActivity" />
+                <ref bean="ucRemoveFulfillmentGroupItemActivity" />
+                <ref bean="ucRemoveOrderItemActivity" />
+                <ref bean="ucRemoveWorkflowPriceOrderIfNecessaryActivity" />
+                <ref bean="ucRemoveWorkflowVerifyFulfillmentGroupItemsActivity" />
+            </list>
+        </property>
+    </bean>
+
+    <!-- Checkout Workflow Configuration -->
+    <bean id="ucCheckoutWorkflow" class="com.ultracommerce.core.workflow.SequenceProcessor">
+        <property name="processContextFactory">
+            <bean class="com.ultracommerce.core.checkout.service.workflow.CheckoutProcessContextFactory"/>
+        </property>
+        <property name="activities" ref="ucCheckoutWorkflowActivities"/>
+        <property name="defaultErrorHandler">
+            <bean class="com.ultracommerce.core.workflow.DefaultErrorHandler">
+                <property name="unloggedExceptionClasses">
+                    <list>
+                        <value>com.ultracommerce.core.inventory.service.InventoryUnavailableException</value>
+                    </list>
+                </property>
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="ucCheckoutWorkflowActivities" class="org.springframework.beans.factory.config.ListFactoryBean">
+        <property name="sourceList">
+            <list>
+                <ref bean="ucValidateCheckoutActivity"/>
+                <ref bean="ucValidateAvailabilityActivity"/>
+                <ref bean="ucVerifyCustomerMaxOfferUsesActivity" />
+                <ref bean="ucValidateProductOptionsActivity" />
+                <ref bean="ucValidateAndConfirmPaymentActivity" />
+                <ref bean="ucRecordOfferUsageActivity" />
+                <ref bean="ucCommitTaxActivity" />
+                <ref bean="ucDecrementInventoryActivity" />
+                <ref bean="ucCompleteOrderActivity" />
+            </list>
+        </property>
+    </bean>
+
+    <aop:config>
+        <aop:aspect id="qosAspect" ref="ucServiceMonitor">
+            <aop:pointcut id="qosMethod" expression="execution(* com.ultracommerce.common.vendor.service.monitor.ServiceStatusDetectable.process(..))"/>
+            <aop:around method="checkServiceAOP" pointcut-ref="qosMethod"/>
+        </aop:aspect>
+    </aop:config>
+       
+</beans>

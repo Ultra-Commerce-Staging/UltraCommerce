@@ -247,7 +247,7 @@
                     <verbose>false</verbose>
                     <addSvnKeyWords>false</addSvnKeyWords>
                     <addJavaLicenseAfterPackage>false</addJavaLicenseAfterPackage>
-                    <organizationName>Broadleaf Commerce</organizationName>
+                    <organizationName>Ultra Commerce</organizationName>
                     <inceptionYear>2009</inceptionYear>
                     <licenseName>uc_dual</licenseName>
                     <licenseResolver>${project.uri}/licenses</licenseResolver>
@@ -399,7 +399,7 @@
                                     <goal>sign</goal>
                                 </goals>
                                 <configuration>
-                                    <keyname>info@broadleafcommerce.org</keyname>
+                                    <keyname>info@ultracommerce.org</keyname>
                                     <gpgArguments>
                                         <arg>--pinentry-mode</arg>
                                         <arg>loopback</arg>
@@ -438,14 +438,14 @@
                             <minmemory>128m</minmemory>
                             <maxmemory>1g</maxmemory>
                             <excludePackageNames>
-                                *.org.broadleafcommerce.profile.web.controller:
-                                *.org.broadleafcommerce.openadmin.web.controller:
-                                *.org.broadleafcommerce.admin.web.controller:
-                                *.org.broadleafcommerce.cms.web.controller:
-                                *.org.broadleafcommerce.cms.admin.web.controller
+                                *.com.ultracommerce.profile.web.controller:
+                                *.com.ultracommerce.openadmin.web.controller:
+                                *.com.ultracommerce.admin.web.controller:
+                                *.com.ultracommerce.cms.web.controller:
+                                *.com.ultracommerce.cms.admin.web.controller
                             </excludePackageNames>
                             <sourceFileExcludes>
-                                <sourceFileExclude>org/broadleafcommerce/cms/web/PreviewTemplateController.java</sourceFileExclude>
+                                <sourceFileExclude>com/ultracommerce/cms/web/PreviewTemplateController.java</sourceFileExclude>
                             </sourceFileExcludes>
                         </configuration>
                     </plugin>
@@ -495,7 +495,7 @@
     </profiles>
     <dependencyManagement>
         <dependencies>
-            <!--Broadleaf libraries -->
+            <!--Ultra libraries -->
             <dependency>
                 <groupId>com.ultracommerce</groupId>
                 <artifactId>ultracommerce-profile</artifactId>

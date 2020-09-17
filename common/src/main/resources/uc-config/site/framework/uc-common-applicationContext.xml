@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  #%L
+  ultra-theme
+  %%
+  Copyright (C) 2009 - 2016 Ultra Commerce
+  %%
+  Licensed under the Ultra Fair Use License Agreement, Version 1.0
+  (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+  unless the restrictions on use therein are violated and require payment to Ultra in which case
+  the Ultra End User License Agreement (EULA), Version 1.1
+  (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
+  shall apply.
+  
+  Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
+  between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
+  #L%
+  -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <import resource="classpath:uc-common-applicationContext.xml"/>
+
+    <context:component-scan base-package="com.ultracommerce.site.common.web"/>
+
+    <!--  Spring 4.1 Site Resource Handling Base Classes -->
+    <bean id="siteResourceHttpRequestHandlerBase" abstract="true" 
+            class="com.ultracommerce.common.web.resource.UltraResourceHttpRequestHandler">
+        <property name="cacheSeconds" value="${staticResourceBrowserCacheSeconds}" />    
+        <property name="resourceResolvers" ref="ucSiteResourceResolvers" />
+    </bean>
+    
+    <bean id="siteJsResourceRequestHandlerBase" abstract="true" parent="siteResourceHttpRequestHandlerBase">
+        <property name="locations" ref="ucJsLocations" />
+        <property name="resourceTransformers" ref="ucJsResourceTransformers" />    
+    </bean>
+    <bean id="ucJsResources" parent="siteJsResourceRequestHandlerBase" />
+    
+    <bean id="siteCssResourceRequestHandlerBase" abstract="true" parent="siteResourceHttpRequestHandlerBase">
+        <property name="locations" ref="ucCssLocations" />
+        <property name="resourceTransformers" ref="ucCssResourceTransformers" />
+    </bean>
+    <bean id="ucCssResources" parent="siteCssResourceRequestHandlerBase" />
+
+    <bean id="siteImageResourceRequestHandlerBase" abstract="true" parent="siteResourceHttpRequestHandlerBase">
+        <property name="locations" ref="ucImageLocations" />
+    </bean>
+    <bean id="ucImageResources" parent="siteImageResourceRequestHandlerBase" />
+    
+    <bean id="siteFontResourceRequestHandlerBase" abstract="true" parent="siteResourceHttpRequestHandlerBase">
+        <property name="locations" ref="ucFontLocations"/>            
+    </bean>
+    <bean id="ucFontResources" parent="siteFontResourceRequestHandlerBase" />
+   
+
+</beans>

@@ -1,0 +1,158 @@
+/*
+ * #%L
+ * UltraCommerce Open Admin Platform
+ * %%
+ * Copyright (C) 2009 - 2016 Ultra Commerce
+ * %%
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
+ * shall apply.
+ * 
+ * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
+ * #L%
+ */
+@font-face {
+	font-family: 'ultra';
+	src:url('../../fonts/ultra.eot?i3chse');
+	src:url('../../fonts/ultra.eot?i3chse#iefix') format('embedded-opentype'),
+	url('../../fonts/ultra.woff2?i3chse') format('woff2'),
+	url('../../fonts/ultra.ttf?i3chse') format('truetype'),
+	url('../../fonts/ultra.woff?i3chse') format('woff'),
+	url('../../fonts/ultra.svg?i3chse#ultra') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+[class^="uc-icon-"], [class*=" uc-icon-"] {
+	font-family: 'ultra';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.uc-icon-uc-leaf:before {
+	content: "\e900";
+}
+.uc-icon-uc-logo:before {
+	content: "\e901";
+}
+.uc-icon-add-category:before {
+	content: "\e600";
+}
+.uc-icon-calendar:before {
+	content: "\e601";
+}
+.uc-icon-catalog:before {
+	content: "\e602";
+}
+.uc-icon-category:before {
+	content: "\e603";
+}
+.uc-icon-checkmark:before {
+	content: "\e604";
+}
+.uc-icon-close:before {
+	content: "\e605";
+}
+.uc-icon-content:before {
+	content: "\e606";
+}
+.uc-icon-customer-care:before {
+	content: "\e607";
+}
+.uc-icon-delete:before {
+	content: "\e608";
+}
+.uc-icon-deploy:before {
+	content: "\e609";
+}
+.uc-icon-design:before {
+	content: "\e60a";
+}
+.uc-icon-edit:before {
+	content: "\e60b";
+}
+.uc-icon-globe:before {
+	content: "\e60c";
+}
+.uc-icon-notifications:before {
+	content: "\e60d";
+}
+.uc-icon-product-added:before {
+	content: "\e60e";
+}
+.uc-icon-product-group:before {
+	content: "\e60f";
+}
+.uc-icon-product-image:before {
+	content: "\e610";
+}
+.uc-icon-reverse:before {
+	content: "\e611";
+}
+.uc-icon-running:before {
+	content: "\e612";
+}
+.uc-icon-security:before {
+	content: "\e613";
+}
+.uc-icon-settings:before {
+	content: "\e614";
+}
+.uc-icon-site-updates:before {
+	content: "\e615";
+}
+.uc-icon-tooltip:before {
+	content: "\e616";
+}
+.uc-icon-view:before {
+	content: "\e617";
+}
+.uc-icon-dot-menu-horizontal:before {
+	content: "\e618";
+}
+.uc-icon-dot-menu-vertical:before {
+	content: "\e619";
+}
+.uc-icon-save:before {
+	content: "\e61a";
+}
+.uc-icon-select-arrows:before {
+	content: "\e61b";
+}
+.uc-icon-triangle-left:before {
+	content: "\e61c";
+}
+.uc-icon-triangle-right:before {
+	content: "\e61d";
+}
+.uc-icon-credit-card:before {
+	content: "\e61e";
+}
+.uc-icon-folder-images:before {
+	content: "\e61f";
+}
+.uc-icon-search:before {
+	content: "\e902";
+}
+.uc-icon-news:before {
+	content: "\e620";
+}
+.uc-icon-publish:before {
+	content: "\e621";
+}
+.uc-icon-tools:before {
+	content: "\e622";
+}
+

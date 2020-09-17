@@ -1,0 +1,24 @@
+#specify fully qualified resource path. e.g.: /com/ultracommerce/profile/extensibility/applicationContext.xml
+#separate each entry with a new line
+#comments may be added by placing a pound symbol '#' in front of the line
+uc-common-applicationContext-persistence.xml
+uc-profile-applicationContext-persistence.xml
+uc-framework-applicationContext-persistence.xml
+#persistence xml files should appear first to ensure that entity managers are loaded first
+uc-common-applicationContext.xml
+uc-profile-applicationContext.xml
+uc-profile-web-applicationContext.xml
+uc-framework-applicationContext.xml
+uc-framework-applicationContext-workflow.xml
+uc-framework-applicationContext-workflow-payment.xml
+uc-framework-web-applicationContext.xml
+uc-framework-web-applicationContext-api-wrapper.xml
+#The application context files below are not added by default to the UC runtime
+#Instead, these items must be explicitly declared for import in web.xml, if desired
+uc-open-admin-contentClient-applicationContext.xml
+uc-open-admin-contentCreator-applicationContext.xml
+uc-admin-applicationContext.xml
+#testing application context files
+uc-framework-applicationContext-test.xml
+#uc-applicationContext-test.xml
+uc-applicationContext-test-security.xml

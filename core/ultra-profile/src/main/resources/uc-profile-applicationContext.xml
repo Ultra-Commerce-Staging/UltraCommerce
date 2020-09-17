@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  #%L
+  UltraCommerce Profile
+  %%
+  Copyright (C) 2009 - 2016 Ultra Commerce
+  %%
+  Licensed under the Ultra Fair Use License Agreement, Version 1.0
+  (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+  unless the restrictions on use therein are violated and require payment to Ultra in which case
+  the Ultra End User License Agreement (EULA), Version 1.1
+  (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
+  shall apply.
+  
+  Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
+  between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
+  #L%
+  -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <import resource="uc-profile-applicationContext-persistence.xml"/>
+    <context:component-scan base-package="com.ultracommerce.profile.core" />
+
+    <bean id="ucRegistrationEmailInfo" parent="ucNullEmailInfo" />
+    <bean id="ucForgotPasswordEmailInfo" parent="ucNullEmailInfo" />
+    <bean id="ucForgotUsernameEmailInfo" parent="ucNullEmailInfo" />
+    <bean id="ucChangePasswordEmailInfo" parent="ucNullEmailInfo" /> 
+
+    <bean id="ucServiceMonitor" class="com.ultracommerce.common.vendor.service.monitor.ServiceMonitor" init-method="init"/>
+    
+    <bean id="springAppContext" class="com.ultracommerce.common.util.SpringAppContext"/>
+    
+    <bean id="ucAddressVerificationProviders" class="org.springframework.beans.factory.config.ListFactoryBean">
+        <property name="sourceList">
+            <list/>
+        </property>
+    </bean>
+
+    <bean id="ucPasswordEncoder" class="com.ultracommerce.common.util.PropertyDrivenBeanFactory" factory-method="createInstance">
+        <constructor-arg value="${password.site.encoder}"/>
+    </bean>
+
+</beans>

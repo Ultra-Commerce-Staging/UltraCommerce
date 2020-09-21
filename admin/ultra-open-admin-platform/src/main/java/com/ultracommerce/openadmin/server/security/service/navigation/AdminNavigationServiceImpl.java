@@ -1,43 +1,43 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.openadmin.server.security.service.navigation;
+package com.ultracommerce.openadmin.server.security.service.navigation;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.extensibility.jpa.SiteDiscriminator;
-import org.broadleafcommerce.common.extension.ExtensionResultHolder;
-import org.broadleafcommerce.common.site.domain.Site;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
-import org.broadleafcommerce.openadmin.dto.SectionCrumb;
-import org.broadleafcommerce.openadmin.server.security.dao.AdminNavigationDao;
-import org.broadleafcommerce.openadmin.server.security.domain.AdminMenu;
-import org.broadleafcommerce.openadmin.server.security.domain.AdminModule;
-import org.broadleafcommerce.openadmin.server.security.domain.AdminModuleDTO;
-import org.broadleafcommerce.openadmin.server.security.domain.AdminModuleImpl;
-import org.broadleafcommerce.openadmin.server.security.domain.AdminPermission;
-import org.broadleafcommerce.openadmin.server.security.domain.AdminRole;
-import org.broadleafcommerce.openadmin.server.security.domain.AdminSection;
-import org.broadleafcommerce.openadmin.server.security.domain.AdminUser;
-import org.broadleafcommerce.openadmin.server.security.service.AdminSecurityService;
-import org.broadleafcommerce.openadmin.web.controller.AbstractAdminAbstractControllerExtensionHandler;
+import com.ultracommerce.common.extensibility.jpa.SiteDiscriminator;
+import com.ultracommerce.common.extension.ExtensionResultHolder;
+import com.ultracommerce.common.site.domain.Site;
+import com.ultracommerce.common.web.UltraRequestContext;
+import com.ultracommerce.openadmin.dto.SectionCrumb;
+import com.ultracommerce.openadmin.server.security.dao.AdminNavigationDao;
+import com.ultracommerce.openadmin.server.security.domain.AdminMenu;
+import com.ultracommerce.openadmin.server.security.domain.AdminModule;
+import com.ultracommerce.openadmin.server.security.domain.AdminModuleDTO;
+import com.ultracommerce.openadmin.server.security.domain.AdminModuleImpl;
+import com.ultracommerce.openadmin.server.security.domain.AdminPermission;
+import com.ultracommerce.openadmin.server.security.domain.AdminRole;
+import com.ultracommerce.openadmin.server.security.domain.AdminSection;
+import com.ultracommerce.openadmin.server.security.domain.AdminUser;
+import com.ultracommerce.openadmin.server.security.service.AdminSecurityService;
+import com.ultracommerce.openadmin.web.controller.AbstractAdminAbstractControllerExtensionHandler;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -54,7 +54,7 @@ import javax.annotation.Resource;
  * This service is used to build the left hand navigation for the admin
  * @author elbertbautista
  */
-@Service("blAdminNavigationService")
+@Service("ucAdminNavigationService")
 public class AdminNavigationServiceImpl implements AdminNavigationService {
 
     private static final Log LOG = LogFactory.getLog(AdminNavigationServiceImpl.class);
@@ -81,17 +81,17 @@ public class AdminNavigationServiceImpl implements AdminNavigationService {
 
     }
 
-    @Resource(name = "blAdminNavigationDao")
+    @Resource(name = "ucAdminNavigationDao")
     protected AdminNavigationDao adminNavigationDao;
 
-    @Resource(name="blAdditionalSectionAuthorizations")
+    @Resource(name="ucAdditionalSectionAuthorizations")
     protected List<SectionAuthorization> additionalSectionAuthorizations = new ArrayList<SectionAuthorization>();
 
-    @Resource(name = "blAdminNavigationServiceExtensionManager")
+    @Resource(name = "ucAdminNavigationServiceExtensionManager")
     protected AdminNavigationServiceExtensionManager extensionManager;
 
     @Override
-    @Transactional("blTransactionManager")
+    @Transactional("ucTransactionManager")
     public AdminSection save(AdminSection adminSection) {
         return adminNavigationDao.save(adminSection);
     }
@@ -307,8 +307,8 @@ public class AdminNavigationServiceImpl implements AdminNavigationService {
 
     protected List<AdminSection> buildAuthorizedSectionsList(AdminUser adminUser, AdminModule module) {
         List<AdminSection> authorizedSections = new ArrayList<AdminSection>();
-        BroadleafRequestContext broadleafRequestContext = BroadleafRequestContext.getBroadleafRequestContext();
-        Site site = broadleafRequestContext.getNonPersistentSite();
+        UltraRequestContext ultraRequestContext = UltraRequestContext.getUltraRequestContext();
+        Site site = ultraRequestContext.getNonPersistentSite();
         Long siteId = site == null ? null : site.getId();
         for (AdminSection section : module.getSections()) {
             if (isUserAuthorizedToViewSection(adminUser, section)) {

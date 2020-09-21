@@ -1,30 +1,30 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.site.service;
+package com.ultracommerce.common.site.service;
 
-import org.broadleafcommerce.common.site.dao.SiteDao;
-import org.broadleafcommerce.common.site.domain.Catalog;
-import org.broadleafcommerce.common.site.domain.Site;
-import org.broadleafcommerce.common.site.domain.SiteCatalogXref;
-import org.broadleafcommerce.common.util.BLCSystemProperty;
-import org.broadleafcommerce.common.util.StreamCapableTransactionalOperationAdapter;
-import org.broadleafcommerce.common.util.StreamingTransactionCapableUtil;
-import org.broadleafcommerce.common.util.TransactionUtils;
+import com.ultracommerce.common.site.dao.SiteDao;
+import com.ultracommerce.common.site.domain.Catalog;
+import com.ultracommerce.common.site.domain.Site;
+import com.ultracommerce.common.site.domain.SiteCatalogXref;
+import com.ultracommerce.common.util.UCSystemProperty;
+import com.ultracommerce.common.util.StreamCapableTransactionalOperationAdapter;
+import com.ultracommerce.common.util.StreamingTransactionCapableUtil;
+import com.ultracommerce.common.util.TransactionUtils;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,16 +35,16 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-@Service("blSiteService")
+@Service("ucSiteService")
 public class SiteServiceImpl implements SiteService {
 
-    @Resource(name="blStreamingTransactionCapableUtil")
+    @Resource(name="ucStreamingTransactionCapableUtil")
     protected StreamingTransactionCapableUtil transUtil;
 
-    @Resource(name = "blSiteDao")
+    @Resource(name = "ucSiteDao")
     protected SiteDao siteDao;
 
-    @Resource(name = "blSiteServiceExtensionManager")
+    @Resource(name = "ucSiteServiceExtensionManager")
     protected SiteServiceExtensionManager extensionManager;
     
     @Override
@@ -177,7 +177,7 @@ public class SiteServiceImpl implements SiteService {
      */
     protected boolean stripSubdomain(String subDomain) {
         if (subDomain != null) {
-            String propStripPrefixes = BLCSystemProperty.resolveSystemProperty("site.domain.resolver.strip.subdomains");
+            String propStripPrefixes = UCSystemProperty.resolveSystemProperty("site.domain.resolver.strip.subdomains");
             if (propStripPrefixes != null) {
                 String[] prefixes = propStripPrefixes.split(",");
                 for(String prefix : prefixes) {
@@ -192,19 +192,19 @@ public class SiteServiceImpl implements SiteService {
 
     @Override
     @Deprecated
-    @Transactional("blTransactionManager")
+    @Transactional("ucTransactionManager")
     public Site save(Site site) {
         return saveAndReturnNonPersisted(site);
     }
     
     @Override
-    @Transactional("blTransactionManager")
+    @Transactional("ucTransactionManager")
     public Site saveAndReturnNonPersisted(Site site) {
         return getNonPersistentSite(saveAndReturnPersisted(site));
     }
 
     @Override
-    @Transactional("blTransactionManager")
+    @Transactional("ucTransactionManager")
     public Site saveAndReturnPersisted(Site site) {
         return siteDao.save(site);
     }

@@ -1,26 +1,26 @@
 /*
  * #%L
- * BroadleafCommerce Framework Web
+ * UltraCommerce Framework Web
  * %%
- * Copyright (C) 2009 - 2017 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.web.device;
+package com.ultracommerce.core.web.device;
 
-import org.broadleafcommerce.common.admin.condition.ConditionalOnNotAdmin;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
-import org.broadleafcommerce.common.web.device.WebRequestDeviceType;
-import org.broadleafcommerce.common.web.filter.FilterOrdered;
+import com.ultracommerce.common.admin.condition.ConditionalOnNotAdmin;
+import com.ultracommerce.common.web.UltraRequestContext;
+import com.ultracommerce.common.web.device.WebRequestDeviceType;
+import com.ultracommerce.common.web.filter.FilterOrdered;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.Ordered;
@@ -42,12 +42,12 @@ import javax.servlet.http.HttpServletResponse;
  * 
  * @author Nathan Moore (nathanmoore).
  */
-@Component("blDeviceResolverRequestFilter")
+@Component("ucDeviceResolverRequestFilter")
 @ConditionalOnNotAdmin
-public class BroadleafDeviceResolverRequestFilter extends DeviceResolverRequestFilter implements Ordered {
+public class UltraDeviceResolverRequestFilter extends DeviceResolverRequestFilter implements Ordered {
 
     @Autowired
-    @Qualifier("blDeviceResolver")
+    @Qualifier("ucDeviceResolver")
     private DeviceResolver deviceResolver;
 
     /**
@@ -81,7 +81,7 @@ public class BroadleafDeviceResolverRequestFilter extends DeviceResolverRequestF
             }
         }
 
-        BroadleafRequestContext.getBroadleafRequestContext().getAdditionalProperties().put(DeviceUtils.CURRENT_DEVICE_ATTRIBUTE, WebRequestDeviceType.getInstance(type));
+        UltraRequestContext.getUltraRequestContext().getAdditionalProperties().put(DeviceUtils.CURRENT_DEVICE_ATTRIBUTE, WebRequestDeviceType.getInstance(type));
     }
     
 }

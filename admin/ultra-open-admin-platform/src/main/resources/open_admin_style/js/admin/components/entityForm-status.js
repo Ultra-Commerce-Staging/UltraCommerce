@@ -1,28 +1,28 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
 
-(function($, BLCAdmin) {
+(function($, UCAdmin) {
 
     // Properties
     var entityFormChangeMap = {};
     var didConfirmLeave = false;
 
-    BLCAdmin.entityForm.status = {
+    UCAdmin.entityForm.status = {
 
         /**
          * Returns whether or not the user has confirmed leaving the page or not.
@@ -90,7 +90,7 @@
                 // Check if this is a request for page reload
                 if (key === 'status--reloadOnRevert' && allowReload) {
                     // Set the property to allow reload
-                    BLCAdmin.entityForm.status.setDidConfirmLeave(true);
+                    UCAdmin.entityForm.status.setDidConfirmLeave(true);
                     window.location.reload();
                     return;
                 }
@@ -125,9 +125,9 @@
                 // to it's original values
                 else if ($(el).hasClass('mediaItem')) {
                     var $mediaImageContainer = $(el).next('.media-image-container');
-                    $mediaImageContainer.find('img.thumbnail').attr("src", BLC.servletContext + origVal);
-                    $mediaImageContainer.find('img.thumbnail').data("fullurl", BLC.servletContext + origVal);
-                    $mediaImageContainer.find('img.thumbnail').parent().attr("href", BLC.servletContext + origVal);
+                    $mediaImageContainer.find('img.thumbnail').attr("src", UC.servletContext + origVal);
+                    $mediaImageContainer.find('img.thumbnail').data("fullurl", UC.servletContext + origVal);
+                    $mediaImageContainer.find('img.thumbnail').parent().attr("href", UC.servletContext + origVal);
                     $mediaImageContainer.find('img.thumbnail').removeClass('placeholder-image');
                     $mediaImageContainer.find('button.edit-asset-selector, button.clear-asset-selector').show();
 
@@ -172,7 +172,7 @@
 
                     // In order to get the new rules on this `RuleBuilder` we need to grab the actual `RuleBuilder`
                     var hiddenId = $ruleBuilderContainer.next('.rule-builder-data').data('hiddenid');
-                    var ruleBuilder = BLCAdmin.ruleBuilders.getRuleBuilderByHiddenId(hiddenId);
+                    var ruleBuilder = UCAdmin.ruleBuilders.getRuleBuilderByHiddenId(hiddenId);
                     var ruleType = $ruleBuilderContainer.parent().find('.rule-builder-required-field').data('ruletype');
 
                     // Change the original value to JSON
@@ -186,18 +186,18 @@
                     var jsonVal = origBuilders;
                     if (jsonVal.data.length > 0) {
                         for (var i=0; i<jsonVal.data.length; i++) {
-                            if (ruleType !== BLCAdmin.RuleTypeEnum.RULE_WITH_QUANTITY) {
+                            if (ruleType !== UCAdmin.RuleTypeEnum.RULE_WITH_QUANTITY) {
                                 jsonVal.data[i].quantity = null;
                             }
-                            BLCAdmin.ruleBuilders.constructQueryBuilder($ruleBuilderContainer, jsonVal.data[i], ruleBuilder.fields, ruleBuilder);
+                            UCAdmin.ruleBuilders.constructQueryBuilder($ruleBuilderContainer, jsonVal.data[i], ruleBuilder.fields, ruleBuilder);
                         }
                     } else {
                         var qty = null;
-                        if (ruleType === BLCAdmin.RuleTypeEnum.RULE_WITH_QUANTITY) {
+                        if (ruleType === UCAdmin.RuleTypeEnum.RULE_WITH_QUANTITY) {
                             qty = 1;
                         }
 
-                        BLCAdmin.ruleBuilders.constructQueryBuilder($ruleBuilderContainer, BLCAdmin.ruleBuilders.getEmptyRuleData(qty), ruleBuilder.fields, ruleBuilder);
+                        UCAdmin.ruleBuilders.constructQueryBuilder($ruleBuilderContainer, UCAdmin.ruleBuilders.getEmptyRuleData(qty), ruleBuilder.fields, ruleBuilder);
                     }
 
                     continue;
@@ -215,7 +215,7 @@
                     continue;
                 }
                 else if ($(el).hasClass('ace-editor-content')) {
-                    BLCAdmin.ace.revertRegisteredEditors();
+                    UCAdmin.ace.revertRegisteredEditors();
                 }
 
                 // If we made it this far, set the fields value.
@@ -258,8 +258,8 @@
          */
         updateEntityFormChangeMap : function(id, origVal, newVal) {
             var changesFromId = this.getEntityFormChangesById(id);
-            var newValJson = BLCAdmin.unescapeString(JSON.stringify(newVal));
-            var origValJson = BLCAdmin.unescapeString(JSON.stringify(origVal));
+            var newValJson = UCAdmin.unescapeString(JSON.stringify(newVal));
+            var origValJson = UCAdmin.unescapeString(JSON.stringify(origVal));
 
             // Check if the field is in the change map
             if (changesFromId === undefined) {
@@ -272,7 +272,7 @@
             }
             // If it is, and the values are the same, remove it
             else {
-                var entityOrigValJson = BLCAdmin.unescapeString(JSON.stringify(changesFromId.originalValue));
+                var entityOrigValJson = UCAdmin.unescapeString(JSON.stringify(changesFromId.originalValue));
                 if (newValJson == entityOrigValJson) {
                     this.removeChangesForId(id);
                 }
@@ -286,10 +286,10 @@
          * It is called once when the page first loads, and then on every subsequent change.
          */
         updateEntityFormActions : function() {
-            var numModals = BLCAdmin.getModals().length;
-            var modals = BLCAdmin.getModals();
+            var numModals = UCAdmin.getModals().length;
+            var modals = UCAdmin.getModals();
             var $prevModal = numModals > 1 ? modals[numModals - 2] : null;
-            var $currModal = BLCAdmin.currentModal();
+            var $currModal = UCAdmin.currentModal();
 
             var $addEntityFormModal;
             if ($currModal && $currModal.has('.modal-add-entity-form').length) {
@@ -317,7 +317,7 @@
                 $approveBtn.addClass('confirm');
 
                 $("#headerChangeBoxContainer").removeClass("hidden");
-                $(".change-box-message").html(BLCAdmin.messages.unsavedChangesRevert);
+                $(".change-box-message").html(UCAdmin.messages.unsavedChangesRevert);
                 $('#headerChangeBox').show();
             } else {
                 // Otherwise, we don't have any unsaved changes.  So disable the 'Save' button and make sure the
@@ -373,9 +373,9 @@
 
                 // In order to get the new rules on this `RuleBuilder` we need to grab the actual `RuleBuilder`
                 var hiddenId = $ruleBuilderContainer.siblings('.rule-builder-data').first().data('hiddenid');
-                var ruleBuilder = BLCAdmin.ruleBuilders.getRuleBuilderByHiddenId(hiddenId);
+                var ruleBuilder = UCAdmin.ruleBuilders.getRuleBuilderByHiddenId(hiddenId);
 
-                var rules = BLCAdmin.ruleBuilders.getAllRuleBuilderRules(ruleBuilder);
+                var rules = UCAdmin.ruleBuilders.getAllRuleBuilderRules(ruleBuilder);
                 newVal = JSON.stringify(rules);
 
                 origVal = $ruleBuilderContainer.attr('data-orig-val');
@@ -477,15 +477,15 @@
 
                 var rulesContainer = $($(this)).siblings('.query-builder-rules-container');
                 var rulesContainerID = rulesContainer.attr('id');
-                var ruleBuilder = BLCAdmin.ruleBuilders.getRuleBuilder(rulesContainerID);
+                var ruleBuilder = UCAdmin.ruleBuilders.getRuleBuilder(rulesContainerID);
 
                 // Set the original value on the rule builder once its been completely initialized
                 if (ruleBuilder && ruleBuilder.builders.length) {
-                    var rules = BLCAdmin.ruleBuilders.getAllRuleBuilderRules(ruleBuilder);
+                    var rules = UCAdmin.ruleBuilders.getAllRuleBuilderRules(ruleBuilder);
                     var origVal = JSON.stringify(rules);
 
                     $(rulesContainer).attr('data-orig-val', JSON.stringify(origVal));
-                    BLCAdmin.entityForm.status.removeChangesForId($(rulesContainer).attr('id'));
+                    UCAdmin.entityForm.status.removeChangesForId($(rulesContainer).attr('id'));
                 }
             });
         },
@@ -508,10 +508,10 @@
 
                 // Show the dialog asking if they want to leave
                 $.confirm({
-                    content: BLCAdmin.messages.unsavedChanges,
+                    content: UCAdmin.messages.unsavedChanges,
                     backgroundDismiss: true,
                     confirm: function () {
-                        BLCAdmin.entityForm.status.setDidConfirmLeave(true);
+                        UCAdmin.entityForm.status.setDidConfirmLeave(true);
                         location.href = target;
                     }
                 });
@@ -528,15 +528,15 @@
          */
         confirmWorkflowAction : function(el, event) {
             // Check if the user has made any unsaved changes
-            if (BLCAdmin.entityForm.status.getEntityFormChangesCount()) {
+            if (UCAdmin.entityForm.status.getEntityFormChangesCount()) {
                 var message;
                 // If this is a `Promote` show the promote message
                 if ($(el).text() === 'Promote') {
-                    message = BLCAdmin.messages.promoteUnsavedChanges;
+                    message = UCAdmin.messages.promoteUnsavedChanges;
                 }
                 // Else, if this is an `Approve` show the approve message
                 else if ($(el).text() === 'Approve') {
-                    message = BLCAdmin.messages.approveUnsavedChanges;
+                    message = UCAdmin.messages.approveUnsavedChanges;
                 }
                 // Otherwise, this is another button on the ribbon, continue as normal
                 else {
@@ -548,8 +548,8 @@
                     content: message,
                     backgroundDismiss: true,
                     confirm: function () {
-                        BLCAdmin.entityForm.status.revertEntityFormChanges(false);
-                        BLCAdmin.workflow.showApproveActionPrompt($(el), false);
+                        UCAdmin.entityForm.status.revertEntityFormChanges(false);
+                        UCAdmin.workflow.showApproveActionPrompt($(el), false);
                     }
                 });
                 return false;
@@ -609,7 +609,7 @@
         }
 
     };
-})(jQuery, BLCAdmin);
+})(jQuery, UCAdmin);
 
 $(document).ready(function() {
 
@@ -621,7 +621,7 @@ $(document).ready(function() {
      */
     $body.on('focus', 'input, select, input:radio, textarea, .redactor-editor', function() {
         // We only care about main entity froms.  If we are in a modal, just return
-        if (!BLCAdmin.entityForm.status.checkIfShouldTrackChanges(this)) { return }
+        if (!UCAdmin.entityForm.status.checkIfShouldTrackChanges(this)) { return }
 
         if ($(this).attr('data-orig-val') === undefined) {
             var origVal = $(this).val() || '';
@@ -641,9 +641,9 @@ $(document).ready(function() {
                 if ($ruleBuilderContainer.attr('data-orig-val') === undefined) {
                     // In order to get the new rules on this `RuleBuilder` we need to grab the actual `RuleBuilder`
                     var hiddenId = $ruleBuilderContainer.next('.rule-builder-data').data('hiddenid');
-                    var ruleBuilder = BLCAdmin.ruleBuilders.getRuleBuilderByHiddenId(hiddenId);
+                    var ruleBuilder = UCAdmin.ruleBuilders.getRuleBuilderByHiddenId(hiddenId);
 
-                    var rules = BLCAdmin.ruleBuilders.getAllRuleBuilderRules(ruleBuilder);
+                    var rules = UCAdmin.ruleBuilders.getAllRuleBuilderRules(ruleBuilder);
                     var origVal = JSON.stringify(rules);
                     $ruleBuilderContainer.attr('data-orig-val', JSON.stringify(origVal));
                 }
@@ -669,7 +669,7 @@ $(document).ready(function() {
      * It gets the field's id, original value, and new value to be used in the entity form's change map.
      */
     $body.on('input paste', 'input[id!="listgrid-search"], textarea, .redactor-editor', function() {
-        BLCAdmin.entityForm.status.handleEntityFormChanges(this);
+        UCAdmin.entityForm.status.handleEntityFormChanges(this);
     });
 
     /**
@@ -677,7 +677,7 @@ $(document).ready(function() {
      * It gets the field's id, original value, and new value to be used in the entity form's change map.
      */
     $body.on('change', 'select, input:radio, input.query-builder-selectize-input, input:file', function() {
-        BLCAdmin.entityForm.status.handleEntityFormChanges(this);
+        UCAdmin.entityForm.status.handleEntityFormChanges(this);
     });
 
     /**
@@ -685,7 +685,7 @@ $(document).ready(function() {
      * and presents a dialog asking if they are sure they want to leave.
      */
     $body.on('click', 'a.back-button, ul.nav-links a', function(event) {
-        BLCAdmin.entityForm.status.confirmLeaveEntityForm(this, event);
+        UCAdmin.entityForm.status.confirmLeaveEntityForm(this, event);
     });
 
     /**
@@ -693,7 +693,7 @@ $(document).ready(function() {
      */
     $body.on('click', 'a#revert-changes', function(event) {
         event.preventDefault();
-        BLCAdmin.entityForm.status.revertEntityFormChanges(true);
+        UCAdmin.entityForm.status.revertEntityFormChanges(true);
     });
 
     /**
@@ -701,10 +701,10 @@ $(document).ready(function() {
      * and presents a dialog asking if they are sure they want to leave.
      */
     $(window).on('beforeunload', function() {
-        if (BLCAdmin.entityForm.status.getEntityFormChangesCount() &&
-            !BLCAdmin.entityForm.status.getDidConfirmLeave() &&
-            BLCAdmin.entityForm.status.checkIfShouldTrackChanges()) {
-            return BLCAdmin.messages.unsavedChangesBrowser;
+        if (UCAdmin.entityForm.status.getEntityFormChangesCount() &&
+            !UCAdmin.entityForm.status.getDidConfirmLeave() &&
+            UCAdmin.entityForm.status.checkIfShouldTrackChanges()) {
+            return UCAdmin.messages.unsavedChangesBrowser;
         }
     });
 
@@ -712,8 +712,8 @@ $(document).ready(function() {
      * We want to update the entity form's actions on window load.
      * But only if we are on an actual entity form and not in a modal.
      */
-    if (BLCAdmin.entityForm.status.checkIfShouldTrackChanges()) {
-        BLCAdmin.entityForm.status.initializeOriginalValues();
-        BLCAdmin.entityForm.status.updateEntityFormActions();
+    if (UCAdmin.entityForm.status.checkIfShouldTrackChanges()) {
+        UCAdmin.entityForm.status.initializeOriginalValues();
+        UCAdmin.entityForm.status.updateEntityFormActions();
     }
 });

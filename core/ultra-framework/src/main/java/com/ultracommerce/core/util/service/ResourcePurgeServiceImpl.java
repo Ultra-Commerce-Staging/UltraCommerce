@@ -1,21 +1,21 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.util.service;
+package com.ultracommerce.core.util.service;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -30,20 +30,20 @@ import javax.annotation.Resource;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.exception.ServiceException;
-import org.broadleafcommerce.common.notification.service.NotificationDispatcher;
-import org.broadleafcommerce.common.notification.service.type.EmailNotification;
-import org.broadleafcommerce.common.notification.service.type.NotificationEventType;
-import org.broadleafcommerce.common.time.SystemTime;
-import org.broadleafcommerce.common.util.TransactionUtils;
-import org.broadleafcommerce.core.order.domain.Order;
-import org.broadleafcommerce.core.order.service.OrderService;
-import org.broadleafcommerce.core.order.service.type.OrderStatus;
-import org.broadleafcommerce.core.util.dao.ResourcePurgeDao;
-import org.broadleafcommerce.core.util.service.type.PurgeCartVariableNames;
-import org.broadleafcommerce.core.util.service.type.PurgeCustomerVariableNames;
-import org.broadleafcommerce.profile.core.domain.Customer;
-import org.broadleafcommerce.profile.core.service.CustomerService;
+import com.ultracommerce.common.exception.ServiceException;
+import com.ultracommerce.common.notification.service.NotificationDispatcher;
+import com.ultracommerce.common.notification.service.type.EmailNotification;
+import com.ultracommerce.common.notification.service.type.NotificationEventType;
+import com.ultracommerce.common.time.SystemTime;
+import com.ultracommerce.common.util.TransactionUtils;
+import com.ultracommerce.core.order.domain.Order;
+import com.ultracommerce.core.order.service.OrderService;
+import com.ultracommerce.core.order.service.type.OrderStatus;
+import com.ultracommerce.core.util.dao.ResourcePurgeDao;
+import com.ultracommerce.core.util.service.type.PurgeCartVariableNames;
+import com.ultracommerce.core.util.service.type.PurgeCustomerVariableNames;
+import com.ultracommerce.profile.core.domain.Customer;
+import com.ultracommerce.profile.core.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -68,7 +68,7 @@ import org.springframework.transaction.TransactionStatus;
  * </bean>
  * <p/>
  * <bean id="purgeCartJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
- * <property name="targetObject" ref="blResourcePurgeService" />
+ * <property name="targetObject" ref="ucResourcePurgeService" />
  * <property name="targetMethod" value="purgeCarts" />
  * <property name="arguments">
  * <list>
@@ -85,7 +85,7 @@ import org.springframework.transaction.TransactionStatus;
  *}
  * @author Jeff Fischer
  */
-@Service("blResourcePurgeService")
+@Service("ucResourcePurgeService")
 public class ResourcePurgeServiceImpl implements ResourcePurgeService {
 
     private static final Log LOG = LogFactory.getLog(ResourcePurgeServiceImpl.class);
@@ -96,20 +96,20 @@ public class ResourcePurgeServiceImpl implements ResourcePurgeService {
     protected PurgeErrorCache customerPurgeErrors = new PurgeErrorCache();
     protected PurgeErrorCache cartPurgeErrors = new PurgeErrorCache();
 
-    @Resource(name = "blTransactionManager")
+    @Resource(name = "ucTransactionManager")
     protected PlatformTransactionManager transactionManager;
     
-    @Resource(name = "blResourcePurgeDao")
+    @Resource(name = "ucResourcePurgeDao")
     protected ResourcePurgeDao resourcePurgeDao;
 
-    @Resource(name = "blOrderService")
+    @Resource(name = "ucOrderService")
     protected OrderService orderService;
 
-    @Resource(name = "blCustomerService")
+    @Resource(name = "ucCustomerService")
     protected CustomerService customerService;
 
     @Autowired
-    @Qualifier("blNotificationDispatcher")
+    @Qualifier("ucNotificationDispatcher")
     protected NotificationDispatcher notificationDispatcher;
 
     @Override

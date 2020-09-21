@@ -1,34 +1,34 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.config.dao;
+package com.ultracommerce.common.config.dao;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.cache.AbstractCacheMissAware;
-import org.broadleafcommerce.common.cache.PersistentRetrieval;
-import org.broadleafcommerce.common.config.domain.NullSystemProperty;
-import org.broadleafcommerce.common.config.domain.SystemProperty;
-import org.broadleafcommerce.common.config.domain.SystemPropertyImpl;
-import org.broadleafcommerce.common.extensibility.jpa.SiteDiscriminator;
-import org.broadleafcommerce.common.extension.ExtensionResultHolder;
-import org.broadleafcommerce.common.extension.ExtensionResultStatusType;
-import org.broadleafcommerce.common.persistence.EntityConfiguration;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
+import com.ultracommerce.common.cache.AbstractCacheMissAware;
+import com.ultracommerce.common.cache.PersistentRetrieval;
+import com.ultracommerce.common.config.domain.NullSystemProperty;
+import com.ultracommerce.common.config.domain.SystemProperty;
+import com.ultracommerce.common.config.domain.SystemPropertyImpl;
+import com.ultracommerce.common.extensibility.jpa.SiteDiscriminator;
+import com.ultracommerce.common.extension.ExtensionResultHolder;
+import com.ultracommerce.common.extension.ExtensionResultStatusType;
+import com.ultracommerce.common.persistence.EntityConfiguration;
+import com.ultracommerce.common.web.UltraRequestContext;
 import org.hibernate.jpa.QueryHints;
 import org.springframework.stereotype.Repository;
 
@@ -52,18 +52,18 @@ import javax.persistence.criteria.Root;
  * User: Kelly Tisdell
  * Date: 6/20/12
  */
-@Repository("blSystemPropertiesDao")
+@Repository("ucSystemPropertiesDao")
 public class SystemPropertiesDaoImpl extends AbstractCacheMissAware<SystemProperty> implements SystemPropertiesDao {
 
     protected static final Log LOG = LogFactory.getLog(SystemPropertiesDaoImpl.class);
 
-    @PersistenceContext(unitName = "blPU")
+    @PersistenceContext(unitName = "ucPU")
     protected EntityManager em;
 
-    @Resource(name = "blEntityConfiguration")
+    @Resource(name = "ucEntityConfiguration")
     protected EntityConfiguration entityConfiguration;
 
-    @Resource(name = "blSystemPropertyDaoQueryExtensionManager")
+    @Resource(name = "ucSystemPropertyDaoQueryExtensionManager")
     protected SystemPropertyDaoQueryExtensionManager queryExtensionManager;
 
     private SystemProperty nullObject;
@@ -111,7 +111,7 @@ public class SystemPropertiesDaoImpl extends AbstractCacheMissAware<SystemProper
 
     @Override
     public SystemProperty readSystemPropertyByName(final String name) {
-        return getCachedObject(SystemProperty.class, "blSystemPropertyNullCheckCache", "SYSTEM_PROPERTY_MISSING_CACHE_HIT_RATE", new PersistentRetrieval<SystemProperty>() {
+        return getCachedObject(SystemProperty.class, "ucSystemPropertyNullCheckCache", "SYSTEM_PROPERTY_MISSING_CACHE_HIT_RATE", new PersistentRetrieval<SystemProperty>() {
             @Override
             public SystemProperty retrievePersistentObject() {
                 CriteriaBuilder builder = em.getCriteriaBuilder();
@@ -141,8 +141,8 @@ public class SystemPropertiesDaoImpl extends AbstractCacheMissAware<SystemProper
                             }
                         }
 
-                        BroadleafRequestContext broadleafRequestContext = BroadleafRequestContext.getBroadleafRequestContext();
-                        if ((broadleafRequestContext == null || broadleafRequestContext.getNonPersistentSite() == null) && SiteDiscriminator.class.isAssignableFrom(SystemPropertyImpl.class)) {
+                        UltraRequestContext ultraRequestContext = UltraRequestContext.getUltraRequestContext();
+                        if ((ultraRequestContext == null || ultraRequestContext.getNonPersistentSite() == null) && SiteDiscriminator.class.isAssignableFrom(SystemPropertyImpl.class)) {
                             for (SystemProperty prop : response) {
                                 if (((SiteDiscriminator) prop).getSiteDiscriminator() == null) {
                                     return prop;
@@ -168,7 +168,7 @@ public class SystemPropertiesDaoImpl extends AbstractCacheMissAware<SystemProper
         if (systemProperty instanceof SiteDiscriminator && ((SiteDiscriminator) systemProperty).getSiteDiscriminator() != null) {
             site = String.valueOf(((SiteDiscriminator) systemProperty).getSiteDiscriminator());
         }
-        super.removeItemFromCache("blSystemPropertyNullCheckCache", systemProperty.getName(), site);
+        super.removeItemFromCache("ucSystemPropertyNullCheckCache", systemProperty.getName(), site);
     }
 
     @Override
@@ -183,7 +183,7 @@ public class SystemPropertiesDaoImpl extends AbstractCacheMissAware<SystemProper
 
     protected String getSite() {
         String site = "";
-        BroadleafRequestContext brc = BroadleafRequestContext.getBroadleafRequestContext();
+        UltraRequestContext brc = UltraRequestContext.getUltraRequestContext();
         if (brc != null) {
             if (brc.getSite() != null) {
                 site = String.valueOf(brc.getSite().getId());

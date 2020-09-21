@@ -1,30 +1,30 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.catalog.domain;
+package com.ultracommerce.core.catalog.domain;
 
-import org.broadleafcommerce.common.copy.CreateResponse;
-import org.broadleafcommerce.common.copy.MultiTenantCloneable;
-import org.broadleafcommerce.common.copy.MultiTenantCopyContext;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransform;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformMember;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformTypes;
-import org.broadleafcommerce.common.presentation.AdminPresentation;
-import org.broadleafcommerce.common.presentation.client.VisibilityEnum;
+import com.ultracommerce.common.copy.CreateResponse;
+import com.ultracommerce.common.copy.MultiTenantCloneable;
+import com.ultracommerce.common.copy.MultiTenantCopyContext;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransform;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransformMember;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransformTypes;
+import com.ultracommerce.common.presentation.AdminPresentation;
+import com.ultracommerce.common.presentation.client.VisibilityEnum;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
@@ -46,8 +46,8 @@ import java.math.BigDecimal;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name="BLC_PRODUCT_UP_SALE")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region="blStandardElements")
+@Table(name="UC_PRODUCT_UP_SALE")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region="ucStandardElements")
 @DirectCopyTransform({
         @DirectCopyTransformMember(templateTokens = DirectCopyTransformTypes.SANDBOX, skipOverlaps=true),
         @DirectCopyTransformMember(templateTokens = DirectCopyTransformTypes.MULTITENANT_CATALOG)
@@ -60,10 +60,10 @@ public class UpSaleProductImpl implements UpSaleProduct, MultiTenantCloneable<Up
     @GeneratedValue(generator= "UpSaleProductId")
     @GenericGenerator(
         name="UpSaleProductId",
-        strategy="org.broadleafcommerce.common.persistence.IdOverrideTableGenerator",
+        strategy="com.ultracommerce.common.persistence.IdOverrideTableGenerator",
         parameters = {
             @Parameter(name="segment_value", value="UpSaleProductImpl"),
-            @Parameter(name="entity_name", value="org.broadleafcommerce.core.catalog.domain.UpSaleProductImpl")
+            @Parameter(name="entity_name", value="com.ultracommerce.core.catalog.domain.UpSaleProductImpl")
         }
     )
     @Column(name = "UP_SALE_PRODUCT_ID")

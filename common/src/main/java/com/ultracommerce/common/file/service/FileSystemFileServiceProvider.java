@@ -1,21 +1,21 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.file.service;
+package com.ultracommerce.common.file.service;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.FileUtils;
@@ -23,13 +23,13 @@ import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.extension.ExtensionResultHolder;
-import org.broadleafcommerce.common.extension.ExtensionResultStatusType;
-import org.broadleafcommerce.common.file.FileServiceException;
-import org.broadleafcommerce.common.file.domain.FileWorkArea;
-import org.broadleafcommerce.common.file.service.type.FileApplicationType;
-import org.broadleafcommerce.common.site.domain.Site;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
+import com.ultracommerce.common.extension.ExtensionResultHolder;
+import com.ultracommerce.common.extension.ExtensionResultStatusType;
+import com.ultracommerce.common.file.FileServiceException;
+import com.ultracommerce.common.file.domain.FileWorkArea;
+import com.ultracommerce.common.file.service.type.FileApplicationType;
+import com.ultracommerce.common.site.domain.Site;
+import com.ultracommerce.common.web.UltraRequestContext;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -41,7 +41,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 /**
- * Default implementation of FileServiceProvider that uses the local file system to store files created by Broadleaf
+ * Default implementation of FileServiceProvider that uses the local file system to store files created by Ultra
  * components.
  * 
  * This Provider can only be used in production systems that run on a single server or those that have a shared filesystem
@@ -50,7 +50,7 @@ import javax.annotation.Resource;
  * @author bpolster
  *
  */
-@Service("blDefaultFileServiceProvider")
+@Service("ucDefaultFileServiceProvider")
 public class FileSystemFileServiceProvider implements FileServiceProvider {
 
     @Value("${asset.server.file.system.path}")
@@ -59,8 +59,8 @@ public class FileSystemFileServiceProvider implements FileServiceProvider {
     @Value("${asset.server.max.generated.file.system.directories}")
     protected int maxGeneratedDirectoryDepth;
 
-    @Resource(name = "blBroadleafFileServiceExtensionManager")
-    protected BroadleafFileServiceExtensionManager extensionManager;
+    @Resource(name = "ucUltraFileServiceExtensionManager")
+    protected UltraFileServiceExtensionManager extensionManager;
 
     private static final String DEFAULT_STORAGE_DIRECTORY = System.getProperty("java.io.tmpdir");
 
@@ -153,7 +153,7 @@ public class FileSystemFileServiceProvider implements FileServiceProvider {
      * {assetFileSystemPath}/35/ec/myproductimage.jpg.  
      * 
      * The hash for the filename will include a beginning slash before performing the MD5.   This
-     * is done largely for backward compatibility with similar functionality in BLC 3.0.0.
+     * is done largely for backward compatibility with similar functionality in UC 3.0.0.
      * 
      * This algorithm has the following benefits:
      * - Efficient file-system storage with
@@ -219,7 +219,7 @@ public class FileSystemFileServiceProvider implements FileServiceProvider {
      * @param The starting directory for local files which must end with a '/';
      */
     protected String getSiteDirectory(String baseDirectory) {
-        BroadleafRequestContext brc = BroadleafRequestContext.getBroadleafRequestContext();
+        UltraRequestContext brc = UltraRequestContext.getUltraRequestContext();
         if (brc != null) {
             Site site = brc.getSite();
             if (site != null) {

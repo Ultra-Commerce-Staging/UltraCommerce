@@ -1,31 +1,31 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.offer.service.discount.domain;
+package com.ultracommerce.core.offer.service.discount.domain;
 
-import org.broadleafcommerce.common.currency.domain.BroadleafCurrency;
-import org.broadleafcommerce.common.currency.util.BroadleafCurrencyUtils;
-import org.broadleafcommerce.common.money.Money;
-import org.broadleafcommerce.core.offer.domain.OrderAdjustment;
-import org.broadleafcommerce.core.offer.service.discount.OrderItemPriceComparator;
-import org.broadleafcommerce.core.order.domain.FulfillmentGroup;
-import org.broadleafcommerce.core.order.domain.Order;
-import org.broadleafcommerce.core.order.domain.OrderItem;
-import org.broadleafcommerce.core.order.domain.OrderItemContainer;
+import com.ultracommerce.common.currency.domain.UltraCurrency;
+import com.ultracommerce.common.currency.util.UltraCurrencyUtils;
+import com.ultracommerce.common.money.Money;
+import com.ultracommerce.core.offer.domain.OrderAdjustment;
+import com.ultracommerce.core.offer.service.discount.OrderItemPriceComparator;
+import com.ultracommerce.core.order.domain.FulfillmentGroup;
+import com.ultracommerce.core.order.domain.Order;
+import com.ultracommerce.core.order.domain.OrderItem;
+import com.ultracommerce.core.order.domain.OrderItemContainer;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -254,7 +254,7 @@ public class PromotableOrderImpl implements PromotableOrder {
 
     @Override
     public Money calculateOrderAdjustmentTotal() {
-        Money orderAdjustmentTotal = BroadleafCurrencyUtils.getMoney(order.getCurrency());
+        Money orderAdjustmentTotal = UltraCurrencyUtils.getMoney(order.getCurrency());
         for (PromotableOrderAdjustment adjustment : candidateOrderOfferAdjustments) {
             orderAdjustmentTotal = orderAdjustmentTotal.add(adjustment.getAdjustmentValue());
         }
@@ -263,7 +263,7 @@ public class PromotableOrderImpl implements PromotableOrder {
 
     @Override
     public Money calculateItemAdjustmentTotal() {
-        Money itemAdjustmentTotal = BroadleafCurrencyUtils.getMoney(order.getCurrency());
+        Money itemAdjustmentTotal = UltraCurrencyUtils.getMoney(order.getCurrency());
 
         for (PromotableOrderItem item : getDiscountableOrderItems()) {
             itemAdjustmentTotal = itemAdjustmentTotal.add(item.calculateTotalAdjustmentValue());
@@ -279,7 +279,7 @@ public class PromotableOrderImpl implements PromotableOrder {
         return allPriceDetails;
     }
 
-    public BroadleafCurrency getOrderCurrency() {
+    public UltraCurrency getOrderCurrency() {
         return this.order.getCurrency();
     }
 
@@ -312,7 +312,7 @@ public class PromotableOrderImpl implements PromotableOrder {
     
     @Override
     public Money calculateSubtotalWithoutAdjustments() {
-        Money calculatedSubTotal = BroadleafCurrencyUtils.getMoney(order.getCurrency());
+        Money calculatedSubTotal = UltraCurrencyUtils.getMoney(order.getCurrency());
         for (PromotableOrderItem orderItem : getAllOrderItems()) {
             calculatedSubTotal = calculatedSubTotal.add(orderItem.calculateTotalWithoutAdjustments());
         }
@@ -321,7 +321,7 @@ public class PromotableOrderImpl implements PromotableOrder {
 
     @Override
     public Money calculateSubtotalWithAdjustments() {
-        Money calculatedSubTotal = BroadleafCurrencyUtils.getMoney(order.getCurrency());
+        Money calculatedSubTotal = UltraCurrencyUtils.getMoney(order.getCurrency());
         for (PromotableOrderItem orderItem : getAllOrderItems()) {
             calculatedSubTotal = calculatedSubTotal.add(orderItem.calculateTotalWithAdjustments());
         }

@@ -1,77 +1,77 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.openadmin.web.controller.entity;
+package com.ultracommerce.openadmin.web.controller.entity;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.exception.SecurityServiceException;
-import org.broadleafcommerce.common.exception.ServiceException;
-import org.broadleafcommerce.common.extension.ExtensionResultHolder;
-import org.broadleafcommerce.common.extension.ExtensionResultStatusType;
-import org.broadleafcommerce.common.persistence.EntityDuplicator;
-import org.broadleafcommerce.common.presentation.client.AddMethodType;
-import org.broadleafcommerce.common.presentation.client.SupportedFieldType;
-import org.broadleafcommerce.common.sandbox.SandBoxHelper;
-import org.broadleafcommerce.common.service.GenericEntityService;
-import org.broadleafcommerce.common.util.BLCArrayUtils;
-import org.broadleafcommerce.common.util.BLCMessageUtils;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
-import org.broadleafcommerce.common.web.JsonResponse;
-import org.broadleafcommerce.openadmin.dto.AdornedTargetCollectionMetadata;
-import org.broadleafcommerce.openadmin.dto.AdornedTargetList;
-import org.broadleafcommerce.openadmin.dto.BasicCollectionMetadata;
-import org.broadleafcommerce.openadmin.dto.BasicFieldMetadata;
-import org.broadleafcommerce.openadmin.dto.ClassMetadata;
-import org.broadleafcommerce.openadmin.dto.ClassTree;
-import org.broadleafcommerce.openadmin.dto.CollectionMetadata;
-import org.broadleafcommerce.openadmin.dto.DynamicResultSet;
-import org.broadleafcommerce.openadmin.dto.Entity;
-import org.broadleafcommerce.openadmin.dto.FieldMetadata;
-import org.broadleafcommerce.openadmin.dto.FilterAndSortCriteria;
-import org.broadleafcommerce.openadmin.dto.MapMetadata;
-import org.broadleafcommerce.openadmin.dto.Property;
-import org.broadleafcommerce.openadmin.dto.SectionCrumb;
-import org.broadleafcommerce.openadmin.dto.TabMetadata;
-import org.broadleafcommerce.openadmin.server.dao.DynamicEntityDao;
-import org.broadleafcommerce.openadmin.server.domain.PersistencePackageRequest;
-import org.broadleafcommerce.openadmin.server.security.dao.AdminUserDao;
-import org.broadleafcommerce.openadmin.server.security.domain.AdminSection;
-import org.broadleafcommerce.openadmin.server.security.domain.AdminUser;
-import org.broadleafcommerce.openadmin.server.security.remote.EntityOperationType;
-import org.broadleafcommerce.openadmin.server.security.service.RowLevelSecurityService;
-import org.broadleafcommerce.openadmin.server.service.persistence.PersistenceResponse;
-import org.broadleafcommerce.openadmin.server.service.persistence.extension.AdornedTargetAutoPopulateExtensionManager;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.BasicPersistenceModule;
-import org.broadleafcommerce.openadmin.web.controller.AdminAbstractController;
-import org.broadleafcommerce.openadmin.web.controller.modal.ModalHeaderType;
-import org.broadleafcommerce.openadmin.web.editor.NonNullBooleanEditor;
-import org.broadleafcommerce.openadmin.web.form.component.DefaultListGridActions;
-import org.broadleafcommerce.openadmin.web.form.component.ListGrid;
-import org.broadleafcommerce.openadmin.web.form.entity.DefaultAdornedEntityFormActions;
-import org.broadleafcommerce.openadmin.web.form.entity.DefaultEntityFormActions;
-import org.broadleafcommerce.openadmin.web.form.entity.DefaultMainActions;
-import org.broadleafcommerce.openadmin.web.form.entity.EntityForm;
-import org.broadleafcommerce.openadmin.web.form.entity.EntityFormAction;
-import org.broadleafcommerce.openadmin.web.form.entity.Field;
-import org.broadleafcommerce.openadmin.web.form.entity.FieldGroup;
+import com.ultracommerce.common.exception.SecurityServiceException;
+import com.ultracommerce.common.exception.ServiceException;
+import com.ultracommerce.common.extension.ExtensionResultHolder;
+import com.ultracommerce.common.extension.ExtensionResultStatusType;
+import com.ultracommerce.common.persistence.EntityDuplicator;
+import com.ultracommerce.common.presentation.client.AddMethodType;
+import com.ultracommerce.common.presentation.client.SupportedFieldType;
+import com.ultracommerce.common.sandbox.SandBoxHelper;
+import com.ultracommerce.common.service.GenericEntityService;
+import com.ultracommerce.common.util.UCArrayUtils;
+import com.ultracommerce.common.util.UCMessageUtils;
+import com.ultracommerce.common.web.UltraRequestContext;
+import com.ultracommerce.common.web.JsonResponse;
+import com.ultracommerce.openadmin.dto.AdornedTargetCollectionMetadata;
+import com.ultracommerce.openadmin.dto.AdornedTargetList;
+import com.ultracommerce.openadmin.dto.BasicCollectionMetadata;
+import com.ultracommerce.openadmin.dto.BasicFieldMetadata;
+import com.ultracommerce.openadmin.dto.ClassMetadata;
+import com.ultracommerce.openadmin.dto.ClassTree;
+import com.ultracommerce.openadmin.dto.CollectionMetadata;
+import com.ultracommerce.openadmin.dto.DynamicResultSet;
+import com.ultracommerce.openadmin.dto.Entity;
+import com.ultracommerce.openadmin.dto.FieldMetadata;
+import com.ultracommerce.openadmin.dto.FilterAndSortCriteria;
+import com.ultracommerce.openadmin.dto.MapMetadata;
+import com.ultracommerce.openadmin.dto.Property;
+import com.ultracommerce.openadmin.dto.SectionCrumb;
+import com.ultracommerce.openadmin.dto.TabMetadata;
+import com.ultracommerce.openadmin.server.dao.DynamicEntityDao;
+import com.ultracommerce.openadmin.server.domain.PersistencePackageRequest;
+import com.ultracommerce.openadmin.server.security.dao.AdminUserDao;
+import com.ultracommerce.openadmin.server.security.domain.AdminSection;
+import com.ultracommerce.openadmin.server.security.domain.AdminUser;
+import com.ultracommerce.openadmin.server.security.remote.EntityOperationType;
+import com.ultracommerce.openadmin.server.security.service.RowLevelSecurityService;
+import com.ultracommerce.openadmin.server.service.persistence.PersistenceResponse;
+import com.ultracommerce.openadmin.server.service.persistence.extension.AdornedTargetAutoPopulateExtensionManager;
+import com.ultracommerce.openadmin.server.service.persistence.module.BasicPersistenceModule;
+import com.ultracommerce.openadmin.web.controller.AdminAbstractController;
+import com.ultracommerce.openadmin.web.controller.modal.ModalHeaderType;
+import com.ultracommerce.openadmin.web.editor.NonNullBooleanEditor;
+import com.ultracommerce.openadmin.web.form.component.DefaultListGridActions;
+import com.ultracommerce.openadmin.web.form.component.ListGrid;
+import com.ultracommerce.openadmin.web.form.entity.DefaultAdornedEntityFormActions;
+import com.ultracommerce.openadmin.web.form.entity.DefaultEntityFormActions;
+import com.ultracommerce.openadmin.web.form.entity.DefaultMainActions;
+import com.ultracommerce.openadmin.web.form.entity.EntityForm;
+import com.ultracommerce.openadmin.web.form.entity.EntityFormAction;
+import com.ultracommerce.openadmin.web.form.entity.Field;
+import com.ultracommerce.openadmin.web.form.entity.FieldGroup;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -116,7 +116,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author Andre Azzolini (apazzolini)
  * @author Jeff Fischer
  */
-@Controller("blAdminBasicEntityController")
+@Controller("ucAdminBasicEntityController")
 @RequestMapping("/{sectionKey:.+}")
 public class AdminBasicEntityController extends AdminAbstractController {
 
@@ -126,25 +126,25 @@ public class AdminBasicEntityController extends AdminAbstractController {
     public static final String CUSTOM_CRITERIA = "criteria";
     public static final String IS_SELECTIZE_REQUEST = "isSelectizeRequest";
 
-    @Resource(name="blSandBoxHelper")
+    @Resource(name="ucSandBoxHelper")
     protected SandBoxHelper sandBoxHelper;
 
-    @Resource(name = "blAdminUserDao")
+    @Resource(name = "ucAdminUserDao")
     protected AdminUserDao adminUserDao;
 
-    @Resource(name="blDynamicEntityDao")
+    @Resource(name="ucDynamicEntityDao")
     protected DynamicEntityDao dynamicEntityDao;
 
-    @Resource(name = "blAdornedTargetAutoPopulateExtensionManager")
+    @Resource(name = "ucAdornedTargetAutoPopulateExtensionManager")
     protected AdornedTargetAutoPopulateExtensionManager adornedTargetAutoPopulateExtensionManager;
 
-    @Resource(name = "blRowLevelSecurityService")
+    @Resource(name = "ucRowLevelSecurityService")
     protected RowLevelSecurityService rowLevelSecurityService;
     
-    @Resource(name = "blEntityDuplicator")
+    @Resource(name = "ucEntityDuplicator")
     protected EntityDuplicator duplicator;
     
-    @Resource(name = "blGenericEntityService")
+    @Resource(name = "ucGenericEntityService")
     protected GenericEntityService genericEntityService;
 
     // ******************************************
@@ -447,7 +447,7 @@ public class AdminBasicEntityController extends AdminAbstractController {
     protected String getErrorDuplicatingResponse(HttpServletResponse response, String code) {
         List<Map<String, Object>> errors = new ArrayList<>();
         String message;
-        BroadleafRequestContext context = BroadleafRequestContext.getBroadleafRequestContext();
+        UltraRequestContext context = UltraRequestContext.getUltraRequestContext();
         if (context != null && context.getMessageSource() != null) {
             message = context.getMessageSource()
                     .getMessage(code, null, code, context.getJavaLocale());
@@ -810,7 +810,7 @@ public class AdminBasicEntityController extends AdminAbstractController {
             String idProp = ((BasicFieldMetadata) md).getForeignKeyProperty();
             String displayProp = ((BasicFieldMetadata) md).getForeignKeyDisplayValueProperty();
 
-            List<String> filterValues = BLCArrayUtils.asList(ids.split(FILTER_VALUE_SEPARATOR_REGEX));
+            List<String> filterValues = UCArrayUtils.asList(ids.split(FILTER_VALUE_SEPARATOR_REGEX));
             ppr.addFilterAndSortCriteria(new FilterAndSortCriteria(idProp, filterValues));
 
             DynamicResultSet drs = service.getRecords(ppr).getDynamicResultSet();
@@ -1182,7 +1182,7 @@ public class AdminBasicEntityController extends AdminAbstractController {
     }
 
     protected void declareShouldIgnoreAdditionStatusFilter() {
-        Map<String, Object> additionalProperties = BroadleafRequestContext.getBroadleafRequestContext().getAdditionalProperties();
+        Map<String, Object> additionalProperties = UltraRequestContext.getUltraRequestContext().getAdditionalProperties();
         additionalProperties.put("shouldIgnoreAdditionStatusFilter", true);
     }
 
@@ -1991,7 +1991,7 @@ public class AdminBasicEntityController extends AdminAbstractController {
             }
             return new JsonResponse(response)
                 .with("status", "error")
-                .with("message", BLCMessageUtils.getMessage(error))
+                .with("message", UCMessageUtils.getMessage(error))
                 .done();
         }
 

@@ -1,32 +1,32 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
 /**
  * 
  */
-package org.broadleafcommerce.common.i18n.service;
+package com.ultracommerce.common.i18n.service;
 
 
 import org.apache.commons.lang.StringUtils;
-import org.broadleafcommerce.common.i18n.domain.TranslatedEntity;
-import org.broadleafcommerce.common.i18n.domain.Translation;
-import org.broadleafcommerce.common.util.ApplicationContextHolder;
-import org.broadleafcommerce.common.util.BLCMapUtils;
-import org.broadleafcommerce.common.util.TypedClosure;
+import com.ultracommerce.common.i18n.domain.TranslatedEntity;
+import com.ultracommerce.common.i18n.domain.Translation;
+import com.ultracommerce.common.util.ApplicationContextHolder;
+import com.ultracommerce.common.util.UCMapUtils;
+import com.ultracommerce.common.util.TypedClosure;
 
 import java.util.HashMap;
 import java.util.List;
@@ -45,10 +45,10 @@ import javax.cache.CacheManager;
  */
 public class TranslationBatchReadCache {
     
-    public static final String CACHE_NAME = "blBatchTranslationCache";
+    public static final String CACHE_NAME = "ucBatchTranslationCache";
 
     protected static Cache<Long, Map<String, Translation>> getCache() {
-        CacheManager cacheManager = ApplicationContextHolder.getApplicationContext().getBean("blCacheManager", CacheManager.class);
+        CacheManager cacheManager = ApplicationContextHolder.getApplicationContext().getBean("ucCacheManager", CacheManager.class);
         return cacheManager.getCache(CACHE_NAME);
     }
     
@@ -73,7 +73,7 @@ public class TranslationBatchReadCache {
             threadlocalCache = new HashMap<String, Translation>();
         }
         
-        Map<String, Translation> additionalTranslations = BLCMapUtils.keyedMap(translations, new TypedClosure<String, Translation>() {
+        Map<String, Translation> additionalTranslations = UCMapUtils.keyedMap(translations, new TypedClosure<String, Translation>() {
 
             @Override
             public String getKey(Translation translation) {

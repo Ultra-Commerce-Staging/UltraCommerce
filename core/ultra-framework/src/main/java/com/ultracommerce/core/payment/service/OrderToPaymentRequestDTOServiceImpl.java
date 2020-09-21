@@ -1,22 +1,22 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
 
-package org.broadleafcommerce.core.payment.service;
+package com.ultracommerce.core.payment.service;
 
 import java.util.List;
 import java.util.Map;
@@ -26,53 +26,53 @@ import javax.annotation.Resource;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.currency.domain.BroadleafCurrency;
-import org.broadleafcommerce.common.money.Money;
-import org.broadleafcommerce.common.payment.dto.PaymentRequestDTO;
-import org.broadleafcommerce.common.persistence.PostLoaderDao;
-import org.broadleafcommerce.common.util.BLCSystemProperty;
-import org.broadleafcommerce.core.order.domain.FulfillmentGroup;
-import org.broadleafcommerce.core.order.domain.NullOrderImpl;
-import org.broadleafcommerce.core.order.domain.Order;
-import org.broadleafcommerce.core.order.service.FulfillmentGroupService;
-import org.broadleafcommerce.core.payment.domain.OrderPayment;
-import org.broadleafcommerce.core.payment.domain.PaymentTransaction;
-import org.broadleafcommerce.profile.core.domain.Address;
-import org.broadleafcommerce.profile.core.domain.Customer;
+import com.ultracommerce.common.currency.domain.UltraCurrency;
+import com.ultracommerce.common.money.Money;
+import com.ultracommerce.common.payment.dto.PaymentRequestDTO;
+import com.ultracommerce.common.persistence.PostLoaderDao;
+import com.ultracommerce.common.util.UCSystemProperty;
+import com.ultracommerce.core.order.domain.FulfillmentGroup;
+import com.ultracommerce.core.order.domain.NullOrderImpl;
+import com.ultracommerce.core.order.domain.Order;
+import com.ultracommerce.core.order.service.FulfillmentGroupService;
+import com.ultracommerce.core.payment.domain.OrderPayment;
+import com.ultracommerce.core.payment.domain.PaymentTransaction;
+import com.ultracommerce.profile.core.domain.Address;
+import com.ultracommerce.profile.core.domain.Customer;
 import org.springframework.stereotype.Service;
 
 import lombok.Data;
 
 /**
  * Service that translates various pieces of information such as:
- * - {@link org.broadleafcommerce.core.order.domain.Order}
- * - {@link org.broadleafcommerce.core.payment.domain.PaymentTransaction}
- * into a {@link org.broadleafcommerce.common.payment.dto.PaymentRequestDTO} so that the gateway can create
+ * - {@link com.ultracommerce.core.order.domain.Order}
+ * - {@link com.ultracommerce.core.payment.domain.PaymentTransaction}
+ * into a {@link com.ultracommerce.common.payment.dto.PaymentRequestDTO} so that the gateway can create
  * the appropriate request for a specific transaction.
  *
  * @author Elbert Bautista (elbertbautista)
  */
-@Service("blOrderToPaymentRequestDTOService")
+@Service("ucOrderToPaymentRequestDTOService")
 public class OrderToPaymentRequestDTOServiceImpl implements OrderToPaymentRequestDTOService {
 
     private static final Log LOG = LogFactory.getLog(OrderToPaymentRequestDTOServiceImpl.class);
 
     public static final String ZERO_TOTAL = "0";
     
-    @Resource(name = "blFulfillmentGroupService")
+    @Resource(name = "ucFulfillmentGroupService")
     protected FulfillmentGroupService fgService;
     
-    @Resource(name = "blPostLoaderDao")
+    @Resource(name = "ucPostLoaderDao")
     protected PostLoaderDao postLoaderDao;
 
-    @Resource(name = "blPaymentRequestDTOService")
+    @Resource(name = "ucPaymentRequestDTOService")
     protected PaymentRequestDTOService paymentRequestDTOService;
 
     @Override
     public PaymentRequestDTO translateOrder(Order order) {
         if (order != null && !(order instanceof NullOrderImpl)) {
             final Long id = order.getId();
-            final BroadleafCurrency currency = order.getCurrency();
+            final UltraCurrency currency = order.getCurrency();
             PaymentRequestDTO requestDTO = new PaymentRequestDTO().orderId(id.toString());
             
             if (LOG.isTraceEnabled()) {
@@ -287,7 +287,7 @@ public class OrderToPaymentRequestDTOServiceImpl implements OrderToPaymentReques
     protected NameResponse getName(Address address) {
         NameResponse response = new NameResponse();
         
-        if (BLCSystemProperty.resolveBooleanSystemProperty("validator.address.fullNameOnly")) {
+        if (UCSystemProperty.resolveBooleanSystemProperty("validator.address.fullNameOnly")) {
             String fullName = address.getFullName();
             
             if (StringUtils.isNotBlank(fullName)) {

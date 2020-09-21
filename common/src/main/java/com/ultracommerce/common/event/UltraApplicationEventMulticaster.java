@@ -1,21 +1,21 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.event;
+package com.ultracommerce.common.event;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,11 +41,11 @@ import java.util.concurrent.Executor;
  * @author Kelly Tisdell
  *
  */
-public class BroadleafApplicationEventMulticaster extends
+public class UltraApplicationEventMulticaster extends
         SimpleApplicationEventMulticaster implements ApplicationContextAware {
 	
     @Autowired(required = false)
-    @Qualifier("blApplicationEventMulticastTaskExecutor")
+    @Qualifier("ucApplicationEventMulticastTaskExecutor")
     private Executor taskExecutor;
 
 	protected ApplicationContext ctx;
@@ -54,7 +54,7 @@ public class BroadleafApplicationEventMulticaster extends
      * Take care when specifying that event or application listener should be executed asynchronously.  
      * If there is no TaskExecutor configured, this 
      * will execute synchronously, regardless.  If there is a TaskExecutor configured, then if the 
-     * listener is a BroadleafApplicationListener and its 
+     * listener is a UltraApplicationListener and its 
      * <code>isAsynchronous()</code> method returns true then the event will fire asynchronously. 
      * Be aware that the events are not durable in this case.  Events that are executed asynchronously  
      * should be used with caution, where a loss of event due to error or shutdown of the VM is not a major 
@@ -66,8 +66,8 @@ public class BroadleafApplicationEventMulticaster extends
         for (final ApplicationListener<?> listener : getApplicationListeners(event, ResolvableType.forInstance(event))) {
 			boolean isAsynchronous = false;
 			if (executor != null) {
-                if ((BroadleafApplicationListener.class.isAssignableFrom(listener.getClass())
-                            && ((BroadleafApplicationListener<? extends ApplicationEvent>)listener).isAsynchronous())) {
+                if ((UltraApplicationListener.class.isAssignableFrom(listener.getClass())
+                            && ((UltraApplicationListener<? extends ApplicationEvent>)listener).isAsynchronous())) {
                     isAsynchronous = true;
 			    }
 			}

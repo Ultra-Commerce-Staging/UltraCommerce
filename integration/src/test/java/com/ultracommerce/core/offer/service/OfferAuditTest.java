@@ -1,42 +1,42 @@
 /*
  * #%L
- * BroadleafCommerce Integration
+ * UltraCommerce Integration
  * %%
- * Copyright (C) 2009 - 2017 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.offer.service;
+package com.ultracommerce.core.offer.service;
 
-import org.broadleafcommerce.common.money.Money;
-import org.broadleafcommerce.core.catalog.SkuDaoDataProvider;
-import org.broadleafcommerce.core.catalog.domain.Sku;
-import org.broadleafcommerce.core.checkout.service.CheckoutService;
-import org.broadleafcommerce.core.checkout.service.exception.CheckoutException;
-import org.broadleafcommerce.core.offer.dao.OfferAuditDao;
-import org.broadleafcommerce.core.offer.dao.OfferCodeDao;
-import org.broadleafcommerce.core.offer.dao.OfferDao;
-import org.broadleafcommerce.core.offer.domain.Offer;
-import org.broadleafcommerce.core.offer.domain.OfferAudit;
-import org.broadleafcommerce.core.offer.domain.OfferCode;
-import org.broadleafcommerce.core.offer.service.exception.OfferMaxUseExceededException;
-import org.broadleafcommerce.core.offer.service.type.OfferDiscountType;
-import org.broadleafcommerce.core.offer.service.type.OfferType;
-import org.broadleafcommerce.core.order.domain.Order;
-import org.broadleafcommerce.core.order.fulfillment.domain.FixedPriceFulfillmentOption;
-import org.broadleafcommerce.core.order.fulfillment.domain.FixedPriceFulfillmentOptionImpl;
-import org.broadleafcommerce.core.order.service.OrderItemService;
-import org.broadleafcommerce.profile.core.domain.Customer;
-import org.broadleafcommerce.test.CommonSetupBaseTest;
+import com.ultracommerce.common.money.Money;
+import com.ultracommerce.core.catalog.SkuDaoDataProvider;
+import com.ultracommerce.core.catalog.domain.Sku;
+import com.ultracommerce.core.checkout.service.CheckoutService;
+import com.ultracommerce.core.checkout.service.exception.CheckoutException;
+import com.ultracommerce.core.offer.dao.OfferAuditDao;
+import com.ultracommerce.core.offer.dao.OfferCodeDao;
+import com.ultracommerce.core.offer.dao.OfferDao;
+import com.ultracommerce.core.offer.domain.Offer;
+import com.ultracommerce.core.offer.domain.OfferAudit;
+import com.ultracommerce.core.offer.domain.OfferCode;
+import com.ultracommerce.core.offer.service.exception.OfferMaxUseExceededException;
+import com.ultracommerce.core.offer.service.type.OfferDiscountType;
+import com.ultracommerce.core.offer.service.type.OfferType;
+import com.ultracommerce.core.order.domain.Order;
+import com.ultracommerce.core.order.fulfillment.domain.FixedPriceFulfillmentOption;
+import com.ultracommerce.core.order.fulfillment.domain.FixedPriceFulfillmentOptionImpl;
+import com.ultracommerce.core.order.service.OrderItemService;
+import com.ultracommerce.profile.core.domain.Customer;
+import com.ultracommerce.test.CommonSetupBaseTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import org.testng.annotations.Test;
@@ -67,7 +67,7 @@ public class OfferAuditTest extends CommonSetupBaseTest {
     @Resource
     private OfferAuditDao offerAuditDao;
 
-    @Resource(name = "blOrderItemService")
+    @Resource(name = "ucOrderItemService")
     private OrderItemService orderItemService;
     
     @Resource

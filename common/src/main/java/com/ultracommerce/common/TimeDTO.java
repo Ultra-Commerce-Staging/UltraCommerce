@@ -1,30 +1,30 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common;
+package com.ultracommerce.common;
 
-import org.broadleafcommerce.common.presentation.AdminPresentation;
-import org.broadleafcommerce.common.presentation.client.SupportedFieldType;
-import org.broadleafcommerce.common.time.DayOfMonthType;
-import org.broadleafcommerce.common.time.DayOfWeekType;
-import org.broadleafcommerce.common.time.HourOfDayType;
-import org.broadleafcommerce.common.time.MinuteType;
-import org.broadleafcommerce.common.time.MonthType;
-import org.broadleafcommerce.common.time.SystemTime;
+import com.ultracommerce.common.presentation.AdminPresentation;
+import com.ultracommerce.common.presentation.client.SupportedFieldType;
+import com.ultracommerce.common.time.DayOfMonthType;
+import com.ultracommerce.common.time.DayOfWeekType;
+import com.ultracommerce.common.time.HourOfDayType;
+import com.ultracommerce.common.time.MinuteType;
+import com.ultracommerce.common.time.MonthType;
+import com.ultracommerce.common.time.SystemTime;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -37,19 +37,19 @@ public class TimeDTO {
     @AdminPresentation(excluded = true)
     private Calendar cal;
 
-    @AdminPresentation(friendlyName = "TimeDTO_Hour_Of_Day", fieldType = SupportedFieldType.BROADLEAF_ENUMERATION, broadleafEnumeration = "org.broadleafcommerce.common.time.HourOfDayType")
+    @AdminPresentation(friendlyName = "TimeDTO_Hour_Of_Day", fieldType = SupportedFieldType.ULTRA_ENUMERATION, ultraEnumeration = "com.ultracommerce.common.time.HourOfDayType")
     private Integer hour;
 
-    @AdminPresentation(friendlyName = "TimeDTO_Day_Of_Week", fieldType = SupportedFieldType.BROADLEAF_ENUMERATION, broadleafEnumeration = "org.broadleafcommerce.common.time.DayOfWeekType")
+    @AdminPresentation(friendlyName = "TimeDTO_Day_Of_Week", fieldType = SupportedFieldType.ULTRA_ENUMERATION, ultraEnumeration = "com.ultracommerce.common.time.DayOfWeekType")
     private Integer dayOfWeek;
 
-    @AdminPresentation(friendlyName = "TimeDTO_Month", fieldType = SupportedFieldType.BROADLEAF_ENUMERATION, broadleafEnumeration = "org.broadleafcommerce.common.time.MonthType")
+    @AdminPresentation(friendlyName = "TimeDTO_Month", fieldType = SupportedFieldType.ULTRA_ENUMERATION, ultraEnumeration = "com.ultracommerce.common.time.MonthType")
     private Integer month;
 
-    @AdminPresentation(friendlyName = "TimeDTO_Day_Of_Month", fieldType = SupportedFieldType.BROADLEAF_ENUMERATION, broadleafEnumeration = "org.broadleafcommerce.common.time.DayOfMonthType")
+    @AdminPresentation(friendlyName = "TimeDTO_Day_Of_Month", fieldType = SupportedFieldType.ULTRA_ENUMERATION, ultraEnumeration = "com.ultracommerce.common.time.DayOfMonthType")
     private Integer dayOfMonth;
 
-    @AdminPresentation(friendlyName = "TimeDTO_Minute", fieldType = SupportedFieldType.BROADLEAF_ENUMERATION, broadleafEnumeration = "org.broadleafcommerce.common.time.MinuteType")
+    @AdminPresentation(friendlyName = "TimeDTO_Minute", fieldType = SupportedFieldType.ULTRA_ENUMERATION, ultraEnumeration = "com.ultracommerce.common.time.MinuteType")
     private Integer minute;
 
     @AdminPresentation(friendlyName = "TimeDTO_Date")

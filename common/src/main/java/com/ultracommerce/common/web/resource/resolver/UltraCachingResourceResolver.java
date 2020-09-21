@@ -1,25 +1,25 @@
 /*
  * #%L
- * broadleaf-theme
+ * ultra-theme
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.web.resource.resolver;
+package com.ultracommerce.common.web.resource.resolver;
 
-import org.broadleafcommerce.common.site.domain.Theme;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
-import org.broadleafcommerce.common.web.resource.BroadleafContextUtil;
+import com.ultracommerce.common.site.domain.Theme;
+import com.ultracommerce.common.web.UltraRequestContext;
+import com.ultracommerce.common.web.resource.UltraContextUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -42,44 +42,44 @@ import javax.servlet.http.HttpServletRequest;
  * support to disable with environment properties.
  *
  * We bypass {@link CachingResourceResolver} and instead borrow its code in order to be
- * able to inject the theme key that is needed by BLC since Spring's class could not be
+ * able to inject the theme key that is needed by UC since Spring's class could not be
  * leveraged otherwise.
  *
  *  {@code }
  * 
  * @author Brian Polster
- * @since Broadleaf 4.0
+ * @since Ultra 4.0
  */
-@Component("blCacheResourceResolver")
-public class BroadleafCachingResourceResolver extends AbstractResourceResolver implements Ordered {
+@Component("ucCacheResourceResolver")
+public class UltraCachingResourceResolver extends AbstractResourceResolver implements Ordered {
 
     public static final String RESOLVED_RESOURCE_CACHE_KEY_PREFIX = "resolvedResource:";
     public static final String RESOLVED_URL_PATH_CACHE_KEY_PREFIX = "resolvedUrlPath:";
     public static final String RESOLVED_RESOURCE_CACHE_KEY_PREFIX_NULL = "resolvedResourceNull:";
     public static final String RESOLVED_URL_PATH_CACHE_KEY_PREFIX_NULL = "resolvedUrlPathNull:";
     private static final Object NULL_REFERENCE = new Object();
-    private int order = BroadleafResourceResolverOrder.BLC_CACHE_RESOURCE_RESOLVER;
+    private int order = UltraResourceResolverOrder.UC_CACHE_RESOURCE_RESOLVER;
 
     private final Cache cache;
 
-    @javax.annotation.Resource(name = "blSpringCacheManager")
+    @javax.annotation.Resource(name = "ucSpringCacheManager")
     private CacheManager cacheManager;
 
-    @javax.annotation.Resource(name = "blBroadleafContextUtil")
-    protected BroadleafContextUtil blcContextUtil;
+    @javax.annotation.Resource(name = "ucUltraContextUtil")
+    protected UltraContextUtil ucContextUtil;
     
-    private static final String DEFAULT_CACHE_NAME = "blResourceCacheElements";
+    private static final String DEFAULT_CACHE_NAME = "ucResourceCacheElements";
 
     @Value("${resource.caching.enabled:true}")
     protected boolean resourceCachingEnabled;
 
     @Autowired
-    public BroadleafCachingResourceResolver(@Qualifier("blSpringCacheManager") CacheManager cacheManager) {
+    public UltraCachingResourceResolver(@Qualifier("ucSpringCacheManager") CacheManager cacheManager) {
         this(cacheManager.getCache(DEFAULT_CACHE_NAME));
     }
 
     // Allows for an implementor to override the default cache settings.
-    public BroadleafCachingResourceResolver(Cache cache) {
+    public UltraCachingResourceResolver(Cache cache) {
         Assert.notNull(cache, "'cache' is required");
         this.cache = cache;
     }
@@ -94,7 +94,7 @@ public class BroadleafCachingResourceResolver extends AbstractResourceResolver i
     @Override
     protected Resource resolveResourceInternal(HttpServletRequest request, String requestPath,
             List<? extends Resource> locations, ResourceResolverChain chain) {
-        blcContextUtil.establishThinRequestContext();
+        ucContextUtil.establishThinRequestContext();
 
         if (resourceCachingEnabled) {
             String key = computeKey(request, requestPath) + getThemePathFromBRC();
@@ -199,14 +199,14 @@ public class BroadleafCachingResourceResolver extends AbstractResourceResolver i
     }
 
     /**
-     * Returns the theme path from the {@link org.broadleafcommerce.common.web.BroadleafRequestContext} or an empty
+     * Returns the theme path from the {@link com.ultracommerce.common.web.UltraRequestContext} or an empty
      * string if no theme was resolved
      *
      * @return
      */
     protected String getThemePathFromBRC() {
         String themePath = null;
-        Theme theme = BroadleafRequestContext.getBroadleafRequestContext().getTheme();
+        Theme theme = UltraRequestContext.getUltraRequestContext().getTheme();
         if (theme != null) {
             themePath = theme.getPath();
         }

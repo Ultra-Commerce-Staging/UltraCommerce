@@ -1,21 +1,21 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-(function($, BLCAdmin) {
+(function($, UCAdmin) {
 
     var recordLoadHandlers = [];
 
@@ -45,8 +45,8 @@
         index : undefined
     };
     
-    // Add utility functions for list grids to the BLCAdmin object
-    BLCAdmin.listGrid.paginate = {
+    // Add utility functions for list grids to the UCAdmin object
+    UCAdmin.listGrid.paginate = {
             
         // ********************** *
         // LOCK RELATED FUNCTIONS *
@@ -310,7 +310,7 @@
                 }
             });
 
-            BLCAdmin.listGrid.paginate.initializeHeaderWidths($headerTable);
+            UCAdmin.listGrid.paginate.initializeHeaderWidths($headerTable);
         },
 
         initializeHeaderWidths : function($headerTable) {
@@ -453,28 +453,28 @@
                 }
                 delta = delta - topIndex;
                 var spinnerOffset = $tbody.closest('.mCustomScrollBox').position().top + 3;
-                BLCAdmin.listGrid.showLoadingSpinner($tbody, spinnerOffset);
+                UCAdmin.listGrid.showLoadingSpinner($tbody, spinnerOffset);
 
-                var params =  BLCAdmin.history.getUrlParameters();
+                var params =  UCAdmin.history.getUrlParameters();
                 for (var param in params) {
-                    baseUrl = BLCAdmin.history.getUrlWithParameter(param, params[param], null, baseUrl);
+                    baseUrl = UCAdmin.history.getUrlWithParameter(param, params[param], null, baseUrl);
                 }
 
-                var url = BLCAdmin.history.getUrlWithParameter('startIndex', startIndex, null, baseUrl);
-                url = BLCAdmin.history.getUrlWithParameter('maxIndex', maxIndex, null, url);
+                var url = UCAdmin.history.getUrlWithParameter('startIndex', startIndex, null, baseUrl);
+                url = UCAdmin.history.getUrlWithParameter('maxIndex', maxIndex, null, url);
 
                 // also grab the sorts and ensure those inputs are also serialized
                 var $sorts = $tbody.closest('.listgrid-container').find('input.sort-direction.active, input.sort-property.active');
                 $sorts.each(function(index, input) {
                     //only submit fields that have a value set and are not a sort field. Sort fields will be added separately
                     if ($(input).val()) {
-                        url = BLCAdmin.history.getUrlWithParameter($(input).data('name'), $(input).val(), null, url);
+                        url = UCAdmin.history.getUrlWithParameter($(input).data('name'), $(input).val(), null, url);
                     }
                 });
 
                 //console.log('Loading more records -- ' + url);
                 
-                BLC.ajax({ url: url, type: 'GET' }, function(data) {
+                UC.ajax({ url: url, type: 'GET' }, function(data) {
                     var $newTbody;
                     if ($tbody.closest('.tree-column-wrapper').length) {
                         var treeColumnParentId = $tbody.closest('.select-column').data('parentid');
@@ -487,22 +487,22 @@
                         var listGridId = $tbody.closest('table').attr('id');
                         $newTbody = $(data).find('table#' + listGridId).find('tbody');
                     }
-                    BLCAdmin.listGrid.paginate.injectRecords($tbody, $newTbody);
-                    BLCAdmin.listGrid.paginate.releaseLock();
+                    UCAdmin.listGrid.paginate.injectRecords($tbody, $newTbody);
+                    UCAdmin.listGrid.paginate.releaseLock();
                     
                     // now that I've loaded records, see if I need to do it again
-                    var topIndex = BLCAdmin.listGrid.paginate.getTopVisibleIndex($tbody);
-                    var topIndexLoaded = BLCAdmin.listGrid.paginate.isIndexLoaded($tbody, topIndex);
-                    var botIndex = BLCAdmin.listGrid.paginate.getBottomVisibleIndex($tbody);
-                    var botIndexLoaded = BLCAdmin.listGrid.paginate.isIndexLoaded($tbody, botIndex);
+                    var topIndex = UCAdmin.listGrid.paginate.getTopVisibleIndex($tbody);
+                    var topIndexLoaded = UCAdmin.listGrid.paginate.isIndexLoaded($tbody, topIndex);
+                    var botIndex = UCAdmin.listGrid.paginate.getBottomVisibleIndex($tbody);
+                    var botIndexLoaded = UCAdmin.listGrid.paginate.isIndexLoaded($tbody, botIndex);
                     if ((!botIndexLoaded || !topIndexLoaded)&&(!$tbody.is(':visible'))) {
-                        BLCAdmin.listGrid.paginate.loadRecords($tbody, baseUrl);
+                        UCAdmin.listGrid.paginate.loadRecords($tbody, baseUrl);
                     } else {
-                        BLCAdmin.listGrid.hideLoadingSpinner($tbody);
+                        UCAdmin.listGrid.hideLoadingSpinner($tbody);
                     }
 
                     if( $tbody.closest('.listgrid-container').find('.listgrid-header-wrapper').find('input[type=checkbox].multiselect-checkbox')) {
-                        BLCAdmin.listGrid.paginate.updateSelectedRecords($tbody)
+                        UCAdmin.listGrid.paginate.updateSelectedRecords($tbody)
                     }
                     // Run any additionally configured initialization handlers
                     for (var i = 0; i < recordLoadHandlers.length; i++) {
@@ -512,7 +512,7 @@
 
                 });
             } else {
-                BLCAdmin.listGrid.paginate.releaseLock();
+                UCAdmin.listGrid.paginate.releaseLock();
             }
         },
         
@@ -597,7 +597,7 @@
                 var $checkbox = $tbody.closest('.listgrid-container').find('.listgrid-header-wrapper').find('input[type=checkbox].multiselect-checkbox');
                 if ($checkbox.prop('checked')) {
                     $listgridBody.find(".listgrid-checkbox").prop('checked', true);
-                    BLCAdmin.listGrid.inlineRowSelected(null, $tbody.find("tr:not(.selected)"), null, null, null, true);
+                    UCAdmin.listGrid.inlineRowSelected(null, $tbody.find("tr:not(.selected)"), null, null, null, true);
                 }
             }
         },
@@ -636,7 +636,7 @@
             //expose either the paging control or the standard scroll counter
             var $header = $tbody.closest('div.listgrid-body-wrapper').siblings('div.listgrid-header-wrapper');
             var $headerTable = $header.find("table");
-            var params = BLCAdmin.history.getUrlParameters();
+            var params = UCAdmin.history.getUrlParameters();
             if (!params) {
                 params = $headerTable.data('currentparams');
             }
@@ -665,7 +665,7 @@
         updateGridSize : function($tbody) {
             var $table = $tbody.closest('table.list-grid-table');
             var $headerTable = $table.closest('.listgrid-container').find('.listgrid-header-wrapper table');
-            var rowHeight = BLCAdmin.listGrid.paginate.getRowHeight($tbody);
+            var rowHeight = UCAdmin.listGrid.paginate.getRowHeight($tbody);
             var thWidths = [];
             var $modalBody = $tbody.closest('.modal-body');
 
@@ -749,16 +749,16 @@
 
             // If we're the only grid on the page, we should stretch to the bottom of the screen if we are not encapsulated
             // inside of an entity-form
-            var listGridsCount = BLCAdmin.listGrid.getListGridCount($);
+            var listGridsCount = UCAdmin.listGrid.getListGridCount($);
             if (listGridsCount == 1 && $wrapper.parents('.entity-form').length == 0 &&
                 $table.data('listgridtype') !== 'tree' &&
                 ($table.data('listgridtype') !== 'asset_grid' && $table.data('listgridtype') !== 'asset_grid_folder') ||
-                (BLCAdmin.assetGrid == undefined && ($table.data('listgridtype') === 'asset_grid' || $table.data('listgridtype') === 'asset_grid_folder'))) {
+                (UCAdmin.assetGrid == undefined && ($table.data('listgridtype') === 'asset_grid' || $table.data('listgridtype') === 'asset_grid_folder'))) {
 
                 var $window = $(window);
                 
                 var wrapperHeight = $window.height() - $wrapper.offset().top - 50;
-                wrapperHeight = BLCAdmin.listGrid.paginate.computeActualMaxHeight($tbody, wrapperHeight);
+                wrapperHeight = UCAdmin.listGrid.paginate.computeActualMaxHeight($tbody, wrapperHeight);
 
                 // Add an extra 2px to the maxHeight to avoid exposing the scroll bar if there is only one record
                 if (wrapperHeight <= rowHeight) {
@@ -772,10 +772,10 @@
                 
                 // If we are showing all records from the single grid page, ensure the url is updated
                 if ($wrapper.find('.mCS_no_scrollbar').length > 0 && $modalBody.length === 0) {
-                    BLCAdmin.listGrid.paginate.updateUrlFromScroll($wrapper.find('tbody'));
+                    UCAdmin.listGrid.paginate.updateUrlFromScroll($wrapper.find('tbody'));
                 }
             } else if (
-                (BLCAdmin.assetGrid != undefined
+                (UCAdmin.assetGrid != undefined
                     && ($table.data('listgridtype') === 'asset_grid'
                         || $table.data('listgridtype') === 'asset_grid_folder'
                         || $table.data('listgridtype') === 'tree'))
@@ -798,7 +798,7 @@
                 if (typeof footerOuterHeight !== "undefined") {
                     wrapperHeight -= footerOuterHeight;
                 }
-                wrapperHeight = BLCAdmin.listGrid.paginate.computeActualMaxHeight($tbody, wrapperHeight);
+                wrapperHeight = UCAdmin.listGrid.paginate.computeActualMaxHeight($tbody, wrapperHeight);
 
                 $wrapper.css('max-height', wrapperHeight);
                 $wrapper.find('.mCustomScrollBox').css('max-height', wrapperHeight);
@@ -849,7 +849,7 @@
                 // not in a modal, not the only grid on the screen, my size should be equal to max size of a grid
                 // There is a possibility, if pagination is limited on the packed, that
 
-                var maxHeight = BLCAdmin.listGrid.paginate.computeActualMaxHeight($tbody, maxSubCollectionListGridHeight);
+                var maxHeight = UCAdmin.listGrid.paginate.computeActualMaxHeight($tbody, maxSubCollectionListGridHeight);
                 $wrapper.css('max-height', maxHeight);
                 $wrapper.find('.mCustomScrollBox').css('max-height', maxHeight);
 
@@ -857,17 +857,17 @@
             }
 
             // after all the heights have been calculated, update the table footer with the correct record shown count
-            BLCAdmin.listGrid.paginate.updateTableFooter($wrapper.find('tbody'));
-            BLCAdmin.listGrid.updateGridTitleBarSize($table.closest('.listgrid-container').find('.fieldgroup-listgrid-wrapper-header'));
+            UCAdmin.listGrid.paginate.updateTableFooter($wrapper.find('tbody'));
+            UCAdmin.listGrid.updateGridTitleBarSize($table.closest('.listgrid-container').find('.fieldgroup-listgrid-wrapper-header'));
         },
         
         computeActualMaxHeight : function($tbody, desiredMaxHeight) {
             // what is the height of the visible rows?
-            var rowHeight = BLCAdmin.listGrid.paginate.getRowHeight($tbody);
-            var loadedRecordRange = BLCAdmin.listGrid.paginate.getLoadedRecordRanges($tbody)[0];
+            var rowHeight = UCAdmin.listGrid.paginate.getRowHeight($tbody);
+            var loadedRecordRange = UCAdmin.listGrid.paginate.getLoadedRecordRanges($tbody)[0];
             // This gives me back a 0-indexed range, I need the row count so add 1
             var numLoadedRows = loadedRecordRange.hi - loadedRecordRange.lo + 1;
-            var numPaddedRows = Math.max(0, BLCAdmin.listGrid.paginate.getTotalRecords($tbody) - numLoadedRows);
+            var numPaddedRows = Math.max(0, UCAdmin.listGrid.paginate.getTotalRecords($tbody) - numLoadedRows);
 
             // How much of the visible viewport is actual loaded rows and how much is padding? 
             var visibleRowsHeight = rowHeight * numLoadedRows;
@@ -897,9 +897,9 @@
         updateUrlFromScroll : function($tbody) {
             var topIndex = this.getTopVisibleIndex($tbody);
             if (topIndex > 0) {
-                BLCAdmin.history.replaceUrlParameter('startIndex', topIndex);
+                UCAdmin.history.replaceUrlParameter('startIndex', topIndex);
             } else {
-                BLCAdmin.history.replaceUrlParameter('startIndex');
+                UCAdmin.history.replaceUrlParameter('startIndex');
             }
         },
         
@@ -979,12 +979,12 @@
                 },
                 callbacks: {
                     onScroll: function() {
-                        var singleGrid = BLCAdmin.listGrid.getListGridCount($) == 1;
+                        var singleGrid = UCAdmin.listGrid.getListGridCount($) == 1;
                         var inModal = $tbody.closest('.modal-body').length === 1;
                         var listGridType = $table.data('listgridtype');
 
                         // Update the currently visible range
-                        BLCAdmin.listGrid.paginate.updateTableFooter($tbody);
+                        UCAdmin.listGrid.paginate.updateTableFooter($tbody);
                         
                         // Fetch records if necessary
                         $.doTimeout('fetch', fetchDebounce, function() {
@@ -1005,13 +1005,13 @@
                             $('body').trigger(urlEvent, [url, $tbody]);
                             url = urlEvent.resultUrl || url;
 
-                            BLCAdmin.listGrid.paginate.loadRecords($tbody, url);
+                            UCAdmin.listGrid.paginate.loadRecords($tbody, url);
                         });
                         
                         // Also update the URL if this is the only grid on the page
                         if (singleGrid && !inModal && listGridType !== 'tree') {
                             $.doTimeout('updateurl', updateUrlDebounce, function(){
-                                BLCAdmin.listGrid.paginate.updateUrlFromScroll($tbody);
+                                UCAdmin.listGrid.paginate.updateUrlFromScroll($tbody);
                             });
                         }
                     }
@@ -1038,7 +1038,7 @@
                 $tbody.find('tr:last').after($pad);
             }
             
-            BLCAdmin.listGrid.paginate.updateGridSize($tbody);
+            UCAdmin.listGrid.paginate.updateGridSize($tbody);
             
             // Render the table
             $wrapper.mCustomScrollbar('update');
@@ -1053,44 +1053,44 @@
         }
     };
     
-    BLCAdmin.addUpdateHandler(function($container) {
+    UCAdmin.addUpdateHandler(function($container) {
         $container.find('.needsupdate').each(function(index, element) {
-            BLCAdmin.listGrid.paginate.updateGridSize($(element));
+            UCAdmin.listGrid.paginate.updateGridSize($(element));
             $(element).removeClass('needsupdate');
         });
     });
     
-})(jQuery, BLCAdmin);
+})(jQuery, UCAdmin);
 
 $(document).ready(function() {
     
     $(window).resize(function() {
         $.doTimeout('resizeListGrid', 0, function() {
             if ($('.oms').length == 0) {
-                BLCAdmin.getActiveTab().find('tbody:not(.no-update)').each(function (index, element) {
+                UCAdmin.getActiveTab().find('tbody:not(.no-update)').each(function (index, element) {
                     if ($(element).closest('.oms-tab').length) {
                         return;
                     }
 
                     if ($(element).is(':visible')) {
-                        if ($(element).parents('#listGrid-main.org\\.broadleafcommerce\\.core\\.order\\.domain\\.Order').length > 0) {
+                        if ($(element).parents('#listGrid-main.org\\.ultracommerce\\.core\\.order\\.domain\\.Order').length > 0) {
                             fillUnusedPageBottomSpace($(element));
                         } else {
-                            BLCAdmin.listGrid.paginate.updateGridSize($(element));
+                            UCAdmin.listGrid.paginate.updateGridSize($(element));
                         }
                     } else {
                         $(element).addClass('needsupdate');
                     }
                 });
-                BLCAdmin.getActiveTab().find('.fieldgroup-listgrid-wrapper-header').each(function (index, element) {
-                    BLCAdmin.listGrid.updateGridTitleBarSize($(element));
+                UCAdmin.getActiveTab().find('.fieldgroup-listgrid-wrapper-header').each(function (index, element) {
+                    UCAdmin.listGrid.updateGridTitleBarSize($(element));
                 });
             }
         });
     });
 
     function fillUnusedPageBottomSpace($tbody) {
-        var gridRowHeight = BLCAdmin.listGrid.paginate.getRowHeight($tbody)
+        var gridRowHeight = UCAdmin.listGrid.paginate.getRowHeight($tbody)
         var minGridRowCount = 9;
         var smallestGridMaxHeight = gridRowHeight * minGridRowCount;
 
@@ -1100,7 +1100,7 @@ $(document).ready(function() {
             $wrapper.css('max-height', maxHeight);
             $wrapper.find('.mCustomScrollBox').css('max-height', maxHeight);
             $wrapper.mCustomScrollbar('update');
-            BLCAdmin.listGrid.paginate.updateTableFooter($tbody);
+            UCAdmin.listGrid.paginate.updateTableFooter($tbody);
         }
 
         function calcMaxHeight(wrapperHeight) {
@@ -1126,25 +1126,25 @@ $(document).ready(function() {
         var $bodyWrapper = $parentSpan.siblings('div.listgrid-body-wrapper');
         var $tbody = $bodyWrapper.find('table.list-grid-table').find('tbody');
         var currentUrl = $tbody.closest('table').data('path');
-        if (BLCAdmin.listGrid.isLoading($tbody)) {
+        if (UCAdmin.listGrid.isLoading($tbody)) {
             return false;
         }
-        var firstId = BLCAdmin.listGrid.paginate.getFirstId($tbody);
-        currentUrl = BLCAdmin.history.getUrlWithParameter('firstId', firstId, null, currentUrl);
-        var lowerCount = BLCAdmin.listGrid.paginate.getLowerCount($tbody);
-        var upperCount = BLCAdmin.listGrid.paginate.getUpperCount($tbody);
-        currentUrl = BLCAdmin.history.getUrlWithParameter('upperCount', upperCount, null, currentUrl);
-        currentUrl = BLCAdmin.history.getUrlWithParameter('lowerCount', lowerCount, null, currentUrl);
+        var firstId = UCAdmin.listGrid.paginate.getFirstId($tbody);
+        currentUrl = UCAdmin.history.getUrlWithParameter('firstId', firstId, null, currentUrl);
+        var lowerCount = UCAdmin.listGrid.paginate.getLowerCount($tbody);
+        var upperCount = UCAdmin.listGrid.paginate.getUpperCount($tbody);
+        currentUrl = UCAdmin.history.getUrlWithParameter('upperCount', upperCount, null, currentUrl);
+        currentUrl = UCAdmin.history.getUrlWithParameter('lowerCount', lowerCount, null, currentUrl);
         var pageSize = $tbody.closest('.listgrid-container').find('.listgrid-table-footer').find('.result-page-size-input').val();
-        currentUrl = BLCAdmin.history.getUrlWithParameter('pageSize', pageSize, null, currentUrl);
-        var spinnerOffset = $tbody.closest('.mCustomScrollBox').position().top + 3 + (BLCAdmin.listGrid.paginate.getRowHeight($tbody));
-        BLCAdmin.listGrid.showLoadingSpinner($tbody, spinnerOffset);
-        BLC.ajax({
+        currentUrl = UCAdmin.history.getUrlWithParameter('pageSize', pageSize, null, currentUrl);
+        var spinnerOffset = $tbody.closest('.mCustomScrollBox').position().top + 3 + (UCAdmin.listGrid.paginate.getRowHeight($tbody));
+        UCAdmin.listGrid.showLoadingSpinner($tbody, spinnerOffset);
+        UC.ajax({
             url: currentUrl,
             type: "GET"
         }, function(data) {
-            BLCAdmin.listGrid.hideLoadingSpinner($tbody);
-            BLCAdmin.listGrid.replaceRelatedListGrid($(data), null, { isRefresh : false});
+            UCAdmin.listGrid.hideLoadingSpinner($tbody);
+            UCAdmin.listGrid.replaceRelatedListGrid($(data), null, { isRefresh : false});
         });
         return false;
     });
@@ -1156,32 +1156,32 @@ $(document).ready(function() {
         var $bodyWrapper = $parentSpan.siblings('div.listgrid-body-wrapper');
         var $tbody = $bodyWrapper.find('table.list-grid-table').find('tbody');
         var currentUrl = $tbody.closest('table').data('path');
-        if (BLCAdmin.listGrid.isLoading($tbody)) {
+        if (UCAdmin.listGrid.isLoading($tbody)) {
             return false;
         }
-        var lastId = BLCAdmin.listGrid.paginate.getLastId($tbody);
-        currentUrl = BLCAdmin.history.getUrlWithParameter('lastId', lastId, null, currentUrl);
-        var lowerCount = BLCAdmin.listGrid.paginate.getLowerCount($tbody);
-        var upperCount = BLCAdmin.listGrid.paginate.getUpperCount($tbody);
-        currentUrl = BLCAdmin.history.getUrlWithParameter('upperCount', upperCount, null, currentUrl);
-        currentUrl = BLCAdmin.history.getUrlWithParameter('lowerCount', lowerCount, null, currentUrl);
+        var lastId = UCAdmin.listGrid.paginate.getLastId($tbody);
+        currentUrl = UCAdmin.history.getUrlWithParameter('lastId', lastId, null, currentUrl);
+        var lowerCount = UCAdmin.listGrid.paginate.getLowerCount($tbody);
+        var upperCount = UCAdmin.listGrid.paginate.getUpperCount($tbody);
+        currentUrl = UCAdmin.history.getUrlWithParameter('upperCount', upperCount, null, currentUrl);
+        currentUrl = UCAdmin.history.getUrlWithParameter('lowerCount', lowerCount, null, currentUrl);
         var pageSize = $tbody.closest('.listgrid-container').find('.listgrid-table-footer').find('.result-page-size-input').val();
-        currentUrl = BLCAdmin.history.getUrlWithParameter('pageSize', pageSize, null, currentUrl);
-        var spinnerOffset = $tbody.closest('.mCustomScrollBox').position().top + 3 + (BLCAdmin.listGrid.paginate.getRowHeight($tbody));
-        BLCAdmin.listGrid.showLoadingSpinner($tbody, spinnerOffset);
-        BLC.ajax({
+        currentUrl = UCAdmin.history.getUrlWithParameter('pageSize', pageSize, null, currentUrl);
+        var spinnerOffset = $tbody.closest('.mCustomScrollBox').position().top + 3 + (UCAdmin.listGrid.paginate.getRowHeight($tbody));
+        UCAdmin.listGrid.showLoadingSpinner($tbody, spinnerOffset);
+        UC.ajax({
             url: currentUrl,
             type: "GET"
         }, function(data) {
-            BLCAdmin.listGrid.hideLoadingSpinner($tbody);
+            UCAdmin.listGrid.hideLoadingSpinner($tbody);
             var $newTBody = $(data).find('tbody');
-            var totalRecords = BLCAdmin.listGrid.paginate.getTotalRecords($newTBody);
+            var totalRecords = UCAdmin.listGrid.paginate.getTotalRecords($newTBody);
             var $footer = $tbody.closest('.listgrid-container').find('.listgrid-table-footer');
             if (totalRecords === 0) {
                 $footer.find('.next-page').css('display', 'none');
             } else {
                 $footer.find('.next-page').css('display', 'inline');
-                BLCAdmin.listGrid.replaceRelatedListGrid($(data), null, { isRefresh : false});
+                UCAdmin.listGrid.replaceRelatedListGrid($(data), null, { isRefresh : false});
             }
         });
         return false;

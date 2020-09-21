@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
   #%L
-  BroadleafCommerce CMS Module
+  UltraCommerce CMS Module
   %%
-  Copyright (C) 2009 - 2016 Broadleaf Commerce
+  Copyright (C) 2009 - 2016 Ultra Commerce
   %%
-  Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
-  (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
-  unless the restrictions on use therein are violated and require payment to Broadleaf in which case
-  the Broadleaf End User License Agreement (EULA), Version 1.1
-  (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+  Licensed under the Ultra Fair Use License Agreement, Version 1.0
+  (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+  unless the restrictions on use therein are violated and require payment to Ultra in which case
+  the Ultra End User License Agreement (EULA), Version 1.1
+  (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
   shall apply.
   
   Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
-  between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+  between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
   #L%
   -->
 
@@ -22,20 +22,20 @@
     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
     
     <!-- Entity mappings - override for extensibility -->
-    <bean id="org.broadleafcommerce.cms.page.domain.Page" class="org.broadleafcommerce.cms.page.domain.PageImpl" scope="prototype"/>
-    <bean id="org.broadleafcommerce.cms.page.domain.PageAttribute" class="org.broadleafcommerce.cms.page.domain.PageAttributeImpl" scope="prototype"/>
-    <bean id="org.broadleafcommerce.cms.page.domain.PageRule" class="org.broadleafcommerce.cms.page.domain.PageRuleImpl" scope="prototype"/>
+    <bean id="com.ultracommerce.cms.page.domain.Page" class="com.ultracommerce.cms.page.domain.PageImpl" scope="prototype"/>
+    <bean id="com.ultracommerce.cms.page.domain.PageAttribute" class="com.ultracommerce.cms.page.domain.PageAttributeImpl" scope="prototype"/>
+    <bean id="com.ultracommerce.cms.page.domain.PageRule" class="com.ultracommerce.cms.page.domain.PageRuleImpl" scope="prototype"/>
 
-    <bean id="org.broadleafcommerce.cms.page.domain.PageTemplate" class="org.broadleafcommerce.cms.page.domain.PageTemplateImpl" scope="prototype"/>
-    <bean id="org.broadleafcommerce.cms.file.domain.StaticAssetStorage" class="org.broadleafcommerce.cms.file.domain.StaticAssetStorageImpl" scope="prototype"/>
-    <bean id="org.broadleafcommerce.cms.file.domain.StaticAsset" class="org.broadleafcommerce.cms.file.domain.StaticAssetImpl" scope="prototype"/>
-    <bean id="org.broadleafcommerce.cms.structure.domain.StructuredContent" class="org.broadleafcommerce.cms.structure.domain.StructuredContentImpl" scope="prototype"/>
-    <bean id="org.broadleafcommerce.cms.structure.domain.StructuredContentType" class="org.broadleafcommerce.cms.structure.domain.StructuredContentTypeImpl" scope="prototype"/>
-    <bean id="org.broadleafcommerce.cms.structure.domain.StructuredContentFieldTemplate" class="org.broadleafcommerce.cms.structure.domain.StructuredContentFieldTemplateImpl" scope="prototype"/>
-    <bean id="org.broadleafcommerce.cms.structure.domain.StructuredContentRule" class="org.broadleafcommerce.cms.structure.domain.StructuredContentRuleImpl" scope="prototype"/>
-    <bean id="org.broadleafcommerce.cms.url.domain.URLHandler" class="org.broadleafcommerce.cms.url.domain.URLHandlerImpl" scope="prototype"/>
+    <bean id="com.ultracommerce.cms.page.domain.PageTemplate" class="com.ultracommerce.cms.page.domain.PageTemplateImpl" scope="prototype"/>
+    <bean id="com.ultracommerce.cms.file.domain.StaticAssetStorage" class="com.ultracommerce.cms.file.domain.StaticAssetStorageImpl" scope="prototype"/>
+    <bean id="com.ultracommerce.cms.file.domain.StaticAsset" class="com.ultracommerce.cms.file.domain.StaticAssetImpl" scope="prototype"/>
+    <bean id="com.ultracommerce.cms.structure.domain.StructuredContent" class="com.ultracommerce.cms.structure.domain.StructuredContentImpl" scope="prototype"/>
+    <bean id="com.ultracommerce.cms.structure.domain.StructuredContentType" class="com.ultracommerce.cms.structure.domain.StructuredContentTypeImpl" scope="prototype"/>
+    <bean id="com.ultracommerce.cms.structure.domain.StructuredContentFieldTemplate" class="com.ultracommerce.cms.structure.domain.StructuredContentFieldTemplateImpl" scope="prototype"/>
+    <bean id="com.ultracommerce.cms.structure.domain.StructuredContentRule" class="com.ultracommerce.cms.structure.domain.StructuredContentRuleImpl" scope="prototype"/>
+    <bean id="com.ultracommerce.cms.url.domain.URLHandler" class="com.ultracommerce.cms.url.domain.URLHandlerImpl" scope="prototype"/>
 
-    <bean id="org.broadleafcommerce.cms.field.domain.FieldDefinition" class="org.broadleafcommerce.cms.field.domain.FieldDefinitionImpl" scope="prototype"/>
-    <bean id="org.broadleafcommerce.cms.structure.domain.StructuredContentField" class="org.broadleafcommerce.cms.structure.domain.StructuredContentFieldImpl" scope="prototype"/>
+    <bean id="com.ultracommerce.cms.field.domain.FieldDefinition" class="com.ultracommerce.cms.field.domain.FieldDefinitionImpl" scope="prototype"/>
+    <bean id="com.ultracommerce.cms.structure.domain.StructuredContentField" class="com.ultracommerce.cms.structure.domain.StructuredContentFieldImpl" scope="prototype"/>
 
 </beans>

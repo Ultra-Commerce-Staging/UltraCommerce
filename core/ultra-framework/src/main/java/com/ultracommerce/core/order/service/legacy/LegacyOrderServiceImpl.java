@@ -1,65 +1,65 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.order.service.legacy;
+package com.ultracommerce.core.order.service.legacy;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.core.catalog.dao.CategoryDao;
-import org.broadleafcommerce.core.catalog.dao.ProductDao;
-import org.broadleafcommerce.core.catalog.dao.SkuDao;
-import org.broadleafcommerce.core.catalog.domain.Category;
-import org.broadleafcommerce.core.catalog.domain.Product;
-import org.broadleafcommerce.core.catalog.domain.ProductBundle;
-import org.broadleafcommerce.core.catalog.domain.ProductOption;
-import org.broadleafcommerce.core.catalog.domain.ProductOptionValue;
-import org.broadleafcommerce.core.catalog.domain.Sku;
-import org.broadleafcommerce.core.catalog.domain.SkuBundleItem;
-import org.broadleafcommerce.core.order.dao.FulfillmentGroupDao;
-import org.broadleafcommerce.core.order.dao.FulfillmentGroupItemDao;
-import org.broadleafcommerce.core.order.dao.OrderDao;
-import org.broadleafcommerce.core.order.dao.OrderItemDao;
-import org.broadleafcommerce.core.order.domain.BundleOrderItem;
-import org.broadleafcommerce.core.order.domain.DiscreteOrderItem;
-import org.broadleafcommerce.core.order.domain.FulfillmentGroup;
-import org.broadleafcommerce.core.order.domain.FulfillmentGroupItem;
-import org.broadleafcommerce.core.order.domain.Order;
-import org.broadleafcommerce.core.order.domain.OrderItem;
-import org.broadleafcommerce.core.order.domain.OrderItemAttribute;
-import org.broadleafcommerce.core.order.domain.OrderItemAttributeImpl;
-import org.broadleafcommerce.core.order.domain.PersonalMessage;
-import org.broadleafcommerce.core.order.service.FulfillmentGroupService;
-import org.broadleafcommerce.core.order.service.OrderItemService;
-import org.broadleafcommerce.core.order.service.OrderServiceImpl;
-import org.broadleafcommerce.core.order.service.call.BundleOrderItemRequest;
-import org.broadleafcommerce.core.order.service.call.DiscreteOrderItemRequest;
-import org.broadleafcommerce.core.order.service.call.FulfillmentGroupItemRequest;
-import org.broadleafcommerce.core.order.service.call.FulfillmentGroupRequest;
-import org.broadleafcommerce.core.order.service.call.GiftWrapOrderItemRequest;
-import org.broadleafcommerce.core.order.service.call.OrderItemRequestDTO;
-import org.broadleafcommerce.core.order.service.exception.ItemNotFoundException;
-import org.broadleafcommerce.core.order.service.exception.RequiredAttributeNotProvidedException;
-import org.broadleafcommerce.core.order.service.type.OrderItemType;
-import org.broadleafcommerce.core.payment.dao.OrderPaymentDao;
-import org.broadleafcommerce.core.payment.domain.OrderPayment;
-import org.broadleafcommerce.core.pricing.service.exception.PricingException;
-import org.broadleafcommerce.profile.core.domain.Address;
-import org.broadleafcommerce.profile.core.domain.Customer;
+import com.ultracommerce.core.catalog.dao.CategoryDao;
+import com.ultracommerce.core.catalog.dao.ProductDao;
+import com.ultracommerce.core.catalog.dao.SkuDao;
+import com.ultracommerce.core.catalog.domain.Category;
+import com.ultracommerce.core.catalog.domain.Product;
+import com.ultracommerce.core.catalog.domain.ProductBundle;
+import com.ultracommerce.core.catalog.domain.ProductOption;
+import com.ultracommerce.core.catalog.domain.ProductOptionValue;
+import com.ultracommerce.core.catalog.domain.Sku;
+import com.ultracommerce.core.catalog.domain.SkuBundleItem;
+import com.ultracommerce.core.order.dao.FulfillmentGroupDao;
+import com.ultracommerce.core.order.dao.FulfillmentGroupItemDao;
+import com.ultracommerce.core.order.dao.OrderDao;
+import com.ultracommerce.core.order.dao.OrderItemDao;
+import com.ultracommerce.core.order.domain.BundleOrderItem;
+import com.ultracommerce.core.order.domain.DiscreteOrderItem;
+import com.ultracommerce.core.order.domain.FulfillmentGroup;
+import com.ultracommerce.core.order.domain.FulfillmentGroupItem;
+import com.ultracommerce.core.order.domain.Order;
+import com.ultracommerce.core.order.domain.OrderItem;
+import com.ultracommerce.core.order.domain.OrderItemAttribute;
+import com.ultracommerce.core.order.domain.OrderItemAttributeImpl;
+import com.ultracommerce.core.order.domain.PersonalMessage;
+import com.ultracommerce.core.order.service.FulfillmentGroupService;
+import com.ultracommerce.core.order.service.OrderItemService;
+import com.ultracommerce.core.order.service.OrderServiceImpl;
+import com.ultracommerce.core.order.service.call.BundleOrderItemRequest;
+import com.ultracommerce.core.order.service.call.DiscreteOrderItemRequest;
+import com.ultracommerce.core.order.service.call.FulfillmentGroupItemRequest;
+import com.ultracommerce.core.order.service.call.FulfillmentGroupRequest;
+import com.ultracommerce.core.order.service.call.GiftWrapOrderItemRequest;
+import com.ultracommerce.core.order.service.call.OrderItemRequestDTO;
+import com.ultracommerce.core.order.service.exception.ItemNotFoundException;
+import com.ultracommerce.core.order.service.exception.RequiredAttributeNotProvidedException;
+import com.ultracommerce.core.order.service.type.OrderItemType;
+import com.ultracommerce.core.payment.dao.OrderPaymentDao;
+import com.ultracommerce.core.payment.domain.OrderPayment;
+import com.ultracommerce.core.pricing.service.exception.PricingException;
+import com.ultracommerce.profile.core.domain.Address;
+import com.ultracommerce.profile.core.domain.Customer;
 
 import javax.annotation.Resource;
 import java.lang.reflect.InvocationTargetException;
@@ -80,28 +80,28 @@ public class LegacyOrderServiceImpl extends OrderServiceImpl implements LegacyOr
 
     private static final Log LOG = LogFactory.getLog(LegacyOrderServiceImpl.class);
 
-    @Resource(name = "blFulfillmentGroupDao")
+    @Resource(name = "ucFulfillmentGroupDao")
     protected FulfillmentGroupDao fulfillmentGroupDao;
 
-    @Resource(name = "blFulfillmentGroupItemDao")
+    @Resource(name = "ucFulfillmentGroupItemDao")
     protected FulfillmentGroupItemDao fulfillmentGroupItemDao;
 
-    @Resource(name = "blOrderItemService")
+    @Resource(name = "ucOrderItemService")
     protected OrderItemService orderItemService;
 
-    @Resource(name = "blOrderItemDao")
+    @Resource(name = "ucOrderItemDao")
     protected OrderItemDao orderItemDao;
 
-    @Resource(name = "blSkuDao")
+    @Resource(name = "ucSkuDao")
     protected SkuDao skuDao;
 
-    @Resource(name = "blProductDao")
+    @Resource(name = "ucProductDao")
     protected ProductDao productDao;
 
-    @Resource(name = "blCategoryDao")
+    @Resource(name = "ucCategoryDao")
     protected CategoryDao categoryDao;
     
-    @Resource(name = "blFulfillmentGroupService")
+    @Resource(name = "ucFulfillmentGroupService")
     protected FulfillmentGroupService fulfillmentGroupService;
 
     @Override

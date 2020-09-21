@@ -190,16 +190,16 @@
 
         tabifier: true,
         
-        /* START BLC MODIFICATION */
+        /* START UC MODIFICATION */
         deniedTags: [ 'noscript', 'script', 'style'],
-        /* END BLC MODIFICATION */
+        /* END UC MODIFICATION */
         allowedTags: false, // or array
 
-        /* START BLC MODIFICATION */
+        /* START UC MODIFICATION */
         paragraphizeBlocks: ['table', 'div', 'pre', 'form', 'ul', 'ol', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'dl', 'blockquote', 'figcaption',
                             'address', 'section', 'header', 'footer', 'aside', 'article', 'object', 'style', 'noscript', 'script', 'iframe', 'select', 'input', 'textarea',
                             'button', 'option', 'map', 'area', 'math', 'hr', 'fieldset', 'legend', 'hgroup', 'nav', 'figure', 'details', 'menu', 'summary', 'p'],
-        /* END BLC MODIFICATION */
+        /* END UC MODIFICATION */
 
         removeComments: false,
         replaceTags: [
@@ -2017,10 +2017,10 @@
                     // convert script tag
                     html = html.replace(/<script(.*?[^>]?)>([\w\W]*?)<\/script>/gi, '<pre class="redactor-script-tag" style="display: none;" $1>$2</pre>');
 
-                    /* START BLC MODIFICATION */
+                    /* START UC MODIFICATION */
                     // convert noscript tag
                     html = html.replace(/<noscript(.*?[^>]?)>([\w\W]*?)<\/noscript>/gi, '<pre class="redactor-noscript-tag" style="display: none;" $1>$2</pre>');
-                    /* END BLC MODIFICATION */
+                    /* END UC MODIFICATION */
 
                     // replace dollar sign to entity
                     html = html.replace(/\$/g, '&#36;');
@@ -2092,7 +2092,7 @@
                     // reconvert script tag
                     html = html.replace(/<pre class="redactor-script-tag" style="display: none;"(.*?[^>]?)>([\w\W]*?)<\/pre>/gi, '<script$1>$2</script>');
 
-                    /* START BLC MODIFICATION */
+                    /* START UC MODIFICATION */
                     // unconvert dollar sign only in script tags, and unconvert `<!-- -->` back to `<![[ ]]>`
                      html = html.replace(/(<script)(.*?[^>]?)>([\w\W]*?)(<\/script>)/gi,
                          function(match, scriptOpen, tagAttributes, content, scriptClose, offset, string) {
@@ -2103,7 +2103,7 @@
                                  .replace(/(--)(>)/g, '$2');
                              return scriptOpen + tagAttributes + '>' + content + scriptClose;
                          });
-                    /* END BLC MODIFICATION */
+                    /* END UC MODIFICATION */
 
                     // restore form tag
                     html = this.clean.restoreFormTags(html);
@@ -2114,9 +2114,9 @@
                         '\u2026': '&hellip;',
                         '\u2014': '&mdash;',
                         '\u2010': '&dash;'
-                        // START BLC_MODIFICATION
+                        // START UC_MODIFICATION
                         ,'\u00ae': '&reg;'
-                        // END BLC MODIFICATION
+                        // END UC MODIFICATION
                     };
                     // replace special characters
                     $.each(chars, function(i,s)
@@ -2187,10 +2187,10 @@
 
                     html = html.replace(/&amp;/g, '&');
 
-                    /* START BLC MODIFICATION */
+                    /* START UC MODIFICATION */
                     // reconvert noscript tag
                     html = html.replace(/<pre class="redactor-noscript-tag" style="display: none;"(.*?[^>]?)>([\w\W]*?)<\/pre>/gi, '<noscript$1>$2</noscript>');
-                    /* END BLC MODIFICATION */
+                    /* END UC MODIFICATION */
 
                     return html;
                 },
@@ -2310,10 +2310,10 @@
                         // comments
                         html = html.replace(/<!--[\s\S]+?-->/gi, '');
 
-                        /* START BLC MODIFICATION */
+                        /* START UC MODIFICATION */
                         // scripts
                         html = html.replace(/<(!|script[^>]*>.*?<\/script(?=[>\s])|noscript[^>]*>.*?<\/noscript(?=[>\s])|\/?(\?xml(:\w+)?|img|meta|link|style|\w:\w+)(?=[\s\/>]))[^>]*>/gi, '');
-                        /* END BLC MODIFICATION */
+                        /* END UC MODIFICATION */
 
                         // Convert <s> into <strike>
                         html = html.replace(/<(\/?)s>/gi, "<$1strike>");
@@ -5127,7 +5127,7 @@
                             }
                             else if (this.utils.isEndOfElement() && (current && current != 'SPAN'))
                             {
-                                return this.keydown.insertDblBreakLine(e);
+                                return this.keydown.insertDucBreakLine(e);
                             }
                             else
                             {
@@ -5148,13 +5148,13 @@
                                 this.caret.setAfter(current);
                                 $(current).contents().unwrap();
 
-                                return this.keydown.insertDblBreakLine(e);
+                                return this.keydown.insertDucBreakLine(e);
                             }
                             else
                             {
                                 if (this.utils.isEndOfEditor())
                                 {
-                                    return this.keydown.insertDblBreakLine(e);
+                                    return this.keydown.insertDucBreakLine(e);
                                 }
                                 else if ($next.length === 0 && current === false && typeof $next.context != 'undefined')
                                 {
@@ -5362,7 +5362,7 @@
 
                     if (this.utils.isEndOfElement())
                     {
-                        return this.keydown.insertDblBreakLine(e);
+                        return this.keydown.insertDucBreakLine(e);
                     }
 
                     return this.keydown.insertBreakLine(e);
@@ -5535,7 +5535,7 @@
                 {
                     return this.keydown.insertBreakLineProcessing(e);
                 },
-                insertDblBreakLine: function(e)
+                insertDucBreakLine: function(e)
                 {
                     return this.keydown.insertBreakLineProcessing(e, true);
                 },
@@ -8006,9 +8006,9 @@
                     // clean setup
                     var ownLine = ['area', 'body', 'head', 'hr', 'i?frame', 'link', 'meta', 'noscript', 'style', 'script', 'table', 'tbody', 'thead', 'tfoot'];
                     
-                    /* START BLC MODIFICATION */
+                    /* START UC MODIFICATION */
                     var contOwnLine = ['li', 'dt', 'dt', 'h[1-6]', 'option', 'noscript', 'script'];
-                    /* END BLC MODIFICATION */
+                    /* END UC MODIFICATION */
                     
                     var newLevel = ['p', 'blockquote', 'div', 'dl', 'fieldset', 'form', 'frameset', 'map', 'ol', 'pre', 'select', 'td', 'th', 'tr', 'ul'];
 
@@ -8102,9 +8102,9 @@
                         {
                             out += tag + '>\n';
                         }
-                        /* START BLC MODIFICATION */
+                        /* START UC MODIFICATION */
                         else if (t = tag.match(/^<(noscript|script|style|pre)/i))
-                        /* END BLC MODIFICATION */
+                        /* END UC MODIFICATION */
                         {
                             t[1] = t[1].toLowerCase();
                             tag = this.tabifier.cleanTag(tag);
@@ -8142,9 +8142,9 @@
                     code = code.replace(/\n\s*\n/g, '\n');
                     code = code.replace(/^[\s\n]*/, '');
                     code = code.replace(/[\s\n]*$/, '');
-                    /* START BLC MODIFICATION */
+                    /* START UC MODIFICATION */
                     code = code.replace(/<noscript(.*?)>\n<\/noscript>/gi, '<noscript$1></noscript>');
-                    /* END BLC MODIFICATION */
+                    /* END UC MODIFICATION */
                     code = code.replace(/<script(.*?)>\n<\/script>/gi, '<script$1></script>');
 
                     this.tabifier.cleanlevel = 0;
@@ -8282,7 +8282,7 @@
 
                     html = this.tidy.$div.html();
 
-                    // START BLC MODIFICATION
+                    // START UC MODIFICATION
                     // The existing Redactor code does the right thing above in the onSync method and the resulting
                     // HTML that is passed to tidy correctly replaces the unicode with their html entities. However,
                     // the above invocation ($div.html()) decodes the HTML entities to replace them with their unicode
@@ -8302,7 +8302,7 @@
                     {
                         html = html.replace(new RegExp(i, 'g'), s);
                     });
-                    // END BLC MODIFICATION
+                    // END UC MODIFICATION
 
                     this.tidy.$div.remove();
 
@@ -8374,9 +8374,9 @@
                     {
                         this.tidy.$div.find(this.tidy.settings.deniedTags.join(',')).each(function(i, s)
                         {
-                            /* START BLC MODIFICATION */
+                            /* START UC MODIFICATION */
                             if ($(s).hasClass('redactor-noscript-tag')||$(s).hasClass('redactor-script-tag') || $(s).hasClass('redactor-selection-marker')) return;
-                            /* END BLC MODIFICATION */
+                            /* END UC MODIFICATION */
 
                             if (s.innerHTML === '') $(s).remove();
                             else $(s).contents().unwrap();

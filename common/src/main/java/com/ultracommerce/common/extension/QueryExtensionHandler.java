@@ -1,21 +1,21 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.extension;
+package com.ultracommerce.common.extension;
 
 import java.util.List;
 
@@ -33,7 +33,7 @@ import javax.persistence.criteria.Root;
 public interface QueryExtensionHandler extends ExtensionHandler {
 
     /**
-     * Perform any setup operations. This is usually done before executing the query and can serve to prepare the BroadleafRequestContext (if applicable).
+     * Perform any setup operations. This is usually done before executing the query and can serve to prepare the UltraRequestContext (if applicable).
      *
      * @param type the class type for the query (can be null)
      * @param config pass information to the handler, perhaps to be used by the handler to determine suitability (can be null)
@@ -79,7 +79,7 @@ public interface QueryExtensionHandler extends ExtensionHandler {
     public ExtensionResultStatusType refineResults(Class<?> type, String[] config, List queryResults, ExtensionResultHolder<List> response);
 
     /**
-     * Perform any breakdown operations. This is usually done after executing the query and can serve to reset the BroadleafRequestContext (if applicable)
+     * Perform any breakdown operations. This is usually done after executing the query and can serve to reset the UltraRequestContext (if applicable)
      *
      * @param type the class type for the query (can be null)
      * @param config pass information to the handler, perhaps to be used by the handler to determine suitability (can be null)

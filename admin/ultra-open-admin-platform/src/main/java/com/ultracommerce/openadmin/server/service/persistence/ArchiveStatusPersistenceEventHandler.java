@@ -1,37 +1,37 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.openadmin.server.service.persistence;
+package com.ultracommerce.openadmin.server.service.persistence;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.exception.ServiceException;
-import org.broadleafcommerce.common.persistence.Status;
-import org.broadleafcommerce.common.presentation.client.PersistencePerspectiveItemType;
-import org.broadleafcommerce.openadmin.dto.AdornedTargetList;
-import org.broadleafcommerce.openadmin.dto.CriteriaTransferObject;
-import org.broadleafcommerce.openadmin.dto.PersistencePackage;
-import org.broadleafcommerce.openadmin.server.service.persistence.extension.ArchiveStatusPersistenceEventHandlerExtensionManager;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.EmptyFilterValues;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.criteria.FieldPath;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.criteria.FieldPathBuilder;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.criteria.FilterMapping;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.criteria.Restriction;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.criteria.predicate.PredicateProvider;
+import com.ultracommerce.common.exception.ServiceException;
+import com.ultracommerce.common.persistence.Status;
+import com.ultracommerce.common.presentation.client.PersistencePerspectiveItemType;
+import com.ultracommerce.openadmin.dto.AdornedTargetList;
+import com.ultracommerce.openadmin.dto.CriteriaTransferObject;
+import com.ultracommerce.openadmin.dto.PersistencePackage;
+import com.ultracommerce.openadmin.server.service.persistence.extension.ArchiveStatusPersistenceEventHandlerExtensionManager;
+import com.ultracommerce.openadmin.server.service.persistence.module.EmptyFilterValues;
+import com.ultracommerce.openadmin.server.service.persistence.module.criteria.FieldPath;
+import com.ultracommerce.openadmin.server.service.persistence.module.criteria.FieldPathBuilder;
+import com.ultracommerce.openadmin.server.service.persistence.module.criteria.FilterMapping;
+import com.ultracommerce.openadmin.server.service.persistence.module.criteria.Restriction;
+import com.ultracommerce.openadmin.server.service.persistence.module.criteria.predicate.PredicateProvider;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -49,12 +49,12 @@ import javax.persistence.criteria.Predicate;
  * 
  * @author Phillip Verheyden (phillipuniverse)
  */
-@Component("blArchiveStatusPersistenceEventHandler")
+@Component("ucArchiveStatusPersistenceEventHandler")
 public class ArchiveStatusPersistenceEventHandler extends PersistenceManagerEventHandlerAdapter {
 
     private static final Log LOG = LogFactory.getLog(ArchiveStatusPersistenceEventHandler.class);
 
-    @Resource(name = "blArchiveStatusPersistenceEventHandlerExtensionManager")
+    @Resource(name = "ucArchiveStatusPersistenceEventHandlerExtensionManager")
     protected ArchiveStatusPersistenceEventHandlerExtensionManager extensionManager;
     
     @Override

@@ -1,50 +1,50 @@
 /*
  * #%L
- * BroadleafCommerce Framework Web
+ * UltraCommerce Framework Web
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.web.controller.checkout;
+package com.ultracommerce.core.web.controller.checkout;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.i18n.service.ISOService;
-import org.broadleafcommerce.common.payment.service.PaymentGatewayCheckoutService;
-import org.broadleafcommerce.common.web.controller.BroadleafAbstractController;
-import org.broadleafcommerce.core.checkout.service.CheckoutService;
-import org.broadleafcommerce.core.order.service.FulfillmentGroupService;
-import org.broadleafcommerce.core.order.service.FulfillmentOptionService;
-import org.broadleafcommerce.core.order.service.OrderMultishipOptionService;
-import org.broadleafcommerce.core.order.service.OrderService;
-import org.broadleafcommerce.core.payment.service.OrderPaymentService;
-import org.broadleafcommerce.core.payment.service.OrderToPaymentRequestDTOService;
-import org.broadleafcommerce.core.web.checkout.validator.BillingInfoFormValidator;
-import org.broadleafcommerce.core.web.checkout.validator.CheckoutPaymentInfoFormValidator;
-import org.broadleafcommerce.core.web.checkout.validator.GiftCardInfoFormValidator;
-import org.broadleafcommerce.core.web.checkout.validator.MultishipAddAddressFormValidator;
-import org.broadleafcommerce.core.web.checkout.validator.OrderInfoFormValidator;
-import org.broadleafcommerce.core.web.checkout.validator.ShippingInfoFormValidator;
-import org.broadleafcommerce.core.web.order.service.CartStateService;
-import org.broadleafcommerce.core.web.service.InitBinderService;
-import org.broadleafcommerce.profile.core.service.AddressService;
-import org.broadleafcommerce.profile.core.service.CountryService;
-import org.broadleafcommerce.profile.core.service.CountrySubdivisionService;
-import org.broadleafcommerce.profile.core.service.CustomerAddressService;
-import org.broadleafcommerce.profile.core.service.CustomerPaymentService;
-import org.broadleafcommerce.profile.core.service.CustomerService;
-import org.broadleafcommerce.profile.core.service.PhoneService;
-import org.broadleafcommerce.profile.core.service.StateService;
+import com.ultracommerce.common.i18n.service.ISOService;
+import com.ultracommerce.common.payment.service.PaymentGatewayCheckoutService;
+import com.ultracommerce.common.web.controller.UltraAbstractController;
+import com.ultracommerce.core.checkout.service.CheckoutService;
+import com.ultracommerce.core.order.service.FulfillmentGroupService;
+import com.ultracommerce.core.order.service.FulfillmentOptionService;
+import com.ultracommerce.core.order.service.OrderMultishipOptionService;
+import com.ultracommerce.core.order.service.OrderService;
+import com.ultracommerce.core.payment.service.OrderPaymentService;
+import com.ultracommerce.core.payment.service.OrderToPaymentRequestDTOService;
+import com.ultracommerce.core.web.checkout.validator.BillingInfoFormValidator;
+import com.ultracommerce.core.web.checkout.validator.CheckoutPaymentInfoFormValidator;
+import com.ultracommerce.core.web.checkout.validator.GiftCardInfoFormValidator;
+import com.ultracommerce.core.web.checkout.validator.MultishipAddAddressFormValidator;
+import com.ultracommerce.core.web.checkout.validator.OrderInfoFormValidator;
+import com.ultracommerce.core.web.checkout.validator.ShippingInfoFormValidator;
+import com.ultracommerce.core.web.order.service.CartStateService;
+import com.ultracommerce.core.web.service.InitBinderService;
+import com.ultracommerce.profile.core.service.AddressService;
+import com.ultracommerce.profile.core.service.CountryService;
+import com.ultracommerce.profile.core.service.CountrySubdivisionService;
+import com.ultracommerce.profile.core.service.CustomerAddressService;
+import com.ultracommerce.profile.core.service.CustomerPaymentService;
+import com.ultracommerce.profile.core.service.CustomerService;
+import com.ultracommerce.profile.core.service.PhoneService;
+import com.ultracommerce.profile.core.service.StateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.ui.Model;
@@ -61,7 +61,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author Elbert Bautista (elbertbautista)
  * @author Joshua Skorton (jskorton)
  */
-public abstract class AbstractCheckoutController extends BroadleafAbstractController {
+public abstract class AbstractCheckoutController extends UltraAbstractController {
 
     private static final Log LOG = LogFactory.getLog(AbstractCheckoutController.class);
 
@@ -75,86 +75,86 @@ public abstract class AbstractCheckoutController extends BroadleafAbstractContro
 
     /* Optional Service */
     @Autowired(required=false)
-    @Qualifier("blPaymentGatewayCheckoutService")
+    @Qualifier("ucPaymentGatewayCheckoutService")
     protected PaymentGatewayCheckoutService paymentGatewayCheckoutService;
 
     /* Services */
-    @Resource(name = "blOrderService")
+    @Resource(name = "ucOrderService")
     protected OrderService orderService;
 
-    @Resource(name = "blOrderPaymentService")
+    @Resource(name = "ucOrderPaymentService")
     protected OrderPaymentService orderPaymentService;
 
-    @Resource(name = "blOrderToPaymentRequestDTOService")
+    @Resource(name = "ucOrderToPaymentRequestDTOService")
     protected OrderToPaymentRequestDTOService dtoTranslationService;
 
-    @Resource(name = "blFulfillmentGroupService")
+    @Resource(name = "ucFulfillmentGroupService")
     protected FulfillmentGroupService fulfillmentGroupService;
 
-    @Resource(name = "blFulfillmentOptionService")
+    @Resource(name = "ucFulfillmentOptionService")
     protected FulfillmentOptionService fulfillmentOptionService;
 
-    @Resource(name = "blCheckoutService")
+    @Resource(name = "ucCheckoutService")
     protected CheckoutService checkoutService;
     
-    @Resource(name = "blCustomerService")
+    @Resource(name = "ucCustomerService")
     protected CustomerService customerService;
 
-    @Resource(name = "blCustomerPaymentService")
+    @Resource(name = "ucCustomerPaymentService")
     protected CustomerPaymentService customerPaymentService;
 
-    @Resource(name = "blStateService")
+    @Resource(name = "ucStateService")
     protected StateService stateService;
 
-    @Resource(name = "blCountryService")
+    @Resource(name = "ucCountryService")
     protected CountryService countryService;
 
-    @Resource(name = "blCountrySubdivisionService")
+    @Resource(name = "ucCountrySubdivisionService")
     protected CountrySubdivisionService countrySubdivisionService;
 
-    @Resource(name = "blISOService")
+    @Resource(name = "ucISOService")
     protected ISOService isoService;
 
-    @Resource(name = "blCustomerAddressService")
+    @Resource(name = "ucCustomerAddressService")
     protected CustomerAddressService customerAddressService;
 
-    @Resource(name = "blAddressService")
+    @Resource(name = "ucAddressService")
     protected AddressService addressService;
 
-    @Resource(name = "blPhoneService")
+    @Resource(name = "ucPhoneService")
     protected PhoneService phoneService;
 
-    @Resource(name = "blOrderMultishipOptionService")
+    @Resource(name = "ucOrderMultishipOptionService")
     protected OrderMultishipOptionService orderMultishipOptionService;
 
     /* Validators */
-    @Resource(name = "blShippingInfoFormValidator")
+    @Resource(name = "ucShippingInfoFormValidator")
     protected ShippingInfoFormValidator shippingInfoFormValidator;
 
-    @Resource(name = "blBillingInfoFormValidator")
+    @Resource(name = "ucBillingInfoFormValidator")
     protected BillingInfoFormValidator billingInfoFormValidator;
 
-    @Resource(name = "blCheckoutPaymentInfoFormValidator")
+    @Resource(name = "ucCheckoutPaymentInfoFormValidator")
     protected CheckoutPaymentInfoFormValidator paymentInfoFormValidator;
 
-    @Resource(name = "blGiftCardInfoFormValidator")
+    @Resource(name = "ucGiftCardInfoFormValidator")
     protected GiftCardInfoFormValidator giftCardInfoFormValidator;
 
-    @Resource(name = "blMultishipAddAddressFormValidator")
+    @Resource(name = "ucMultishipAddAddressFormValidator")
     protected MultishipAddAddressFormValidator multishipAddAddressFormValidator;
 
-    @Resource(name = "blOrderInfoFormValidator")
+    @Resource(name = "ucOrderInfoFormValidator")
     protected OrderInfoFormValidator orderInfoFormValidator;
 
-    @Resource(name = "blCartStateService")
+    @Resource(name = "ucCartStateService")
     protected CartStateService cartStateService;
 
-    @Resource(name = "blInitBinderService")
+    @Resource(name = "ucInitBinderService")
     protected InitBinderService initBinderService;
 
     /* Extension Managers */
-    @Resource(name = "blCheckoutControllerExtensionManager")
-    protected BroadleafCheckoutControllerExtensionManager checkoutControllerExtensionManager;
+    @Resource(name = "ucCheckoutControllerExtensionManager")
+    protected UltraCheckoutControllerExtensionManager checkoutControllerExtensionManager;
 
     /* Views and Redirects */
     public String getCartPageRedirect() {

@@ -1,27 +1,27 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.openadmin.web.filter;
+package com.ultracommerce.openadmin.web.filter;
 
-import org.broadleafcommerce.common.persistence.EntityConfiguration;
-import org.broadleafcommerce.common.security.BroadleafExternalAuthenticationUserDetails;
-import org.broadleafcommerce.openadmin.server.security.domain.AdminRole;
-import org.broadleafcommerce.openadmin.server.security.domain.AdminUser;
-import org.broadleafcommerce.openadmin.server.security.service.AdminSecurityService;
+import com.ultracommerce.common.persistence.EntityConfiguration;
+import com.ultracommerce.common.security.UltraExternalAuthenticationUserDetails;
+import com.ultracommerce.openadmin.server.security.domain.AdminRole;
+import com.ultracommerce.openadmin.server.security.domain.AdminUser;
+import com.ultracommerce.openadmin.server.security.service.AdminSecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.Authentication;
@@ -45,12 +45,12 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * This class provides a filter to be used with External Security Providers (e.g. LDAP).  When authentication is performed against
- * another system it is important to provision an admin user in Broadleaf and set up the appropriate roles.
+ * another system it is important to provision an admin user in Ultra and set up the appropriate roles.
  * This class checks to see if a user exists and if not, creates one.  It also replaces all roles associated with a user with roles that
  * match their Authentication credentials.  DO NOT USE THIS FILTER UNLESS YOU ARE AUTHENTICATING AGAINST AN EXTERNAL
  * SOURCE SUCH AS LDAP.
  *
- * @deprecated NO LONGER REQUIRED AND SHOULD NOT BE USED. SEE BroadleafAdminLdapUserDetailsMapper.
+ * @deprecated NO LONGER REQUIRED AND SHOULD NOT BE USED. SEE UltraAdminLdapUserDetailsMapper.
  *
  * <p/>
  * User: Kelly Tisdell
@@ -59,35 +59,35 @@ import javax.servlet.http.HttpServletRequest;
 @Deprecated
 public class AdminExternalLoginStateFilter extends GenericFilterBean {
 
-    protected static final String BLC_ADMIN_PROVISION_USER_CHECK = "BLC_ADMIN_PROVISION_USER_CHECK";
+    protected static final String UC_ADMIN_PROVISION_USER_CHECK = "UC_ADMIN_PROVISION_USER_CHECK";
 
     @Autowired
-    @Qualifier("blAdminSecurityService")
+    @Qualifier("ucAdminSecurityService")
     private AdminSecurityService adminSecurityService;
 
     @Autowired
-    @Qualifier("blEntityConfiguration")
+    @Qualifier("ucEntityConfiguration")
     private EntityConfiguration entityConfiguration;
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
 
         HttpServletRequest request = (HttpServletRequest)servletRequest;
-        if (request.getSession(true).getAttribute(BLC_ADMIN_PROVISION_USER_CHECK) == null) {
+        if (request.getSession(true).getAttribute(UC_ADMIN_PROVISION_USER_CHECK) == null) {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             if (authentication != null && authentication.isAuthenticated()) {
                 if (authentication.getPrincipal() instanceof UserDetails){
                     UserDetails userDetails = (UserDetails)authentication.getPrincipal();
                     if (userDetails != null && userDetails.getUsername() != null) {
                         AdminUser user = adminSecurityService.readAdminUserByUserName(userDetails.getUsername());
-                        if (userDetails instanceof BroadleafExternalAuthenticationUserDetails) {
-                            BroadleafExternalAuthenticationUserDetails broadleafUser = (BroadleafExternalAuthenticationUserDetails)userDetails;
+                        if (userDetails instanceof UltraExternalAuthenticationUserDetails) {
+                            UltraExternalAuthenticationUserDetails ultraUser = (UltraExternalAuthenticationUserDetails)userDetails;
                             if (user == null) {
                                 //Provision a new user...
                                 user = (AdminUser)entityConfiguration.createEntityInstance(AdminUser.class.getName());
                             }
-                            saveAdminUser(broadleafUser, user);
-                            request.getSession().setAttribute(BLC_ADMIN_PROVISION_USER_CHECK, Boolean.TRUE);
+                            saveAdminUser(ultraUser, user);
+                            request.getSession().setAttribute(UC_ADMIN_PROVISION_USER_CHECK, Boolean.TRUE);
                         }
 
                     }
@@ -98,10 +98,10 @@ public class AdminExternalLoginStateFilter extends GenericFilterBean {
         filterChain.doFilter(servletRequest, servletResponse);
     }
 
-    protected void saveAdminUser(BroadleafExternalAuthenticationUserDetails broadleafUser, AdminUser user) {
+    protected void saveAdminUser(UltraExternalAuthenticationUserDetails ultraUser, AdminUser user) {
         //Name, login, password, email are required.
-        user.setLogin(broadleafUser.getUsername());
-        user.setUnencodedPassword(broadleafUser.getPassword());
+        user.setLogin(ultraUser.getUsername());
+        user.setUnencodedPassword(ultraUser.getPassword());
 
         if (user.getUnencodedPassword() == null) {
             //If Spring is configured to erase credentials, then this will always be null
@@ -110,17 +110,17 @@ public class AdminExternalLoginStateFilter extends GenericFilterBean {
         }
 
         StringBuffer name = new StringBuffer();
-        if (broadleafUser.getFirstName() != null && broadleafUser.getFirstName().trim().length() > 0) {
-            name.append(broadleafUser.getFirstName().trim());
+        if (ultraUser.getFirstName() != null && ultraUser.getFirstName().trim().length() > 0) {
+            name.append(ultraUser.getFirstName().trim());
             name.append(" ");
         }
 
-        if (broadleafUser.getLastName() != null && broadleafUser.getLastName().trim().length() > 0) {
-            name.append(broadleafUser.getLastName().trim());
+        if (ultraUser.getLastName() != null && ultraUser.getLastName().trim().length() > 0) {
+            name.append(ultraUser.getLastName().trim());
         }
 
         user.setName(name.toString());
-        user.setEmail(broadleafUser.getEmail());
+        user.setEmail(ultraUser.getEmail());
 
         Set<AdminRole> roleSet = user.getAllRoles();
         //First, remove all roles associated with the user if they already existed
@@ -138,7 +138,7 @@ public class AdminExternalLoginStateFilter extends GenericFilterBean {
             for (AdminRole role : availableRoles) {
                roleMap.put(role.getName(), role);
             }
-            Collection<GrantedAuthority> authorities = broadleafUser.getAuthorities();
+            Collection<GrantedAuthority> authorities = ultraUser.getAuthorities();
             for (GrantedAuthority authority : authorities) {
                 if (roleMap.get(authority.getAuthority()) != null){
                     roleSet.add(roleMap.get(authority.getAuthority()));

@@ -1,32 +1,32 @@
 /*
  * #%L
- * BroadleafCommerce Framework Web
+ * UltraCommerce Framework Web
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
 
-package org.broadleafcommerce.core.web.processor;
+package com.ultracommerce.core.web.processor;
 
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
-import org.broadleafcommerce.core.search.domain.SearchCriteria;
-import org.broadleafcommerce.core.search.domain.SearchFacetDTO;
-import org.broadleafcommerce.core.web.service.SearchFacetDTOService;
-import org.broadleafcommerce.core.web.util.ProcessorUtils;
-import org.broadleafcommerce.presentation.condition.ConditionalOnTemplating;
-import org.broadleafcommerce.presentation.dialect.AbstractBroadleafAttributeModifierProcessor;
-import org.broadleafcommerce.presentation.model.BroadleafAttributeModifier;
-import org.broadleafcommerce.presentation.model.BroadleafTemplateContext;
+import com.ultracommerce.common.web.UltraRequestContext;
+import com.ultracommerce.core.search.domain.SearchCriteria;
+import com.ultracommerce.core.search.domain.SearchFacetDTO;
+import com.ultracommerce.core.web.service.SearchFacetDTOService;
+import com.ultracommerce.core.web.util.ProcessorUtils;
+import com.ultracommerce.presentation.condition.ConditionalOnTemplating;
+import com.ultracommerce.presentation.dialect.AbstractUltraAttributeModifierProcessor;
+import com.ultracommerce.presentation.model.UltraAttributeModifier;
+import com.ultracommerce.presentation.model.UltraTemplateContext;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -42,11 +42,11 @@ import javax.servlet.http.HttpServletRequest;
  * 
  * @author apazzolini
  */
-@Component("blRemoveFacetValuesLinkProcessor")
+@Component("ucRemoveFacetValuesLinkProcessor")
 @ConditionalOnTemplating
-public class RemoveFacetValuesLinkProcessor extends AbstractBroadleafAttributeModifierProcessor {
+public class RemoveFacetValuesLinkProcessor extends AbstractUltraAttributeModifierProcessor {
 
-    @Resource(name = "blSearchFacetDTOService")
+    @Resource(name = "ucSearchFacetDTOService")
     protected SearchFacetDTOService searchFacetDTOService;
 
     @Override
@@ -60,9 +60,9 @@ public class RemoveFacetValuesLinkProcessor extends AbstractBroadleafAttributeMo
     }
 
     @Override
-    public BroadleafAttributeModifier getModifiedAttributes(String tagName, Map<String, String> tagAttributes, String attributeName, String attributeValue, BroadleafTemplateContext context) {
-        BroadleafRequestContext blcContext = BroadleafRequestContext.getBroadleafRequestContext();
-        HttpServletRequest request = blcContext.getRequest();
+    public UltraAttributeModifier getModifiedAttributes(String tagName, Map<String, String> tagAttributes, String attributeName, String attributeValue, UltraTemplateContext context) {
+        UltraRequestContext ucContext = UltraRequestContext.getUltraRequestContext();
+        HttpServletRequest request = ucContext.getRequest();
 
         String baseUrl = request.getRequestURL().toString();
         Map<String, String[]> params = new HashMap<>(request.getParameterMap());
@@ -76,6 +76,6 @@ public class RemoveFacetValuesLinkProcessor extends AbstractBroadleafAttributeMo
         String url = ProcessorUtils.getUrl(baseUrl, params);
         Map<String, String> newAttributes = new HashMap<>();
         newAttributes.put("href", url);
-        return new BroadleafAttributeModifier(newAttributes);
+        return new UltraAttributeModifier(newAttributes);
     }
 }

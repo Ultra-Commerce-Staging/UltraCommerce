@@ -1,33 +1,33 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.order.domain;
+package com.ultracommerce.core.order.domain;
 
-import org.broadleafcommerce.common.copy.CreateResponse;
-import org.broadleafcommerce.common.copy.MultiTenantCopyContext;
-import org.broadleafcommerce.common.currency.util.BroadleafCurrencyUtils;
-import org.broadleafcommerce.common.currency.util.CurrencyCodeIdentifiable;
-import org.broadleafcommerce.common.money.Money;
-import org.broadleafcommerce.common.presentation.AdminPresentation;
-import org.broadleafcommerce.common.presentation.client.SupportedFieldType;
-import org.broadleafcommerce.common.presentation.override.AdminPresentationMergeEntry;
-import org.broadleafcommerce.common.presentation.override.AdminPresentationMergeOverride;
-import org.broadleafcommerce.common.presentation.override.AdminPresentationMergeOverrides;
-import org.broadleafcommerce.common.presentation.override.PropertyType;
+import com.ultracommerce.common.copy.CreateResponse;
+import com.ultracommerce.common.copy.MultiTenantCopyContext;
+import com.ultracommerce.common.currency.util.UltraCurrencyUtils;
+import com.ultracommerce.common.currency.util.CurrencyCodeIdentifiable;
+import com.ultracommerce.common.money.Money;
+import com.ultracommerce.common.presentation.AdminPresentation;
+import com.ultracommerce.common.presentation.client.SupportedFieldType;
+import com.ultracommerce.common.presentation.override.AdminPresentationMergeEntry;
+import com.ultracommerce.common.presentation.override.AdminPresentationMergeOverride;
+import com.ultracommerce.common.presentation.override.AdminPresentationMergeOverrides;
+import com.ultracommerce.common.presentation.override.PropertyType;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Cascade;
@@ -55,8 +55,8 @@ import javax.persistence.Table;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "BLC_FULFILLMENT_GROUP_FEE")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE, region = "blOrderElements")
+@Table(name = "UC_FULFILLMENT_GROUP_FEE")
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE, region = "ucOrderElements")
 @AdminPresentationMergeOverrides(
     {
         @AdminPresentationMergeOverride(name = "", mergeEntries =
@@ -72,10 +72,10 @@ public class FulfillmentGroupFeeImpl implements FulfillmentGroupFee, CurrencyCod
     @GeneratedValue(generator = "FulfillmentGroupFeeId")
     @GenericGenerator(
         name="FulfillmentGroupFeeId",
-        strategy="org.broadleafcommerce.common.persistence.IdOverrideTableGenerator",
+        strategy="com.ultracommerce.common.persistence.IdOverrideTableGenerator",
         parameters = {
             @Parameter(name="segment_value", value="FulfillmentGroupFeeImpl"),
-            @Parameter(name="entity_name", value="org.broadleafcommerce.core.order.domain.FulfillmentGroupFeeImpl")
+            @Parameter(name="entity_name", value="com.ultracommerce.core.order.domain.FulfillmentGroupFeeImpl")
         }
     )
     @Column(name = "FULFILLMENT_GROUP_FEE_ID")
@@ -102,9 +102,9 @@ public class FulfillmentGroupFeeImpl implements FulfillmentGroupFee, CurrencyCod
     protected Boolean feeTaxable = false; 
 
     @OneToMany(fetch = FetchType.LAZY, targetEntity = TaxDetailImpl.class, cascade = {CascadeType.ALL})
-    @JoinTable(name = "BLC_FG_FEE_TAX_XREF", joinColumns = @JoinColumn(name = "FULFILLMENT_GROUP_FEE_ID"), inverseJoinColumns = @JoinColumn(name = "TAX_DETAIL_ID"))
+    @JoinTable(name = "UC_FG_FEE_TAX_XREF", joinColumns = @JoinColumn(name = "FULFILLMENT_GROUP_FEE_ID"), inverseJoinColumns = @JoinColumn(name = "TAX_DETAIL_ID"))
     @Cascade(value={org.hibernate.annotations.CascadeType.ALL, org.hibernate.annotations.CascadeType.DELETE_ORPHAN})
-    @Cache(usage=CacheConcurrencyStrategy.NONSTRICT_READ_WRITE, region="blOrderElements")
+    @Cache(usage=CacheConcurrencyStrategy.NONSTRICT_READ_WRITE, region="ucOrderElements")
     protected List<TaxDetail> taxes = new ArrayList<TaxDetail>();
     
     @Column(name = "TOTAL_FEE_TAX", precision=19, scale=5)
@@ -133,7 +133,7 @@ public class FulfillmentGroupFeeImpl implements FulfillmentGroupFee, CurrencyCod
 
     @Override
     public Money getAmount() {
-        return amount == null ? null : BroadleafCurrencyUtils.getMoney(amount, getFulfillmentGroup().getOrder().getCurrency());
+        return amount == null ? null : UltraCurrencyUtils.getMoney(amount, getFulfillmentGroup().getOrder().getCurrency());
     }
 
     @Override
@@ -183,7 +183,7 @@ public class FulfillmentGroupFeeImpl implements FulfillmentGroupFee, CurrencyCod
     
     @Override
     public Money getTotalTax() {
-        return totalTax == null ? null : BroadleafCurrencyUtils.getMoney(totalTax, getFulfillmentGroup().getOrder().getCurrency());
+        return totalTax == null ? null : UltraCurrencyUtils.getMoney(totalTax, getFulfillmentGroup().getOrder().getCurrency());
     }
 
     @Override

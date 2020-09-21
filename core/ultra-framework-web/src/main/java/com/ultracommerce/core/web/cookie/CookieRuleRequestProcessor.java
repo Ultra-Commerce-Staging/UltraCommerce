@@ -1,28 +1,28 @@
 /*
  * #%L
- * BroadleafCommerce Framework Web
+ * UltraCommerce Framework Web
  * %%
- * Copyright (C) 2009 - 2018 Broadleaf Commerce
+ * Copyright (C) 2009 - 2018 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.web.cookie;
+package com.ultracommerce.core.web.cookie;
 
 import org.apache.commons.lang3.StringUtils;
-import org.broadleafcommerce.common.security.util.CookieUtils;
-import org.broadleafcommerce.common.util.BLCRequestUtils;
-import org.broadleafcommerce.common.web.AbstractBroadleafWebRequestProcessor;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
-import org.broadleafcommerce.core.rule.RuleDTOConfig;
+import com.ultracommerce.common.security.util.CookieUtils;
+import com.ultracommerce.common.util.UCRequestUtils;
+import com.ultracommerce.common.web.AbstractUltraWebRequestProcessor;
+import com.ultracommerce.common.web.UltraRequestContext;
+import com.ultracommerce.core.rule.RuleDTOConfig;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
 
@@ -40,7 +40,7 @@ import java.util.Map;
  * </p>
  * Add a cookie configuration to your Spring xml or Java configuration. Sample below demonstrated Java-based config:
  * {@code
- *    @Merge("blCookieRuleConfigs")
+ *    @Merge("ucCookieRuleConfigs")
  *    public RuleDTOConfig myCookieRuleDTOConfig() {
  *        RuleDTOConfig config = new RuleDTOConfig("myFieldName", "myLabel");
  *        config.setAlternateName("cookieName");
@@ -49,11 +49,11 @@ import java.util.Map;
  * }
  * @author Jeff Fischer
  */
-public class CookieRuleRequestProcessor extends AbstractBroadleafWebRequestProcessor {
+public class CookieRuleRequestProcessor extends AbstractUltraWebRequestProcessor {
 
     public static final String FORWARD_HEADER = "X-FORWARDED-FOR";
-    public static final String COOKIE_ATTRIBUTE_NAME = "_blCookieAttribute";
-    protected static final String BLC_RULE_MAP_PARAM = "blRuleMap";
+    public static final String COOKIE_ATTRIBUTE_NAME = "_ucCookieAttribute";
+    protected static final String UC_RULE_MAP_PARAM = "ucRuleMap";
 
     protected CookieUtils cookieUtils;
     protected List<RuleDTOConfig> configs;
@@ -67,21 +67,21 @@ public class CookieRuleRequestProcessor extends AbstractBroadleafWebRequestProce
     public void process(WebRequest request) {
         if (request instanceof ServletWebRequest) {
             ServletWebRequest servletWebRequest = (ServletWebRequest) request;
-            Map proxy = (Map) BLCRequestUtils.getSessionAttributeIfOk(request, COOKIE_ATTRIBUTE_NAME);
+            Map proxy = (Map) UCRequestUtils.getSessionAttributeIfOk(request, COOKIE_ATTRIBUTE_NAME);
             if (proxy == null) {
                 proxy = getVals(servletWebRequest);
-                BLCRequestUtils.setSessionAttributeIfOk(request, COOKIE_ATTRIBUTE_NAME, proxy);
+                UCRequestUtils.setSessionAttributeIfOk(request, COOKIE_ATTRIBUTE_NAME, proxy);
             }
-            BroadleafRequestContext.getBroadleafRequestContext().getAdditionalProperties().put(COOKIE_ATTRIBUTE_NAME, proxy);
+            UltraRequestContext.getUltraRequestContext().getAdditionalProperties().put(COOKIE_ATTRIBUTE_NAME, proxy);
 
             Map<String, Object> ruleMap = getRuleMapFromRequest(request);
             ruleMap.put(COOKIE_ATTRIBUTE_NAME, proxy);
-            request.setAttribute(BLC_RULE_MAP_PARAM, ruleMap, WebRequest.SCOPE_REQUEST);
+            request.setAttribute(UC_RULE_MAP_PARAM, ruleMap, WebRequest.SCOPE_REQUEST);
         }
     }
 
     protected Map<String,Object> getRuleMapFromRequest(WebRequest request) {
-        Map<String,Object> ruleMap = (Map<String, Object>) request.getAttribute(BLC_RULE_MAP_PARAM, WebRequest.SCOPE_REQUEST);
+        Map<String,Object> ruleMap = (Map<String, Object>) request.getAttribute(UC_RULE_MAP_PARAM, WebRequest.SCOPE_REQUEST);
         if (ruleMap == null) {
             ruleMap = new HashMap<>();
         }

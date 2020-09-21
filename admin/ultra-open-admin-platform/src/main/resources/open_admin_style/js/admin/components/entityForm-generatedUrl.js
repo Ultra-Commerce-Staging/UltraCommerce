@@ -1,23 +1,23 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-(function($, BLCAdmin) {
+(function($, UCAdmin) {
     
-    BLCAdmin.generatedUrl = {
+    UCAdmin.generatedUrl = {
             
         registerUrlGenerator : function registerUrlGenerator($generatedUrlContainer) {
             var sourceFieldName = $generatedUrlContainer.data('source-field');
@@ -25,10 +25,10 @@
             var $targetField = $generatedUrlContainer.find('input.target-field');
 
             $sourceField.on('keyup', function() {
-                BLCAdmin.generatedUrl.setGeneratedUrl($sourceField, $targetField);
+                UCAdmin.generatedUrl.setGeneratedUrl($sourceField, $targetField);
             });
 
-            BLCAdmin.generatedUrl.setGeneratedUrl($sourceField, $targetField);
+            UCAdmin.generatedUrl.setGeneratedUrl($sourceField, $targetField);
         },
         
         setGeneratedUrl : function setGeneratedUrl($sourceField, $targetField) {
@@ -39,7 +39,7 @@
                 generatedPrefix = $field.find('input.generated-url-prefix').val();
                 
                 $field.on('change', function() {
-                    BLCAdmin.generatedUrl.setGeneratedUrl($sourceField, $targetField);
+                    UCAdmin.generatedUrl.setGeneratedUrl($sourceField, $targetField);
                 });
                 
                 if (generatedPrefix == null || generatedPrefix == "") {
@@ -61,7 +61,7 @@
                 generatedPrefix = '/';
             }
 
-            var convertedUrl = BLCAdmin.generatedUrl.convertToUrlFragment($sourceField.val(), {
+            var convertedUrl = UCAdmin.generatedUrl.convertToUrlFragment($sourceField.val(), {
                 allowSlash : $targetField.data('allow-slash')
             });
 
@@ -88,23 +88,23 @@
             }
 
             if (options != null && options.allowSlash) {
-                return val.replace(/ /g, BLC.systemProperty.urlFragmentSeparator).replace(/[^\w\s-_\/]/gi, '').toLowerCase() + valPostFix;
+                return val.replace(/ /g, UC.systemProperty.urlFragmentSeparator).replace(/[^\w\s-_\/]/gi, '').toLowerCase() + valPostFix;
             } else {
-                return val.replace(/ /g, BLC.systemProperty.urlFragmentSeparator).replace(/[^\w\s-_]/gi, '').toLowerCase() + valPostFix;
+                return val.replace(/ /g, UC.systemProperty.urlFragmentSeparator).replace(/[^\w\s-_]/gi, '').toLowerCase() + valPostFix;
             }
         }
 
     };
 
-    BLCAdmin.addInitializationHandler(function($container) {
+    UCAdmin.addInitializationHandler(function($container) {
         $container.find('div.generated-url-container').each(function(idx, el) {
             if ($(el).data('overridden-url') != true) {
-                BLCAdmin.generatedUrl.registerUrlGenerator($(el));
+                UCAdmin.generatedUrl.registerUrlGenerator($(el));
             }
         });
     });
 
-})(jQuery, BLCAdmin);
+})(jQuery, UCAdmin);
 
 $('body').on('click', 'a.override-generated-url', function(event) {
     event.preventDefault();
@@ -116,11 +116,11 @@ $('body').on('click', 'a.override-generated-url', function(event) {
 	if (enabled) {
 	    $container.find('input').attr('readonly', 'readonly');
 	    $this.text($this.data('disabled-text'));
-	    BLCAdmin.generatedUrl.registerUrlGenerator($container);
+	    UCAdmin.generatedUrl.registerUrlGenerator($container);
 	} else {
 	    $container.find('input').removeAttr('readonly');
 	    $this.text($this.data('enabled-text'));
-	    BLCAdmin.generatedUrl.unregisterUrlGenerator($container);
+	    UCAdmin.generatedUrl.unregisterUrlGenerator($container);
 	}
 	
 	$container.closest('form').find('#field-' + $container.data('toggle-field') + ' input').val(!enabled);

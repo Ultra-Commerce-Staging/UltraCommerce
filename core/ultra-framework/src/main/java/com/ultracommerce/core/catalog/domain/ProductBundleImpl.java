@@ -1,35 +1,35 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.catalog.domain;
+package com.ultracommerce.core.catalog.domain;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.broadleafcommerce.common.copy.CreateResponse;
-import org.broadleafcommerce.common.copy.MultiTenantCopyContext;
-import org.broadleafcommerce.common.money.BankersRounding;
-import org.broadleafcommerce.common.money.Money;
-import org.broadleafcommerce.common.presentation.AdminPresentation;
-import org.broadleafcommerce.common.presentation.AdminPresentationClass;
-import org.broadleafcommerce.common.presentation.AdminPresentationCollection;
-import org.broadleafcommerce.common.presentation.PopulateToOneFieldsEnum;
-import org.broadleafcommerce.common.presentation.RequiredOverride;
-import org.broadleafcommerce.common.presentation.client.SupportedFieldType;
-import org.broadleafcommerce.core.catalog.service.type.ProductBundlePricingModelType;
+import com.ultracommerce.common.copy.CreateResponse;
+import com.ultracommerce.common.copy.MultiTenantCopyContext;
+import com.ultracommerce.common.money.BankersRounding;
+import com.ultracommerce.common.money.Money;
+import com.ultracommerce.common.presentation.AdminPresentation;
+import com.ultracommerce.common.presentation.AdminPresentationClass;
+import com.ultracommerce.common.presentation.AdminPresentationCollection;
+import com.ultracommerce.common.presentation.PopulateToOneFieldsEnum;
+import com.ultracommerce.common.presentation.RequiredOverride;
+import com.ultracommerce.common.presentation.client.SupportedFieldType;
+import com.ultracommerce.core.catalog.service.type.ProductBundlePricingModelType;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -54,7 +54,7 @@ import javax.persistence.Table;
 @Deprecated
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "BLC_PRODUCT_BUNDLE")
+@Table(name = "UC_PRODUCT_BUNDLE")
 @AdminPresentationClass(populateToOneFields = PopulateToOneFieldsEnum.TRUE, friendlyName = "ProductImpl_bundleProduct")
 public class ProductBundleImpl extends ProductImpl implements ProductBundle {
 
@@ -64,8 +64,8 @@ public class ProductBundleImpl extends ProductImpl implements ProductBundle {
     @AdminPresentation(friendlyName = "productBundlePricingModel", 
         group = GroupName.Price, order = 1,
         helpText = "productBundlePricingModelHelp", 
-        fieldType = SupportedFieldType.BROADLEAF_ENUMERATION, 
-        broadleafEnumeration = "org.broadleafcommerce.core.catalog.service.type.ProductBundlePricingModelType",
+        fieldType = SupportedFieldType.ULTRA_ENUMERATION, 
+        ultraEnumeration = "com.ultracommerce.core.catalog.service.type.ProductBundlePricingModelType",
         defaultValue = "ITEM_SUM",
         requiredOverride = RequiredOverride.REQUIRED)
     protected String pricingModel;
@@ -88,7 +88,7 @@ public class ProductBundleImpl extends ProductImpl implements ProductBundle {
 
     @OneToMany(mappedBy = "bundle", targetEntity = SkuBundleItemImpl.class, cascade = { CascadeType.ALL })
     @OrderBy(value = "sequence")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "blProducts")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "ucProducts")
     @BatchSize(size = 50)
     @AdminPresentationCollection(friendlyName = "skuBundleItemsTitle",
         sortProperty = "sequence",

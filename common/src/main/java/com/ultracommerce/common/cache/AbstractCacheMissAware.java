@@ -1,28 +1,28 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.cache;
+package com.ultracommerce.common.cache;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
-import org.broadleafcommerce.common.sandbox.domain.SandBox;
-import org.broadleafcommerce.common.site.domain.Site;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
+import com.ultracommerce.common.sandbox.domain.SandBox;
+import com.ultracommerce.common.site.domain.Site;
+import com.ultracommerce.common.web.UltraRequestContext;
 import org.springframework.util.ClassUtils;
 
 import java.io.Serializable;
@@ -46,10 +46,10 @@ import javax.cache.CacheManager;
  */
 public abstract class AbstractCacheMissAware<T> {
     
-    @Resource(name="blStatisticsService")
+    @Resource(name="ucStatisticsService")
     protected StatisticsService statisticsService;
     
-    @Resource(name = "blCacheManager")
+    @Resource(name = "ucCacheManager")
     protected CacheManager cacheManager;
 
     private Object nullObject = null;
@@ -62,7 +62,7 @@ public abstract class AbstractCacheMissAware<T> {
      * @return the completed key
      */
     protected String buildKey(String... params) {
-        BroadleafRequestContext context = BroadleafRequestContext.getBroadleafRequestContext();
+        UltraRequestContext context = UltraRequestContext.getUltraRequestContext();
         SandBox sandBox = null;
         if (context != null) {
             sandBox = context.getSandBox();
@@ -159,7 +159,7 @@ public abstract class AbstractCacheMissAware<T> {
     /**
      * This is the main entry point for retrieving an object from this cache.
      *
-     * @see org.broadleafcommerce.common.cache.StatisticsService
+     * @see com.ultracommerce.common.cache.StatisticsService
      * @param responseClass the class representing the type of the cache item
      * @param cacheName the name of the cache - the ehcache region name
      * @param statisticsName the name to use for cache hit statistics
@@ -170,7 +170,7 @@ public abstract class AbstractCacheMissAware<T> {
      */
     protected T getCachedObject(Class<T> responseClass, String cacheName, String statisticsName, PersistentRetrieval<T> retrieval, String... params) {
         T nullResponse = getNullObject(responseClass);
-        BroadleafRequestContext context = BroadleafRequestContext.getBroadleafRequestContext();
+        UltraRequestContext context = UltraRequestContext.getUltraRequestContext();
         String key = buildKey(params);
         T response = null;
         boolean allowL2Cache = false;

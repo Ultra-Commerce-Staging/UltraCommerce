@@ -1,23 +1,23 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.security;
+package com.ultracommerce.common.security;
 
-import org.broadleafcommerce.common.site.domain.Site;
+import com.ultracommerce.common.site.domain.Site;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
@@ -25,12 +25,12 @@ import java.util.Collection;
 
 /**
  * This is an extension of Spring's User class to provide additional data to the UserDetails interface.  This should be used by derivitave
- * authentication providers to return an instance of UserDetails when authenticating against a system other than the Broadleaf tables (e.g. LDAP)
+ * authentication providers to return an instance of UserDetails when authenticating against a system other than the Ultra tables (e.g. LDAP)
  * <p/>
  * User: Kelly Tisdell
  * Date: 6/19/12
  */
-public class BroadleafExternalAuthenticationUserDetails extends User {
+public class UltraExternalAuthenticationUserDetails extends User {
     
     private static final long serialVersionUID = 1L;
 
@@ -49,11 +49,11 @@ public class BroadleafExternalAuthenticationUserDetails extends User {
      * @param password
      * @param authorities
      */
-    public BroadleafExternalAuthenticationUserDetails(String username, String password, Collection<? extends GrantedAuthority> authorities) {
+    public UltraExternalAuthenticationUserDetails(String username, String password, Collection<? extends GrantedAuthority> authorities) {
         super(username, password, true, true, true, true, authorities);
     }
 
-    public BroadleafExternalAuthenticationUserDetails(String username, String password,
+    public UltraExternalAuthenticationUserDetails(String username, String password,
             boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired,
             boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities) {
         super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);

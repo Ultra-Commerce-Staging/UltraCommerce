@@ -1,24 +1,24 @@
 /*
  * #%L
- * BroadleafCommerce CMS Module
+ * UltraCommerce CMS Module
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.cms.structure.domain;
+package com.ultracommerce.cms.structure.domain;
 
-import org.broadleafcommerce.common.copy.MultiTenantCloneable;
-import org.broadleafcommerce.common.locale.domain.Locale;
+import com.ultracommerce.common.copy.MultiTenantCloneable;
+import com.ultracommerce.common.locale.domain.Locale;
 
 import java.io.Serializable;
 import java.util.Map;
@@ -32,10 +32,10 @@ import javax.annotation.Nullable;
  * item with a set of predefined fields.    The fields associated with an instance
  * of StructuredContent are defined by its associated {@link StructuredContentType}.
  * <br>
- * StructuredContent items are typically maintained via the Broadleaf Commerce admin.
+ * StructuredContent items are typically maintained via the Ultra Commerce admin.
  * <br>
  * Display structured content items is typically done using the
- * {@link org.broadleafcommerce.cms.web.structure.DisplayContentTag} taglib.
+ * {@link com.ultracommerce.cms.web.structure.DisplayContentTag} taglib.
  * <br>
  * An typical usage for <code>StructuredContent</code> is to display targeted ads.
  * Consider a <code>StructuredContentType</code> of "ad" with fields "ad-image" and
@@ -43,12 +43,12 @@ import javax.annotation.Nullable;
  * <code>StructuredContentMatchRules</code> and setting the <code>priority</code>,
  * different ads could be shown to different users.
  *
- * It would not be typical in a Broadleaf implementation to extend this interface
+ * It would not be typical in a Ultra implementation to extend this interface
  * or to use any implementation other than {@link StructuredContentImpl}.
  *
  * @see {@link StructuredContentType}
  * @see {@link StructuredContentImpl}
- * @see {@link org.broadleafcommerce.cms.web.structure.DisplayContentTag}
+ * @see {@link com.ultracommerce.cms.web.structure.DisplayContentTag}
  * @author Brian Polster
  * @author Jeff Fischer
  *
@@ -189,7 +189,7 @@ public interface StructuredContent extends Serializable,MultiTenantCloneable<Str
     /**
      * @deprecated - Not supported - simplifying interface
      * 
-     * Functionality removed as of BLC 3.2
+     * Functionality removed as of UC 3.2
      * 
      * @return
      */
@@ -200,7 +200,7 @@ public interface StructuredContent extends Serializable,MultiTenantCloneable<Str
     /**
      * @deprecated - Not supported - simplifying interface
      * 
-     * Functionality removed as of BLC 3.2
+     * Functionality removed as of UC 3.2
      *
      * @param structuredContentMatchRules
      */
@@ -210,7 +210,7 @@ public interface StructuredContent extends Serializable,MultiTenantCloneable<Str
     /**
      * @deprecated - no longer supported - simplifying interface
      * 
-     * Functionality removed as of BLC 3.2
+     * Functionality removed as of UC 3.2
      *
      * @return
      */
@@ -221,7 +221,7 @@ public interface StructuredContent extends Serializable,MultiTenantCloneable<Str
     /**
      * @deprecated - no longer supported - simplifying interface
      * 
-     * Functionality removed as of BLC 3.2
+     * Functionality removed as of UC 3.2
      *
      * @param qualifyingItemCriteria
      */

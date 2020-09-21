@@ -1,21 +1,21 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.catalog.domain;
+package com.ultracommerce.core.catalog.domain;
 
 import org.apache.commons.beanutils.MethodUtils;
 import org.apache.commons.collections.MapUtils;
@@ -23,43 +23,43 @@ import org.apache.commons.collections.map.MultiValueMap;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.copy.CreateResponse;
-import org.broadleafcommerce.common.copy.MultiTenantCopyContext;
-import org.broadleafcommerce.common.currency.domain.BroadleafCurrency;
-import org.broadleafcommerce.common.currency.domain.BroadleafCurrencyImpl;
-import org.broadleafcommerce.common.extensibility.jpa.clone.ClonePolicyArchive;
-import org.broadleafcommerce.common.extensibility.jpa.clone.ClonePolicyCollectionOverride;
-import org.broadleafcommerce.common.extensibility.jpa.clone.IgnoreEnterpriseBehavior;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransform;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformMember;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformTypes;
-import org.broadleafcommerce.common.i18n.service.DynamicTranslationProvider;
-import org.broadleafcommerce.common.media.domain.Media;
-import org.broadleafcommerce.common.money.Money;
-import org.broadleafcommerce.common.presentation.AdminPresentation;
-import org.broadleafcommerce.common.presentation.AdminPresentationCollection;
-import org.broadleafcommerce.common.presentation.AdminPresentationDataDrivenEnumeration;
-import org.broadleafcommerce.common.presentation.AdminPresentationMap;
-import org.broadleafcommerce.common.presentation.AdminPresentationMapField;
-import org.broadleafcommerce.common.presentation.AdminPresentationMapFields;
-import org.broadleafcommerce.common.presentation.AdminPresentationToOneLookup;
-import org.broadleafcommerce.common.presentation.ConfigurationItem;
-import org.broadleafcommerce.common.presentation.OptionFilterParam;
-import org.broadleafcommerce.common.presentation.OptionFilterParamType;
-import org.broadleafcommerce.common.presentation.ValidationConfiguration;
-import org.broadleafcommerce.common.presentation.client.LookupType;
-import org.broadleafcommerce.common.presentation.client.SupportedFieldType;
-import org.broadleafcommerce.common.presentation.client.VisibilityEnum;
-import org.broadleafcommerce.common.util.DateUtil;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
-import org.broadleafcommerce.core.catalog.service.dynamic.DynamicSkuPrices;
-import org.broadleafcommerce.core.catalog.service.dynamic.SkuActiveDateConsiderationContext;
-import org.broadleafcommerce.core.catalog.service.dynamic.SkuPricingConsiderationContext;
-import org.broadleafcommerce.core.inventory.service.type.InventoryType;
-import org.broadleafcommerce.core.order.domain.FulfillmentOption;
-import org.broadleafcommerce.core.order.domain.FulfillmentOptionImpl;
-import org.broadleafcommerce.core.order.service.type.FulfillmentType;
-import org.broadleafcommerce.core.search.domain.FieldEntity;
+import com.ultracommerce.common.copy.CreateResponse;
+import com.ultracommerce.common.copy.MultiTenantCopyContext;
+import com.ultracommerce.common.currency.domain.UltraCurrency;
+import com.ultracommerce.common.currency.domain.UltraCurrencyImpl;
+import com.ultracommerce.common.extensibility.jpa.clone.ClonePolicyArchive;
+import com.ultracommerce.common.extensibility.jpa.clone.ClonePolicyCollectionOverride;
+import com.ultracommerce.common.extensibility.jpa.clone.IgnoreEnterpriseBehavior;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransform;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransformMember;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransformTypes;
+import com.ultracommerce.common.i18n.service.DynamicTranslationProvider;
+import com.ultracommerce.common.media.domain.Media;
+import com.ultracommerce.common.money.Money;
+import com.ultracommerce.common.presentation.AdminPresentation;
+import com.ultracommerce.common.presentation.AdminPresentationCollection;
+import com.ultracommerce.common.presentation.AdminPresentationDataDrivenEnumeration;
+import com.ultracommerce.common.presentation.AdminPresentationMap;
+import com.ultracommerce.common.presentation.AdminPresentationMapField;
+import com.ultracommerce.common.presentation.AdminPresentationMapFields;
+import com.ultracommerce.common.presentation.AdminPresentationToOneLookup;
+import com.ultracommerce.common.presentation.ConfigurationItem;
+import com.ultracommerce.common.presentation.OptionFilterParam;
+import com.ultracommerce.common.presentation.OptionFilterParamType;
+import com.ultracommerce.common.presentation.ValidationConfiguration;
+import com.ultracommerce.common.presentation.client.LookupType;
+import com.ultracommerce.common.presentation.client.SupportedFieldType;
+import com.ultracommerce.common.presentation.client.VisibilityEnum;
+import com.ultracommerce.common.util.DateUtil;
+import com.ultracommerce.common.web.UltraRequestContext;
+import com.ultracommerce.core.catalog.service.dynamic.DynamicSkuPrices;
+import com.ultracommerce.core.catalog.service.dynamic.SkuActiveDateConsiderationContext;
+import com.ultracommerce.core.catalog.service.dynamic.SkuPricingConsiderationContext;
+import com.ultracommerce.core.inventory.service.type.InventoryType;
+import com.ultracommerce.core.order.domain.FulfillmentOption;
+import com.ultracommerce.core.order.domain.FulfillmentOptionImpl;
+import com.ultracommerce.core.order.service.type.FulfillmentType;
+import com.ultracommerce.core.search.domain.FieldEntity;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -122,14 +122,14 @@ import javax.persistence.Transient;
  * your own version of {@link Sku}.<br>
  * <br>
  * This implementation uses a Hibernate implementation of JPA configured through
- * annotations. The Entity references the following tables: BLC_SKU,
- * BLC_SKU_IMAGE
+ * annotations. The Entity references the following tables: UC_SKU,
+ * UC_SKU_IMAGE
  *
  * !!!!!!!!!!!!!!!!!
  * <p>For admin required field validation, if this Sku is apart of an additionalSkus list (meaning it is not a defaultSku) then
  * it should have no required restrictions on it. All additional Skus can delegate to the defaultSku of the related product
  * for all of its fields. For this reason, if you would like to mark more fields as required then rather than using
- * {@link AdminPresentation#requiredOverride()}, use the mo:overrides section in bl-admin-applicationContext.xml for Product
+ * {@link AdminPresentation#requiredOverride()}, use the mo:overrides section in uc-admin-applicationContext.xml for Product
  * and reference each required field like 'defaultSku.name' or 'defaultSku.retailPrice'.</p>
  *
  * @author btaylor
@@ -137,14 +137,14 @@ import javax.persistence.Transient;
  */
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "BLC_SKU")
+@Table(name = "UC_SKU")
 //multi-column indexes don't appear to get exported correctly when declared at the field level, so declaring here as a workaround
-@org.hibernate.annotations.Table(appliesTo = "BLC_SKU", indexes = {
+@org.hibernate.annotations.Table(appliesTo = "UC_SKU", indexes = {
     @Index(name = "SKU_URL_KEY_INDEX",
         columnNames = { "URL_KEY" }
     )
 })
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "blProducts")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "ucProducts")
 @DirectCopyTransform({
         @DirectCopyTransformMember(templateTokens = DirectCopyTransformTypes.SANDBOX, skipOverlaps=true),
         @DirectCopyTransformMember(templateTokens = DirectCopyTransformTypes.MULTITENANT_CATALOG)
@@ -159,10 +159,10 @@ public class SkuImpl implements Sku, SkuAdminPresentation {
     @GeneratedValue(generator = "SkuId")
     @GenericGenerator(
         name = "SkuId",
-        strategy = "org.broadleafcommerce.common.persistence.IdOverrideTableGenerator",
+        strategy = "com.ultracommerce.common.persistence.IdOverrideTableGenerator",
         parameters = {
             @Parameter(name = "segment_value", value = "SkuImpl"),
-            @Parameter(name = "entity_name", value = "org.broadleafcommerce.core.catalog.domain.SkuImpl")
+            @Parameter(name = "entity_name", value = "com.ultracommerce.core.catalog.domain.SkuImpl")
         }
     )
     @Column(name = "SKU_ID")
@@ -282,7 +282,7 @@ public class SkuImpl implements Sku, SkuAdminPresentation {
         tooltip = "skuEndDateTooltip",
         validationConfigurations = {
             @ValidationConfiguration(
-                validationImplementation = "blAfterStartDateValidator",
+                validationImplementation = "ucAfterStartDateValidator",
                 configurationItems = {
                         @ConfigurationItem(itemName = "otherField", itemValue = "activeStartDate")
                 }) 
@@ -303,7 +303,7 @@ public class SkuImpl implements Sku, SkuAdminPresentation {
 
     @OneToMany(mappedBy = "sku", targetEntity = SkuMediaXrefImpl.class, cascade = { CascadeType.ALL })
     @MapKey(name = "key")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "blProducts")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "ucProducts")
     @BatchSize(size = 50)
     @AdminPresentationMap(friendlyName = "SkuImpl_Sku_Media",
         tab = TabName.Media,
@@ -335,7 +335,7 @@ public class SkuImpl implements Sku, SkuAdminPresentation {
     @OneToOne(optional = true, targetEntity = ProductImpl.class, cascade = {CascadeType.ALL})
     @Cascade(value = {org.hibernate.annotations.CascadeType.ALL})
     @JoinColumn(name = "DEFAULT_PRODUCT_ID")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "blProducts")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "ucProducts")
     @IgnoreEnterpriseBehavior
     protected Product defaultProduct;
 
@@ -348,47 +348,47 @@ public class SkuImpl implements Sku, SkuAdminPresentation {
     protected Product product;
 
     @OneToMany(mappedBy = "sku", targetEntity = SkuAttributeImpl.class, cascade = { CascadeType.ALL })
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "blProducts")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "ucProducts")
     @BatchSize(size = 50)
     @AdminPresentationCollection(friendlyName = "skuAttributesTitle",
             tab = TabName.Advanced, order = 1000)
     protected List<SkuAttribute> skuAttributes = new ArrayList<SkuAttribute>();
 
     @OneToMany(targetEntity = SkuProductOptionValueXrefImpl.class, cascade = CascadeType.ALL, mappedBy = "sku")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "blProducts")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "ucProducts")
     @BatchSize(size = 50)
     @ClonePolicyCollectionOverride
     @ClonePolicyArchive
-    //Use a Set instead of a List - see https://github.com/BroadleafCommerce/BroadleafCommerce/issues/917
+    //Use a Set instead of a List - see https://github.com/UltraCommerce/UltraCommerce/issues/917
     protected Set<SkuProductOptionValueXref> productOptionValueXrefs = new HashSet<SkuProductOptionValueXref>();
 
     @Transient
     protected Set<ProductOptionValue> legacyProductOptionValues = new HashSet<ProductOptionValue>();
 
     @ManyToMany(fetch = FetchType.LAZY, targetEntity = SkuFeeImpl.class)
-    @JoinTable(name = "BLC_SKU_FEE_XREF",
+    @JoinTable(name = "UC_SKU_FEE_XREF",
             joinColumns = @JoinColumn(name = "SKU_ID", referencedColumnName = "SKU_ID", nullable = true),
             inverseJoinColumns = @JoinColumn(name = "SKU_FEE_ID", referencedColumnName = "SKU_FEE_ID", nullable = true))
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "blProducts")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "ucProducts")
     @BatchSize(size = 50)
     protected List<SkuFee> fees = new ArrayList<SkuFee>();
 
     @ElementCollection
-    @CollectionTable(name = "BLC_SKU_FULFILLMENT_FLAT_RATES", 
+    @CollectionTable(name = "UC_SKU_FULFILLMENT_FLAT_RATES", 
         joinColumns = @JoinColumn(name = "SKU_ID", referencedColumnName = "SKU_ID", nullable = true))
     @MapKeyJoinColumn(name = "FULFILLMENT_OPTION_ID", referencedColumnName = "FULFILLMENT_OPTION_ID")
     @MapKeyClass(FulfillmentOptionImpl.class)
     @Column(name = "RATE", precision = 19, scale = 5)
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "blProducts")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "ucProducts")
     @BatchSize(size = 50)
     protected Map<FulfillmentOption, BigDecimal> fulfillmentFlatRates = new HashMap<FulfillmentOption, BigDecimal>();
 
     @ManyToMany(targetEntity = FulfillmentOptionImpl.class)
-    @JoinTable(name = "BLC_SKU_FULFILLMENT_EXCLUDED",
+    @JoinTable(name = "UC_SKU_FULFILLMENT_EXCLUDED",
             joinColumns = @JoinColumn(name = "SKU_ID", referencedColumnName = "SKU_ID"),
             inverseJoinColumns = @JoinColumn(name = "FULFILLMENT_OPTION_ID",referencedColumnName = "FULFILLMENT_OPTION_ID"))
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "blProducts")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "ucProducts")
     @BatchSize(size = 50)
     protected List<FulfillmentOption> excludedFulfillmentOptions = new ArrayList<FulfillmentOption>();
 
@@ -396,8 +396,8 @@ public class SkuImpl implements Sku, SkuAdminPresentation {
     @AdminPresentation(friendlyName = "SkuImpl_Sku_InventoryType",
         group = GroupName.Inventory, order = 1000,
         helpText = "skuInventoryTypeHelpText",
-        fieldType = SupportedFieldType.BROADLEAF_ENUMERATION, 
-        broadleafEnumeration = "org.broadleafcommerce.core.inventory.service.type.InventoryType",
+        fieldType = SupportedFieldType.ULTRA_ENUMERATION, 
+        ultraEnumeration = "com.ultracommerce.core.inventory.service.type.InventoryType",
         columnWidth = "180px", prominent = true)
     protected String inventoryType;
     
@@ -409,8 +409,8 @@ public class SkuImpl implements Sku, SkuAdminPresentation {
     @Column(name = "FULFILLMENT_TYPE")
     @AdminPresentation(friendlyName = "SkuImpl_Sku_FulfillmentType",
         group = GroupName.ShippingFulfillment, order = FieldOrder.FULFILLMENT_TYPE,
-        fieldType = SupportedFieldType.BROADLEAF_ENUMERATION, 
-        broadleafEnumeration = "org.broadleafcommerce.core.order.service.type.FulfillmentType")
+        fieldType = SupportedFieldType.ULTRA_ENUMERATION, 
+        ultraEnumeration = "com.ultracommerce.core.order.service.type.FulfillmentType")
     protected String fulfillmentType;
     
     /**
@@ -421,13 +421,13 @@ public class SkuImpl implements Sku, SkuAdminPresentation {
      * Normally null and hidden.  Use Meta-Data overrides to display in the admin.
      * @see Sku#getCurrency() for further cautions about using this field.
      */
-    @ManyToOne(targetEntity = BroadleafCurrencyImpl.class, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = UltraCurrencyImpl.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "CURRENCY_CODE")
     @AdminPresentation(friendlyName = "SkuImpl_Currency",
             group = GroupName.Advanced, order = 3000,
             visibility = VisibilityEnum.HIDDEN_ALL)
     @AdminPresentationToOneLookup(lookupType = LookupType.DROPDOWN, lookupDisplayProperty = "friendlyName")
-    protected BroadleafCurrency currency;
+    protected UltraCurrency currency;
 
     @Override
     public Long getId() {
@@ -610,11 +610,11 @@ public class SkuImpl implements Sku, SkuAdminPresentation {
             return dynamicPrices;
         } else {
             DynamicSkuPrices dsp = new DynamicSkuPrices();
-            BroadleafCurrency tmpCurrency;
+            UltraCurrency tmpCurrency;
             if (currency != null) {
                 tmpCurrency = currency;
             } else {
-                tmpCurrency = BroadleafRequestContext.getCurrency();
+                tmpCurrency = UltraRequestContext.getCurrency();
             }
             if (retailPrice != null) {
                 dsp.setRetailPrice(new Money(retailPrice, tmpCurrency));
@@ -1072,7 +1072,7 @@ public class SkuImpl implements Sku, SkuAdminPresentation {
     public List<ProductOptionValue> getProductOptionValues() {
         //Changing this API to Set is ill-advised (especially in a patch release). The tendrils are widespread. Instead
         //we just migrate the call from the List to the internal Set representation. This is in response
-        //to https://github.com/BroadleafCommerce/BroadleafCommerce/issues/917.
+        //to https://github.com/UltraCommerce/UltraCommerce/issues/917.
         return (List<ProductOptionValue>) Proxy.newProxyInstance(getClass().getClassLoader(), new Class<?>[]{List.class}, new InvocationHandler() {
             @Override
             public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
@@ -1229,7 +1229,7 @@ public class SkuImpl implements Sku, SkuAdminPresentation {
     }
 
     @Override
-    public BroadleafCurrency getCurrency() {
+    public UltraCurrency getCurrency() {
         if (currency == null && hasDefaultSku()) {
             return lookupDefaultSku().getCurrency();
         } else {
@@ -1238,7 +1238,7 @@ public class SkuImpl implements Sku, SkuAdminPresentation {
     }
 
     @Override
-    public void setCurrency(BroadleafCurrency currency) {
+    public void setCurrency(UltraCurrency currency) {
         this.currency = currency;
     }
 

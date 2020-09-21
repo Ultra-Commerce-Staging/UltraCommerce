@@ -1,29 +1,29 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2013 Broadleaf Commerce
+ * Copyright (C) 2009 - 2013 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.openadmin.web.filter;
+package com.ultracommerce.openadmin.web.filter;
 
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.exception.ServiceException;
-import org.broadleafcommerce.common.security.handler.SecurityFilter;
-import org.broadleafcommerce.common.security.service.StaleStateProtectionService;
-import org.broadleafcommerce.common.security.service.StaleStateServiceException;
+import com.ultracommerce.common.exception.ServiceException;
+import com.ultracommerce.common.security.handler.SecurityFilter;
+import com.ultracommerce.common.security.service.StaleStateProtectionService;
+import com.ultracommerce.common.security.service.StaleStateServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -49,25 +49,25 @@ import javax.servlet.http.HttpServletResponse;
  * </p>
  * {@code
  *      ...
- *       <sec:custom-filter ref="blPreSecurityFilterChain" before="CHANNEL_FILTER"/>
- *        <sec:custom-filter ref="blSecurityFilter" before="FORM_LOGIN_FILTER"/>
- *        <sec:custom-filter ref="blAdminFilterSecurityInterceptor" after="EXCEPTION_TRANSLATION_FILTER"/>
- *        <sec:custom-filter ref="blPostSecurityFilterChain" after="SWITCH_USER_FILTER"/>
+ *       <sec:custom-filter ref="ucPreSecurityFilterChain" before="CHANNEL_FILTER"/>
+ *        <sec:custom-filter ref="ucSecurityFilter" before="FORM_LOGIN_FILTER"/>
+ *        <sec:custom-filter ref="ucAdminFilterSecurityInterceptor" after="EXCEPTION_TRANSLATION_FILTER"/>
+ *        <sec:custom-filter ref="ucPostSecurityFilterChain" after="SWITCH_USER_FILTER"/>
  *    </sec:http>
- *   <bean id="blSecurityFilter" class="org.broadleafcommerce.openadmin.web.filter.AdminSecurityFilter" />
+ *   <bean id="ucSecurityFilter" class="com.ultracommerce.openadmin.web.filter.AdminSecurityFilter" />
  *   ...
  * }
  *
  *
  * @author trevorleffert, Jeff Fischer
  */
-@Component("blAdminCsrfFilter")
+@Component("ucAdminCsrfFilter")
 public class AdminSecurityFilter extends SecurityFilter {
 
     private static final Log LOG = LogFactory.getLog(AdminSecurityFilter.class);
 
     @Autowired(required = false)
-    @Qualifier("blAdminAuthenticationFailureHandler")
+    @Qualifier("ucAdminAuthenticationFailureHandler")
     protected AuthenticationFailureHandler failureHandler;
 
     @Override

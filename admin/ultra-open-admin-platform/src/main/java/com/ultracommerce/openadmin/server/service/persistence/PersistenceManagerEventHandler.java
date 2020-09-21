@@ -1,45 +1,45 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.openadmin.server.service.persistence;
+package com.ultracommerce.openadmin.server.service.persistence;
 
-import org.broadleafcommerce.common.exception.ServiceException;
-import org.broadleafcommerce.openadmin.dto.CriteriaTransferObject;
-import org.broadleafcommerce.openadmin.dto.DynamicResultSet;
-import org.broadleafcommerce.openadmin.dto.Entity;
-import org.broadleafcommerce.openadmin.dto.PersistencePackage;
+import com.ultracommerce.common.exception.ServiceException;
+import com.ultracommerce.openadmin.dto.CriteriaTransferObject;
+import com.ultracommerce.openadmin.dto.DynamicResultSet;
+import com.ultracommerce.openadmin.dto.Entity;
+import com.ultracommerce.openadmin.dto.PersistencePackage;
 import org.springframework.core.Ordered;
 
 /**
- * Interface for handling various lifecycle event for the {@link org.broadleafcommerce.openadmin.server.service.persistence.PersistenceManager}.
+ * Interface for handling various lifecycle event for the {@link com.ultracommerce.openadmin.server.service.persistence.PersistenceManager}.
  * These events occur as part of the standard admin persistence lifecycle for entities.
  * <p/>
  * PersistenceManagerEventHandler instances are generally registered via the following approach in application
  * context xml
  * <p/>
  * {@code
- * <bean class="org.broadleafcommerce.common.extensibility.context.merge.LateStageMergeBeanPostProcessor">
- *      <property name="collectionRef" value="blSandBoxPersistenceManagerEventHandlers"/>
- *      <property name="targetRef" value="blPersistenceManagerEventHandlers"/>
+ * <bean class="com.ultracommerce.common.extensibility.context.merge.LateStageMergeBeanPostProcessor">
+ *      <property name="collectionRef" value="ucSandBoxPersistenceManagerEventHandlers"/>
+ *      <property name="targetRef" value="ucPersistenceManagerEventHandlers"/>
  * </bean>
- * <bean id="blSandBoxPersistenceManagerEventHandlers" class="org.springframework.beans.factory.config.ListFactoryBean">
+ * <bean id="ucSandBoxPersistenceManagerEventHandlers" class="org.springframework.beans.factory.config.ListFactoryBean">
  *      <property name="sourceList">
  *          <list>
- *              <ref bean="blSandBoxPersistenceManagerEventHandler"/>
+ *              <ref bean="ucSandBoxPersistenceManagerEventHandler"/>
  *          </list>
 *       </property>
  * </bean>
@@ -159,7 +159,7 @@ public interface PersistenceManagerEventHandler extends Ordered {
      * Called after a validation error. Validations occur on adds, updates and removes. The validation confirms the persistence request is
      * correct and does not have any errors. This event handling hook provides an opportunity to impact and/or modify
      * the results of validation errors. Errors are generally reviewed in this method by looking at
-     * {@link org.broadleafcommerce.openadmin.dto.Entity#getPropertyValidationErrors()}
+     * {@link com.ultracommerce.openadmin.dto.Entity#getPropertyValidationErrors()}
      *
      * @param persistenceManager the PersistenceManager instance making the call
      * @param entity the results of the persistence request

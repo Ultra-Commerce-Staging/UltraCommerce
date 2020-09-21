@@ -1,26 +1,26 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.catalog.dao;
+package com.ultracommerce.core.catalog.dao;
 
-import org.broadleafcommerce.core.catalog.domain.Product;
-import org.broadleafcommerce.core.catalog.domain.ProductBundle;
-import org.broadleafcommerce.core.catalog.service.type.ProductType;
-import org.broadleafcommerce.core.search.domain.SearchCriteria;
+import com.ultracommerce.core.catalog.domain.Product;
+import com.ultracommerce.core.catalog.domain.ProductBundle;
+import com.ultracommerce.core.catalog.service.type.ProductType;
+import com.ultracommerce.core.search.domain.SearchCriteria;
 
 import java.util.Date;
 import java.util.List;
@@ -208,12 +208,12 @@ public interface ProductDao {
 
     /**
      * Create a new {@code Product} instance. The system will use the configuration in
-     * {@code /BroadleafCommerce/core/BroadleafCommerceFramework/src/main/resources/bl-framework-applicationContext-entity.xml}
-     * to determine which polymorphic version of {@code Product} to instantiate. To make Broadleaf instantiate your
+     * {@code /UltraCommerce/core/UltraCommerceFramework/src/main/resources/uc-framework-applicationContext-entity.xml}
+     * to determine which polymorphic version of {@code Product} to instantiate. To make Ultra instantiate your
      * extension of {@code Product} by default, include an entity configuration bean in your application context xml similar to:
      * <p>
      * {@code
-     *     <bean id="blEntityConfiguration" class="org.broadleafcommerce.common.persistence.EntityConfiguration">
+     *     <bean id="ucEntityConfiguration" class="com.ultracommerce.common.persistence.EntityConfiguration">
      *          <property name="entityContexts">
      *              <list>
      *                  <value>classpath:myCompany-applicationContext-entity.xml</value>
@@ -222,11 +222,11 @@ public interface ProductDao {
      *      </bean>
      * }
      * </p>
-     * Declare the same key for your desired entity in your entity xml that is used in the Broadleaf entity xml, but change the value to the fully
+     * Declare the same key for your desired entity in your entity xml that is used in the Ultra entity xml, but change the value to the fully
      * qualified classname of your entity extension.
      *
      * @param productType the type of product you would like to create (presumably a Product or ProductSku instance). The getType method of {@code ProductType} provides the key for the entity configuration.
-     * @return a {@code Product} instance based on the Broadleaf entity configuration.
+     * @return a {@code Product} instance based on the Ultra entity configuration.
      */
     public Product create(ProductType productType);
 

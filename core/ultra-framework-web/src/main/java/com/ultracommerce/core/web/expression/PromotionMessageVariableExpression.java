@@ -1,34 +1,34 @@
 /*
  * #%L
- * BroadleafCommerce Framework Web
+ * UltraCommerce Framework Web
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.web.expression;
+package com.ultracommerce.core.web.expression;
 
 import org.apache.commons.collections.map.MultiValueMap;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.core.catalog.domain.Product;
-import org.broadleafcommerce.core.offer.domain.OrderItemPriceDetailAdjustment;
-import org.broadleafcommerce.core.order.domain.OrderItem;
-import org.broadleafcommerce.core.order.domain.OrderItemPriceDetail;
-import org.broadleafcommerce.core.promotionMessage.domain.type.PromotionMessagePlacementType;
-import org.broadleafcommerce.core.promotionMessage.dto.PromotionMessageDTO;
-import org.broadleafcommerce.core.promotionMessage.service.PromotionMessageGenerator;
-import org.broadleafcommerce.core.promotionMessage.util.BLCPromotionMessageUtils;
-import org.broadleafcommerce.presentation.condition.ConditionalOnTemplating;
+import com.ultracommerce.core.catalog.domain.Product;
+import com.ultracommerce.core.offer.domain.OrderItemPriceDetailAdjustment;
+import com.ultracommerce.core.order.domain.OrderItem;
+import com.ultracommerce.core.order.domain.OrderItemPriceDetail;
+import com.ultracommerce.core.promotionMessage.domain.type.PromotionMessagePlacementType;
+import com.ultracommerce.core.promotionMessage.dto.PromotionMessageDTO;
+import com.ultracommerce.core.promotionMessage.service.PromotionMessageGenerator;
+import com.ultracommerce.core.promotionMessage.util.UCPromotionMessageUtils;
+import com.ultracommerce.presentation.condition.ConditionalOnTemplating;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -40,16 +40,16 @@ import javax.annotation.Resource;
 /**
  * @author Chris Kittrell (ckittrell)
  */
-@Service("blPromotionMessageVariableExpression")
+@Service("ucPromotionMessageVariableExpression")
 @ConditionalOnTemplating
-public class PromotionMessageVariableExpression extends BLCVariableExpression {
+public class PromotionMessageVariableExpression extends UCVariableExpression {
 
     private static final Log LOG = LogFactory.getLog(PromotionMessageVariableExpression.class);
 
     public static final String PRODUCT = "product";
     public static final String PLACEMENT = "placement";
 
-    @Resource(name = "blPromotionMessageGenerators")
+    @Resource(name = "ucPromotionMessageGenerators")
     protected List<PromotionMessageGenerator> generators;
 
     @Override
@@ -68,8 +68,8 @@ public class PromotionMessageVariableExpression extends BLCVariableExpression {
             promotionMessages.putAll(generator.generatePromotionMessages(product));
         }
 
-        List<PromotionMessageDTO> filteredMessages = BLCPromotionMessageUtils.filterPromotionMessageDTOsByTypes(promotionMessages, filteredPlacements);
-        BLCPromotionMessageUtils.sortMessagesByPriority(filteredMessages);
+        List<PromotionMessageDTO> filteredMessages = UCPromotionMessageUtils.filterPromotionMessageDTOsByTypes(promotionMessages, filteredPlacements);
+        UCPromotionMessageUtils.sortMessagesByPriority(filteredMessages);
 
         return filteredMessages;
     }

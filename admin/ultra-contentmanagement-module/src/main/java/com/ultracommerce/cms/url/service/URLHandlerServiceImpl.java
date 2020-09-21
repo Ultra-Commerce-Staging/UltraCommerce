@@ -1,33 +1,33 @@
 /*
  * #%L
- * BroadleafCommerce CMS Module
+ * UltraCommerce CMS Module
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.cms.url.service;
+package com.ultracommerce.cms.url.service;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.cms.url.dao.URLHandlerDao;
-import org.broadleafcommerce.cms.url.domain.NullURLHandler;
-import org.broadleafcommerce.cms.url.domain.URLHandler;
-import org.broadleafcommerce.cms.url.domain.URLHandlerDTO;
-import org.broadleafcommerce.common.cache.StatisticsService;
-import org.broadleafcommerce.common.site.domain.Site;
-import org.broadleafcommerce.common.util.EfficientLRUMap;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
+import com.ultracommerce.cms.url.dao.URLHandlerDao;
+import com.ultracommerce.cms.url.domain.NullURLHandler;
+import com.ultracommerce.cms.url.domain.URLHandler;
+import com.ultracommerce.cms.url.domain.URLHandlerDTO;
+import com.ultracommerce.common.cache.StatisticsService;
+import com.ultracommerce.common.site.domain.Site;
+import com.ultracommerce.common.util.EfficientLRUMap;
+import com.ultracommerce.common.web.UltraRequestContext;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -44,7 +44,7 @@ import javax.cache.CacheManager;
 /**
  * Created by bpolster.
  */
-@Service("blURLHandlerService")
+@Service("ucURLHandlerService")
 public class URLHandlerServiceImpl implements URLHandlerService {
 
     protected static final String REGEX_SPECIAL_CHARS_PATTERN = "([\\[\\]\\.\\|\\?\\*\\+\\(\\)\\\\~`\\!@#%&\\-_+={}'\"\"<>:;, \\/])"; //other than ^ and $
@@ -53,13 +53,13 @@ public class URLHandlerServiceImpl implements URLHandlerService {
     private static final Log LOG = LogFactory.getLog(URLHandlerServiceImpl.class);
     protected Cache<String,URLHandler> urlHandlerCache;
 
-    @Resource(name = "blURLHandlerDao")
+    @Resource(name = "ucURLHandlerDao")
     protected URLHandlerDao urlHandlerDao;
 
-    @Resource(name = "blStatisticsService")
+    @Resource(name = "ucStatisticsService")
     protected StatisticsService statisticsService;
     
-    @Resource(name = "blCacheManager")
+    @Resource(name = "ucCacheManager")
     protected CacheManager cacheManager;
 
     protected Map<String, Pattern> urlPatternMap = new EfficientLRUMap<String, Pattern>(2000);
@@ -82,14 +82,14 @@ public class URLHandlerServiceImpl implements URLHandlerService {
         URLHandler handler = null;
 
         Site site = null;
-        if (BroadleafRequestContext.getBroadleafRequestContext() != null) {
-            site = BroadleafRequestContext.getBroadleafRequestContext().getNonPersistentSite();
+        if (UltraRequestContext.getUltraRequestContext() != null) {
+            site = UltraRequestContext.getUltraRequestContext().getNonPersistentSite();
         }
 
         String key = buildURLHandlerCacheKey(site, uri);
 
         //See if this is in cache first, but only if we are in production
-        if (BroadleafRequestContext.getBroadleafRequestContext().isProductionSandBox()) {
+        if (UltraRequestContext.getUltraRequestContext().isProductionSandBox()) {
             handler = getUrlHandlerFromCache(key);
         }
 
@@ -111,7 +111,7 @@ public class URLHandlerServiceImpl implements URLHandlerService {
                 handler = new URLHandlerDTO(handler.getNewURL(), handler.getUrlRedirectType());
             }
 
-            if (BroadleafRequestContext.getBroadleafRequestContext().isProductionSandBox()) {
+            if (UltraRequestContext.getUltraRequestContext().isProductionSandBox()) {
                 getUrlHandlerCache().put(key, handler);
             }
         }
@@ -139,7 +139,7 @@ public class URLHandlerServiceImpl implements URLHandlerService {
     }
 
     @Override
-    @Transactional("blTransactionManager")
+    @Transactional("ucTransactionManager")
     public URLHandler saveURLHandler(URLHandler handler) {
         return urlHandlerDao.saveURLHandler(handler);
     }

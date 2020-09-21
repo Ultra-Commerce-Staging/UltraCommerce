@@ -1,29 +1,29 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.currency.domain;
+package com.ultracommerce.common.currency.domain;
 
 
-import org.broadleafcommerce.common.admin.domain.AdminMainEntity;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransform;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformMember;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformTypes;
-import org.broadleafcommerce.common.presentation.AdminPresentation;
-import org.broadleafcommerce.common.presentation.AdminPresentationClass;
+import com.ultracommerce.common.admin.domain.AdminMainEntity;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransform;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransformMember;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransformTypes;
+import com.ultracommerce.common.presentation.AdminPresentation;
+import com.ultracommerce.common.presentation.AdminPresentationClass;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -41,30 +41,30 @@ import javax.persistence.Transient;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "BLC_CURRENCY")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE, region = "blCMSElements")
-@AdminPresentationClass(friendlyName = "BroadleafCurrencyImpl_baseCurrency")
+@Table(name = "UC_CURRENCY")
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE, region = "ucCMSElements")
+@AdminPresentationClass(friendlyName = "UltraCurrencyImpl_baseCurrency")
 @DirectCopyTransform({
         @DirectCopyTransformMember(templateTokens = DirectCopyTransformTypes.MULTITENANT_SITE),
         @DirectCopyTransformMember(templateTokens = DirectCopyTransformTypes.AUDITABLE_ONLY)
 })
-public class BroadleafCurrencyImpl implements BroadleafCurrency, AdminMainEntity {
+public class UltraCurrencyImpl implements UltraCurrency, AdminMainEntity {
 
     private static final long serialVersionUID = 1L;
 
     @Id
     @Column(name = "CURRENCY_CODE")
-    @AdminPresentation(friendlyName = "BroadleafCurrencyImpl_Currency_Code",
-            order = 1, group = "BroadleafCurrencyImpl_Details", prominent = true, gridOrder = 2000)
+    @AdminPresentation(friendlyName = "UltraCurrencyImpl_Currency_Code",
+            order = 1, group = "UltraCurrencyImpl_Details", prominent = true, gridOrder = 2000)
     protected String currencyCode;
 
     @Column(name = "FRIENDLY_NAME")
-    @AdminPresentation(friendlyName = "BroadleafCurrencyImpl_Name", order = 2, group = "BroadleafCurrencyImpl_Details",
+    @AdminPresentation(friendlyName = "UltraCurrencyImpl_Name", order = 2, group = "UltraCurrencyImpl_Details",
             prominent = true, gridOrder = 1000)
     protected String friendlyName;
 
     @Column(name = "DEFAULT_FLAG")
-    @AdminPresentation(friendlyName = "BroadleafCurrencyImpl_Is_Default", group = "BroadleafCurrencyImpl_Details", excluded = true)
+    @AdminPresentation(friendlyName = "UltraCurrencyImpl_Is_Default", group = "UltraCurrencyImpl_Details", excluded = true)
     protected Boolean defaultFlag = false;
     
     @Transient
@@ -120,7 +120,7 @@ public class BroadleafCurrencyImpl implements BroadleafCurrency, AdminMainEntity
             return false;
         }
 
-        BroadleafCurrencyImpl currency = (BroadleafCurrencyImpl) o;
+        UltraCurrencyImpl currency = (UltraCurrencyImpl) o;
 
         if (currencyCode != null ? !currencyCode.equals(currency.currencyCode) : currency.currencyCode != null) {
             return false;

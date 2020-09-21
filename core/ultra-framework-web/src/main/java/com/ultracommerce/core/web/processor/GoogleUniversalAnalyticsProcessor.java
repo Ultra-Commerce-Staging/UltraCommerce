@@ -1,43 +1,43 @@
 /*
  * #%L
- * BroadleafCommerce Framework Web
+ * UltraCommerce Framework Web
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.web.processor;
+package com.ultracommerce.core.web.processor;
 
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.util.BLCSystemProperty;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
-import org.broadleafcommerce.core.catalog.domain.Sku;
-import org.broadleafcommerce.core.order.domain.DiscreteOrderItem;
-import org.broadleafcommerce.core.order.domain.FulfillmentGroup;
-import org.broadleafcommerce.core.order.domain.FulfillmentGroupItem;
-import org.broadleafcommerce.core.order.domain.Order;
-import org.broadleafcommerce.core.order.domain.OrderItem;
-import org.broadleafcommerce.core.order.domain.OrderItemAttribute;
-import org.broadleafcommerce.core.order.domain.SkuAccessor;
-import org.broadleafcommerce.core.order.service.OrderService;
-import org.broadleafcommerce.presentation.condition.ConditionalOnTemplating;
-import org.broadleafcommerce.presentation.dialect.AbstractBroadleafTagReplacementProcessor;
-import org.broadleafcommerce.presentation.model.BroadleafTemplateContext;
-import org.broadleafcommerce.presentation.model.BroadleafTemplateElement;
-import org.broadleafcommerce.presentation.model.BroadleafTemplateModel;
-import org.broadleafcommerce.presentation.model.BroadleafTemplateNonVoidElement;
+import com.ultracommerce.common.util.UCSystemProperty;
+import com.ultracommerce.common.web.UltraRequestContext;
+import com.ultracommerce.core.catalog.domain.Sku;
+import com.ultracommerce.core.order.domain.DiscreteOrderItem;
+import com.ultracommerce.core.order.domain.FulfillmentGroup;
+import com.ultracommerce.core.order.domain.FulfillmentGroupItem;
+import com.ultracommerce.core.order.domain.Order;
+import com.ultracommerce.core.order.domain.OrderItem;
+import com.ultracommerce.core.order.domain.OrderItemAttribute;
+import com.ultracommerce.core.order.domain.SkuAccessor;
+import com.ultracommerce.core.order.service.OrderService;
+import com.ultracommerce.presentation.condition.ConditionalOnTemplating;
+import com.ultracommerce.presentation.dialect.AbstractUltraTagReplacementProcessor;
+import com.ultracommerce.presentation.model.UltraTemplateContext;
+import com.ultracommerce.presentation.model.UltraTemplateElement;
+import com.ultracommerce.presentation.model.UltraTemplateModel;
+import com.ultracommerce.presentation.model.UltraTemplateNonVoidElement;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -74,9 +74,9 @@ import javax.servlet.http.HttpServletRequest;
  * 
  * @author Phillip Verheyden (phillipuniverse)
  */
-@Component("blGoogleUniversalAnalyticsProcessor")
+@Component("ucGoogleUniversalAnalyticsProcessor")
 @ConditionalOnTemplating
-public class GoogleUniversalAnalyticsProcessor extends AbstractBroadleafTagReplacementProcessor {
+public class GoogleUniversalAnalyticsProcessor extends AbstractUltraTagReplacementProcessor {
 
     private static final Log LOG = LogFactory.getLog(GoogleUniversalAnalyticsProcessor.class);
 
@@ -86,7 +86,7 @@ public class GoogleUniversalAnalyticsProcessor extends AbstractBroadleafTagRepla
     @Value("${googleAnalytics.masterWebPropertyId}")
     protected String masterWebPropertyId;
     
-    @Resource(name = "blOrderService")
+    @Resource(name = "ucOrderService")
     protected OrderService orderService;
     
     /**
@@ -107,7 +107,7 @@ public class GoogleUniversalAnalyticsProcessor extends AbstractBroadleafTagRepla
     }
     
     @Override
-    public BroadleafTemplateModel getReplacementModel(String tagName, Map<String, String> tagAttributes, BroadleafTemplateContext context) {
+    public UltraTemplateModel getReplacementModel(String tagName, Map<String, String> tagAttributes, UltraTemplateContext context) {
         StringBuffer sb = new StringBuffer();
         Map<String, String> trackers = getTrackers();
         if (MapUtils.isNotEmpty(trackers)) {
@@ -146,9 +146,9 @@ public class GoogleUniversalAnalyticsProcessor extends AbstractBroadleafTagRepla
                 sb.append("});");
 
                 if ("webProperty".equals(trackerName)) {
-                    HttpServletRequest request = BroadleafRequestContext.getBroadleafRequestContext().getRequest();
+                    HttpServletRequest request = UltraRequestContext.getUltraRequestContext().getRequest();
                     if (request != null) {
-                        Map<String, String> setValuesMap = (Map<String, String>) request.getAttribute("blGAValuesMap");
+                        Map<String, String> setValuesMap = (Map<String, String>) request.getAttribute("ucGAValuesMap");
                         if (setValuesMap != null) {
                             for (Map.Entry<String, String> entry : setValuesMap.entrySet()) {
                                 sb.append("ga('" + trackerPrefix + "set',").append(entry.getKey()).append(",")
@@ -173,9 +173,9 @@ public class GoogleUniversalAnalyticsProcessor extends AbstractBroadleafTagRepla
             }
             
             // Add contentNode to the document
-            BroadleafTemplateModel model = context.createModel();
-            BroadleafTemplateNonVoidElement scriptTag = context.createNonVoidElement("script");
-            BroadleafTemplateElement script = context.createTextElement(sb.toString());
+            UltraTemplateModel model = context.createModel();
+            UltraTemplateNonVoidElement scriptTag = context.createNonVoidElement("script");
+            UltraTemplateElement script = context.createTextElement(sb.toString());
             scriptTag.addChild(script);
             model.addElement(scriptTag);
             return model;
@@ -307,19 +307,19 @@ public class GoogleUniversalAnalyticsProcessor extends AbstractBroadleafTagRepla
     }
     
     public String getAffiliation() {
-        return BLCSystemProperty.resolveSystemProperty("googleAnalytics.affiliation");
+        return UCSystemProperty.resolveSystemProperty("googleAnalytics.affiliation");
     }
     
     public String getWebPropertyId() {
-        return BLCSystemProperty.resolveSystemProperty("googleAnalytics.webPropertyId");
+        return UCSystemProperty.resolveSystemProperty("googleAnalytics.webPropertyId");
     }
     
     public boolean isIncludeLinkAttribution() {
-        return BLCSystemProperty.resolveBooleanSystemProperty("googleAnalytics.enableLinkAttribution", true);
+        return UCSystemProperty.resolveBooleanSystemProperty("googleAnalytics.enableLinkAttribution", true);
     }
 
     public boolean isIncludeDisplayAdvertising() {
-        return BLCSystemProperty.resolveBooleanSystemProperty("googleAnalytics.enableDisplayAdvertising", false);
+        return UCSystemProperty.resolveBooleanSystemProperty("googleAnalytics.enableDisplayAdvertising", false);
     }
 
 }

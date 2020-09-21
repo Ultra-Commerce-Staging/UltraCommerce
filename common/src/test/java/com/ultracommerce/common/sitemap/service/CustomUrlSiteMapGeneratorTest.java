@@ -1,38 +1,38 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
 
-package org.broadleafcommerce.common.sitemap.service;
+package com.ultracommerce.common.sitemap.service;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertThat;
 
-import org.broadleafcommerce.common.site.domain.Site;
-import org.broadleafcommerce.common.site.domain.SiteImpl;
-import org.broadleafcommerce.common.sitemap.domain.CustomUrlSiteMapGeneratorConfiguration;
-import org.broadleafcommerce.common.sitemap.domain.CustomUrlSiteMapGeneratorConfigurationImpl;
-import org.broadleafcommerce.common.sitemap.domain.SiteMapUrlEntry;
-import org.broadleafcommerce.common.sitemap.domain.SiteMapUrlEntryImpl;
-import org.broadleafcommerce.common.sitemap.exception.SiteMapException;
-import org.broadleafcommerce.common.sitemap.service.CustomUrlSiteMapGenerator;
-import org.broadleafcommerce.common.sitemap.service.type.SiteMapChangeFreqType;
-import org.broadleafcommerce.common.sitemap.service.type.SiteMapGeneratorType;
-import org.broadleafcommerce.common.sitemap.service.type.SiteMapPriorityType;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
+import com.ultracommerce.common.site.domain.Site;
+import com.ultracommerce.common.site.domain.SiteImpl;
+import com.ultracommerce.common.sitemap.domain.CustomUrlSiteMapGeneratorConfiguration;
+import com.ultracommerce.common.sitemap.domain.CustomUrlSiteMapGeneratorConfigurationImpl;
+import com.ultracommerce.common.sitemap.domain.SiteMapUrlEntry;
+import com.ultracommerce.common.sitemap.domain.SiteMapUrlEntryImpl;
+import com.ultracommerce.common.sitemap.exception.SiteMapException;
+import com.ultracommerce.common.sitemap.service.CustomUrlSiteMapGenerator;
+import com.ultracommerce.common.sitemap.service.type.SiteMapChangeFreqType;
+import com.ultracommerce.common.sitemap.service.type.SiteMapGeneratorType;
+import com.ultracommerce.common.sitemap.service.type.SiteMapPriorityType;
+import com.ultracommerce.common.web.UltraRequestContext;
 import org.junit.Test;
 
 import java.io.File;
@@ -57,16 +57,16 @@ public class CustomUrlSiteMapGeneratorTest extends SiteMapGeneratorTest {
         File file2 = fileService.getResource("/sitemap1.xml");
         File file3 = fileService.getResource("/sitemap2.xml");
 
-        compareFiles(file1, "src/test/resources/org/broadleafcommerce/sitemap/custom/sitemap_index.xml");
-        compareFiles(file2, "src/test/resources/org/broadleafcommerce/sitemap/custom/sitemap1.xml");
-        compareFiles(file3, "src/test/resources/org/broadleafcommerce/sitemap/custom/sitemap2.xml");
+        compareFiles(file1, "src/test/resources/com/ultracommerce/sitemap/custom/sitemap_index.xml");
+        compareFiles(file2, "src/test/resources/com/ultracommerce/sitemap/custom/sitemap1.xml");
+        compareFiles(file3, "src/test/resources/com/ultracommerce/sitemap/custom/sitemap2.xml");
 
     }
     
     @Test
     public void testSiteMapsWithSiteContext() throws SiteMapException, IOException {
-        BroadleafRequestContext brc = new BroadleafRequestContext();
-        BroadleafRequestContext.setBroadleafRequestContext(brc);
+        UltraRequestContext brc = new UltraRequestContext();
+        UltraRequestContext.setUltraRequestContext(brc);
 
         Site site = new SiteImpl();
         site.setId(256L);
@@ -83,12 +83,12 @@ public class CustomUrlSiteMapGeneratorTest extends SiteMapGeneratorTest {
         assertThat(file2.getAbsolutePath(), containsString("site-256"));
         assertThat(file3.getAbsolutePath(), containsString("site-256"));
 
-        compareFiles(file1, "src/test/resources/org/broadleafcommerce/sitemap/custom/sitemap_index.xml");
-        compareFiles(file2, "src/test/resources/org/broadleafcommerce/sitemap/custom/sitemap1.xml");
-        compareFiles(file3, "src/test/resources/org/broadleafcommerce/sitemap/custom/sitemap2.xml");
+        compareFiles(file1, "src/test/resources/com/ultracommerce/sitemap/custom/sitemap_index.xml");
+        compareFiles(file2, "src/test/resources/com/ultracommerce/sitemap/custom/sitemap1.xml");
+        compareFiles(file3, "src/test/resources/com/ultracommerce/sitemap/custom/sitemap2.xml");
         
         // Remove the request context from thread local so it doesn't get in the way of subsequent tests
-        BroadleafRequestContext.setBroadleafRequestContext(null);
+        UltraRequestContext.setUltraRequestContext(null);
     }
     
     public CustomUrlSiteMapGeneratorConfiguration getConfiguration() {

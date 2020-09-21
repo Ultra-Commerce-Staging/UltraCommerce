@@ -1,24 +1,24 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.payment.domain.secure;
+package com.ultracommerce.core.payment.domain.secure;
 
-import org.broadleafcommerce.common.encryption.EncryptionModule;
-import org.broadleafcommerce.core.payment.service.SecureOrderPaymentService;
+import com.ultracommerce.common.encryption.EncryptionModule;
+import com.ultracommerce.core.payment.service.SecureOrderPaymentService;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Index;
 import org.hibernate.annotations.Parameter;
@@ -39,13 +39,13 @@ import javax.persistence.Transient;
  */
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "BLC_BANK_ACCOUNT_PAYMENT")
+@Table(name = "UC_BANK_ACCOUNT_PAYMENT")
 public class BankAccountPaymentImpl implements BankAccountPayment {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * Rather than constructing directly, use {@link SecureOrderPaymentService#create(org.broadleafcommerce.core.payment.service.type.PaymentType)}
+     * Rather than constructing directly, use {@link SecureOrderPaymentService#create(com.ultracommerce.core.payment.service.type.PaymentType)}
      * so that the appropriate {@link EncryptionModule} can be hooked up to this entity
      */
     protected BankAccountPaymentImpl() {
@@ -60,10 +60,10 @@ public class BankAccountPaymentImpl implements BankAccountPayment {
     @GeneratedValue(generator = "BankPaymentId")
     @GenericGenerator(
             name="BankPaymentId",
-            strategy="org.broadleafcommerce.common.persistence.IdOverrideTableGenerator",
+            strategy="com.ultracommerce.common.persistence.IdOverrideTableGenerator",
             parameters = {
                 @Parameter(name="segment_value", value="BankAccountPaymentImpl"),
-                @Parameter(name="entity_name", value="org.broadleafcommerce.core.payment.domain.BankAccountPaymentInfoImpl")
+                @Parameter(name="entity_name", value="com.ultracommerce.core.payment.domain.BankAccountPaymentInfoImpl")
             }
         )
     @Column(name = "PAYMENT_ID")

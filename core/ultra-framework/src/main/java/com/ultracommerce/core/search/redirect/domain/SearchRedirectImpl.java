@@ -1,35 +1,35 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.search.redirect.domain;
+package com.ultracommerce.core.search.redirect.domain;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.admin.domain.AdminMainEntity;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransform;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformMember;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformTypes;
-import org.broadleafcommerce.common.presentation.AdminPresentation;
-import org.broadleafcommerce.common.presentation.ConfigurationItem;
-import org.broadleafcommerce.common.presentation.RequiredOverride;
-import org.broadleafcommerce.common.presentation.ValidationConfiguration;
-import org.broadleafcommerce.common.presentation.client.VisibilityEnum;
-import org.broadleafcommerce.common.time.SystemTime;
-import org.broadleafcommerce.common.util.BLCSystemProperty;
+import com.ultracommerce.common.admin.domain.AdminMainEntity;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransform;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransformMember;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransformTypes;
+import com.ultracommerce.common.presentation.AdminPresentation;
+import com.ultracommerce.common.presentation.ConfigurationItem;
+import com.ultracommerce.common.presentation.RequiredOverride;
+import com.ultracommerce.common.presentation.ValidationConfiguration;
+import com.ultracommerce.common.presentation.client.VisibilityEnum;
+import com.ultracommerce.common.time.SystemTime;
+import com.ultracommerce.common.util.UCSystemProperty;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
@@ -53,8 +53,8 @@ import javax.persistence.Transient;
  */
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "BLC_SEARCH_INTERCEPT")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "blStandardElements")
+@Table(name = "UC_SEARCH_INTERCEPT")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "ucStandardElements")
 @DirectCopyTransform({
         @DirectCopyTransformMember(templateTokens = DirectCopyTransformTypes.MULTITENANT_SITE),
         @DirectCopyTransformMember(templateTokens = DirectCopyTransformTypes.AUDITABLE_ONLY)
@@ -70,10 +70,10 @@ public class SearchRedirectImpl implements SearchRedirect, java.io.Serializable,
     @GeneratedValue(generator = "SearchRedirectID")
     @GenericGenerator(
         name="SearchRedirectID",
-        strategy="org.broadleafcommerce.common.persistence.IdOverrideTableGenerator",
+        strategy="com.ultracommerce.common.persistence.IdOverrideTableGenerator",
         parameters = {
             @Parameter(name="segment_value", value="SearchRedirectImpl"),
-            @Parameter(name="entity_name", value="org.broadleafcommerce.core.search.redirect.domain.SearchRedirectImpl")
+            @Parameter(name="entity_name", value="com.ultracommerce.core.search.redirect.domain.SearchRedirectImpl")
         }
     )
     @Column(name = "SEARCH_REDIRECT_ID")
@@ -109,7 +109,7 @@ public class SearchRedirectImpl implements SearchRedirect, java.io.Serializable,
             groupOrder = 1,
             validationConfigurations = {
                     @ValidationConfiguration(
-                            validationImplementation = "blAfterStartDateValidator",
+                            validationImplementation = "ucAfterStartDateValidator",
                             configurationItems = {
                                     @ConfigurationItem(itemName = "otherField", itemValue = "activeStartDate")
                             })
@@ -179,7 +179,7 @@ public class SearchRedirectImpl implements SearchRedirect, java.io.Serializable,
     @Override
     public boolean isActive() {
         Long date = SystemTime.asMillis(true);
-        boolean isNullActiveStartDateActive = BLCSystemProperty.resolveBooleanSystemProperty("searchRedirect.is.null.activeStartDate.active");
+        boolean isNullActiveStartDateActive = UCSystemProperty.resolveBooleanSystemProperty("searchRedirect.is.null.activeStartDate.active");
 
         boolean isActive;
         if (isNullActiveStartDateActive) {

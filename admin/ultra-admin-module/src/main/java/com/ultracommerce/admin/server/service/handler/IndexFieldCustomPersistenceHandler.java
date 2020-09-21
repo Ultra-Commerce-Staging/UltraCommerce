@@ -1,21 +1,21 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.admin.server.service.handler;
+package com.ultracommerce.admin.server.service.handler;
 
 import java.io.Serializable;
 import java.util.List;
@@ -30,40 +30,40 @@ import javax.persistence.criteria.Predicate;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.exception.ServiceException;
-import org.broadleafcommerce.common.extension.ExtensionResultStatusType;
-import org.broadleafcommerce.common.persistence.Status;
-import org.broadleafcommerce.common.presentation.client.OperationType;
-import org.broadleafcommerce.core.search.domain.IndexField;
-import org.broadleafcommerce.core.search.domain.IndexFieldType;
-import org.broadleafcommerce.core.search.domain.IndexFieldTypeImpl;
-import org.broadleafcommerce.core.search.domain.solr.FieldType;
-import org.broadleafcommerce.openadmin.dto.CriteriaTransferObject;
-import org.broadleafcommerce.openadmin.dto.DynamicResultSet;
-import org.broadleafcommerce.openadmin.dto.Entity;
-import org.broadleafcommerce.openadmin.dto.FieldMetadata;
-import org.broadleafcommerce.openadmin.dto.FilterAndSortCriteria;
-import org.broadleafcommerce.openadmin.dto.PersistencePackage;
-import org.broadleafcommerce.openadmin.dto.PersistencePerspective;
-import org.broadleafcommerce.openadmin.server.dao.DynamicEntityDao;
-import org.broadleafcommerce.openadmin.server.service.handler.CustomPersistenceHandlerAdapter;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.RecordHelper;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.criteria.FieldPath;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.criteria.FieldPathBuilder;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.criteria.FilterMapping;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.criteria.Restriction;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.criteria.predicate.PredicateProvider;
+import com.ultracommerce.common.exception.ServiceException;
+import com.ultracommerce.common.extension.ExtensionResultStatusType;
+import com.ultracommerce.common.persistence.Status;
+import com.ultracommerce.common.presentation.client.OperationType;
+import com.ultracommerce.core.search.domain.IndexField;
+import com.ultracommerce.core.search.domain.IndexFieldType;
+import com.ultracommerce.core.search.domain.IndexFieldTypeImpl;
+import com.ultracommerce.core.search.domain.solr.FieldType;
+import com.ultracommerce.openadmin.dto.CriteriaTransferObject;
+import com.ultracommerce.openadmin.dto.DynamicResultSet;
+import com.ultracommerce.openadmin.dto.Entity;
+import com.ultracommerce.openadmin.dto.FieldMetadata;
+import com.ultracommerce.openadmin.dto.FilterAndSortCriteria;
+import com.ultracommerce.openadmin.dto.PersistencePackage;
+import com.ultracommerce.openadmin.dto.PersistencePerspective;
+import com.ultracommerce.openadmin.server.dao.DynamicEntityDao;
+import com.ultracommerce.openadmin.server.service.handler.CustomPersistenceHandlerAdapter;
+import com.ultracommerce.openadmin.server.service.persistence.module.RecordHelper;
+import com.ultracommerce.openadmin.server.service.persistence.module.criteria.FieldPath;
+import com.ultracommerce.openadmin.server.service.persistence.module.criteria.FieldPathBuilder;
+import com.ultracommerce.openadmin.server.service.persistence.module.criteria.FilterMapping;
+import com.ultracommerce.openadmin.server.service.persistence.module.criteria.Restriction;
+import com.ultracommerce.openadmin.server.service.persistence.module.criteria.predicate.PredicateProvider;
 import org.springframework.stereotype.Component;
 
 /**
  * @author Chad Harchar (charchar)
  */
-@Component("blIndexFieldCustomPersistenceHandler")
+@Component("ucIndexFieldCustomPersistenceHandler")
 public class IndexFieldCustomPersistenceHandler extends CustomPersistenceHandlerAdapter {
 
     private static final Log LOG = LogFactory.getLog(IndexFieldCustomPersistenceHandler.class);
 
-    @Resource(name = "blIndexFieldCustomPersistenceHandlerExtensionManager")
+    @Resource(name = "ucIndexFieldCustomPersistenceHandlerExtensionManager")
     protected IndexFieldCustomPersistenceHandlerExtensionManager extensionManager;
 
     @Override

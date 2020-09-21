@@ -1,25 +1,25 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-(function($, BLCAdmin) {
+(function($, UCAdmin) {
     
     var typeaheadMatches = {};
     
-    BLCAdmin.typeahead = {
+    UCAdmin.typeahead = {
             
         setToOneSelectionId : function setToOneSelectionId($input) {
             var $fieldBox = $input.closest('.field-group');
@@ -71,16 +71,16 @@
             });
             
             $input.on('blur', function() {
-                BLCAdmin.typeahead.setToOneSelectionId($input);
+                UCAdmin.typeahead.setToOneSelectionId($input);
             });
         },
         
     };
     
-    BLCAdmin.addInitializationHandler(function($container) {
+    UCAdmin.addInitializationHandler(function($container) {
         $container.find('.to-one-typeahead').each(function(index, element) {
-            BLCAdmin.typeahead.initializeForToOne($(element));
+            UCAdmin.typeahead.initializeForToOne($(element));
         });
     });
     
-})(jQuery, BLCAdmin);
+})(jQuery, UCAdmin);

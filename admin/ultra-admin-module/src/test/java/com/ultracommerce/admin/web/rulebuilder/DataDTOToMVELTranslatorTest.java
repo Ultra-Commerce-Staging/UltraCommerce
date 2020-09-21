@@ -1,35 +1,35 @@
 /*
  * #%L
- * BroadleafCommerce Admin Module
+ * UltraCommerce Admin Module
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.admin.web.rulebuilder;
+package com.ultracommerce.admin.web.rulebuilder;
 
-import org.broadleafcommerce.admin.web.rulebuilder.service.CustomerFieldServiceImpl;
-import org.broadleafcommerce.admin.web.rulebuilder.service.FulfillmentGroupFieldServiceImpl;
-import org.broadleafcommerce.admin.web.rulebuilder.service.OrderFieldServiceImpl;
-import org.broadleafcommerce.admin.web.rulebuilder.service.OrderItemFieldServiceImpl;
-import org.broadleafcommerce.common.presentation.RuleOperatorType;
-import org.broadleafcommerce.common.presentation.RuleOptionType;
-import org.broadleafcommerce.common.presentation.client.SupportedFieldType;
-import org.broadleafcommerce.openadmin.web.rulebuilder.BLCOperator;
-import org.broadleafcommerce.openadmin.web.rulebuilder.DataDTOToMVELTranslator;
-import org.broadleafcommerce.openadmin.web.rulebuilder.MVELTranslationException;
-import org.broadleafcommerce.openadmin.web.rulebuilder.dto.DataDTO;
-import org.broadleafcommerce.openadmin.web.rulebuilder.dto.ExpressionDTO;
-import org.broadleafcommerce.openadmin.web.rulebuilder.dto.FieldData;
+import com.ultracommerce.admin.web.rulebuilder.service.CustomerFieldServiceImpl;
+import com.ultracommerce.admin.web.rulebuilder.service.FulfillmentGroupFieldServiceImpl;
+import com.ultracommerce.admin.web.rulebuilder.service.OrderFieldServiceImpl;
+import com.ultracommerce.admin.web.rulebuilder.service.OrderItemFieldServiceImpl;
+import com.ultracommerce.common.presentation.RuleOperatorType;
+import com.ultracommerce.common.presentation.RuleOptionType;
+import com.ultracommerce.common.presentation.client.SupportedFieldType;
+import com.ultracommerce.openadmin.web.rulebuilder.UCOperator;
+import com.ultracommerce.openadmin.web.rulebuilder.DataDTOToMVELTranslator;
+import com.ultracommerce.openadmin.web.rulebuilder.MVELTranslationException;
+import com.ultracommerce.openadmin.web.rulebuilder.dto.DataDTO;
+import com.ultracommerce.openadmin.web.rulebuilder.dto.ExpressionDTO;
+import com.ultracommerce.openadmin.web.rulebuilder.dto.FieldData;
 
 import junit.framework.TestCase;
 
@@ -78,7 +78,7 @@ public class DataDTOToMVELTranslatorTest extends TestCase {
         DataDTOToMVELTranslator translator = new DataDTOToMVELTranslator();
         ExpressionDTO expressionDTO = new ExpressionDTO();
         expressionDTO.setId("category.name");
-        expressionDTO.setOperator(BLCOperator.IEQUALS.name());
+        expressionDTO.setOperator(UCOperator.IEQUALS.name());
         expressionDTO.setValue("merchandise");
 
         String translated = translator.createMVEL("discreteOrderItem", expressionDTO, orderItemFieldService);
@@ -106,18 +106,18 @@ public class DataDTOToMVELTranslatorTest extends TestCase {
     public void testCustomerQualificationMVEL() throws MVELTranslationException {
         DataDTOToMVELTranslator translator = new DataDTOToMVELTranslator();
         DataDTO dataDTO = new DataDTO();
-        dataDTO.setCondition(BLCOperator.AND.name());
+        dataDTO.setCondition(UCOperator.AND.name());
 
         //not currently supported
 //        ExpressionDTO e1 = new ExpressionDTO();
 //        e1.setName("emailAddress");
-//        e1.setOperator(BLCOperator.NOT_EQUAL_FIELD.name());
+//        e1.setOperator(UCOperator.NOT_EQUAL_FIELD.name());
 //        e1.setValue("username");
 
         // Not supported
 //        ExpressionDTO e2 = new ExpressionDTO();
 //        e2.setName("deactivated");
-//        e2.setOperator(BLCOperator.EQUALS.name());
+//        e2.setOperator(UCOperator.EQUALS.name());
 //        e2.setValue("true");
 
         //dataDTO.getGroups().add(e1);
@@ -149,11 +149,11 @@ public class DataDTOToMVELTranslatorTest extends TestCase {
     public void testOrderQualificationMVEL() throws MVELTranslationException {
         DataDTOToMVELTranslator translator = new DataDTOToMVELTranslator();
         DataDTO dataDTO = new DataDTO();
-        dataDTO.setCondition(BLCOperator.AND.name());
+        dataDTO.setCondition(UCOperator.AND.name());
 
         ExpressionDTO expressionDTO = new ExpressionDTO();
         expressionDTO.setId("subTotal");
-        expressionDTO.setOperator(BLCOperator.GREATER_OR_EQUAL.name());
+        expressionDTO.setOperator(UCOperator.GREATER_OR_EQUAL.name());
         expressionDTO.setValue("100");
         dataDTO.getRules().add(expressionDTO);
 
@@ -197,10 +197,10 @@ public class DataDTOToMVELTranslatorTest extends TestCase {
 
         DataDTO d1 = new DataDTO();
         d1.setQuantity(1);
-        d1.setCondition(BLCOperator.AND.name());
+        d1.setCondition(UCOperator.AND.name());
         ExpressionDTO d1e1 = new ExpressionDTO();
         d1e1.setId("category.name");
-        d1e1.setOperator(BLCOperator.EQUALS.name());
+        d1e1.setOperator(UCOperator.EQUALS.name());
         d1e1.setValue("test category");
         d1.getRules().add(d1e1);
 
@@ -210,10 +210,10 @@ public class DataDTOToMVELTranslatorTest extends TestCase {
 
         DataDTO d2 = new DataDTO();
         d2.setQuantity(1);
-        d2.setCondition(BLCOperator.NOT.name());
+        d2.setCondition(UCOperator.NOT.name());
         ExpressionDTO d2e1 = new ExpressionDTO();
         d2e1.setId("product.manufacturer");
-        d2e1.setOperator(BLCOperator.EQUALS.name());
+        d2e1.setOperator(UCOperator.EQUALS.name());
         d2e1.setValue("test manufacturer");
         d2.getRules().add(d2e1);
 
@@ -250,16 +250,16 @@ public class DataDTOToMVELTranslatorTest extends TestCase {
     public void testFulfillmentQualificationMVEL() throws MVELTranslationException {
         DataDTOToMVELTranslator translator = new DataDTOToMVELTranslator();
         DataDTO dataDTO = new DataDTO();
-        dataDTO.setCondition(BLCOperator.AND.name());
+        dataDTO.setCondition(UCOperator.AND.name());
 
         ExpressionDTO e1 = new ExpressionDTO();
         e1.setId("address.state.name");
-        e1.setOperator(BLCOperator.EQUALS.name());
+        e1.setOperator(UCOperator.EQUALS.name());
         e1.setValue("Texas");
 
         ExpressionDTO e2 = new ExpressionDTO();
         e2.setId("retailFulfillmentPrice");
-        e2.setOperator(BLCOperator.BETWEEN_INCLUSIVE.name());
+        e2.setOperator(UCOperator.BETWEEN_INCLUSIVE.name());
         e2.setValue("[99,199]");
 
         dataDTO.getRules().add(e1);
@@ -275,10 +275,10 @@ public class DataDTOToMVELTranslatorTest extends TestCase {
 
         DataDTO d1 = new DataDTO();
         d1.setQuantity(1);
-        d1.setCondition(BLCOperator.AND.name());
+        d1.setCondition(UCOperator.AND.name());
         ExpressionDTO d1e1 = new ExpressionDTO();
         d1e1.setId("category.name");
-        d1e1.setOperator(BLCOperator.COLLECTION_IN.name());
+        d1e1.setOperator(UCOperator.COLLECTION_IN.name());
         d1e1.setValue("[\"test category\", \"test category 2\"]");
         d1.getRules().add(d1e1);
 
@@ -293,10 +293,10 @@ public class DataDTOToMVELTranslatorTest extends TestCase {
 
         DataDTO d1 = new DataDTO();
         d1.setQuantity(0);
-        d1.setCondition(BLCOperator.AND.name());
+        d1.setCondition(UCOperator.AND.name());
         ExpressionDTO d1e1 = new ExpressionDTO();
         d1e1.setId("getCustomerAttributes()---invoice_date");
-        d1e1.setOperator(BLCOperator.WITHIN_DAYS.name());
+        d1e1.setOperator(UCOperator.WITHIN_DAYS.name());
         d1e1.setValue("12");
         d1.getRules().add(d1e1);
 

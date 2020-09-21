@@ -1,27 +1,27 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
 
-package org.broadleafcommerce.common.money;
+package com.ultracommerce.common.money;
 
-import org.broadleafcommerce.common.currency.domain.BroadleafCurrency;
-import org.broadleafcommerce.common.money.util.CurrencyAdapter;
-import org.broadleafcommerce.common.util.xml.BigDecimalRoundingAdapter;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
+import com.ultracommerce.common.currency.domain.UltraCurrency;
+import com.ultracommerce.common.money.util.CurrencyAdapter;
+import com.ultracommerce.common.util.xml.BigDecimalRoundingAdapter;
+import com.ultracommerce.common.web.UltraRequestContext;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -58,9 +58,9 @@ public class Money implements Serializable, Cloneable, Comparable<Money>, Extern
 
     public static final Money ZERO = new Money(BigDecimal.ZERO);
 
-    protected static String getCurrencyCode(BroadleafCurrency blCurrency) {
-        if (blCurrency != null) {
-            return blCurrency.getCurrencyCode();
+    protected static String getCurrencyCode(UltraCurrency ucCurrency) {
+        if (ucCurrency != null) {
+            return ucCurrency.getCurrencyCode();
         } else {
             return defaultCurrency().getCurrencyCode();
         }
@@ -70,16 +70,16 @@ public class Money implements Serializable, Cloneable, Comparable<Money>, Extern
         this(BankersRounding.zeroAmount(), currency);
     }
 
-    public Money(BroadleafCurrency blCurrency) {
-        this(0, Currency.getInstance(getCurrencyCode(blCurrency)));
+    public Money(UltraCurrency ucCurrency) {
+        this(0, Currency.getInstance(getCurrencyCode(ucCurrency)));
     }
 
-    public Money(BigDecimal amount, BroadleafCurrency blCurrency) {
-        this(amount, Currency.getInstance(getCurrencyCode(blCurrency)));
+    public Money(BigDecimal amount, UltraCurrency ucCurrency) {
+        this(amount, Currency.getInstance(getCurrencyCode(ucCurrency)));
     }
 
-    public Money(BigDecimal amount, BroadleafCurrency blCurrency, int scale) {
-        this(amount, Currency.getInstance(getCurrencyCode(blCurrency)), scale);
+    public Money(BigDecimal amount, UltraCurrency ucCurrency, int scale) {
+        this(amount, Currency.getInstance(getCurrencyCode(ucCurrency)), scale);
     }
 
     public Money() {
@@ -440,12 +440,12 @@ public class Money implements Serializable, Cloneable, Comparable<Money>, Extern
             return Currency.getInstance(CurrencyConsiderationContext.getCurrencyDeterminationService().getCurrencyCode(CurrencyConsiderationContext.getCurrencyConsiderationContext()));
         }
 
-        // Check the BLC Thread
-        BroadleafRequestContext brc = BroadleafRequestContext.getBroadleafRequestContext();
+        // Check the UC Thread
+        UltraRequestContext brc = UltraRequestContext.getUltraRequestContext();
 
-        if (brc != null && brc.getBroadleafCurrency() != null) {
-            assert brc.getBroadleafCurrency().getCurrencyCode() != null;
-            return Currency.getInstance(brc.getBroadleafCurrency().getCurrencyCode());
+        if (brc != null && brc.getUltraCurrency() != null) {
+            assert brc.getUltraCurrency().getCurrencyCode() != null;
+            return Currency.getInstance(brc.getUltraCurrency().getCurrencyCode());
         }
 
         if (System.getProperty("currency.default") != null) {

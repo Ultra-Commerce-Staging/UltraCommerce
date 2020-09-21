@@ -1,34 +1,34 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
 
-package org.broadleafcommerce.common.site.domain;
+package com.ultracommerce.common.site.domain;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.admin.domain.AdminMainEntity;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransform;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformMember;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformTypes;
-import org.broadleafcommerce.common.i18n.service.DynamicTranslationProvider;
-import org.broadleafcommerce.common.persistence.ArchiveStatus;
-import org.broadleafcommerce.common.presentation.AdminPresentation;
-import org.broadleafcommerce.common.presentation.AdminPresentationClass;
-import org.broadleafcommerce.common.presentation.RequiredOverride;
+import com.ultracommerce.common.admin.domain.AdminMainEntity;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransform;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransformMember;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransformTypes;
+import com.ultracommerce.common.i18n.service.DynamicTranslationProvider;
+import com.ultracommerce.common.persistence.ArchiveStatus;
+import com.ultracommerce.common.presentation.AdminPresentation;
+import com.ultracommerce.common.presentation.AdminPresentationClass;
+import com.ultracommerce.common.presentation.RequiredOverride;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -58,10 +58,10 @@ import javax.persistence.Transient;
  */
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "BLC_CATALOG")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "blSiteElements")
+@Table(name = "UC_CATALOG")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "ucSiteElements")
 @AdminPresentationClass(friendlyName = "CatalogImpl")
-@SQLDelete(sql = "UPDATE BLC_CATALOG SET ARCHIVED = 'Y' WHERE CATALOG_ID = ?")
+@SQLDelete(sql = "UPDATE UC_CATALOG SET ARCHIVED = 'Y' WHERE CATALOG_ID = ?")
 @DirectCopyTransform({
         @DirectCopyTransformMember(templateTokens = DirectCopyTransformTypes.MULTITENANT_SITEMARKER),
         @DirectCopyTransformMember(templateTokens = DirectCopyTransformTypes.AUDITABLE_ONLY),
@@ -75,10 +75,10 @@ public class CatalogImpl implements Catalog, AdminMainEntity {
     @GeneratedValue(generator = "CatalogId")
     @GenericGenerator(
             name = "CatalogId",
-            strategy = "org.broadleafcommerce.common.persistence.IdOverrideTableGenerator",
+            strategy = "com.ultracommerce.common.persistence.IdOverrideTableGenerator",
             parameters = {
                     @Parameter(name = "segment_value", value = "CatalogImpl"),
-                    @Parameter(name = "entity_name", value = "org.broadleafcommerce.common.site.domain.CatalogImpl")
+                    @Parameter(name = "entity_name", value = "com.ultracommerce.common.site.domain.CatalogImpl")
             })
     @Column(name = "CATALOG_ID")
     protected Long id;
@@ -89,7 +89,7 @@ public class CatalogImpl implements Catalog, AdminMainEntity {
 
     @OneToMany(targetEntity = SiteCatalogXrefImpl.class, mappedBy = "catalog", orphanRemoval = true)
     @Cascade(value = { org.hibernate.annotations.CascadeType.MERGE, org.hibernate.annotations.CascadeType.PERSIST })
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "blSiteElements")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "ucSiteElements")
     @BatchSize(size = 50)
     protected List<SiteCatalogXref> siteXrefs = new ArrayList<SiteCatalogXref>();
 
@@ -146,7 +146,7 @@ public class CatalogImpl implements Catalog, AdminMainEntity {
 
     public void checkCloneable(Catalog catalog) throws CloneNotSupportedException, SecurityException, NoSuchMethodException {
         Method cloneMethod = catalog.getClass().getMethod("clone", new Class[] {});
-        if (cloneMethod.getDeclaringClass().getName().startsWith("org.broadleafcommerce") && !catalog.getClass().getName().startsWith("org.broadleafcommerce")) {
+        if (cloneMethod.getDeclaringClass().getName().startsWith("com.ultracommerce") && !catalog.getClass().getName().startsWith("com.ultracommerce")) {
             //subclass is not implementing the clone method
             throw new CloneNotSupportedException("Custom extensions and implementations should implement clone.");
         }
@@ -160,7 +160,7 @@ public class CatalogImpl implements Catalog, AdminMainEntity {
             try {
                 checkCloneable(clone);
             } catch (CloneNotSupportedException e) {
-                LOG.warn("Clone implementation missing in inheritance hierarchy outside of Broadleaf: " + clone.getClass().getName(), e);
+                LOG.warn("Clone implementation missing in inheritance hierarchy outside of Ultra: " + clone.getClass().getName(), e);
             }
             clone.setId(id);
             clone.setName(name);

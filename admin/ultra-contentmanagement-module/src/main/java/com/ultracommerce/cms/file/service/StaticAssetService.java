@@ -1,24 +1,24 @@
 /*
  * #%L
- * BroadleafCommerce CMS Module
+ * UltraCommerce CMS Module
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.cms.file.service;
+package com.ultracommerce.cms.file.service;
 
-import org.broadleafcommerce.cms.file.domain.StaticAsset;
-import org.broadleafcommerce.common.file.service.StaticAssetPathService;
+import com.ultracommerce.cms.file.domain.StaticAsset;
+import com.ultracommerce.common.file.service.StaticAssetPathService;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -42,7 +42,7 @@ public interface StaticAssetService {
 
     /**
      * <p>
-     * Used when uploading a file to Broadleaf.    This method will create the corresponding 
+     * Used when uploading a file to Ultra.    This method will create the corresponding 
      * asset.   
      * 
      * <p>
@@ -121,7 +121,7 @@ public interface StaticAssetService {
     public String convertAssetPath(String assetPath, String contextPath, boolean secureRequest);
 
     /**
-     * Add an asset outside of Broadleaf Admin.  
+     * Add an asset outside of Ultra Admin.  
      * 
      * @param staticAsset
      * @return
@@ -129,7 +129,7 @@ public interface StaticAssetService {
     public StaticAsset addStaticAsset(StaticAsset staticAsset);
 
     /**
-     * Update an asset outside of Broadleaf Admin.  
+     * Update an asset outside of Ultra Admin.  
      * 
      * @param staticAsset
      * @return
@@ -137,7 +137,7 @@ public interface StaticAssetService {
     public StaticAsset updateStaticAsset(StaticAsset staticAsset);
 
     /**
-     * Delete an asset outside of Broadleaf Admin.  
+     * Delete an asset outside of Ultra Admin.  
      * 
      * @param staticAsset
      * @return

@@ -1,26 +1,26 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.openadmin.web.service;
+package com.ultracommerce.openadmin.web.service;
 
-import org.broadleafcommerce.common.extension.ExtensionHandler;
-import org.broadleafcommerce.common.extension.ExtensionResultStatusType;
-import org.broadleafcommerce.openadmin.dto.Entity;
-import org.broadleafcommerce.openadmin.web.form.component.ListGridRecord;
+import com.ultracommerce.common.extension.ExtensionHandler;
+import com.ultracommerce.common.extension.ExtensionResultStatusType;
+import com.ultracommerce.openadmin.dto.Entity;
+import com.ultracommerce.openadmin.web.form.component.ListGridRecord;
 
 /**
  * An extension handler to allow a custom error key or error message to be added to the ListGridRecord.
@@ -37,7 +37,7 @@ public interface ListGridErrorMessageExtensionHandler extends ExtensionHandler {
      * Otherwise, they should either set the error message or the error key on the ListGrid on the entity. If both 
      * are set the error message will win.
      * 
-     * Implementors can use the BroadleafRequestContext to try to determine Locale, or get a MessageSource, etc.
+     * Implementors can use the UltraRequestContext to try to determine Locale, or get a MessageSource, etc.
      * 
      * @param entity
      * @param lgr

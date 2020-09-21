@@ -1,32 +1,32 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.extensibility.jpa;
+package com.ultracommerce.common.extensibility.jpa;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.IterableUtils;
 import org.apache.commons.collections4.Predicate;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.exception.ExceptionHelper;
-import org.broadleafcommerce.common.extensibility.jpa.convert.BroadleafClassTransformer;
-import org.broadleafcommerce.common.extensibility.jpa.convert.BroadleafPersistenceUnitDeclaringClassTransformer;
-import org.broadleafcommerce.common.extensibility.jpa.convert.EntityMarkerClassTransformer;
-import org.broadleafcommerce.common.extensibility.jpa.copy.NullClassTransformer;
+import com.ultracommerce.common.exception.ExceptionHelper;
+import com.ultracommerce.common.extensibility.jpa.convert.UltraClassTransformer;
+import com.ultracommerce.common.extensibility.jpa.convert.UltraPersistenceUnitDeclaringClassTransformer;
+import com.ultracommerce.common.extensibility.jpa.convert.EntityMarkerClassTransformer;
+import com.ultracommerce.common.extensibility.jpa.copy.NullClassTransformer;
 import org.hibernate.ejb.AvailableSettings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -75,22 +75,22 @@ public class MergePersistenceUnitManager extends DefaultPersistenceUnitManager {
     private static final Log LOG = LogFactory.getLog(MergePersistenceUnitManager.class);
 
     protected HashMap<String, PersistenceUnitInfo> mergedPus = new HashMap<>();
-    protected List<BroadleafClassTransformer> classTransformers = new ArrayList<>();
+    protected List<UltraClassTransformer> classTransformers = new ArrayList<>();
 
-    @Resource(name="blMergedPersistenceXmlLocations")
+    @Resource(name="ucMergedPersistenceXmlLocations")
     protected Set<String> mergedPersistenceXmlLocations;
 
-    @Resource(name="blMergedDataSources")
+    @Resource(name="ucMergedDataSources")
     protected Map<String, DataSource> mergedDataSources;
     
-    @Resource(name="blMergedClassTransformers")
-    protected Set<BroadleafClassTransformer> mergedClassTransformers;
+    @Resource(name="ucMergedClassTransformers")
+    protected Set<UltraClassTransformer> mergedClassTransformers;
 
-    @Resource(name="blEntityMarkerClassTransformer")
+    @Resource(name="ucEntityMarkerClassTransformer")
     protected EntityMarkerClassTransformer entityMarkerClassTransformer;
     
     @Autowired(required = false)
-    @Qualifier("blAutoDDLStatusExporter")
+    @Qualifier("ucAutoDDLStatusExporter")
     protected MBeanExporter mBeanExporter;
     
     @Autowired
@@ -185,16 +185,16 @@ public class MergePersistenceUnitManager extends DefaultPersistenceUnitManager {
     protected boolean addTransformersToPersistenceUnits() throws Exception {
         boolean weaverRegistered = true;
         for (PersistenceUnitInfo pui : mergedPus.values()) {
-            for (BroadleafClassTransformer transformer : classTransformers) {
+            for (UltraClassTransformer transformer : classTransformers) {
                 try {
                     boolean isTransformerQualified = !(transformer instanceof NullClassTransformer) &&
                         (
-                            pui.getPersistenceUnitName().equals("blPU") &&
-                            !(transformer instanceof BroadleafPersistenceUnitDeclaringClassTransformer)
+                            pui.getPersistenceUnitName().equals("ucPU") &&
+                            !(transformer instanceof UltraPersistenceUnitDeclaringClassTransformer)
                         ) ||
                         (
-                            (transformer instanceof BroadleafPersistenceUnitDeclaringClassTransformer) &&
-                            pui.getPersistenceUnitName().equals(((BroadleafPersistenceUnitDeclaringClassTransformer) transformer).getPersistenceUnitName())
+                            (transformer instanceof UltraPersistenceUnitDeclaringClassTransformer) &&
+                            pui.getPersistenceUnitName().equals(((UltraPersistenceUnitDeclaringClassTransformer) transformer).getPersistenceUnitName())
                         );
                     if (isTransformerQualified) {
                         pui.addTransformer(transformer);
@@ -241,13 +241,13 @@ public class MergePersistenceUnitManager extends DefaultPersistenceUnitManager {
         return weaverRegistered;
     }
 
-    protected boolean handleClassTransformerRegistrationProblem(BroadleafClassTransformer transformer, Exception e) throws Exception {
+    protected boolean handleClassTransformerRegistrationProblem(UltraClassTransformer transformer, Exception e) throws Exception {
         boolean weaverRegistered;
         Exception refined = ExceptionHelper.refineException(IllegalStateException.class, RuntimeException.class, e);
         if (refined instanceof IllegalStateException) {
-            LOG.warn("A BroadleafClassTransformer is configured for this persistence unit, but Spring " +
+            LOG.warn("A UltraClassTransformer is configured for this persistence unit, but Spring " +
                     "reported a problem (likely that a LoadTimeWeaver is not registered). As a result, " +
-                    "the Broadleaf Commerce ClassTransformer ("+transformer.getClass().getName()+") is " +
+                    "the Ultra Commerce ClassTransformer ("+transformer.getClass().getName()+") is " +
                     "not being registered with the persistence unit. To resove this add a -javaagent:/path/to/spring-instrument.jar to the JVM args of the server");
             weaverRegistered = false;
         } else {
@@ -271,7 +271,7 @@ public class MergePersistenceUnitManager extends DefaultPersistenceUnitManager {
                 + " being loaded by the application's classloader. Ensure that session persistence is disabled; in Tomcat ensure that a <Manager pathname=\"\" /> element exists in your context.xml."
                 + "\n2. You are inadvertently using class scanning to find a ServletContainerInitializer class, and your servlet container is loading all classes before transformers have been registered."
                 + " If you are using a web.xml, ensure that there is an <absolute-ordering /> element somewhere in that file. If you are not using a web.xml and are using Spring Boot,"
-                + " then you likely need to add one. See https://www.broadleafcommerce.com/docs/core/5.2/broadleaf-concepts/key-aspects-and-configuration/app-server-configuration/tomcat for the example web.xml"
+                + " then you likely need to add one. See https://www.ultracommerce.com/docs/core/5.2/ultra-concepts/key-aspects-and-configuration/app-server-configuration/tomcat for the example web.xml"
                 + "\n3. The classes are being used as apart of an @Bean method or in some other runtime capacity that is initialized prior to persistence manager startup";
         if (devtoolsFound) {
             msg += "\n4. Spring Boot Devtools is on the classpath and the Restarter capabilities are interfering. Spring Boot Devtools restarter functionality works by creating multiple ClassLoaders"
@@ -307,7 +307,7 @@ public class MergePersistenceUnitManager extends DefaultPersistenceUnitManager {
         }
         if (CollectionUtils.isNotEmpty(incorrectEntityBeanDefs)) {
             String msg = "The following bean definitions for entity classes were detected in the Spring root ApplicationContext which prevents them from being correctly transformed. Ensure that bean definitions"
-                + " for entity classes used for overriding are only in applicationContext-entity.xml-like files configured with the blMergedEntityContexts bean and do not undergo component scanning or any other"
+                + " for entity classes used for overriding are only in applicationContext-entity.xml-like files configured with the ucMergedEntityContexts bean and do not undergo component scanning or any other"
                 + " Spring ApplicationContext configuration."
                 + "\n" + Arrays.toString(incorrectEntityBeanDefs.toArray());
             throw new IllegalStateException(msg);
@@ -373,22 +373,22 @@ public class MergePersistenceUnitManager extends DefaultPersistenceUnitManager {
      */
     protected void exceptionIfEntityMarkerNotFound() {
         if (CollectionUtils.isNotEmpty(mergedClassTransformers)) {
-            boolean foundEntityMarkerTransformer = IterableUtils.find(mergedClassTransformers, new Predicate<BroadleafClassTransformer>(){
+            boolean foundEntityMarkerTransformer = IterableUtils.find(mergedClassTransformers, new Predicate<UltraClassTransformer>(){
     
                 @Override
-                public boolean evaluate(BroadleafClassTransformer object) {
+                public boolean evaluate(UltraClassTransformer object) {
                     return EntityMarkerClassTransformer.class.isAssignableFrom(object.getClass());
                 }
                 
             }) != null;
             
             if (!foundEntityMarkerTransformer) {
-                BeanDefinition transformersBeanDef = ((BeanDefinitionRegistry) applicationContext.getAutowireCapableBeanFactory()).getBeanDefinition("blMergedClassTransformers");
-                String msg = "The EntityMarkerClassTransformer was not detected as registered in the the list of blMergedClassTransformers. This is"
-                    + " usually caused the blMergedClassTransformers being overridden in a different configuration. Without this transformer Broadleaf"
+                BeanDefinition transformersBeanDef = ((BeanDefinitionRegistry) applicationContext.getAutowireCapableBeanFactory()).getBeanDefinition("ucMergedClassTransformers");
+                String msg = "The EntityMarkerClassTransformer was not detected as registered in the the list of ucMergedClassTransformers. This is"
+                    + " usually caused the ucMergedClassTransformers being overridden in a different configuration. Without this transformer Ultra"
                     + " is unable to validate whether or not class transformation happened as expected. This bean was registered as " + transformersBeanDef
-                    + " but it should have been detected as registerd in bl-common-applicationContext.xml. Change the definition in " + transformersBeanDef.getResourceDescription()
-                    + " to instead utilize the EarlyStageMergeBeanPostProcessor in XML or an @Merge(targetRef=\"blMergedClassTransformers\" early = true) in a Java configuration class";
+                    + " but it should have been detected as registerd in uc-common-applicationContext.xml. Change the definition in " + transformersBeanDef.getResourceDescription()
+                    + " to instead utilize the EarlyStageMergeBeanPostProcessor in XML or an @Merge(targetRef=\"ucMergedClassTransformers\" early = true) in a Java configuration class";
                 throw new IllegalStateException(msg);
             }
         }
@@ -428,7 +428,7 @@ public class MergePersistenceUnitManager extends DefaultPersistenceUnitManager {
             if (props != null) {
                 for (Object key : props.keySet()) {
                     pui.getProperties().put(key, props.get(key));
-                    for (BroadleafClassTransformer transformer : classTransformers) {
+                    for (UltraClassTransformer transformer : classTransformers) {
                         try {
                             transformer.compileJPAProperties(props, key);
                         } catch (Exception e) {
@@ -475,11 +475,11 @@ public class MergePersistenceUnitManager extends DefaultPersistenceUnitManager {
         throw new IllegalStateException("Default Persistence Unit is not supported. The persistence unit name must be specified at the entity manager factory.");
     }
 
-    public List<BroadleafClassTransformer> getClassTransformers() {
+    public List<UltraClassTransformer> getClassTransformers() {
         return classTransformers;
     }
 
-    public void setClassTransformers(List<BroadleafClassTransformer> classTransformers) {
+    public void setClassTransformers(List<UltraClassTransformer> classTransformers) {
         this.classTransformers = classTransformers;
     }
 

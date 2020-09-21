@@ -1,25 +1,25 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2017 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.extensibility.jpa.convert;
+package com.ultracommerce.common.extensibility.jpa.convert;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyIgnorePattern;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyIgnorePattern;
 import org.hibernate.annotations.Type;
 import org.hibernate.type.MaterializedClobType;
 import org.springframework.stereotype.Component;
@@ -48,7 +48,7 @@ import javassist.bytecode.annotation.Annotation;
 import javassist.bytecode.annotation.StringMemberValue;
 
 /**
- * Broadleaf defines the Hibernate type for Clob fields as {@link StringClobType}. This has been deprecated in favor of
+ * Ultra defines the Hibernate type for Clob fields as {@link StringClobType}. This has been deprecated in favor of
  * {@link MaterializedClobType}. However, this is not a panacea, as this can map to the wrong type for Postgres. However,
  * this mapping is correct for Oracle.
  * </p>
@@ -59,18 +59,18 @@ import javassist.bytecode.annotation.StringMemberValue;
  *
  * <p>
  * Hibernate 5.2 completely removed the org.hibernate.type.StringClobType that was used in all {literal @}Lob fields
- * within Broadleaf. In order to improve forwards-compatiblity, this finds any instances in entities that
+ * within Ultra. In order to improve forwards-compatiblity, this finds any instances in entities that
  * were using StringClobType for {@literal @}Lob {@literal @}Type and swaps it out with org.hibernate.type.MaterializedClobType
  *
  * @author Jeff Fischer
  * @author Phillip Verheyden (phillipuniverse)
  */
-@Component("blMaterializedClobTypeClassTransformer")
-public class MaterializedClobTypeClassTransformer implements BroadleafClassTransformer {
+@Component("ucMaterializedClobTypeClassTransformer")
+public class MaterializedClobTypeClassTransformer implements UltraClassTransformer {
 
     private static final Log logger = LogFactory.getLog(MaterializedClobTypeClassTransformer.class);
 
-    @Resource(name = "blDirectCopyIgnorePatterns")
+    @Resource(name = "ucDirectCopyIgnorePatterns")
     protected List<DirectCopyIgnorePattern> ignorePatterns = new ArrayList<DirectCopyIgnorePattern>();
 
     @Override
@@ -118,7 +118,7 @@ public class MaterializedClobTypeClassTransformer implements BroadleafClassTrans
                                 if (typeName.equals(Type.class.getName())) {
                                     StringMemberValue annot = (StringMemberValue) annotation.getMemberValue("type");
                                     if (annot != null && annot.getValue().equals("org.hibernate.type.StringClobType")) {
-                                        if (!convertedClassName.startsWith("org.broadleafcommerce") || !convertedClassName.startsWith("com.broadleafcommerce")) {
+                                        if (!convertedClassName.startsWith("com.ultracommerce") || !convertedClassName.startsWith("com.ultracommerce")) {
                                             logger.warn(String.format("org.hibernate.type.StringClobType found on %s#%s which is no longer a class in Hibernate, automatically replacing with org.hibernate.type.MaterializedClobType. Please replace"
                                                 + " all instances of @Type(type = \"org.hibernate.type.StringClobType\") with @Type(type = \"org.hibernate.type.MaterializedClobType\")",
                                                 convertedClassName, field.getName()));

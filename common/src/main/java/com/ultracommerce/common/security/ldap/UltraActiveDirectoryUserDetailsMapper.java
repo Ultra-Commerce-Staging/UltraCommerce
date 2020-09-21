@@ -1,23 +1,23 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.security.ldap;
+package com.ultracommerce.common.security.ldap;
 
-import org.broadleafcommerce.common.security.BroadleafExternalAuthenticationUserDetails;
+import com.ultracommerce.common.security.UltraExternalAuthenticationUserDetails;
 import org.springframework.ldap.core.DirContextOperations;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -31,17 +31,17 @@ import java.util.Map;
 /**
  * This class allows Spring to do it's thing with respect to mapping user details from
  * LDAP to the Spring's security framework. However, this class allows us to specify whether
- * to use the user's user name from LDAP, or to use their email address to map them to a Broadleaf
+ * to use the user's user name from LDAP, or to use their email address to map them to a Ultra
  * user.  It also allows us to override the role names (GrantedAuthorities) that come from LDAP with
- * names that may be more suitable for Broadleaf.
+ * names that may be more suitable for Ultra.
  *
- * @deprecated NO LONGER REQUIRED AND SHOULD NOT BE USED. SEE BroadleafAdminLdapUserDetailsMapper.
+ * @deprecated NO LONGER REQUIRED AND SHOULD NOT BE USED. SEE UltraAdminLdapUserDetailsMapper.
  *
  * @author Kelly Tisdell
  *
  */
 @Deprecated
-public class BroadleafActiveDirectoryUserDetailsMapper extends LdapUserDetailsMapper {
+public class UltraActiveDirectoryUserDetailsMapper extends LdapUserDetailsMapper {
 
     protected boolean useEmailAddressAsUsername = true;
 
@@ -88,16 +88,16 @@ public class BroadleafActiveDirectoryUserDetailsMapper extends LdapUserDetailsMa
             password = userDetails.getUsername();
         }
 
-        BroadleafExternalAuthenticationUserDetails broadleafUser = new BroadleafExternalAuthenticationUserDetails(userDetails.getUsername(), password, userDetails.getAuthorities());
-        broadleafUser.setFirstName((String)ctx.getObjectAttribute("givenName"));
-        broadleafUser.setLastName((String)ctx.getObjectAttribute("sn"));
-        broadleafUser.setEmail(email);
+        UltraExternalAuthenticationUserDetails ultraUser = new UltraExternalAuthenticationUserDetails(userDetails.getUsername(), password, userDetails.getAuthorities());
+        ultraUser.setFirstName((String)ctx.getObjectAttribute("givenName"));
+        ultraUser.setLastName((String)ctx.getObjectAttribute("sn"));
+        ultraUser.setEmail(email);
 
-        return broadleafUser;
+        return ultraUser;
     }
 
     /**
-     * The LDAP server may contain a user name other than an email address.  If the email address should be used to map to a Broadleaf user, then
+     * The LDAP server may contain a user name other than an email address.  If the email address should be used to map to a Ultra user, then
      * set this to true.  The principal will be set to the user's email address returned from the LDAP server.
      * @param value
      */
@@ -106,11 +106,11 @@ public class BroadleafActiveDirectoryUserDetailsMapper extends LdapUserDetailsMa
     }
 
     /**
-     * This allows you to declaratively set a map containing values that will substitute role names from LDAP to Broadleaf roles names in cases that they might be different.
+     * This allows you to declaratively set a map containing values that will substitute role names from LDAP to Ultra roles names in cases that they might be different.
      * For example, if you have a role specified in LDAP under "memberOf" with a DN of "Marketing Administrator", you might want to
      * map that to the role "ADMIN".  By default the prefix "ROLE_" will be pre-pended to this name. So to configure this, you would specify:
      *
-     * <bean class="org.broadleaf.loadtest.web.security.ActiveDirectoryUserDetailsContextMapper">
+     * <bean class="org.ultra.loadtest.web.security.ActiveDirectoryUserDetailsContextMapper">
      *     <property name="roleMappings">
      *         <map>
      *             <entry key="Marketing_Administrator" value="CATALOG_ADMIN"/>

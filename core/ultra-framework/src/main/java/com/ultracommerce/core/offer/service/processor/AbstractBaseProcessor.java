@@ -1,21 +1,21 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.offer.service.processor;
+package com.ultracommerce.core.offer.service.processor;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.Predicate;
@@ -23,28 +23,28 @@ import org.apache.commons.collections4.map.LRUMap;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.RequestDTO;
-import org.broadleafcommerce.common.TimeDTO;
-import org.broadleafcommerce.common.money.Money;
-import org.broadleafcommerce.common.rule.MvelHelper;
-import org.broadleafcommerce.common.time.SystemTime;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
-import org.broadleafcommerce.core.offer.domain.Offer;
-import org.broadleafcommerce.core.offer.domain.OfferItemCriteria;
-import org.broadleafcommerce.core.offer.domain.OfferOfferRuleXref;
-import org.broadleafcommerce.core.offer.domain.OfferPriceData;
-import org.broadleafcommerce.core.offer.domain.OfferQualifyingCriteriaXref;
-import org.broadleafcommerce.core.offer.domain.OfferTargetCriteriaXref;
-import org.broadleafcommerce.core.offer.service.OfferServiceExtensionManager;
-import org.broadleafcommerce.core.offer.service.discount.CandidatePromotionItems;
-import org.broadleafcommerce.core.offer.service.discount.domain.PromotableOfferUtility;
-import org.broadleafcommerce.core.offer.service.discount.domain.PromotableOrderItem;
-import org.broadleafcommerce.core.offer.service.discount.domain.PromotableOrderItemPriceDetail;
-import org.broadleafcommerce.core.offer.service.type.OfferRuleType;
-import org.broadleafcommerce.core.offer.service.type.OfferType;
-import org.broadleafcommerce.core.order.domain.OrderItem;
-import org.broadleafcommerce.core.order.service.type.FulfillmentType;
-import org.broadleafcommerce.profile.core.domain.Customer;
+import com.ultracommerce.common.RequestDTO;
+import com.ultracommerce.common.TimeDTO;
+import com.ultracommerce.common.money.Money;
+import com.ultracommerce.common.rule.MvelHelper;
+import com.ultracommerce.common.time.SystemTime;
+import com.ultracommerce.common.web.UltraRequestContext;
+import com.ultracommerce.core.offer.domain.Offer;
+import com.ultracommerce.core.offer.domain.OfferItemCriteria;
+import com.ultracommerce.core.offer.domain.OfferOfferRuleXref;
+import com.ultracommerce.core.offer.domain.OfferPriceData;
+import com.ultracommerce.core.offer.domain.OfferQualifyingCriteriaXref;
+import com.ultracommerce.core.offer.domain.OfferTargetCriteriaXref;
+import com.ultracommerce.core.offer.service.OfferServiceExtensionManager;
+import com.ultracommerce.core.offer.service.discount.CandidatePromotionItems;
+import com.ultracommerce.core.offer.service.discount.domain.PromotableOfferUtility;
+import com.ultracommerce.core.offer.service.discount.domain.PromotableOrderItem;
+import com.ultracommerce.core.offer.service.discount.domain.PromotableOrderItemPriceDetail;
+import com.ultracommerce.core.offer.service.type.OfferRuleType;
+import com.ultracommerce.core.offer.service.type.OfferType;
+import com.ultracommerce.core.order.domain.OrderItem;
+import com.ultracommerce.core.order.service.type.FulfillmentType;
+import com.ultracommerce.profile.core.domain.Customer;
 import org.joda.time.DateTimeZone;
 import org.joda.time.LocalDateTime;
 import java.util.ArrayList;
@@ -71,10 +71,10 @@ public abstract class AbstractBaseProcessor implements BaseProcessor {
     private static final Log LOG = LogFactory.getLog(AbstractBaseProcessor.class);
     private static final Map EXPRESSION_CACHE = new LRUMap(1000);
 
-    @Resource(name = "blOfferTimeZoneProcessor")
+    @Resource(name = "ucOfferTimeZoneProcessor")
     protected OfferTimeZoneProcessor offerTimeZoneProcessor;
     
-    @Resource(name = "blOfferServiceExtensionManager")
+    @Resource(name = "ucOfferServiceExtensionManager")
     protected OfferServiceExtensionManager extensionManager;
 
     protected final PromotableOfferUtility promotableOfferUtility;
@@ -354,8 +354,8 @@ public abstract class AbstractBaseProcessor implements BaseProcessor {
 
     protected List<Offer> removeInvalidRequestOffers(List<Offer> offers) {
         RequestDTO requestDTO = null;
-        if (BroadleafRequestContext.getBroadleafRequestContext() != null) {
-            requestDTO = BroadleafRequestContext.getBroadleafRequestContext().getRequestDTO();
+        if (UltraRequestContext.getUltraRequestContext() != null) {
+            requestDTO = UltraRequestContext.getUltraRequestContext().getRequestDTO();
         }
 
         List<Offer> offersToRemove = new ArrayList<Offer>();

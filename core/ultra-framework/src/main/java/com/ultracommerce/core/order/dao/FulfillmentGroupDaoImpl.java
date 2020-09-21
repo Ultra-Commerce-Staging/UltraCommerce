@@ -1,28 +1,28 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.order.dao;
+package com.ultracommerce.core.order.dao;
 
-import org.broadleafcommerce.common.persistence.EntityConfiguration;
-import org.broadleafcommerce.core.order.domain.FulfillmentGroup;
-import org.broadleafcommerce.core.order.domain.FulfillmentGroupFee;
-import org.broadleafcommerce.core.order.domain.FulfillmentGroupImpl;
-import org.broadleafcommerce.core.order.domain.Order;
-import org.broadleafcommerce.core.order.service.type.FulfillmentGroupStatusType;
+import com.ultracommerce.common.persistence.EntityConfiguration;
+import com.ultracommerce.core.order.domain.FulfillmentGroup;
+import com.ultracommerce.core.order.domain.FulfillmentGroupFee;
+import com.ultracommerce.core.order.domain.FulfillmentGroupImpl;
+import com.ultracommerce.core.order.domain.Order;
+import com.ultracommerce.core.order.service.type.FulfillmentGroupStatusType;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;
@@ -31,13 +31,13 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.List;
 
-@Repository("blFulfillmentGroupDao")
+@Repository("ucFulfillmentGroupDao")
 public class FulfillmentGroupDaoImpl implements FulfillmentGroupDao {
 
-    @PersistenceContext(unitName = "blPU")
+    @PersistenceContext(unitName = "ucPU")
     protected EntityManager em;
 
-    @Resource(name="blEntityConfiguration")
+    @Resource(name="ucEntityConfiguration")
     protected EntityConfiguration entityConfiguration;
 
     @Override
@@ -52,7 +52,7 @@ public class FulfillmentGroupDaoImpl implements FulfillmentGroupDao {
 
     @Override
     public FulfillmentGroupImpl readDefaultFulfillmentGroupForOrder(final Order order) {
-        final Query query = em.createNamedQuery("BC_READ_DEFAULT_FULFILLMENT_GROUP_BY_ORDER_ID");
+        final Query query = em.createNamedQuery("UC_READ_DEFAULT_FULFILLMENT_GROUP_BY_ORDER_ID");
         query.setParameter("orderId", order.getId());
         @SuppressWarnings("unchecked")
         List<FulfillmentGroupImpl> fulfillmentGroups = query.getResultList();
@@ -69,27 +69,27 @@ public class FulfillmentGroupDaoImpl implements FulfillmentGroupDao {
 
     @Override
     public FulfillmentGroup createDefault() {
-        final FulfillmentGroup fg = ((FulfillmentGroup) entityConfiguration.createEntityInstance("org.broadleafcommerce.core.order.domain.FulfillmentGroup"));
+        final FulfillmentGroup fg = ((FulfillmentGroup) entityConfiguration.createEntityInstance("com.ultracommerce.core.order.domain.FulfillmentGroup"));
         fg.setPrimary(true);
         return fg;
     }
 
     @Override
     public FulfillmentGroup create() {
-        final FulfillmentGroup fg =  ((FulfillmentGroup) entityConfiguration.createEntityInstance("org.broadleafcommerce.core.order.domain.FulfillmentGroup"));
+        final FulfillmentGroup fg =  ((FulfillmentGroup) entityConfiguration.createEntityInstance("com.ultracommerce.core.order.domain.FulfillmentGroup"));
         return fg;
     }
 
     @Override
     public FulfillmentGroupFee createFulfillmentGroupFee() {
-        return ((FulfillmentGroupFee) entityConfiguration.createEntityInstance("org.broadleafcommerce.core.order.domain.FulfillmentGroupFee"));
+        return ((FulfillmentGroupFee) entityConfiguration.createEntityInstance("com.ultracommerce.core.order.domain.FulfillmentGroupFee"));
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public List<FulfillmentGroup> readUnfulfilledFulfillmentGroups(int start,
             int maxResults) {
-        Query query = em.createNamedQuery("BC_READ_UNFULFILLED_FULFILLMENT_GROUP_ASC");
+        Query query = em.createNamedQuery("UC_READ_UNFULFILLED_FULFILLMENT_GROUP_ASC");
         query.setFirstResult(start);
         query.setMaxResults(maxResults);
         return query.getResultList();
@@ -99,7 +99,7 @@ public class FulfillmentGroupDaoImpl implements FulfillmentGroupDao {
     @Override
     public List<FulfillmentGroup> readPartiallyFulfilledFulfillmentGroups(int start,
             int maxResults) {
-        Query query = em.createNamedQuery("BC_READ_PARTIALLY_FULFILLED_FULFILLMENT_GROUP_ASC");
+        Query query = em.createNamedQuery("UC_READ_PARTIALLY_FULFILLED_FULFILLMENT_GROUP_ASC");
         query.setFirstResult(start);
         query.setMaxResults(maxResults);
         
@@ -110,7 +110,7 @@ public class FulfillmentGroupDaoImpl implements FulfillmentGroupDao {
     @Override
     public List<FulfillmentGroup> readUnprocessedFulfillmentGroups(int start,
             int maxResults) {
-        Query query = em.createNamedQuery("BC_READ_UNPROCESSED_FULFILLMENT_GROUP_ASC");
+        Query query = em.createNamedQuery("UC_READ_UNPROCESSED_FULFILLMENT_GROUP_ASC");
         query.setFirstResult(start);
         query.setMaxResults(maxResults);
         
@@ -123,9 +123,9 @@ public class FulfillmentGroupDaoImpl implements FulfillmentGroupDao {
             FulfillmentGroupStatusType status, int start, int maxResults, boolean ascending) {
         Query query = null;
         if (ascending) {
-            query = em.createNamedQuery("BC_READ_FULFILLMENT_GROUP_BY_STATUS_ASC");
+            query = em.createNamedQuery("UC_READ_FULFILLMENT_GROUP_BY_STATUS_ASC");
         } else {
-            query = em.createNamedQuery("BC_READ_FULFILLMENT_GROUP_BY_STATUS_DESC");
+            query = em.createNamedQuery("UC_READ_FULFILLMENT_GROUP_BY_STATUS_DESC");
         }
         query.setParameter("status", status.getType());
         query.setFirstResult(start);
@@ -143,7 +143,7 @@ public class FulfillmentGroupDaoImpl implements FulfillmentGroupDao {
     @SuppressWarnings("unchecked")
     @Override
     public Integer readNextFulfillmentGroupSequnceForOrder(Order order) {
-        Query query = em.createNamedQuery("BC_READ_MAX_FULFILLMENT_GROUP_SEQUENCE");
+        Query query = em.createNamedQuery("UC_READ_MAX_FULFILLMENT_GROUP_SEQUENCE");
         query.setParameter("orderId", order.getId());
         List<Integer> max = query.getResultList();
         if (max != null && !max.isEmpty()) {

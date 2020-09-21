@@ -1,21 +1,21 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.extensibility.jpa;
+package com.ultracommerce.common.extensibility.jpa;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -38,20 +38,20 @@ import javax.annotation.Nullable;
  * 
  * <pre>
  * {@literal @}Bean
- * {@literal @}ConditionalOnClass("com.broadleafcommerce.somemodule.domain.DomainClass")
+ * {@literal @}ConditionalOnClass("com.ultracommerce.somemodule.domain.DomainClass")
  * public ORMConfigDto newManagedDomainClass() {
- *     return new ORMConfigDto("blPU")
- *         .addClassName("com.broadleafcommerce.somemodule.domain.DomainClass");
+ *     return new ORMConfigDto("ucPU")
+ *         .addClassName("com.ultracommerce.somemodule.domain.DomainClass");
  * }
  * </pre>
  * 
  * <p>
  * Note that this functionality can also be achieved by creating multiple {@code persistence.xml} files and conditionally adding it to
- * {@code blMergedPersistenceXmlLocations} like so:
+ * {@code ucMergedPersistenceXmlLocations} like so:
  * 
  * <pre>
- * {@literal @}Merge("blMergedPersistenceXmlLocations")
- * {@literal @}ConditionalOnClass("com.broadleafcommerce.somemodule.domain.DomainClass")
+ * {@literal @}Merge("ucMergedPersistenceXmlLocations")
+ * {@literal @}ConditionalOnClass("com.ultracommerce.somemodule.domain.DomainClass")
  * public ORMConfigDto newManagedDomainClass() {
  *     return Arrays.asList("persistence-domainclass.xml");
  * }
@@ -74,7 +74,7 @@ public class ORMConfigDto implements Serializable {
     
     /**
      * 
-     * @param puName the persistence unit that this should be apart of (usually {@code "blPU"}
+     * @param puName the persistence unit that this should be apart of (usually {@code "ucPU"}
      */
     public ORMConfigDto(String puName) {
         this.puName = puName;

@@ -1,21 +1,21 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.file.service;
+package com.ultracommerce.common.file.service;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.FileUtils;
@@ -23,13 +23,13 @@ import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.extension.ExtensionResultHolder;
-import org.broadleafcommerce.common.extension.ExtensionResultStatusType;
-import org.broadleafcommerce.common.file.FileServiceException;
-import org.broadleafcommerce.common.file.domain.FileWorkArea;
-import org.broadleafcommerce.common.file.service.type.FileApplicationType;
-import org.broadleafcommerce.common.sitemap.service.SiteMapGenerator;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
+import com.ultracommerce.common.extension.ExtensionResultHolder;
+import com.ultracommerce.common.extension.ExtensionResultStatusType;
+import com.ultracommerce.common.file.FileServiceException;
+import com.ultracommerce.common.file.domain.FileWorkArea;
+import com.ultracommerce.common.file.service.type.FileApplicationType;
+import com.ultracommerce.common.sitemap.service.SiteMapGenerator;
+import com.ultracommerce.common.web.UltraRequestContext;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
@@ -45,14 +45,14 @@ import java.util.Random;
 
 import javax.annotation.Resource;
 /**
- * Many components in the Broadleaf Framework can benefit from creating and manipulating temporary files as well
+ * Many components in the Ultra Framework can benefit from creating and manipulating temporary files as well
  * as storing and accessing files in a remote repository (such as AmazonS3).
  * 
  * This service provides a pluggable way to provide those services via {@link FileServiceProvider} implementations.
  * 
  * This service can be used by any component that needs to write files to an area shared by multiple application servers.
  * 
- * For example usage, see {@link SiteMapGenerator}.  The Broadleaf CMS module also uses this component to load, store, and 
+ * For example usage, see {@link SiteMapGenerator}.  The Ultra CMS module also uses this component to load, store, and 
  * manipulate images for the file-system.   
  * 
  * Generally, the process to create a new asset in the shared file system is ...
@@ -64,15 +64,15 @@ import javax.annotation.Resource;
  * @author bpolster
  *
  */
-@Service("blFileService")
-public class BroadleafFileServiceImpl implements BroadleafFileService {
+@Service("ucFileService")
+public class UltraFileServiceImpl implements UltraFileService {
     
-    private static final Log LOG = LogFactory.getLog(BroadleafFileServiceImpl.class);
+    private static final Log LOG = LogFactory.getLog(UltraFileServiceImpl.class);
 
-    @Resource(name = "blFileServiceProviders")
+    @Resource(name = "ucFileServiceProviders")
     protected List<FileServiceProvider> fileServiceProviders = new ArrayList<FileServiceProvider>();
     
-    @Resource(name = "blDefaultFileServiceProvider")
+    @Resource(name = "ucDefaultFileServiceProvider")
     protected FileServiceProvider defaultFileServiceProvider;
 
     private static final String DEFAULT_STORAGE_DIRECTORY = System.getProperty("java.io.tmpdir");
@@ -86,8 +86,8 @@ public class BroadleafFileServiceImpl implements BroadleafFileService {
     @Value("${asset.server.file.classpath.directory}")
     protected String fileServiceClasspathDirectory;
 
-    @Resource(name = "blBroadleafFileServiceExtensionManager")
-    protected BroadleafFileServiceExtensionManager extensionManager;
+    @Resource(name = "ucUltraFileServiceExtensionManager")
+    protected UltraFileServiceExtensionManager extensionManager;
 
     /**
      * Create a file work area that can be used for further operations. 
@@ -319,7 +319,7 @@ public class BroadleafFileServiceImpl implements BroadleafFileService {
     /**
      * Returns the FileServiceProvider that can handle the passed in application type.
      * 
-     * By default, this method returns the component configured at blFileServiceProvider
+     * By default, this method returns the component configured at ucFileServiceProvider
      * 
      * @param applicationType
      * @return
@@ -356,7 +356,7 @@ public class BroadleafFileServiceImpl implements BroadleafFileService {
 
         if (!skipSite) {
             // Create site specific directory if Multi-site (all site files will be located in the same directory)
-            BroadleafRequestContext brc = BroadleafRequestContext.getBroadleafRequestContext();
+            UltraRequestContext brc = UltraRequestContext.getUltraRequestContext();
             if (brc != null && brc.getSite() != null) {
                 String siteDirectory = "site-" + brc.getSite().getId();
                 String siteHash = DigestUtils.md5Hex(siteDirectory);

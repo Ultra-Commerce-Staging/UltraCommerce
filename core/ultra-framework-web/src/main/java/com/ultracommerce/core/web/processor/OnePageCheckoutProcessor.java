@@ -1,56 +1,56 @@
 /*
  * #%L
- * BroadleafCommerce Framework Web
+ * UltraCommerce Framework Web
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
 
-package org.broadleafcommerce.core.web.processor;
+package com.ultracommerce.core.web.processor;
 
 import org.apache.commons.lang.BooleanUtils;
-import org.broadleafcommerce.common.money.Money;
-import org.broadleafcommerce.common.payment.PaymentGatewayType;
-import org.broadleafcommerce.common.payment.PaymentType;
-import org.broadleafcommerce.common.util.BLCPaymentMethodUtils;
-import org.broadleafcommerce.common.vendor.service.exception.FulfillmentPriceException;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
-import org.broadleafcommerce.common.web.expression.BroadleafVariableExpression;
-import org.broadleafcommerce.common.web.payment.controller.PaymentGatewayAbstractController;
-import org.broadleafcommerce.core.order.domain.FulfillmentOption;
-import org.broadleafcommerce.core.order.domain.NullOrderImpl;
-import org.broadleafcommerce.core.order.domain.Order;
-import org.broadleafcommerce.core.order.service.FulfillmentGroupService;
-import org.broadleafcommerce.core.order.service.FulfillmentOptionService;
-import org.broadleafcommerce.core.payment.domain.OrderPayment;
-import org.broadleafcommerce.core.payment.service.OrderToPaymentRequestDTOService;
-import org.broadleafcommerce.core.pricing.service.FulfillmentPricingService;
-import org.broadleafcommerce.core.pricing.service.fulfillment.provider.FulfillmentEstimationResponse;
-import org.broadleafcommerce.core.web.checkout.model.BillingInfoForm;
-import org.broadleafcommerce.core.web.checkout.model.OrderInfoForm;
-import org.broadleafcommerce.core.web.checkout.model.ShippingInfoForm;
-import org.broadleafcommerce.core.web.checkout.section.CheckoutSectionDTO;
-import org.broadleafcommerce.core.web.checkout.section.CheckoutSectionStateType;
-import org.broadleafcommerce.core.web.checkout.section.CheckoutSectionViewType;
-import org.broadleafcommerce.core.web.checkout.service.CheckoutFormService;
-import org.broadleafcommerce.core.web.order.CartState;
-import org.broadleafcommerce.core.web.order.service.CartStateService;
-import org.broadleafcommerce.presentation.condition.ConditionalOnTemplating;
-import org.broadleafcommerce.presentation.dialect.AbstractBroadleafVariableModifierProcessor;
-import org.broadleafcommerce.presentation.model.BroadleafTemplateContext;
-import org.broadleafcommerce.profile.core.service.CountryService;
-import org.broadleafcommerce.profile.core.service.CustomerAddressService;
-import org.broadleafcommerce.profile.core.service.StateService;
+import com.ultracommerce.common.money.Money;
+import com.ultracommerce.common.payment.PaymentGatewayType;
+import com.ultracommerce.common.payment.PaymentType;
+import com.ultracommerce.common.util.UCPaymentMethodUtils;
+import com.ultracommerce.common.vendor.service.exception.FulfillmentPriceException;
+import com.ultracommerce.common.web.UltraRequestContext;
+import com.ultracommerce.common.web.expression.UltraVariableExpression;
+import com.ultracommerce.common.web.payment.controller.PaymentGatewayAbstractController;
+import com.ultracommerce.core.order.domain.FulfillmentOption;
+import com.ultracommerce.core.order.domain.NullOrderImpl;
+import com.ultracommerce.core.order.domain.Order;
+import com.ultracommerce.core.order.service.FulfillmentGroupService;
+import com.ultracommerce.core.order.service.FulfillmentOptionService;
+import com.ultracommerce.core.payment.domain.OrderPayment;
+import com.ultracommerce.core.payment.service.OrderToPaymentRequestDTOService;
+import com.ultracommerce.core.pricing.service.FulfillmentPricingService;
+import com.ultracommerce.core.pricing.service.fulfillment.provider.FulfillmentEstimationResponse;
+import com.ultracommerce.core.web.checkout.model.BillingInfoForm;
+import com.ultracommerce.core.web.checkout.model.OrderInfoForm;
+import com.ultracommerce.core.web.checkout.model.ShippingInfoForm;
+import com.ultracommerce.core.web.checkout.section.CheckoutSectionDTO;
+import com.ultracommerce.core.web.checkout.section.CheckoutSectionStateType;
+import com.ultracommerce.core.web.checkout.section.CheckoutSectionViewType;
+import com.ultracommerce.core.web.checkout.service.CheckoutFormService;
+import com.ultracommerce.core.web.order.CartState;
+import com.ultracommerce.core.web.order.service.CartStateService;
+import com.ultracommerce.presentation.condition.ConditionalOnTemplating;
+import com.ultracommerce.presentation.dialect.AbstractUltraVariableModifierProcessor;
+import com.ultracommerce.presentation.model.UltraTemplateContext;
+import com.ultracommerce.profile.core.service.CountryService;
+import com.ultracommerce.profile.core.service.CustomerAddressService;
+import com.ultracommerce.profile.core.service.StateService;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -76,45 +76,45 @@ import javax.servlet.http.HttpServletRequest;
  * back from a Third Party Payment gateway to complete the order (e.g. PayPal Express Checkout), then
  * the billing section will not be shown.
  *
- * @deprecated in favor of using the following {@link BroadleafVariableExpression} implementations:
- *  {@link org.broadleafcommerce.core.web.expression.checkout.CheckoutFormVariableExpression}
- *  {@link org.broadleafcommerce.core.web.expression.checkout.CheckoutStageVariableExpression}
- *  {@link org.broadleafcommerce.core.web.expression.checkout.FulfillmentVariableExpression}
- *  {@link org.broadleafcommerce.core.web.expression.checkout.PaymentMethodVariableExpression}
- *  {@link org.broadleafcommerce.core.web.expression.BasicAddressVariableExpression}
+ * @deprecated in favor of using the following {@link UltraVariableExpression} implementations:
+ *  {@link com.ultracommerce.core.web.expression.checkout.CheckoutFormVariableExpression}
+ *  {@link com.ultracommerce.core.web.expression.checkout.CheckoutStageVariableExpression}
+ *  {@link com.ultracommerce.core.web.expression.checkout.FulfillmentVariableExpression}
+ *  {@link com.ultracommerce.core.web.expression.checkout.PaymentMethodVariableExpression}
+ *  {@link com.ultracommerce.core.web.expression.BasicAddressVariableExpression}
  *
  * @author Elbert Bautista (elbertbautista)
  */
 @Deprecated
-@Component("blOnePageCheckoutProcessor")
+@Component("ucOnePageCheckoutProcessor")
 @ConditionalOnTemplating
-public class OnePageCheckoutProcessor extends AbstractBroadleafVariableModifierProcessor {
+public class OnePageCheckoutProcessor extends AbstractUltraVariableModifierProcessor {
 
-    @Resource(name = "blStateService")
+    @Resource(name = "ucStateService")
     protected StateService stateService;
 
-    @Resource(name = "blCountryService")
+    @Resource(name = "ucCountryService")
     protected CountryService countryService;
 
-    @Resource(name = "blCustomerAddressService")
+    @Resource(name = "ucCustomerAddressService")
     protected CustomerAddressService customerAddressService;
 
-    @Resource(name = "blFulfillmentGroupService")
+    @Resource(name = "ucFulfillmentGroupService")
     protected FulfillmentGroupService fulfillmentGroupService;
 
-    @Resource(name = "blFulfillmentOptionService")
+    @Resource(name = "ucFulfillmentOptionService")
     protected FulfillmentOptionService fulfillmentOptionService;
 
-    @Resource(name = "blFulfillmentPricingService")
+    @Resource(name = "ucFulfillmentPricingService")
     protected FulfillmentPricingService fulfillmentPricingService;
 
-    @Resource(name = "blOrderToPaymentRequestDTOService")
+    @Resource(name = "ucOrderToPaymentRequestDTOService")
     protected OrderToPaymentRequestDTOService orderToPaymentRequestDTOService;
 
-    @Resource(name = "blCartStateService")
+    @Resource(name = "ucCartStateService")
     protected CartStateService cartStateService;
 
-    @Resource(name = "blCheckoutFormService")
+    @Resource(name = "ucCheckoutFormService")
     protected CheckoutFormService checkoutFormService;
 
     @Override
@@ -133,7 +133,7 @@ public class OnePageCheckoutProcessor extends AbstractBroadleafVariableModifierP
     }
 
     @Override
-    public Map<String, Object> populateModelVariables(String tagName, Map<String, String> tagAttributes, BroadleafTemplateContext context) {
+    public Map<String, Object> populateModelVariables(String tagName, Map<String, String> tagAttributes, UltraTemplateContext context) {
         //Pre-populate the command objects
         OrderInfoForm orderInfoForm = context.parseExpression(tagAttributes.get("orderInfoForm"));
 
@@ -206,8 +206,8 @@ public class OnePageCheckoutProcessor extends AbstractBroadleafVariableModifierP
      * @param localVars
      */
     protected void populateProcessingError(Map<String, Object> localVars) {
-        BroadleafRequestContext blcContext = BroadleafRequestContext.getBroadleafRequestContext();
-        HttpServletRequest request = blcContext.getRequest();
+        UltraRequestContext ucContext = UltraRequestContext.getUltraRequestContext();
+        HttpServletRequest request = ucContext.getRequest();
         String processorError = request.getParameter(PaymentGatewayAbstractController.PAYMENT_PROCESSING_ERROR);
         localVars.put(PaymentGatewayAbstractController.PAYMENT_PROCESSING_ERROR, processorError);
     }
@@ -357,8 +357,8 @@ public class OnePageCheckoutProcessor extends AbstractBroadleafVariableModifierP
             }
 
             //Finally, if the edit button is explicitly clicked, set the section to Form View
-            BroadleafRequestContext blcContext = BroadleafRequestContext.getBroadleafRequestContext();
-            HttpServletRequest request = blcContext.getRequest();
+            UltraRequestContext ucContext = UltraRequestContext.getUltraRequestContext();
+            HttpServletRequest request = ucContext.getRequest();
             boolean editOrderInfo = BooleanUtils.toBoolean(request.getParameter("edit-order-info"));
             boolean editBillingInfo = BooleanUtils.toBoolean(request.getParameter("edit-billing"));
             boolean editShippingInfo = BooleanUtils.toBoolean(request.getParameter("edit-shipping"));
@@ -439,7 +439,7 @@ public class OnePageCheckoutProcessor extends AbstractBroadleafVariableModifierP
      * @return List containing expiration months of the form "01 - January"
      */
     protected List<String> populateExpirationMonths() {
-        return BLCPaymentMethodUtils.getExpirationMonthOptions();
+        return UCPaymentMethodUtils.getExpirationMonthOptions();
     }
 
     /**
@@ -449,7 +449,7 @@ public class OnePageCheckoutProcessor extends AbstractBroadleafVariableModifierP
      * @return List of the next ten years starting with the current year.
      */
     protected List<String> populateExpirationYears() {
-        return BLCPaymentMethodUtils.getExpirationYearOptions();
+        return UCPaymentMethodUtils.getExpirationYearOptions();
     }
 
 }

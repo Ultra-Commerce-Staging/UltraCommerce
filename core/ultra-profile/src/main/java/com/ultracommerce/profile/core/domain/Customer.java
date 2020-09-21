@@ -1,25 +1,25 @@
 /*
  * #%L
- * BroadleafCommerce Profile
+ * UltraCommerce Profile
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.profile.core.domain;
+package com.ultracommerce.profile.core.domain;
 
-import org.broadleafcommerce.common.audit.Auditable;
-import org.broadleafcommerce.common.copy.MultiTenantCloneable;
-import org.broadleafcommerce.common.locale.domain.Locale;
+import com.ultracommerce.common.audit.Auditable;
+import com.ultracommerce.common.copy.MultiTenantCloneable;
+import com.ultracommerce.common.locale.domain.Locale;
 
 import java.io.Serializable;
 import java.util.List;
@@ -46,11 +46,11 @@ public interface Customer extends Serializable, MultiTenantCloneable<Customer> {
      * <p>
      *     During a site conversion or security breach or a matter of routine security policy, 
      *     it may be necessary to require users to change their password. This property will 
-     *     not allow a user whose credentials are managed within Broadleaf to login until 
+     *     not allow a user whose credentials are managed within Ultra to login until 
      *     they have reset their password. 
      * </p>
      * <p>
-     *     Used by blUserDetailsService.
+     *     Used by ucUserDetailsService.
      * </p>
      */
     public boolean isPasswordChangeRequired();
@@ -158,7 +158,7 @@ public interface Customer extends Serializable, MultiTenantCloneable<Customer> {
 
     /**
      * Associates a tax exemption code to this user to notate tax exemption status. Default behavior in the
-     * {@link org.broadleafcommerce.core.pricing.service.tax.provider.SimpleTaxProvider} is that if this is set to
+     * {@link com.ultracommerce.core.pricing.service.tax.provider.SimpleTaxProvider} is that if this is set to
      * any value then this customer is tax exempt.
      * 
      * @param exemption the tax exemption code for the customer
@@ -169,7 +169,7 @@ public interface Customer extends Serializable, MultiTenantCloneable<Customer> {
     /**
      * <p>
      * Convenience method to represent if this customer should be taxed or not when pricing their {@link Order}. Default
-     * behavior in the {@link org.broadleafcommerce.core.pricing.service.tax.provider.SimpleTaxProvider} is that if there
+     * behavior in the {@link com.ultracommerce.core.pricing.service.tax.provider.SimpleTaxProvider} is that if there
      * is anything in {@link #getTaxExemptionCode()} then the customer is exempt.
      * 
      * <p>

@@ -1,25 +1,25 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.site.dao;
+package com.ultracommerce.common.site.dao;
 
-import org.broadleafcommerce.common.site.domain.Catalog;
-import org.broadleafcommerce.common.site.domain.Site;
-import org.broadleafcommerce.common.site.domain.SiteCatalogXref;
+import com.ultracommerce.common.site.domain.Catalog;
+import com.ultracommerce.common.site.domain.Site;
+import com.ultracommerce.common.site.domain.SiteCatalogXref;
 
 import java.util.List;
 
@@ -27,7 +27,7 @@ public interface SiteDao {
 
     /**
      * Creates an instance of Site based on the class matching the bean id of 
-     * "org.broadleafcommerce.common.site.domain.Site"
+     * "com.ultracommerce.common.site.domain.Site"
      * 
      * @return
      */
@@ -63,7 +63,7 @@ public interface SiteDao {
     public Site save(Site site);
 
     /**
-     * Returns a default site.   This method returns null in the out of box implementation of Broadleaf.
+     * Returns a default site.   This method returns null in the out of box implementation of Ultra.
      * Extend for implementation specific behavior. 
      * 
      * @return
@@ -86,14 +86,14 @@ public interface SiteDao {
     Catalog retrieveCatalogByName(String name);
 
     /**
-     * Creates a catalog using {@link org.broadleafcommerce.common.persistence.EntityConfiguration}.
+     * Creates a catalog using {@link com.ultracommerce.common.persistence.EntityConfiguration}.
      *
      * @return the catalog
      */
     public Catalog createCatalog();
 
     /**
-     * Creates a new instance of {@code SiteCatalogXref} using {@link org.broadleafcommerce.common.persistence.EntityConfiguration}.
+     * Creates a new instance of {@code SiteCatalogXref} using {@link com.ultracommerce.common.persistence.EntityConfiguration}.
      *
      * @return the site catalog
      */

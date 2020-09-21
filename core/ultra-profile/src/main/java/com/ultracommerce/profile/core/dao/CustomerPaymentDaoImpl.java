@@ -1,25 +1,25 @@
 /*
  * #%L
- * BroadleafCommerce Profile
+ * UltraCommerce Profile
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.profile.core.dao;
+package com.ultracommerce.profile.core.dao;
 
-import org.broadleafcommerce.common.persistence.EntityConfiguration;
-import org.broadleafcommerce.profile.core.domain.CustomerPayment;
-import org.broadleafcommerce.profile.core.domain.CustomerPaymentImpl;
+import com.ultracommerce.common.persistence.EntityConfiguration;
+import com.ultracommerce.profile.core.domain.CustomerPayment;
+import com.ultracommerce.profile.core.domain.CustomerPaymentImpl;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -30,18 +30,18 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-@Repository("blCustomerPaymentDao")
+@Repository("ucCustomerPaymentDao")
 public class CustomerPaymentDaoImpl implements CustomerPaymentDao {
 
-    @PersistenceContext(unitName = "blPU")
+    @PersistenceContext(unitName = "ucPU")
     protected EntityManager em;
 
-    @Resource(name = "blEntityConfiguration")
+    @Resource(name = "ucEntityConfiguration")
     protected EntityConfiguration entityConfiguration;
 
     @Override
     public List<CustomerPayment> readCustomerPaymentsByCustomerId(Long customerId) {
-        Query query = em.createNamedQuery("BC_READ_CUSTOMER_PAYMENTS_BY_CUSTOMER_ID");
+        Query query = em.createNamedQuery("UC_READ_CUSTOMER_PAYMENTS_BY_CUSTOMER_ID");
         query.setParameter("customerId", customerId);
         return query.getResultList();
     }
@@ -53,7 +53,7 @@ public class CustomerPaymentDaoImpl implements CustomerPaymentDao {
 
     @Override
     public CustomerPayment readCustomerPaymentByToken(String token) {
-        Query query = em.createNamedQuery("BC_READ_CUSTOMER_PAYMENT_BY_TOKEN");
+        Query query = em.createNamedQuery("UC_READ_CUSTOMER_PAYMENT_BY_TOKEN");
         query.setParameter("token", token);
         CustomerPayment payment = null;
         try{

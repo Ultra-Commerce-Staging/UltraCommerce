@@ -1,35 +1,35 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.config.domain;
+package com.ultracommerce.common.config.domain;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.broadleafcommerce.common.admin.domain.AdminMainEntity;
-import org.broadleafcommerce.common.config.service.type.SystemPropertyFieldType;
-import org.broadleafcommerce.common.copy.CreateResponse;
-import org.broadleafcommerce.common.copy.MultiTenantCopyContext;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransform;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformMember;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformTypes;
-import org.broadleafcommerce.common.presentation.AdminPresentation;
-import org.broadleafcommerce.common.presentation.RequiredOverride;
-import org.broadleafcommerce.common.presentation.ValidationConfiguration;
-import org.broadleafcommerce.common.presentation.client.SupportedFieldType;
+import com.ultracommerce.common.admin.domain.AdminMainEntity;
+import com.ultracommerce.common.config.service.type.SystemPropertyFieldType;
+import com.ultracommerce.common.copy.CreateResponse;
+import com.ultracommerce.common.copy.MultiTenantCopyContext;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransform;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransformMember;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransformTypes;
+import com.ultracommerce.common.presentation.AdminPresentation;
+import com.ultracommerce.common.presentation.RequiredOverride;
+import com.ultracommerce.common.presentation.ValidationConfiguration;
+import com.ultracommerce.common.presentation.client.SupportedFieldType;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
@@ -51,11 +51,11 @@ import javax.persistence.Table;
  * Date: 6/20/12
  */
 @Entity
-@Table(name="BLC_SYSTEM_PROPERTY", indexes = { 
+@Table(name="UC_SYSTEM_PROPERTY", indexes = { 
         @Index(name = "IDX_BLSYPR_PROPERTY_NAME", columnList = "PROPERTY_NAME")
     })
 @Inheritance(strategy = InheritanceType.JOINED)
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region="blStandardElements")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region="ucStandardElements")
 @DirectCopyTransform({
         @DirectCopyTransformMember(templateTokens = DirectCopyTransformTypes.MULTITENANT_SITE),
         @DirectCopyTransformMember(templateTokens = DirectCopyTransformTypes.SANDBOX)
@@ -68,13 +68,13 @@ public class SystemPropertyImpl implements SystemProperty, AdminMainEntity, Syst
     @GeneratedValue(generator = "SystemPropertyId")
     @GenericGenerator(
         name="SystemPropertyId",
-        strategy="org.broadleafcommerce.common.persistence.IdOverrideTableGenerator",
+        strategy="com.ultracommerce.common.persistence.IdOverrideTableGenerator",
         parameters = {
             @Parameter(name="segment_value", value="SystemPropertyImpl"),
-            @Parameter(name="entity_name", value="org.broadleafcommerce.common.config.domain.SystemPropertyImpl")
+            @Parameter(name="entity_name", value="com.ultracommerce.common.config.domain.SystemPropertyImpl")
         }
     )
-    @Column(name = "BLC_SYSTEM_PROPERTY_ID")
+    @Column(name = "UC_SYSTEM_PROPERTY_ID")
     protected Long id;
 
     @Column(name = "PROPERTY_NAME", nullable = false)
@@ -82,7 +82,7 @@ public class SystemPropertyImpl implements SystemProperty, AdminMainEntity, Syst
             group = GroupName.General, order = FieldOrder.ATTRIBUTE_NAME,
             prominent = true, gridOrder = 1000,
             requiredOverride = RequiredOverride.REQUIRED,
-            validationConfigurations=@ValidationConfiguration(validationImplementation="blSystemPropertyAttributeNameValidator"))
+            validationConfigurations=@ValidationConfiguration(validationImplementation="ucSystemPropertyAttributeNameValidator"))
     protected String name;
 
     @Column(name = "OVERRIDE_GENERATED_PROP_NAME")
@@ -101,8 +101,8 @@ public class SystemPropertyImpl implements SystemProperty, AdminMainEntity, Syst
     @AdminPresentation(friendlyName = "SystemPropertyImpl_propertyType",
         group = GroupName.General, order = FieldOrder.PROPERTY_TYPE,
         prominent = true, gridOrder = 2000,
-        fieldType = SupportedFieldType.BROADLEAF_ENUMERATION, 
-        broadleafEnumeration = "org.broadleafcommerce.common.config.service.type.SystemPropertyFieldType",
+        fieldType = SupportedFieldType.ULTRA_ENUMERATION, 
+        ultraEnumeration = "com.ultracommerce.common.config.service.type.SystemPropertyFieldType",
         requiredOverride = RequiredOverride.REQUIRED)
     protected String propertyType;
 

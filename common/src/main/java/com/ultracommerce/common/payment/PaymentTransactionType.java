@@ -1,23 +1,23 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.payment;
+package com.ultracommerce.common.payment;
 
-import org.broadleafcommerce.common.BroadleafEnumerationType;
+import com.ultracommerce.common.UltraEnumerationType;
 
 import java.io.Serializable;
 import java.util.LinkedHashMap;
@@ -25,7 +25,7 @@ import java.util.Map;
 
 /**
  * The PaymentTransactionType is used to represent the types of operations/transactions that could occur against a single payment.
- * In the Broadleaf core framework, these types appear on the org.broadleafcommerce.core.payment.domain.PaymentTransaction.
+ * In the Ultra core framework, these types appear on the com.ultracommerce.core.payment.domain.PaymentTransaction.
  *
  * @see {@link #AUTHORIZE}
  * @see {@link #CAPTURE}
@@ -85,7 +85,7 @@ import java.util.Map;
  * @author Phillip Verheyden (phillipuniverse)
  * @author Elbert Bautista (elbertbautista)
  */
-public class PaymentTransactionType implements Serializable, BroadleafEnumerationType {
+public class PaymentTransactionType implements Serializable, UltraEnumerationType {
 
     private static final long serialVersionUID = 1L;
 
@@ -170,7 +170,7 @@ public class PaymentTransactionType implements Serializable, BroadleafEnumeratio
      * {@link ValidateAndConfirmPaymentActivity}. That means that any unconfirmed CREDIT_CARD transactions will be
      * "Authorized" or "Authorized and Captured" at time of checkout. If the Order Payment is of any other type, then the activity
      * will attempt to call the gateways implementation of:
-     * {@link org.broadleafcommerce.common.payment.service.PaymentGatewayTransactionConfirmationService#confirmTransaction(org.broadleafcommerce.common.payment.dto.PaymentRequestDTO)}</p>
+     * {@link com.ultracommerce.common.payment.service.PaymentGatewayTransactionConfirmationService#confirmTransaction(com.ultracommerce.common.payment.dto.PaymentRequestDTO)}</p>
      */
     public static final PaymentTransactionType UNCONFIRMED = new PaymentTransactionType("UNCONFIRMED", "Not Confirmed");
 

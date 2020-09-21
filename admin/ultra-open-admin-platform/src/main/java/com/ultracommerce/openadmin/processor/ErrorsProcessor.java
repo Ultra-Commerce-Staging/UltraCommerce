@@ -1,36 +1,36 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
 
-package org.broadleafcommerce.openadmin.processor;
+package com.ultracommerce.openadmin.processor;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.util.StringUtil;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
-import org.broadleafcommerce.openadmin.web.form.entity.DynamicEntityFormInfo;
-import org.broadleafcommerce.openadmin.web.form.entity.EntityForm;
-import org.broadleafcommerce.openadmin.web.form.entity.Field;
-import org.broadleafcommerce.openadmin.web.form.entity.Tab;
-import org.broadleafcommerce.presentation.condition.ConditionalOnTemplating;
-import org.broadleafcommerce.presentation.dialect.AbstractBroadleafVariableModifierAttrProcessor;
-import org.broadleafcommerce.presentation.dialect.BroadleafDialectPrefix;
-import org.broadleafcommerce.presentation.model.BroadleafBindStatus;
-import org.broadleafcommerce.presentation.model.BroadleafTemplateContext;
+import com.ultracommerce.common.util.StringUtil;
+import com.ultracommerce.common.web.UltraRequestContext;
+import com.ultracommerce.openadmin.web.form.entity.DynamicEntityFormInfo;
+import com.ultracommerce.openadmin.web.form.entity.EntityForm;
+import com.ultracommerce.openadmin.web.form.entity.Field;
+import com.ultracommerce.openadmin.web.form.entity.Tab;
+import com.ultracommerce.presentation.condition.ConditionalOnTemplating;
+import com.ultracommerce.presentation.dialect.AbstractUltraVariableModifierAttrProcessor;
+import com.ultracommerce.presentation.dialect.UltraDialectPrefix;
+import com.ultracommerce.presentation.model.UltraBindStatus;
+import com.ultracommerce.presentation.model.UltraTemplateContext;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
@@ -49,13 +49,13 @@ import java.util.Map;
  * For instance, if you would like to get all of the errors for the {@link EntityForm}, invoke this processor with an
  * attribute that looks like:
  * 
- *      blc_admin:errors="*{*}"
+ *      uc_admin:errors="*{*}"
  *
  * @author Phillip Verheyden (phillipuniverse)
  */
-@Component("blErrorsProcessor")
+@Component("ucErrorsProcessor")
 @ConditionalOnTemplating
-public class ErrorsProcessor extends AbstractBroadleafVariableModifierAttrProcessor {
+public class ErrorsProcessor extends AbstractUltraVariableModifierAttrProcessor {
 
     protected static final Log LOG = LogFactory.getLog(ErrorsProcessor.class);
 
@@ -72,7 +72,7 @@ public class ErrorsProcessor extends AbstractBroadleafVariableModifierAttrProces
     
     @Override
     public String getPrefix() {
-        return BroadleafDialectPrefix.BLC_ADMIN;
+        return UltraDialectPrefix.UC_ADMIN;
     }
     
     @Override
@@ -81,9 +81,9 @@ public class ErrorsProcessor extends AbstractBroadleafVariableModifierAttrProces
     }
     
     @Override
-    public Map<String, Object> populateModelVariables(String tagName, Map<String, String> tagAttributes, String attributeName, String attributeValue, BroadleafTemplateContext context) {
+    public Map<String, Object> populateModelVariables(String tagName, Map<String, String> tagAttributes, String attributeName, String attributeValue, UltraTemplateContext context) {
 
-        BroadleafBindStatus bindStatus = context.getBindStatus(attributeValue);
+        UltraBindStatus bindStatus = context.getBindStatus(attributeValue);
 
         Map<String, Object> newLocalVars = new HashMap<>();
         if (bindStatus.isError()) {
@@ -139,9 +139,9 @@ public class ErrorsProcessor extends AbstractBroadleafVariableModifierAttrProces
             }
 
             String translatedGeneralTab = GENERAL_ERRORS_TAB_KEY;
-            BroadleafRequestContext blcContext = BroadleafRequestContext.getBroadleafRequestContext();
-            if (blcContext != null && blcContext.getMessageSource() != null) {
-                translatedGeneralTab = blcContext.getMessageSource().getMessage(translatedGeneralTab, null, translatedGeneralTab, blcContext.getJavaLocale());
+            UltraRequestContext ucContext = UltraRequestContext.getUltraRequestContext();
+            if (ucContext != null && ucContext.getMessageSource() != null) {
+                translatedGeneralTab = ucContext.getMessageSource().getMessage(translatedGeneralTab, null, translatedGeneralTab, ucContext.getJavaLocale());
             }
 
             for (ObjectError err : bindStatus.getErrors().getGlobalErrors()) {

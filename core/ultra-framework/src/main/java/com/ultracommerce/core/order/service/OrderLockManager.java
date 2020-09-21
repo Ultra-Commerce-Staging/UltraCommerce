@@ -1,23 +1,23 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.order.service;
+package com.ultracommerce.core.order.service;
 
-import org.broadleafcommerce.core.order.domain.Order;
+import com.ultracommerce.core.order.domain.Order;
 
 /**
  * It is recommended to only allow one write operation on orders at a time. For example, if two add to cart operations
@@ -70,7 +70,7 @@ public interface OrderLockManager {
 
     /**
      * This method indicates if the lock manager is active.  It can return a static value or a dynamic one 
-     * based on values in the BroadleafRequestContext or other stateful mechanism.  A good example of when this might be 
+     * based on values in the UltraRequestContext or other stateful mechanism.  A good example of when this might be 
      * dynamic is when there is a session-based lock and the request indicates that it is not OK to use sessions.
      * @return
      */

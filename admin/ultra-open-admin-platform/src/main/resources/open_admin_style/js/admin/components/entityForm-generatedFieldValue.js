@@ -1,33 +1,33 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-(function($, BLCAdmin) {
+(function($, UCAdmin) {
     
-    BLCAdmin.generatedFieldValue = {
+    UCAdmin.generatedFieldValue = {
             
         registerFieldValueGenerator : function registerFieldValueGenerator($generatedFieldValueContainer) {
             var sourceFieldName = $generatedFieldValueContainer.data('source-field');
             var $sourceField = $generatedFieldValueContainer.closest('form').find('#field-' + sourceFieldName + ' input');
 
             $sourceField.on('keyup', function() {
-                BLCAdmin.generatedFieldValue.setGeneratedFieldValue($generatedFieldValueContainer);
+                UCAdmin.generatedFieldValue.setGeneratedFieldValue($generatedFieldValueContainer);
             });
 
-            BLCAdmin.generatedFieldValue.setGeneratedFieldValue($generatedFieldValueContainer);
+            UCAdmin.generatedFieldValue.setGeneratedFieldValue($generatedFieldValueContainer);
         },
         
         setGeneratedFieldValue : function setGeneratedFieldValue($generatedFieldValueContainer) {
@@ -50,15 +50,15 @@
 
     };
 
-    BLCAdmin.addInitializationHandler(function($container) {
+    UCAdmin.addInitializationHandler(function($container) {
         $container.find('div.generated-fieldValue-container').each(function(idx, el) {
             if ($(el).data('overridden-fieldValue') != true && !$(el).hasClass('disabledValueGeneration')) {
-                BLCAdmin.generatedFieldValue.registerFieldValueGenerator($(el));
+                UCAdmin.generatedFieldValue.registerFieldValueGenerator($(el));
             }
         });
     });
 
-})(jQuery, BLCAdmin);
+})(jQuery, UCAdmin);
 
 $('body').on('click', 'a.override-generated-fieldValue', function(event) {
     event.preventDefault();
@@ -72,14 +72,14 @@ $('body').on('click', 'a.override-generated-fieldValue', function(event) {
 	    $this.text($this.data('disabled-text'));
 
         if (!$container.hasClass('disabledValueGeneration')) {
-            BLCAdmin.generatedFieldValue.registerFieldValueGenerator($container);
+            UCAdmin.generatedFieldValue.registerFieldValueGenerator($container);
         } else {
-            BLCAdmin.generatedFieldValue.setGeneratedFieldValue($container);
+            UCAdmin.generatedFieldValue.setGeneratedFieldValue($container);
         }
 	} else {
 	    $container.find('input').removeAttr('readonly');
 	    $this.text($this.data('enabled-text'));
-	    BLCAdmin.generatedFieldValue.unregisterFieldValueGenerator($container);
+	    UCAdmin.generatedFieldValue.unregisterFieldValueGenerator($container);
 	}
 	
 	$container.closest('form').find('#field-' + $container.data('toggle-field') + ' input').val(!enabled);

@@ -1,31 +1,31 @@
 /*
  * #%L
- * BroadleafCommerce Framework Web
+ * UltraCommerce Framework Web
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.web.service;
+package com.ultracommerce.core.web.service;
 
 import org.apache.commons.lang.StringUtils;
-import org.broadleafcommerce.common.exception.ServiceException;
-import org.broadleafcommerce.common.security.service.ExploitProtectionService;
-import org.broadleafcommerce.common.util.BLCSystemProperty;
-import org.broadleafcommerce.core.catalog.domain.Category;
-import org.broadleafcommerce.core.search.domain.SearchCriteria;
-import org.broadleafcommerce.core.search.domain.SearchFacetDTO;
-import org.broadleafcommerce.core.search.domain.SearchFacetResultDTO;
-import org.broadleafcommerce.core.web.catalog.CategoryHandlerMapping;
+import com.ultracommerce.common.exception.ServiceException;
+import com.ultracommerce.common.security.service.ExploitProtectionService;
+import com.ultracommerce.common.util.UCSystemProperty;
+import com.ultracommerce.core.catalog.domain.Category;
+import com.ultracommerce.core.search.domain.SearchCriteria;
+import com.ultracommerce.core.search.domain.SearchFacetDTO;
+import com.ultracommerce.core.search.domain.SearchFacetResultDTO;
+import com.ultracommerce.core.web.catalog.CategoryHandlerMapping;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -37,18 +37,18 @@ import java.util.Objects;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
-@Service("blSearchFacetDTOService")
+@Service("ucSearchFacetDTOService")
 public class SearchFacetDTOServiceImpl implements SearchFacetDTOService {
 
-    @Resource(name = "blExploitProtectionService")
+    @Resource(name = "ucExploitProtectionService")
     protected ExploitProtectionService exploitProtectionService;
 
     protected int getDefaultPageSize() {
-        return BLCSystemProperty.resolveIntSystemProperty("web.defaultPageSize");
+        return UCSystemProperty.resolveIntSystemProperty("web.defaultPageSize");
     }
 
     protected int getMaxPageSize() {
-        return BLCSystemProperty.resolveIntSystemProperty("web.maxPageSize");
+        return UCSystemProperty.resolveIntSystemProperty("web.maxPageSize");
     }
 
     @Override

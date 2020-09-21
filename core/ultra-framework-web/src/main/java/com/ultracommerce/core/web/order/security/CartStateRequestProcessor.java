@@ -1,40 +1,40 @@
 /*
  * #%L
- * BroadleafCommerce Framework Web
+ * UltraCommerce Framework Web
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.web.order.security;
+package com.ultracommerce.core.web.order.security;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.crossapp.service.CrossAppAuthService;
-import org.broadleafcommerce.common.extension.ExtensionResultHolder;
-import org.broadleafcommerce.common.util.BLCRequestUtils;
-import org.broadleafcommerce.common.web.AbstractBroadleafWebRequestProcessor;
-import org.broadleafcommerce.common.web.BroadleafWebRequestProcessor;
-import org.broadleafcommerce.core.order.domain.Order;
-import org.broadleafcommerce.core.order.service.MergeCartService;
-import org.broadleafcommerce.core.order.service.OrderService;
-import org.broadleafcommerce.core.order.service.call.MergeCartResponse;
-import org.broadleafcommerce.core.order.service.exception.RemoveFromCartException;
-import org.broadleafcommerce.core.order.service.type.OrderStatus;
-import org.broadleafcommerce.core.pricing.service.exception.PricingException;
-import org.broadleafcommerce.core.web.service.UpdateCartService;
-import org.broadleafcommerce.profile.core.domain.Customer;
-import org.broadleafcommerce.profile.web.core.CustomerState;
-import org.broadleafcommerce.profile.web.core.security.CustomerStateRequestProcessor;
+import com.ultracommerce.common.crossapp.service.CrossAppAuthService;
+import com.ultracommerce.common.extension.ExtensionResultHolder;
+import com.ultracommerce.common.util.UCRequestUtils;
+import com.ultracommerce.common.web.AbstractUltraWebRequestProcessor;
+import com.ultracommerce.common.web.UltraWebRequestProcessor;
+import com.ultracommerce.core.order.domain.Order;
+import com.ultracommerce.core.order.service.MergeCartService;
+import com.ultracommerce.core.order.service.OrderService;
+import com.ultracommerce.core.order.service.call.MergeCartResponse;
+import com.ultracommerce.core.order.service.exception.RemoveFromCartException;
+import com.ultracommerce.core.order.service.type.OrderStatus;
+import com.ultracommerce.core.pricing.service.exception.PricingException;
+import com.ultracommerce.core.web.service.UpdateCartService;
+import com.ultracommerce.profile.core.domain.Customer;
+import com.ultracommerce.profile.web.core.CustomerState;
+import com.ultracommerce.profile.web.core.security.CustomerStateRequestProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -49,7 +49,7 @@ import javax.annotation.Resource;
 /**
  * Ensures that the customer's current cart is available to the request.  
  * 
- * Also invokes blMergeCartProcessor" if the user has just logged in.   
+ * Also invokes ucMergeCartProcessor" if the user has just logged in.   
  * 
  * Genericized version of the CartStateFilter. This was made to facilitate reuse between Servlet Filters, Portlet Filters 
  * and Spring MVC interceptors. Spring has an easy way of converting HttpRequests and PortletRequests into WebRequests 
@@ -59,42 +59,42 @@ import javax.annotation.Resource;
  * 
  * @author Phillip Verheyden
  * @see {@link CartStateFilter}
- * @see {@link BroadleafWebRequestProcessor}
+ * @see {@link UltraWebRequestProcessor}
  * @see {@link ServletWebRequest}
  * @see {@link org.springframework.web.portlet.context.PortletWebRequest}
  */
-@Component("blCartStateRequestProcessor")
-public class CartStateRequestProcessor extends AbstractBroadleafWebRequestProcessor {
+@Component("ucCartStateRequestProcessor")
+public class CartStateRequestProcessor extends AbstractUltraWebRequestProcessor {
 
     /** Logger for this class and subclasses */
     protected final Log LOG = LogFactory.getLog(getClass());
 
-    public static final String BLC_RULE_MAP_PARAM = "blRuleMap";
+    public static final String UC_RULE_MAP_PARAM = "ucRuleMap";
 
-    @Resource(name = "blCartStateRequestProcessorExtensionManager")
+    @Resource(name = "ucCartStateRequestProcessorExtensionManager")
     protected CartStateRequestProcessorExtensionManager extensionManager;
 
-    @Resource(name = "blOrderService")
+    @Resource(name = "ucOrderService")
     protected OrderService orderService;
 
-    @Resource(name = "blUpdateCartService")
+    @Resource(name = "ucUpdateCartService")
     protected UpdateCartService updateCartService;
 
-    @Resource(name = "blMergeCartService")
+    @Resource(name = "ucMergeCartService")
     protected MergeCartService mergeCartService;
     
-    @Resource(name = "blCustomerStateRequestProcessor")
+    @Resource(name = "ucCustomerStateRequestProcessor")
     protected CustomerStateRequestProcessor customerStateRequestProcessor;
 
     @Autowired(required = false)
-    @Qualifier("blCrossAppAuthService")
+    @Qualifier("ucCrossAppAuthService")
     protected CrossAppAuthService crossAppAuthService;
 
     protected static String cartRequestAttributeName = "cart";
     
     protected static String anonymousCartSessionAttributeName = "anonymousCart";
 
-    public static final String OVERRIDE_CART_ATTR_NAME = "_blc_overrideCartId";
+    public static final String OVERRIDE_CART_ATTR_NAME = "_uc_overrideCartId";
         
     @Override
     public void process(WebRequest request) {
@@ -102,7 +102,7 @@ public class CartStateRequestProcessor extends AbstractBroadleafWebRequestProces
 
         if (customer == null) {
             LOG.info("No customer was found on the current request, no cart will be added to the current request. Ensure that the"
-                    + " blCustomerStateFilter occurs prior to the blCartStateFilter");
+                    + " ucCustomerStateFilter occurs prior to the ucCartStateFilter");
             return;
         }
 
@@ -139,7 +139,7 @@ public class CartStateRequestProcessor extends AbstractBroadleafWebRequestProces
 
         // Setup cart for content rule processing
         @SuppressWarnings("unchecked")
-        Map<String, Object> ruleMap = (Map<String, Object>) request.getAttribute(BLC_RULE_MAP_PARAM, WebRequest.SCOPE_REQUEST);
+        Map<String, Object> ruleMap = (Map<String, Object>) request.getAttribute(UC_RULE_MAP_PARAM, WebRequest.SCOPE_REQUEST);
         if (ruleMap == null) {
             ruleMap = new HashMap<String, Object>();
         }
@@ -148,12 +148,12 @@ public class CartStateRequestProcessor extends AbstractBroadleafWebRequestProces
         // Leaving the following line in for backwards compatibility, but all rules should use order as the
         // variable name.
         ruleMap.put("cart", cart);
-        request.setAttribute(BLC_RULE_MAP_PARAM, ruleMap, WebRequest.SCOPE_REQUEST);
+        request.setAttribute(UC_RULE_MAP_PARAM, ruleMap, WebRequest.SCOPE_REQUEST);
     }
 
     public Order getOverrideCart(WebRequest request) {
         Long orderId = null;
-        if (BLCRequestUtils.isOKtoUseSession(request)) {
+        if (UCRequestUtils.isOKtoUseSession(request)) {
             orderId = (Long) request.getAttribute(OVERRIDE_CART_ATTR_NAME, WebRequest.SCOPE_SESSION);
         }
         Order cart = null;
@@ -200,7 +200,7 @@ public class CartStateRequestProcessor extends AbstractBroadleafWebRequestProces
             throw new RuntimeException(e);
         }
         
-        if (BLCRequestUtils.isOKtoUseSession(request)) {
+        if (UCRequestUtils.isOKtoUseSession(request)) {
             // The anonymous customer from session is no longer needed; it can be safely removed
             request.removeAttribute(CustomerStateRequestProcessor.getAnonymousCustomerSessionAttributeName(),
                     WebRequest.SCOPE_SESSION);

@@ -1,24 +1,24 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2017 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
 /**
  * 
  */
-package org.broadleafcommerce.common.config;
+package com.ultracommerce.common.config;
 
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Configuration;
@@ -46,8 +46,8 @@ import java.lang.annotation.Target;
  * 
  * <pre>
  * {@code
- * <context:component-scan base-package="org.broadleafcommerce.some.package">
- *     <context:exclude-filter type="annotation" expression="org.broadleafcommerce.common.config.PostAutoConfiguration"/>
+ * <context:component-scan base-package="com.ultracommerce.some.package">
+ *     <context:exclude-filter type="annotation" expression="com.ultracommerce.common.config.PostAutoConfiguration"/>
  * </context:component-scan>
  * }
  * </pre>
@@ -56,7 +56,7 @@ import java.lang.annotation.Target;
  * Or in an {@link @ComponentScan} annotation:
  * 
  * <pre>
- * {@literal @}ComponentScan(basePackages = "org.broadleafcommerce.some.package",
+ * {@literal @}ComponentScan(basePackages = "com.ultracommerce.some.package",
  *    excludeFilters = {@literal @}Filter(type = FilterType.ANNOTATION, classes = PostAutoConfiguration.class))
  * }
  * </pre>

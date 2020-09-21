@@ -1,43 +1,43 @@
 /*
  * #%L
- * BroadleafCommerce CMS Module
+ * UltraCommerce CMS Module
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.cms.page.service;
+package com.ultracommerce.cms.page.service;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.cms.file.service.StaticAssetService;
-import org.broadleafcommerce.cms.page.dao.PageDao;
-import org.broadleafcommerce.cms.page.domain.Page;
-import org.broadleafcommerce.cms.page.domain.PageField;
-import org.broadleafcommerce.cms.page.domain.PageTemplate;
-import org.broadleafcommerce.common.cache.CacheStatType;
-import org.broadleafcommerce.common.cache.StatisticsService;
-import org.broadleafcommerce.common.extension.ExtensionResultHolder;
-import org.broadleafcommerce.common.extension.ResultType;
-import org.broadleafcommerce.common.locale.domain.Locale;
-import org.broadleafcommerce.common.locale.service.LocaleService;
-import org.broadleafcommerce.common.locale.util.LocaleUtil;
-import org.broadleafcommerce.common.page.dto.NullPageDTO;
-import org.broadleafcommerce.common.page.dto.PageDTO;
-import org.broadleafcommerce.common.rule.RuleProcessor;
-import org.broadleafcommerce.common.site.domain.Site;
-import org.broadleafcommerce.common.template.TemplateOverrideExtensionManager;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
+import com.ultracommerce.cms.file.service.StaticAssetService;
+import com.ultracommerce.cms.page.dao.PageDao;
+import com.ultracommerce.cms.page.domain.Page;
+import com.ultracommerce.cms.page.domain.PageField;
+import com.ultracommerce.cms.page.domain.PageTemplate;
+import com.ultracommerce.common.cache.CacheStatType;
+import com.ultracommerce.common.cache.StatisticsService;
+import com.ultracommerce.common.extension.ExtensionResultHolder;
+import com.ultracommerce.common.extension.ResultType;
+import com.ultracommerce.common.locale.domain.Locale;
+import com.ultracommerce.common.locale.service.LocaleService;
+import com.ultracommerce.common.locale.util.LocaleUtil;
+import com.ultracommerce.common.page.dto.NullPageDTO;
+import com.ultracommerce.common.page.dto.PageDTO;
+import com.ultracommerce.common.rule.RuleProcessor;
+import com.ultracommerce.common.site.domain.Site;
+import com.ultracommerce.common.template.TemplateOverrideExtensionManager;
+import com.ultracommerce.common.web.UltraRequestContext;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -57,40 +57,40 @@ import javax.cache.CacheManager;
  * @author Brian Polster (bpolster)
  * @author Nathan Moore (nathandmoore)
  */
-@Service("blPageService")
+@Service("ucPageService")
 public class PageServiceImpl implements PageService {
 
     protected static final Log LOG = LogFactory.getLog(PageServiceImpl.class);
     protected static String AND = " && ";
 
-    @Resource(name="blPageDao")
+    @Resource(name="ucPageDao")
     protected PageDao pageDao;
 
-    @Resource(name="blPageRuleProcessors")
+    @Resource(name="ucPageRuleProcessors")
     protected List<RuleProcessor<PageDTO>> pageRuleProcessors;
 
-    @Resource(name="blLocaleService")
+    @Resource(name="ucLocaleService")
     protected LocaleService localeService;
 
-    @Resource(name="blStaticAssetService")
+    @Resource(name="ucStaticAssetService")
     protected StaticAssetService staticAssetService;
 
-    @Resource(name="blStatisticsService")
+    @Resource(name="ucStatisticsService")
     protected StatisticsService statisticsService;
 
-    @Resource(name = "blTemplateOverrideExtensionManager")
+    @Resource(name = "ucTemplateOverrideExtensionManager")
     protected TemplateOverrideExtensionManager templateOverrideManager;
 
-    @Resource(name = "blPageServiceUtility")
+    @Resource(name = "ucPageServiceUtility")
     protected PageServiceUtility pageServiceUtility;
 
-    @Resource(name = "blPageServiceExtensionManager")
+    @Resource(name = "ucPageServiceExtensionManager")
     protected PageServiceExtensionManager extensionManager;
 
-    @Resource(name = "blPageQueryExtensionManager")
+    @Resource(name = "ucPageQueryExtensionManager")
     protected PageQueryExtensionManager queryExtensionManager;
     
-    @Resource(name = "blCacheManager")
+    @Resource(name = "ucCacheManager")
     protected CacheManager cacheManager;
 
     protected Cache pageCache;
@@ -128,7 +128,7 @@ public class PageServiceImpl implements PageService {
     }
 
     @Override
-    @Transactional("blTransactionManager")
+    @Transactional("ucTransactionManager")
     public PageTemplate savePageTemplate(PageTemplate template) {
         return pageDao.savePageTemplate(template);
     }
@@ -226,7 +226,7 @@ public class PageServiceImpl implements PageService {
     @Override
     public List<PageDTO> buildPageDTOList(List<Page> pageList, boolean secure, String identifier, Locale locale) {
         List<PageDTO> dtoList = new ArrayList<>();
-        BroadleafRequestContext context = BroadleafRequestContext.getBroadleafRequestContext();
+        UltraRequestContext context = UltraRequestContext.getUltraRequestContext();
 
         if (context.isProductionSandBox()) {
             dtoList = buildPageDTOListUsingCache(pageList, identifier, locale, secure);
@@ -302,7 +302,7 @@ public class PageServiceImpl implements PageService {
 
     @SuppressWarnings("unchecked")
     protected void addPageMapCacheEntry(String identifier, String key) {
-        BroadleafRequestContext context = BroadleafRequestContext.getBroadleafRequestContext();
+        UltraRequestContext context = UltraRequestContext.getUltraRequestContext();
         Site site = context.getNonPersistentSite();
         Long siteId = (site != null) ? site.getId() : null;
 

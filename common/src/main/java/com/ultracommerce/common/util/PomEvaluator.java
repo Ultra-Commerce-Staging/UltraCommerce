@@ -1,21 +1,21 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.util;
+package com.ultracommerce.common.util;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -36,8 +36,8 @@ public class PomEvaluator {
     private static Category SPRING = new Category("Spring Framework", LicenseType.APACHE2, FrameworkType.GENERAL);
     private static Category HIBERNATE = new Category("Hibernate Framework", LicenseType.LGPL, FrameworkType.PERSISTENCE);
     private static Category GOOGLE = new Category("Google", LicenseType.APACHE2, FrameworkType.GENERAL);
-    private static Category BROADLEAF_OPEN_SOURCE = new Category("Broadleaf Framework Open Source", LicenseType.APACHE2, FrameworkType.ECOMMERCE);
-    private static Category BROADLEAF_COMMERCIAL = new Category("Broadleaf Framework Commercial", LicenseType.APACHE2, FrameworkType.ECOMMERCE);
+    private static Category ULTRA_OPEN_SOURCE = new Category("Ultra Framework Open Source", LicenseType.APACHE2, FrameworkType.ECOMMERCE);
+    private static Category ULTRA_COMMERCIAL = new Category("Ultra Framework Commercial", LicenseType.APACHE2, FrameworkType.ECOMMERCE);
     private static Category APACHE_FOUNDATION = new Category("Apache 2.0", LicenseType.APACHE2, FrameworkType.GENERAL);
     private static Category JAVAX = new Category("javax", LicenseType.JAVA_EXTENSION, FrameworkType.OTHER);
     private static Category SLF4J = new Category("slfj", LicenseType.MIT, FrameworkType.LOGGING);
@@ -77,9 +77,9 @@ public class PomEvaluator {
         knownLibraries.put("org.hibernate", HIBERNATE);
         knownLibraries.put("org.hibernate.javax.persistence", HIBERNATE);
 
-        // Broadleaf
-        knownLibraries.put("org.broadleafcommerce", BROADLEAF_OPEN_SOURCE);
-        knownLibraries.put("com.broadleafcommerce", BROADLEAF_COMMERCIAL);
+        // Ultra
+        knownLibraries.put("com.ultracommerce", ULTRA_OPEN_SOURCE);
+        knownLibraries.put("com.ultracommerce", ULTRA_COMMERCIAL);
 
         // JavaX
         knownLibraries.put("javax.xml.bind", JAVAX);
@@ -186,7 +186,7 @@ public class PomEvaluator {
 //        BufferedReader br = null;
 //
 //        try {
-//            String fileName = "/Users/brianpolster/blc-workspace/BroadleafCommerce/pom.xml";
+//            String fileName = "/Users/brianpolster/uc-workspace/UltraCommerce/pom.xml";
 //            if (args.length > 0) {
 //                fileName = args[0];
 //            }

@@ -1,32 +1,32 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2019 Broadleaf Commerce
+ * Copyright (C) 2009 - 2019 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.checkout.service.workflow;
+package com.ultracommerce.core.checkout.service.workflow;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.core.catalog.domain.Sku;
-import org.broadleafcommerce.core.inventory.service.ContextualInventoryService;
-import org.broadleafcommerce.core.order.domain.BundleOrderItem;
-import org.broadleafcommerce.core.order.domain.DiscreteOrderItem;
-import org.broadleafcommerce.core.order.domain.Order;
-import org.broadleafcommerce.core.order.domain.OrderItem;
-import org.broadleafcommerce.core.workflow.BaseActivity;
-import org.broadleafcommerce.core.workflow.ProcessContext;
+import com.ultracommerce.core.catalog.domain.Sku;
+import com.ultracommerce.core.inventory.service.ContextualInventoryService;
+import com.ultracommerce.core.order.domain.BundleOrderItem;
+import com.ultracommerce.core.order.domain.DiscreteOrderItem;
+import com.ultracommerce.core.order.domain.Order;
+import com.ultracommerce.core.order.domain.OrderItem;
+import com.ultracommerce.core.workflow.BaseActivity;
+import com.ultracommerce.core.workflow.ProcessContext;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -36,17 +36,17 @@ import javax.annotation.Resource;
 
 /**
  * This will check the availability and quantities (if applicable) all order items in checkout request.
- * Very similar to the {@link CheckUpdateAvailabilityActivity} but in the blCheckoutWorkflow instead.
+ * Very similar to the {@link CheckUpdateAvailabilityActivity} but in the ucCheckoutWorkflow instead.
  * This should prevent succeed checkout, in case, when Sku became unavailable in range
  * after it was adding to the cart and before completing the order.
  */
-@Component("blValidateAvailabilityActivity")
+@Component("ucValidateAvailabilityActivity")
 public class ValidateAvailabilityActivity extends BaseActivity<ProcessContext<CheckoutSeed>> {
 
     public static final int ORDER = 750;
     private static final Log LOG = LogFactory.getLog(ValidateAvailabilityActivity.class);
 
-    @Resource(name = "blInventoryService")
+    @Resource(name = "ucInventoryService")
     protected ContextualInventoryService inventoryService;
 
     public ValidateAvailabilityActivity() {

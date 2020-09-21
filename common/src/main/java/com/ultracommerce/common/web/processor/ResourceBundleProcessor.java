@@ -1,30 +1,30 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.web.processor;
+package com.ultracommerce.common.web.processor;
 
 import org.apache.commons.lang3.StringUtils;
-import org.broadleafcommerce.common.resource.service.ResourceBundlingService;
-import org.broadleafcommerce.common.web.processor.attributes.ResourceTagAttributes;
-import org.broadleafcommerce.presentation.condition.ConditionalOnTemplating;
-import org.broadleafcommerce.presentation.model.BroadleafTemplateContext;
-import org.broadleafcommerce.presentation.model.BroadleafTemplateElement;
-import org.broadleafcommerce.presentation.model.BroadleafTemplateModel;
-import org.broadleafcommerce.presentation.model.BroadleafTemplateNonVoidElement;
+import com.ultracommerce.common.resource.service.ResourceBundlingService;
+import com.ultracommerce.common.web.processor.attributes.ResourceTagAttributes;
+import com.ultracommerce.presentation.condition.ConditionalOnTemplating;
+import com.ultracommerce.presentation.model.UltraTemplateContext;
+import com.ultracommerce.presentation.model.UltraTemplateElement;
+import com.ultracommerce.presentation.model.UltraTemplateModel;
+import com.ultracommerce.presentation.model.UltraTemplateNonVoidElement;
 import org.springframework.stereotype.Component;
 
 import java.security.InvalidParameterException;
@@ -154,7 +154,7 @@ import java.util.Map;
  * <p>
  *
  * This processor has the ability to retrieve a bundle that has already been requested earlier in the template
- * looking it up with the bundle name. See {@link org.broadleafcommerce.common.web.request.ResourcesRequest} for
+ * looking it up with the bundle name. See {@link com.ultracommerce.common.web.request.ResourcesRequest} for
  * more information. This helps with not having to duplicate the bundle information across the &lt;blc:bundlepreload&gt;
  * and &lt;blc:bundle&gt; tags.
  *
@@ -163,7 +163,7 @@ import java.util.Map;
  * @author Jacob Mitash (jmitash)
  * @see ResourceBundlingService
  */
-@Component("blResourceBundleProcessor")
+@Component("ucResourceBundleProcessor")
 @ConditionalOnTemplating
 public class ResourceBundleProcessor extends AbstractResourceProcessor {
 
@@ -193,8 +193,8 @@ public class ResourceBundleProcessor extends AbstractResourceProcessor {
     }
 
     @Override
-    protected BroadleafTemplateModel buildModelUnbundled(List<String> attributeFiles, ResourceTagAttributes attributes, BroadleafTemplateContext context) {
-        final BroadleafTemplateModel model = context.createModel();
+    protected UltraTemplateModel buildModelUnbundled(List<String> attributeFiles, ResourceTagAttributes attributes, UltraTemplateContext context) {
+        final UltraTemplateModel model = context.createModel();
 
         final List<String> files = postProcessUnbundledFileList(attributeFiles, attributes, context);
 
@@ -207,7 +207,7 @@ public class ResourceBundleProcessor extends AbstractResourceProcessor {
             }
 
             // add bundle complete script if needed/supported
-            final BroadleafTemplateElement bundleCompleteElement = buildUnbundledSyncCompletedEventElement(attributes, context);
+            final UltraTemplateElement bundleCompleteElement = buildUnbundledSyncCompletedEventElement(attributes, context);
             if (bundleCompleteElement != null) {
                 model.addElement(bundleCompleteElement);
             }
@@ -221,8 +221,8 @@ public class ResourceBundleProcessor extends AbstractResourceProcessor {
     }
 
     @Override
-    protected BroadleafTemplateModel buildModelBundled(List<String> attributeFiles, ResourceTagAttributes attributes, BroadleafTemplateContext context) {
-        final BroadleafTemplateModel model = context.createModel();
+    protected UltraTemplateModel buildModelBundled(List<String> attributeFiles, ResourceTagAttributes attributes, UltraTemplateContext context) {
+        final UltraTemplateModel model = context.createModel();
 
         final String bundleResourcePath = getBundlePath(attributes, attributeFiles);
         final String bundleUrl = getBundleUrl(bundleResourcePath, context);
@@ -240,18 +240,18 @@ public class ResourceBundleProcessor extends AbstractResourceProcessor {
     }
 
     /**
-     * @deprecated Use {@link #addElementToModel(ResourceTagAttributes, BroadleafTemplateContext, BroadleafTemplateModel)} instead
+     * @deprecated Use {@link #addElementToModel(ResourceTagAttributes, UltraTemplateContext, UltraTemplateModel)} instead
      */
     @Deprecated
-    protected void addElementToModel(String src, boolean async, boolean defer, BroadleafTemplateContext context, BroadleafTemplateModel model) {
+    protected void addElementToModel(String src, boolean async, boolean defer, UltraTemplateContext context, UltraTemplateModel model) {
         addElementToModel(src, async, defer, null, context, model);
     }
 
     /**
-     * @deprecated Use {@link #addElementToModel(ResourceTagAttributes, BroadleafTemplateContext, BroadleafTemplateModel)} instead
+     * @deprecated Use {@link #addElementToModel(ResourceTagAttributes, UltraTemplateContext, UltraTemplateModel)} instead
      */
     @Deprecated
-    protected void addElementToModel(String src, boolean async, boolean defer, String dependencyEvent, BroadleafTemplateContext context, BroadleafTemplateModel model) {
+    protected void addElementToModel(String src, boolean async, boolean defer, String dependencyEvent, UltraTemplateContext context, UltraTemplateModel model) {
         ResourceTagAttributes tagAttributes = new ResourceTagAttributes()
                 .src(src)
                 .async(async)
@@ -266,7 +266,7 @@ public class ResourceBundleProcessor extends AbstractResourceProcessor {
      * @param context the context of the original bundle tag
      * @param model the model to add the script to
      */
-    protected void addElementToModel(ResourceTagAttributes attributes, BroadleafTemplateContext context, BroadleafTemplateModel model) {
+    protected void addElementToModel(ResourceTagAttributes attributes, UltraTemplateContext context, UltraTemplateModel model) {
         String src = attributes.src();
         src = attributes.src().contains(";") ? src.substring(0, src.indexOf(';')) : src;
 
@@ -285,7 +285,7 @@ public class ResourceBundleProcessor extends AbstractResourceProcessor {
      * @param context the context of the original bundle tag
      * @param model the model to add the script to
      */
-    protected void addJavaScriptToModel(ResourceTagAttributes attributes, BroadleafTemplateContext context, BroadleafTemplateModel model) {
+    protected void addJavaScriptToModel(ResourceTagAttributes attributes, UltraTemplateContext context, UltraTemplateModel model) {
         model.addElement(context.createNonVoidElement("script", getScriptAttributes(attributes), true));
     }
 
@@ -295,10 +295,10 @@ public class ResourceBundleProcessor extends AbstractResourceProcessor {
      * @param context the context of the original bundle tag
      * @param model the model to add the link to
      */
-    protected void addCssToModel(ResourceTagAttributes attributes, BroadleafTemplateContext context, BroadleafTemplateModel model) {
+    protected void addCssToModel(ResourceTagAttributes attributes, UltraTemplateContext context, UltraTemplateModel model) {
         if (attributes.defer()) {
-            List<BroadleafTemplateElement> deferredCssElements = getDeferredCssElements(attributes, context);
-            for (BroadleafTemplateElement element : deferredCssElements) {
+            List<UltraTemplateElement> deferredCssElements = getDeferredCssElements(attributes, context);
+            for (UltraTemplateElement element : deferredCssElements) {
                 model.addElement(element);
             }
         } else {
@@ -312,14 +312,14 @@ public class ResourceBundleProcessor extends AbstractResourceProcessor {
      * @param context the context of the original resource tag
      * @return list of elements needed for deferred CSS
      */
-    protected List<BroadleafTemplateElement> getDeferredCssElements(ResourceTagAttributes attributes, BroadleafTemplateContext context) {
-        List<BroadleafTemplateElement> elements = new ArrayList<>();
+    protected List<UltraTemplateElement> getDeferredCssElements(ResourceTagAttributes attributes, UltraTemplateContext context) {
+        List<UltraTemplateElement> elements = new ArrayList<>();
 
         Map<String, String> deferredCssAttributes = new HashMap<>(this.deferredCssAttributes);
         deferredCssAttributes.put("href", attributes.src());
         elements.add(context.createStandaloneElement("link", deferredCssAttributes, true));
 
-        BroadleafTemplateNonVoidElement noScriptElement = context.createNonVoidElement("noscript");
+        UltraTemplateNonVoidElement noScriptElement = context.createNonVoidElement("noscript");
         noScriptElement.addChild(context.createStandaloneElement("link", getNormalCssAttributes(attributes), true));
         elements.add(noScriptElement);
 
@@ -327,10 +327,10 @@ public class ResourceBundleProcessor extends AbstractResourceProcessor {
     }
 
     /**
-     * @deprecated Use {@link #addDependencyRestrictionToModel(List, ResourceTagAttributes, BroadleafTemplateContext, BroadleafTemplateModel)} instead
+     * @deprecated Use {@link #addDependencyRestrictionToModel(List, ResourceTagAttributes, UltraTemplateContext, UltraTemplateModel)} instead
      */
     @Deprecated
-    protected void addDependentBundleRestrictionToModel(String src, boolean async, boolean defer, String dependencyEvent, BroadleafTemplateContext context, BroadleafTemplateModel model) {
+    protected void addDependentBundleRestrictionToModel(String src, boolean async, boolean defer, String dependencyEvent, UltraTemplateContext context, UltraTemplateModel model) {
         ResourceTagAttributes attributes = new ResourceTagAttributes()
                 .src(src)
                 .async(async)
@@ -345,7 +345,7 @@ public class ResourceBundleProcessor extends AbstractResourceProcessor {
      * @param context the context of the original bundle tag
      * @param model the model to add the script to
      */
-    protected void addDependencyRestrictionToModel(List<String> files, ResourceTagAttributes attributes, BroadleafTemplateContext context, BroadleafTemplateModel model) {
+    protected void addDependencyRestrictionToModel(List<String> files, ResourceTagAttributes attributes, UltraTemplateContext context, UltraTemplateModel model) {
         final String functionName = cleanUpJavaScriptName(attributes.name());
         final String dependencyEvent = attributes.bundleDependencyEvent();
 
@@ -400,7 +400,7 @@ public class ResourceBundleProcessor extends AbstractResourceProcessor {
                         "};" +
                         "</script>";
 
-        BroadleafTemplateElement element = context.createTextElement(script);
+        UltraTemplateElement element = context.createTextElement(script);
         model.addElement(element);
     }
 
@@ -507,7 +507,7 @@ public class ResourceBundleProcessor extends AbstractResourceProcessor {
      * @param context the context of the bundle tag
      * @return the script element or null if not supported
      */
-    protected BroadleafTemplateElement buildUnbundledSyncCompletedEventElement(ResourceTagAttributes attributes, BroadleafTemplateContext context) {
+    protected UltraTemplateElement buildUnbundledSyncCompletedEventElement(ResourceTagAttributes attributes, UltraTemplateContext context) {
         if (getBundleEnabled() || useAsyncJavaScript(attributes) || attributes.bundleCompletedEvent() == null) {
             return null;
         }
@@ -517,7 +517,7 @@ public class ResourceBundleProcessor extends AbstractResourceProcessor {
             return null;
         }
 
-        final BroadleafTemplateNonVoidElement script = context.createNonVoidElement("script");
+        final UltraTemplateNonVoidElement script = context.createNonVoidElement("script");
         script.addChild(context.createTextElement(bundleCompleteEventJavaScript));
 
         return script;

@@ -1,30 +1,30 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.web.resource;
+package com.ultracommerce.common.web.resource;
 
-import org.broadleafcommerce.common.RequestDTOImpl;
-import org.broadleafcommerce.common.classloader.release.ThreadLocalManager;
-import org.broadleafcommerce.common.util.DeployBehaviorUtil;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
-import org.broadleafcommerce.common.web.BroadleafSandBoxResolver;
-import org.broadleafcommerce.common.web.BroadleafSiteResolver;
-import org.broadleafcommerce.common.web.BroadleafThemeResolver;
-import org.broadleafcommerce.common.web.DeployBehavior;
+import com.ultracommerce.common.RequestDTOImpl;
+import com.ultracommerce.common.classloader.release.ThreadLocalManager;
+import com.ultracommerce.common.util.DeployBehaviorUtil;
+import com.ultracommerce.common.web.UltraRequestContext;
+import com.ultracommerce.common.web.UltraSandBoxResolver;
+import com.ultracommerce.common.web.UltraSiteResolver;
+import com.ultracommerce.common.web.UltraThemeResolver;
+import com.ultracommerce.common.web.DeployBehavior;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
@@ -46,25 +46,25 @@ import javax.servlet.http.HttpSession;
  * @author bpolster
  *
  */
-@Service("blBroadleafContextUtil")
-public class BroadleafContextUtil {
+@Service("ucUltraContextUtil")
+public class UltraContextUtil {
     
-    @javax.annotation.Resource(name = "blSiteResolver")
-    protected BroadleafSiteResolver siteResolver;
+    @javax.annotation.Resource(name = "ucSiteResolver")
+    protected UltraSiteResolver siteResolver;
     
-    @javax.annotation.Resource(name = "blSandBoxResolver")
-    protected BroadleafSandBoxResolver sbResolver;
+    @javax.annotation.Resource(name = "ucSandBoxResolver")
+    protected UltraSandBoxResolver sbResolver;
     
-    @javax.annotation.Resource(name = "blThemeResolver")
-    protected BroadleafThemeResolver themeResolver;
+    @javax.annotation.Resource(name = "ucThemeResolver")
+    protected UltraThemeResolver themeResolver;
 
-    @javax.annotation.Resource(name = "blDeployBehaviorUtil")
+    @javax.annotation.Resource(name = "ucDeployBehaviorUtil")
     protected DeployBehaviorUtil deployBehaviorUtil;
 
     protected boolean versioningEnabled = false;
 
     /**
-     * Creates a BroadleafRequestContext with supported values populated
+     * Creates a UltraRequestContext with supported values populated
      * @see #establishThinRequestContextInternal(boolean, boolean)
      */
     public void establishThinRequestContext() {
@@ -72,7 +72,7 @@ public class BroadleafContextUtil {
     }
 
     /**
-     * Creates a BroadleafRequestContext without a Sandbox
+     * Creates a UltraRequestContext without a Sandbox
      * @see #establishThinRequestContextInternal(boolean, boolean)
      */
     public void establishThinRequestContextWithoutSandBox() {
@@ -80,7 +80,7 @@ public class BroadleafContextUtil {
     }
 
     /**
-     * Creates a BroadleafRequestContext without a Theme or Sandbox
+     * Creates a UltraRequestContext without a Theme or Sandbox
      * @see #establishThinRequestContextInternal(boolean, boolean)
      */
     public void establishThinRequestContextWithoutThemeOrSandbox() {
@@ -88,7 +88,7 @@ public class BroadleafContextUtil {
     }
 
     /**
-     * Adds request and site to the BroadleafRequestContext
+     * Adds request and site to the UltraRequestContext
      * 
      * If includeTheme is true then also adds the Theme.
      * If includeSandBox is true then also adds the SandBox.
@@ -97,7 +97,7 @@ public class BroadleafContextUtil {
      * @param includeSandBox
      */
     protected void establishThinRequestContextInternal(boolean includeTheme, boolean includeSandBox) {
-        BroadleafRequestContext brc = BroadleafRequestContext.getBroadleafRequestContext();
+        UltraRequestContext brc = UltraRequestContext.getUltraRequestContext();
 
         if (brc.getRequest() == null) {
             ServletRequestAttributes requestAttributes = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes());

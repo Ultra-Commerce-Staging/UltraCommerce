@@ -1,32 +1,32 @@
 /*
  * #%L
- * BroadleafCommerce CMS Module
+ * UltraCommerce CMS Module
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.cms.page.service;
+package com.ultracommerce.cms.page.service;
 
-import org.broadleafcommerce.cms.page.dao.PageDao;
-import org.broadleafcommerce.cms.page.domain.Page;
-import org.broadleafcommerce.cms.page.domain.PageImpl;
-import org.broadleafcommerce.common.sitemap.domain.SiteMapGeneratorConfiguration;
-import org.broadleafcommerce.common.sitemap.domain.SiteMapGeneratorConfigurationImpl;
-import org.broadleafcommerce.common.sitemap.exception.SiteMapException;
-import org.broadleafcommerce.common.sitemap.service.SiteMapGeneratorTest;
-import org.broadleafcommerce.common.sitemap.service.type.SiteMapChangeFreqType;
-import org.broadleafcommerce.common.sitemap.service.type.SiteMapGeneratorType;
-import org.broadleafcommerce.common.sitemap.service.type.SiteMapPriorityType;
+import com.ultracommerce.cms.page.dao.PageDao;
+import com.ultracommerce.cms.page.domain.Page;
+import com.ultracommerce.cms.page.domain.PageImpl;
+import com.ultracommerce.common.sitemap.domain.SiteMapGeneratorConfiguration;
+import com.ultracommerce.common.sitemap.domain.SiteMapGeneratorConfigurationImpl;
+import com.ultracommerce.common.sitemap.exception.SiteMapException;
+import com.ultracommerce.common.sitemap.service.SiteMapGeneratorTest;
+import com.ultracommerce.common.sitemap.service.type.SiteMapChangeFreqType;
+import com.ultracommerce.common.sitemap.service.type.SiteMapGeneratorType;
+import com.ultracommerce.common.sitemap.service.type.SiteMapPriorityType;
 import org.easymock.EasyMock;
 import org.junit.Test;
 
@@ -77,9 +77,9 @@ public class PageSiteMapGeneratorTest extends SiteMapGeneratorTest {
         File file2 = fileService.getResource("/sitemap1.xml");
         File file3 = fileService.getResource("/sitemap2.xml");
 
-        compareFiles(file1, "src/test/resources/org/broadleafcommerce/sitemap/page/sitemap_index.xml");
-        compareFiles(file2, "src/test/resources/org/broadleafcommerce/sitemap/page/sitemap1.xml");
-        compareFiles(file3, "src/test/resources/org/broadleafcommerce/sitemap/page/sitemap2.xml");
+        compareFiles(file1, "src/test/resources/com/ultracommerce/sitemap/page/sitemap_index.xml");
+        compareFiles(file2, "src/test/resources/com/ultracommerce/sitemap/page/sitemap1.xml");
+        compareFiles(file3, "src/test/resources/com/ultracommerce/sitemap/page/sitemap2.xml");
     
     }
 

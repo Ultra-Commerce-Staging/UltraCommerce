@@ -1,56 +1,56 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
 
-package org.broadleafcommerce.core.payment.service;
+package com.ultracommerce.core.payment.service;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.i18n.domain.ISOCountry;
-import org.broadleafcommerce.common.i18n.service.ISOService;
-import org.broadleafcommerce.common.payment.PaymentAdditionalFieldType;
-import org.broadleafcommerce.common.payment.PaymentGatewayType;
-import org.broadleafcommerce.common.payment.dto.AddressDTO;
-import org.broadleafcommerce.common.payment.dto.GatewayCustomerDTO;
-import org.broadleafcommerce.common.payment.dto.PaymentResponseDTO;
-import org.broadleafcommerce.common.payment.service.PaymentGatewayCheckoutService;
-import org.broadleafcommerce.common.payment.service.PaymentGatewayConfiguration;
-import org.broadleafcommerce.common.web.payment.controller.PaymentGatewayAbstractController;
-import org.broadleafcommerce.core.checkout.service.CheckoutService;
-import org.broadleafcommerce.core.checkout.service.exception.CheckoutException;
-import org.broadleafcommerce.core.checkout.service.workflow.CheckoutResponse;
-import org.broadleafcommerce.core.order.domain.FulfillmentGroup;
-import org.broadleafcommerce.core.order.domain.NullOrderImpl;
-import org.broadleafcommerce.core.order.domain.Order;
-import org.broadleafcommerce.core.order.service.FulfillmentGroupService;
-import org.broadleafcommerce.core.order.service.OrderService;
-import org.broadleafcommerce.core.order.service.type.OrderStatus;
-import org.broadleafcommerce.core.payment.domain.OrderPayment;
-import org.broadleafcommerce.core.payment.domain.PaymentTransaction;
-import org.broadleafcommerce.profile.core.domain.Address;
-import org.broadleafcommerce.profile.core.domain.Country;
-import org.broadleafcommerce.profile.core.domain.Customer;
-import org.broadleafcommerce.profile.core.domain.Phone;
-import org.broadleafcommerce.profile.core.domain.State;
-import org.broadleafcommerce.profile.core.service.AddressService;
-import org.broadleafcommerce.profile.core.service.CountryService;
-import org.broadleafcommerce.profile.core.service.PhoneService;
-import org.broadleafcommerce.profile.core.service.StateService;
+import com.ultracommerce.common.i18n.domain.ISOCountry;
+import com.ultracommerce.common.i18n.service.ISOService;
+import com.ultracommerce.common.payment.PaymentAdditionalFieldType;
+import com.ultracommerce.common.payment.PaymentGatewayType;
+import com.ultracommerce.common.payment.dto.AddressDTO;
+import com.ultracommerce.common.payment.dto.GatewayCustomerDTO;
+import com.ultracommerce.common.payment.dto.PaymentResponseDTO;
+import com.ultracommerce.common.payment.service.PaymentGatewayCheckoutService;
+import com.ultracommerce.common.payment.service.PaymentGatewayConfiguration;
+import com.ultracommerce.common.web.payment.controller.PaymentGatewayAbstractController;
+import com.ultracommerce.core.checkout.service.CheckoutService;
+import com.ultracommerce.core.checkout.service.exception.CheckoutException;
+import com.ultracommerce.core.checkout.service.workflow.CheckoutResponse;
+import com.ultracommerce.core.order.domain.FulfillmentGroup;
+import com.ultracommerce.core.order.domain.NullOrderImpl;
+import com.ultracommerce.core.order.domain.Order;
+import com.ultracommerce.core.order.service.FulfillmentGroupService;
+import com.ultracommerce.core.order.service.OrderService;
+import com.ultracommerce.core.order.service.type.OrderStatus;
+import com.ultracommerce.core.payment.domain.OrderPayment;
+import com.ultracommerce.core.payment.domain.PaymentTransaction;
+import com.ultracommerce.profile.core.domain.Address;
+import com.ultracommerce.profile.core.domain.Country;
+import com.ultracommerce.profile.core.domain.Customer;
+import com.ultracommerce.profile.core.domain.Phone;
+import com.ultracommerce.profile.core.domain.State;
+import com.ultracommerce.profile.core.service.AddressService;
+import com.ultracommerce.profile.core.service.CountryService;
+import com.ultracommerce.profile.core.service.PhoneService;
+import com.ultracommerce.profile.core.service.StateService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -67,21 +67,21 @@ import javax.annotation.Resource;
  * @see {@link PaymentGatewayAbstractController}
  * @author Phillip Verheyden (phillipuniverse)
  */
-@Service("blPaymentGatewayCheckoutService")
+@Service("ucPaymentGatewayCheckoutService")
 public class DefaultPaymentGatewayCheckoutService implements PaymentGatewayCheckoutService {
     
     private static final Log LOG = LogFactory.getLog(DefaultPaymentGatewayCheckoutService.class);
 
-    @Resource(name = "blOrderService")
+    @Resource(name = "ucOrderService")
     protected OrderService orderService;
     
-    @Resource(name = "blOrderPaymentService")
+    @Resource(name = "ucOrderPaymentService")
     protected OrderPaymentService orderPaymentService;
 
-    @Resource(name = "blCheckoutService")
+    @Resource(name = "ucCheckoutService")
     protected CheckoutService checkoutService;
 
-    @Resource(name = "blPaymentResponseDTOToEntityService")
+    @Resource(name = "ucPaymentResponseDTOToEntityService")
     protected PaymentResponseDTOToEntityService dtoToEntityService;
 
     @Value("${default.payment.gateway.checkout.useGatewayBillingAddress}")

@@ -1,21 +1,21 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.catalog.domain;
+package com.ultracommerce.core.catalog.domain;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.collections.CollectionUtils;
@@ -24,43 +24,43 @@ import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.map.MultiValueMap;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.admin.domain.AdminMainEntity;
-import org.broadleafcommerce.common.cache.Hydrated;
-import org.broadleafcommerce.common.cache.HydratedSetup;
-import org.broadleafcommerce.common.cache.engine.CacheFactoryException;
-import org.broadleafcommerce.common.copy.CreateResponse;
-import org.broadleafcommerce.common.copy.MultiTenantCopyContext;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransform;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformMember;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformTypes;
-import org.broadleafcommerce.common.i18n.service.DynamicTranslationProvider;
-import org.broadleafcommerce.common.media.domain.Media;
-import org.broadleafcommerce.common.persistence.ArchiveStatus;
-import org.broadleafcommerce.common.persistence.Status;
-import org.broadleafcommerce.common.presentation.AdminPresentation;
-import org.broadleafcommerce.common.presentation.AdminPresentationAdornedTargetCollection;
-import org.broadleafcommerce.common.presentation.AdminPresentationCollection;
-import org.broadleafcommerce.common.presentation.AdminPresentationDataDrivenEnumeration;
-import org.broadleafcommerce.common.presentation.AdminPresentationMap;
-import org.broadleafcommerce.common.presentation.AdminPresentationMapKey;
-import org.broadleafcommerce.common.presentation.AdminPresentationToOneLookup;
-import org.broadleafcommerce.common.presentation.ConfigurationItem;
-import org.broadleafcommerce.common.presentation.OptionFilterParam;
-import org.broadleafcommerce.common.presentation.OptionFilterParamType;
-import org.broadleafcommerce.common.presentation.ValidationConfiguration;
-import org.broadleafcommerce.common.presentation.client.SupportedFieldType;
-import org.broadleafcommerce.common.presentation.client.VisibilityEnum;
-import org.broadleafcommerce.common.template.TemplatePathContainer;
-import org.broadleafcommerce.common.util.DateUtil;
-import org.broadleafcommerce.common.util.UrlUtil;
-import org.broadleafcommerce.common.web.Locatable;
-import org.broadleafcommerce.core.inventory.service.type.InventoryType;
-import org.broadleafcommerce.core.order.service.type.FulfillmentType;
-import org.broadleafcommerce.core.search.domain.CategoryExcludedSearchFacet;
-import org.broadleafcommerce.core.search.domain.CategoryExcludedSearchFacetImpl;
-import org.broadleafcommerce.core.search.domain.CategorySearchFacet;
-import org.broadleafcommerce.core.search.domain.CategorySearchFacetImpl;
-import org.broadleafcommerce.core.search.domain.SearchFacet;
+import com.ultracommerce.common.admin.domain.AdminMainEntity;
+import com.ultracommerce.common.cache.Hydrated;
+import com.ultracommerce.common.cache.HydratedSetup;
+import com.ultracommerce.common.cache.engine.CacheFactoryException;
+import com.ultracommerce.common.copy.CreateResponse;
+import com.ultracommerce.common.copy.MultiTenantCopyContext;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransform;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransformMember;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransformTypes;
+import com.ultracommerce.common.i18n.service.DynamicTranslationProvider;
+import com.ultracommerce.common.media.domain.Media;
+import com.ultracommerce.common.persistence.ArchiveStatus;
+import com.ultracommerce.common.persistence.Status;
+import com.ultracommerce.common.presentation.AdminPresentation;
+import com.ultracommerce.common.presentation.AdminPresentationAdornedTargetCollection;
+import com.ultracommerce.common.presentation.AdminPresentationCollection;
+import com.ultracommerce.common.presentation.AdminPresentationDataDrivenEnumeration;
+import com.ultracommerce.common.presentation.AdminPresentationMap;
+import com.ultracommerce.common.presentation.AdminPresentationMapKey;
+import com.ultracommerce.common.presentation.AdminPresentationToOneLookup;
+import com.ultracommerce.common.presentation.ConfigurationItem;
+import com.ultracommerce.common.presentation.OptionFilterParam;
+import com.ultracommerce.common.presentation.OptionFilterParamType;
+import com.ultracommerce.common.presentation.ValidationConfiguration;
+import com.ultracommerce.common.presentation.client.SupportedFieldType;
+import com.ultracommerce.common.presentation.client.VisibilityEnum;
+import com.ultracommerce.common.template.TemplatePathContainer;
+import com.ultracommerce.common.util.DateUtil;
+import com.ultracommerce.common.util.UrlUtil;
+import com.ultracommerce.common.web.Locatable;
+import com.ultracommerce.core.inventory.service.type.InventoryType;
+import com.ultracommerce.core.order.service.type.FulfillmentType;
+import com.ultracommerce.core.search.domain.CategoryExcludedSearchFacet;
+import com.ultracommerce.core.search.domain.CategoryExcludedSearchFacetImpl;
+import com.ultracommerce.core.search.domain.CategorySearchFacet;
+import com.ultracommerce.core.search.domain.CategorySearchFacetImpl;
+import com.ultracommerce.core.search.domain.SearchFacet;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -108,9 +108,9 @@ import javax.persistence.Transient;
  */
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name="BLC_CATEGORY")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region="blCategories")
-@SQLDelete(sql="UPDATE BLC_CATEGORY SET ARCHIVED = 'Y' WHERE CATEGORY_ID = ?")
+@Table(name="UC_CATEGORY")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region="ucCategories")
+@SQLDelete(sql="UPDATE UC_CATEGORY SET ARCHIVED = 'Y' WHERE CATEGORY_ID = ?")
 @DirectCopyTransform({
         @DirectCopyTransformMember(templateTokens = DirectCopyTransformTypes.SANDBOX, skipOverlaps = true),
         @DirectCopyTransformMember(templateTokens = DirectCopyTransformTypes.MULTITENANT_CATALOG)
@@ -164,10 +164,10 @@ public class CategoryImpl implements Category, Status, AdminMainEntity, Locatabl
     @GeneratedValue(generator= "CategoryId")
     @GenericGenerator(
         name="CategoryId",
-        strategy="org.broadleafcommerce.common.persistence.IdOverrideTableGenerator",
+        strategy="com.ultracommerce.common.persistence.IdOverrideTableGenerator",
         parameters = {
             @Parameter(name="segment_value", value="CategoryImpl"),
-            @Parameter(name="entity_name", value="org.broadleafcommerce.core.catalog.domain.CategoryImpl")
+            @Parameter(name="entity_name", value="com.ultracommerce.core.catalog.domain.CategoryImpl")
         }
     )
     @Column(name = "CATEGORY_ID")
@@ -186,7 +186,7 @@ public class CategoryImpl implements Category, Status, AdminMainEntity, Locatabl
     @AdminPresentation(friendlyName = "CategoryImpl_Category_Url", order = 4000,
             group = GroupName.General,
             prominent = true, gridOrder = 2000,
-            validationConfigurations = { @ValidationConfiguration(validationImplementation = "blUriPropertyValidator") })
+            validationConfigurations = { @ValidationConfiguration(validationImplementation = "ucUriPropertyValidator") })
     @Index(name="CATEGORY_URL_INDEX", columnNames={"URL"})
     protected String url;
 
@@ -235,7 +235,7 @@ public class CategoryImpl implements Category, Status, AdminMainEntity, Locatabl
     @AdminPresentation(friendlyName = "CategoryImpl_Category_Active_End_Date", order = 2000,
         group = GroupName.ActiveDateRange,
         validationConfigurations = {
-            @ValidationConfiguration(validationImplementation = "blAfterStartDateValidator",
+            @ValidationConfiguration(validationImplementation = "ucAfterStartDateValidator",
                 configurationItems = {
                     @ConfigurationItem(itemName = "otherField", itemValue = "activeStartDate")
             })
@@ -297,7 +297,7 @@ public class CategoryImpl implements Category, Status, AdminMainEntity, Locatabl
     @OneToMany(targetEntity = CategoryXrefImpl.class, mappedBy = "category", orphanRemoval = true,
             cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @OrderBy(value="displayOrder")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region="blCategories")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region="ucCategories")
     @BatchSize(size = 50)
     @AdminPresentationAdornedTargetCollection(
             targetObjectProperty = "subCategory",
@@ -311,7 +311,7 @@ public class CategoryImpl implements Category, Status, AdminMainEntity, Locatabl
     @OneToMany(targetEntity = CategoryXrefImpl.class, mappedBy = "subCategory", orphanRemoval = true,
             cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @OrderBy(value="displayOrder")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region="blCategories")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region="ucCategories")
     @BatchSize(size = 50)
     @AdminPresentationAdornedTargetCollection(
             targetObjectProperty = "category",
@@ -325,7 +325,7 @@ public class CategoryImpl implements Category, Status, AdminMainEntity, Locatabl
     @OneToMany(targetEntity = CategoryProductXrefImpl.class, mappedBy = "category", orphanRemoval = true,
             cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     @OrderBy(value="displayOrder")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region="blCategories")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region="ucCategories")
     @BatchSize(size = 50)
     @AdminPresentationAdornedTargetCollection(
             targetObjectProperty = "product",
@@ -338,7 +338,7 @@ public class CategoryImpl implements Category, Status, AdminMainEntity, Locatabl
 
     @OneToMany(mappedBy = "category", targetEntity = CategoryMediaXrefImpl.class, cascade = { CascadeType.ALL }, orphanRemoval = true)
     @MapKey(name = "key")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "blCategories")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "ucCategories")
     @BatchSize(size = 50)
     @AdminPresentationMap(friendlyName = "CategoryImpl_Category_Media",
         tab = TabName.Media,
@@ -364,7 +364,7 @@ public class CategoryImpl implements Category, Status, AdminMainEntity, Locatabl
 
     @OneToMany(mappedBy = "category", targetEntity = FeaturedProductImpl.class, cascade = {CascadeType.ALL}, orphanRemoval = true)
     @Cascade(value={org.hibernate.annotations.CascadeType.ALL})
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region="blCategories")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region="ucCategories")
     @OrderBy(value="sequence")
     @BatchSize(size = 50)
     @AdminPresentationAdornedTargetCollection(friendlyName = "featuredProductsTitle", order = 1000,
@@ -377,7 +377,7 @@ public class CategoryImpl implements Category, Status, AdminMainEntity, Locatabl
 
     @OneToMany(mappedBy = "category", targetEntity = CrossSaleProductImpl.class, cascade = {CascadeType.ALL}, orphanRemoval = true)
     @Cascade(value={org.hibernate.annotations.CascadeType.ALL, org.hibernate.annotations.CascadeType.DELETE_ORPHAN})
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region="blCategories")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region="ucCategories")
     @OrderBy(value="sequence")
     @AdminPresentationAdornedTargetCollection(friendlyName = "crossSaleProductsTitle", order = 2000,
             tab = TabName.Marketing,
@@ -389,7 +389,7 @@ public class CategoryImpl implements Category, Status, AdminMainEntity, Locatabl
 
     @OneToMany(mappedBy = "category", targetEntity = UpSaleProductImpl.class, cascade = {CascadeType.ALL}, orphanRemoval = true)
     @Cascade(value={org.hibernate.annotations.CascadeType.ALL})
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region="blCategories")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region="ucCategories")
     @OrderBy(value="sequence")
     @AdminPresentationAdornedTargetCollection(friendlyName = "upsaleProductsTitle", order = 3000,
             tab = TabName.Marketing,
@@ -400,7 +400,7 @@ public class CategoryImpl implements Category, Status, AdminMainEntity, Locatabl
     protected List<RelatedProduct> upSaleProducts  = new ArrayList<RelatedProduct>();
 
     @OneToMany(mappedBy = "category", targetEntity = CategorySearchFacetImpl.class, cascade = {CascadeType.ALL})
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region="blCategories")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region="ucCategories")
     @OrderBy(value="sequence")
     @AdminPresentationAdornedTargetCollection(friendlyName = "categoryFacetsTitle", order = 1000,
             tab = TabName.Search,
@@ -411,7 +411,7 @@ public class CategoryImpl implements Category, Status, AdminMainEntity, Locatabl
     protected List<CategorySearchFacet> searchFacets  = new ArrayList<CategorySearchFacet>();
 
     @OneToMany(mappedBy = "category", targetEntity = CategoryExcludedSearchFacetImpl.class, cascade = { CascadeType.ALL })
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "blCategories")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "ucCategories")
     @OrderBy(value = "sequence")
     @AdminPresentationAdornedTargetCollection(friendlyName = "excludedFacetsTitle", order = 2000,
             tab = TabName.Search,
@@ -422,7 +422,7 @@ public class CategoryImpl implements Category, Status, AdminMainEntity, Locatabl
     protected List<CategoryExcludedSearchFacet> excludedSearchFacets = new ArrayList<CategoryExcludedSearchFacet>(10);
 
     @OneToMany(mappedBy = "category", targetEntity = CategoryAttributeImpl.class, cascade = {CascadeType.ALL}, orphanRemoval = true)
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region="blCategories")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region="ucCategories")
     @BatchSize(size = 50)
     @AdminPresentationCollection(friendlyName = "categoryAttributesTitle",
             tab = TabName.General, order = FieldOrder.CustomAttributes)
@@ -432,16 +432,16 @@ public class CategoryImpl implements Category, Status, AdminMainEntity, Locatabl
     @AdminPresentation(friendlyName = "CategoryImpl_Category_InventoryType", order = 2000,
             tooltip = "categoryInventoryTypeHelpText",
             group = GroupName.ProductDefaults,
-            fieldType = SupportedFieldType.BROADLEAF_ENUMERATION,
-            broadleafEnumeration = "org.broadleafcommerce.core.inventory.service.type.InventoryType")
+            fieldType = SupportedFieldType.ULTRA_ENUMERATION,
+            ultraEnumeration = "com.ultracommerce.core.inventory.service.type.InventoryType")
     protected String inventoryType;
 
     @Column(name = "FULFILLMENT_TYPE")
     @AdminPresentation(friendlyName = "CategoryImpl_Category_FulfillmentType", order = 3000,
             tooltip = "categoryFulfillmentTypeHelpText",
             group = GroupName.ProductDefaults,
-            fieldType = SupportedFieldType.BROADLEAF_ENUMERATION,
-            broadleafEnumeration = "org.broadleafcommerce.core.order.service.type.FulfillmentType")
+            fieldType = SupportedFieldType.ULTRA_ENUMERATION,
+            ultraEnumeration = "com.ultracommerce.core.order.service.type.FulfillmentType")
     protected String fulfillmentType;
 
     @Embedded

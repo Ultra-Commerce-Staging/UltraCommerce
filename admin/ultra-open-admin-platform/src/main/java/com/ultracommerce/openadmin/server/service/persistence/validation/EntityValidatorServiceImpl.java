@@ -1,36 +1,36 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.openadmin.server.service.persistence.validation;
+package com.ultracommerce.openadmin.server.service.persistence.validation;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.presentation.ValidationConfiguration;
-import org.broadleafcommerce.common.presentation.client.OperationType;
-import org.broadleafcommerce.openadmin.dto.BasicFieldMetadata;
-import org.broadleafcommerce.openadmin.dto.Entity;
-import org.broadleafcommerce.openadmin.dto.FieldMetadata;
-import org.broadleafcommerce.openadmin.dto.Property;
-import org.broadleafcommerce.openadmin.server.security.service.RowLevelSecurityService;
-import org.broadleafcommerce.openadmin.server.service.persistence.PersistenceException;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.BasicPersistenceModule;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.FieldNotAvailableException;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.RecordHelper;
+import com.ultracommerce.common.presentation.ValidationConfiguration;
+import com.ultracommerce.common.presentation.client.OperationType;
+import com.ultracommerce.openadmin.dto.BasicFieldMetadata;
+import com.ultracommerce.openadmin.dto.Entity;
+import com.ultracommerce.openadmin.dto.FieldMetadata;
+import com.ultracommerce.openadmin.dto.Property;
+import com.ultracommerce.openadmin.server.security.service.RowLevelSecurityService;
+import com.ultracommerce.openadmin.server.service.persistence.PersistenceException;
+import com.ultracommerce.openadmin.server.service.persistence.module.BasicPersistenceModule;
+import com.ultracommerce.openadmin.server.service.persistence.module.FieldNotAvailableException;
+import com.ultracommerce.openadmin.server.service.persistence.module.RecordHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.GenericTypeResolver;
@@ -55,45 +55,45 @@ import javax.annotation.Resource;
  * @see {@link EntityValidatorService}
  * @see {@link ValidationConfiguration}
  */
-@Service("blEntityValidatorService")
+@Service("ucEntityValidatorService")
 public class EntityValidatorServiceImpl implements EntityValidatorService {
     protected static final Log LOG = LogFactory.getLog(EntityValidatorServiceImpl.class);
 
-    @Resource(name = "blGlobalEntityPropertyValidators")
+    @Resource(name = "ucGlobalEntityPropertyValidators")
     protected List<GlobalPropertyValidator> globalEntityValidators;
 
     @Autowired
     protected ApplicationContext applicationContext;
 
-    @Resource(name = "blRowLevelSecurityService")
+    @Resource(name = "ucRowLevelSecurityService")
     protected RowLevelSecurityService securityService;
 
-    private Map<String, List<BroadleafEntityValidator<?>>> broadleafValidatorMap;
+    private Map<String, List<UltraEntityValidator<?>>> ultraValidatorMap;
 
     @PostConstruct
-    public void populateBroadleafValidatorMap() {
-        String[] beanNames = applicationContext.getBeanNamesForType(BroadleafEntityValidator.class);
-        broadleafValidatorMap = new HashMap<>(beanNames.length);
+    public void populateUltraValidatorMap() {
+        String[] beanNames = applicationContext.getBeanNamesForType(UltraEntityValidator.class);
+        ultraValidatorMap = new HashMap<>(beanNames.length);
 
         for (String beanName : beanNames) {
-            BroadleafEntityValidator<?> broadleafValidator = applicationContext.getBean(beanName,
-                                                                                        BroadleafEntityValidator.class);
-            Class<?> entityType = GenericTypeResolver.resolveTypeArgument(broadleafValidator.getClass(),
-                                                                          BroadleafEntityValidator.class);
+            UltraEntityValidator<?> ultraValidator = applicationContext.getBean(beanName,
+                                                                                        UltraEntityValidator.class);
+            Class<?> entityType = GenericTypeResolver.resolveTypeArgument(ultraValidator.getClass(),
+                                                                          UltraEntityValidator.class);
             if (entityType != null) {
                 String entityClassName = entityType.getName();
                 LOG.info(String.format("Registering validator %s for entity type %s",
-                                       broadleafValidator.getClass().getName(), entityClassName));
+                                       ultraValidator.getClass().getName(), entityClassName));
 
-                List<BroadleafEntityValidator<?>> registeredValidatorsForType = broadleafValidatorMap
+                List<UltraEntityValidator<?>> registeredValidatorsForType = ultraValidatorMap
                         .get(entityClassName);
                 if (registeredValidatorsForType == null) {
                     registeredValidatorsForType = new ArrayList<>();
-                    broadleafValidatorMap.put(entityClassName, registeredValidatorsForType);
+                    ultraValidatorMap.put(entityClassName, registeredValidatorsForType);
                 }
-                registeredValidatorsForType.add(broadleafValidator);
+                registeredValidatorsForType.add(ultraValidator);
             } else {
-                LOG.warn("Could not determine entity type for " + broadleafValidator.getClass().getName());
+                LOG.warn("Could not determine entity type for " + ultraValidator.getClass().getName());
             }
         }
     }
@@ -221,12 +221,12 @@ public class EntityValidatorServiceImpl implements EntityValidatorService {
             }
         }
         if (instance != null) {
-            List<BroadleafEntityValidator<?>> broadleafValidators = broadleafValidatorMap
+            List<UltraEntityValidator<?>> ultraValidators = ultraValidatorMap
                     .get(instance.getClass().getName());
-            if (broadleafValidators != null) {
-                for (BroadleafEntityValidator<?> broadleafValidator : broadleafValidators) {
-                    LOG.debug("Calling validator " + broadleafValidator.getClass().getName());
-                    broadleafValidator.validate(submittedEntity, instance, propertiesMetadata, recordHelper,
+            if (ultraValidators != null) {
+                for (UltraEntityValidator<?> ultraValidator : ultraValidators) {
+                    LOG.debug("Calling validator " + ultraValidator.getClass().getName());
+                    ultraValidator.validate(submittedEntity, instance, propertiesMetadata, recordHelper,
                                                 validateUnsubmittedProperties);
                 }
             }
@@ -240,8 +240,8 @@ public class EntityValidatorServiceImpl implements EntityValidatorService {
      * <p>
      * For instance, if this entity's {@link Entity#getType()} is {@link ProductBundleImpl}, then the result will be:
      *
-     * [org.broadleafcommerce.core.catalog.domain.ProductBundleImpl,
-     * org.broadleafcommerce.core.catalog.domain.ProductImpl]
+     * [com.ultracommerce.core.catalog.domain.ProductBundleImpl,
+     * com.ultracommerce.core.catalog.domain.ProductImpl]
      *
      * @param entity
      * @return

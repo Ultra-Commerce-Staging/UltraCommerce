@@ -1,21 +1,21 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.security.channel;
+package com.ultracommerce.common.security.channel;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -42,11 +42,11 @@ import javax.servlet.ServletRequest;
  * 
  * <pre>
  * {@code
- *   <bean class="org.broadleafcommerce.common.security.channel.ProtoChannelBeanPostProcessor">
+ *   <bean class="com.ultracommerce.common.security.channel.ProtoChannelBeanPostProcessor">
  *       <property name="channelProcessorOverrides">
  *           <list>
- *              <bean class="org.broadleafcommerce.common.security.channel.ProtoInsecureChannelProcessor" />
- *              <bean class="org.broadleafcommerce.common.security.channel.ProtoSecureChannelProcessor" />
+ *              <bean class="com.ultracommerce.common.security.channel.ProtoInsecureChannelProcessor" />
+ *              <bean class="com.ultracommerce.common.security.channel.ProtoSecureChannelProcessor" />
  *          </list>
  *      </property>
  *  </bean>
@@ -57,7 +57,7 @@ import javax.servlet.ServletRequest;
  * any invocations to {@link ServletRequest#isSecure}. If your application server supports it, we recommend instead using
  * that approach which will encapsulate any functionality encapsulated within the Proto processors. For more information
  * on configuring your specific servlet container, see
- * <a href="https://github.com/BroadleafCommerce/BroadleafCommerce/issues/424">this issue report</a>
+ * <a href="https://github.com/UltraCommerce/UltraCommerce/issues/424">this issue report</a>
  * </p>
  * 
  * @author Jeff Fischer

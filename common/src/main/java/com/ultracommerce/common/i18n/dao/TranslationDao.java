@@ -1,27 +1,27 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
 
-package org.broadleafcommerce.common.i18n.dao;
+package com.ultracommerce.common.i18n.dao;
 
-import org.broadleafcommerce.common.extension.ResultType;
-import org.broadleafcommerce.common.extension.StandardCacheItem;
-import org.broadleafcommerce.common.i18n.domain.TranslatedEntity;
-import org.broadleafcommerce.common.i18n.domain.Translation;
+import com.ultracommerce.common.extension.ResultType;
+import com.ultracommerce.common.extension.StandardCacheItem;
+import com.ultracommerce.common.i18n.domain.TranslatedEntity;
+import com.ultracommerce.common.i18n.domain.Translation;
 
 import java.util.List;
 import java.util.Map;
@@ -139,8 +139,8 @@ public interface TranslationDao {
     List<Translation> readAllTranslationEntries(TranslatedEntity entityType, ResultType stage, List<String> entityIds);
 
     /**
-     * Read all translation entries (see {@link #readAllTranslationEntries(org.broadleafcommerce.common.i18n.domain.TranslatedEntity, org.broadleafcommerce.common.extension.ResultType)}),
-     * and convert those results into a list of {@link org.broadleafcommerce.common.extension.StandardCacheItem} instances.
+     * Read all translation entries (see {@link #readAllTranslationEntries(com.ultracommerce.common.i18n.domain.TranslatedEntity, com.ultracommerce.common.extension.ResultType)}),
+     * and convert those results into a list of {@link com.ultracommerce.common.extension.StandardCacheItem} instances.
      *
      * @param entityType
      * @param stage param drives whether to look for entries at a template level or standard site level (multitenant concepts). Can be IGNORE. Any multitenant behavior is ignored in the absence of the multitenant module.

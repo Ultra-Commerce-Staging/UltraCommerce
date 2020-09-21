@@ -1,51 +1,51 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.order.service;
+package com.ultracommerce.core.order.service;
 
 import org.apache.commons.logging.Log;
-import org.broadleafcommerce.common.payment.PaymentType;
-import org.broadleafcommerce.core.offer.domain.OfferCode;
-import org.broadleafcommerce.core.offer.service.exception.OfferException;
-import org.broadleafcommerce.core.offer.service.exception.OfferMaxUseExceededException;
-import org.broadleafcommerce.core.order.dao.OrderDao;
-import org.broadleafcommerce.core.order.domain.Order;
-import org.broadleafcommerce.core.order.domain.OrderItem;
-import org.broadleafcommerce.core.order.service.call.ActivityMessageDTO;
-import org.broadleafcommerce.core.order.service.call.GiftWrapOrderItemRequest;
-import org.broadleafcommerce.core.order.service.call.OrderItemRequestDTO;
-import org.broadleafcommerce.core.order.service.exception.AddToCartException;
-import org.broadleafcommerce.core.order.service.exception.RemoveFromCartException;
-import org.broadleafcommerce.core.order.service.exception.UpdateCartException;
-import org.broadleafcommerce.core.order.service.type.OrderStatus;
-import org.broadleafcommerce.core.order.service.workflow.CartOperationRequest;
-import org.broadleafcommerce.core.payment.domain.OrderPayment;
-import org.broadleafcommerce.core.payment.domain.secure.Referenced;
-import org.broadleafcommerce.core.pricing.service.exception.PricingException;
-import org.broadleafcommerce.core.workflow.ProcessContext;
-import org.broadleafcommerce.core.workflow.WorkflowException;
-import org.broadleafcommerce.profile.core.domain.Customer;
+import com.ultracommerce.common.payment.PaymentType;
+import com.ultracommerce.core.offer.domain.OfferCode;
+import com.ultracommerce.core.offer.service.exception.OfferException;
+import com.ultracommerce.core.offer.service.exception.OfferMaxUseExceededException;
+import com.ultracommerce.core.order.dao.OrderDao;
+import com.ultracommerce.core.order.domain.Order;
+import com.ultracommerce.core.order.domain.OrderItem;
+import com.ultracommerce.core.order.service.call.ActivityMessageDTO;
+import com.ultracommerce.core.order.service.call.GiftWrapOrderItemRequest;
+import com.ultracommerce.core.order.service.call.OrderItemRequestDTO;
+import com.ultracommerce.core.order.service.exception.AddToCartException;
+import com.ultracommerce.core.order.service.exception.RemoveFromCartException;
+import com.ultracommerce.core.order.service.exception.UpdateCartException;
+import com.ultracommerce.core.order.service.type.OrderStatus;
+import com.ultracommerce.core.order.service.workflow.CartOperationRequest;
+import com.ultracommerce.core.payment.domain.OrderPayment;
+import com.ultracommerce.core.payment.domain.secure.Referenced;
+import com.ultracommerce.core.pricing.service.exception.PricingException;
+import com.ultracommerce.core.workflow.ProcessContext;
+import com.ultracommerce.core.workflow.WorkflowException;
+import com.ultracommerce.profile.core.domain.Customer;
 
 import java.util.Date;
 import java.util.List;
 
 /**
  * The general interface for interacting with shopping carts and completed Orders.
- * In Broadleaf Commerce, a Cart and an Order are the same thing. A "cart" becomes 
+ * In Ultra Commerce, a Cart and an Order are the same thing. A "cart" becomes 
  * an order after it has been submitted.
  *
  * Most of the methods in this order are used to modify the cart. However, it is also
@@ -58,12 +58,12 @@ public interface OrderService {
      * that is on the current request, which can be grabbed by utilizing the CustomerState 
      * utility class.
      * 
-     * The default Broadleaf implementation of this method will provision a new Order in the 
+     * The default Ultra implementation of this method will provision a new Order in the 
      * database and set the current customer as the owner of the order. If the customer has an
      * email address associated with their profile, that will be copied as well. If the customer
      * is a new, anonymous customer, his username will be set to his database id.
      * 
-     * @see org.broadleafcommerce.profile.web.core.CustomerState#getCustomer()
+     * @see com.ultracommerce.profile.web.core.CustomerState#getCustomer()
      * 
      * @param customer
      * @return the newly created order
@@ -76,7 +76,7 @@ public interface OrderService {
      *
      * @param name the wishlist name
      * @param customer
-     * @param args additional arguments to be used by Broadleaf extensions
+     * @param args additional arguments to be used by Ultra extensions
      * @return the newly created named order
      */
     public Order createNamedOrderForCustomer(String name, Customer customer);
@@ -90,7 +90,7 @@ public interface OrderService {
      * 
      * @param name
      * @param customer
-     * @param args additional arguments to be used by Broadleaf extensions
+     * @param args additional arguments to be used by Ultra extensions
      * @return the named order requested
      */
     public Order findNamedOrderForCustomer(String name, Customer customer);
@@ -123,7 +123,7 @@ public interface OrderService {
     /**
      * Looks up the current shopping cart for the customer. Note that a shopping cart is
      * simply an Order with OrderStatus = IN_PROCESS. If for some reason the given customer
-     * has more than one current IN_PROCESS Order, the default Broadleaf implementation will
+     * has more than one current IN_PROCESS Order, the default Ultra implementation will
      * return the first match found. Furthermore, also note that the current shopping cart
      * for a customer must never be named -- an Order with a non-null "name" property indicates
      * that it is a wishlist and not a shopping cart.
@@ -211,7 +211,7 @@ public interface OrderService {
     public Order save(Order order, boolean priceOrder, boolean repriceItems) throws PricingException;
     
     /**
-     * Deletes the given order. Note that the default Broadleaf implementation in 
+     * Deletes the given order. Note that the default Ultra implementation in 
      * OrderServiceImpl will actually remove the Order instance from the database.
      * 
      * @param order
@@ -270,7 +270,7 @@ public interface OrderService {
      * enter the site. Upon the first addition of a product to a cart, a non-null order
      * will be provisioned for the user.
      * 
-     * @see org.broadleafcommerce.core.order.domain.NullOrderImpl for more information
+     * @see com.ultracommerce.core.order.domain.NullOrderImpl for more information
      * 
      * @return a shared, static, unmodifiable NullOrder
      */
@@ -307,7 +307,7 @@ public interface OrderService {
     /**
      * Looks through the given order and returns the latest added OrderItem that matches on the skuId
      * and productId. Generally, this is used to retrieve the OrderItem that was just added to the cart.
-     * The default Broadleaf implementation will attempt to match on skuId first, and failing that, it will
+     * The default Ultra implementation will attempt to match on skuId first, and failing that, it will
      * look at the productId.
      * 
      * Note that the behavior is slightly undeterministic in the case that {@link setAutomaticallyMergeLikeItems}
@@ -607,7 +607,7 @@ public interface OrderService {
     void refresh(Order order);
 
     /**
-     * Retrieve an enhanced version of the cart for the customer. Enhanced carts are generally provided by commercial Broadleaf
+     * Retrieve an enhanced version of the cart for the customer. Enhanced carts are generally provided by commercial Ultra
      * modules.
      *
      * @param customer the user for whom the enhanced cart is retrieved
@@ -617,7 +617,7 @@ public interface OrderService {
 
     /**
      * For the customer, use the candidateOrder as the source of enhancement for generating an enhanced cart. Enhanced carts
-     * are generally provided by commercial Broadleaf modules.
+     * are generally provided by commercial Ultra modules.
      *
      * @param customer the user for whom the enhanced cart is generated
      * @param candidateOrder the source of enhancement

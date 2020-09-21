@@ -1,28 +1,28 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.search.dao;
+package com.ultracommerce.core.search.dao;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.sandbox.SandBoxHelper;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
-import org.broadleafcommerce.core.catalog.domain.CategoryImpl;
-import org.broadleafcommerce.core.catalog.domain.ProductImpl;
+import com.ultracommerce.common.sandbox.SandBoxHelper;
+import com.ultracommerce.common.web.UltraRequestContext;
+import com.ultracommerce.core.catalog.domain.CategoryImpl;
+import com.ultracommerce.core.catalog.domain.ProductImpl;
 import org.springframework.stereotype.Repository;
 
 import com.google.common.collect.BiMap;
@@ -40,22 +40,22 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 /**
- * @see org.broadleafcommerce.core.search.dao.SolrIndexDao
+ * @see com.ultracommerce.core.search.dao.SolrIndexDao
  * @author Jeff Fischer
  */
-@Repository("blSolrIndexDao")
+@Repository("ucSolrIndexDao")
 public class SolrIndexDaoImpl implements SolrIndexDao {
     protected static final Log LOG = LogFactory.getLog(SolrIndexDaoImpl.class);
 
-    @PersistenceContext(unitName="blPU")
+    @PersistenceContext(unitName="ucPU")
     protected EntityManager em;
 
-    @Resource(name="blSandBoxHelper")
+    @Resource(name="ucSandBoxHelper")
     protected SandBoxHelper sandBoxHelper;
     
     @Override
     public void populateProductCatalogStructure(List<Long> productIds, CatalogStructure catalogStructure) {
-        BroadleafRequestContext context = BroadleafRequestContext.getBroadleafRequestContext();
+        UltraRequestContext context = UltraRequestContext.getUltraRequestContext();
         Boolean oldIgnoreFilters = context.getInternalIgnoreFilters();
         context.setInternalIgnoreFilters(false);
         try {
@@ -74,7 +74,7 @@ public class SolrIndexDaoImpl implements SolrIndexDao {
                 System.arraycopy(products, pos, temp, 0, mySize);
                 
                 //context.getAdditionalProperties().put("constrainedFilterGroups", Arrays.asList("archivedFilter"));
-                TypedQuery<ParentCategoryByProduct> query = em.createNamedQuery("BC_READ_PARENT_CATEGORY_IDS_BY_PRODUCTS", ParentCategoryByProduct.class);
+                TypedQuery<ParentCategoryByProduct> query = em.createNamedQuery("UC_READ_PARENT_CATEGORY_IDS_BY_PRODUCTS", ParentCategoryByProduct.class);
                 query.setParameter("productIds", sandBoxHelper.mergeCloneIds(ProductImpl.class, temp));
     
                 List<ParentCategoryByProduct> results = query.getResultList();
@@ -137,7 +137,7 @@ public class SolrIndexDaoImpl implements SolrIndexDao {
             int mySize = remaining > batchSize ? batchSize : remaining;
             Long[] temp = new Long[mySize];
             System.arraycopy(categoryIds, pos, temp, 0, mySize);
-            TypedQuery<ParentCategoryByCategory> query = em.createNamedQuery("BC_READ_PARENT_CATEGORY_IDS_BY_CATEGORIES", ParentCategoryByCategory.class);
+            TypedQuery<ParentCategoryByCategory> query = em.createNamedQuery("UC_READ_PARENT_CATEGORY_IDS_BY_CATEGORIES", ParentCategoryByCategory.class);
             query.setParameter("categoryIds", sandBoxHelper.mergeCloneIds(CategoryImpl.class, temp));
             List<ParentCategoryByCategory> results = query.getResultList();
             for (ParentCategoryByCategory item : results) {

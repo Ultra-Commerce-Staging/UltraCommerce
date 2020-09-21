@@ -1,40 +1,40 @@
 /*
  * #%L
- * broadleaf-multitenant-singleschema
+ * ultra-multitenant-singleschema
  * %%
- * Copyright (C) 2009 - 2017 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.i18n.service;
+package com.ultracommerce.common.i18n.service;
 
 import org.apache.commons.lang3.StringUtils;
-import org.broadleafcommerce.common.cache.OverridePreCacheInitializer;
-import org.broadleafcommerce.common.cache.OverridePreCacheService;
-import org.broadleafcommerce.common.exception.ExceptionHelper;
-import org.broadleafcommerce.common.extension.ExtensionResultHolder;
-import org.broadleafcommerce.common.extension.ExtensionResultStatusType;
-import org.broadleafcommerce.common.extension.ItemStatus;
-import org.broadleafcommerce.common.extension.ResultType;
-import org.broadleafcommerce.common.extension.StandardCacheItem;
-import org.broadleafcommerce.common.extension.TemplateOnlyQueryExtensionManager;
-import org.broadleafcommerce.common.i18n.dao.TranslationDao;
-import org.broadleafcommerce.common.i18n.domain.TranslatedEntity;
-import org.broadleafcommerce.common.i18n.domain.Translation;
-import org.broadleafcommerce.common.i18n.domain.TranslationImpl;
-import org.broadleafcommerce.common.site.domain.Site;
-import org.broadleafcommerce.common.util.dao.DynamicDaoHelper;
-import org.broadleafcommerce.common.util.dao.DynamicDaoHelperImpl;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
+import com.ultracommerce.common.cache.OverridePreCacheInitializer;
+import com.ultracommerce.common.cache.OverridePreCacheService;
+import com.ultracommerce.common.exception.ExceptionHelper;
+import com.ultracommerce.common.extension.ExtensionResultHolder;
+import com.ultracommerce.common.extension.ExtensionResultStatusType;
+import com.ultracommerce.common.extension.ItemStatus;
+import com.ultracommerce.common.extension.ResultType;
+import com.ultracommerce.common.extension.StandardCacheItem;
+import com.ultracommerce.common.extension.TemplateOnlyQueryExtensionManager;
+import com.ultracommerce.common.i18n.dao.TranslationDao;
+import com.ultracommerce.common.i18n.domain.TranslatedEntity;
+import com.ultracommerce.common.i18n.domain.Translation;
+import com.ultracommerce.common.i18n.domain.TranslationImpl;
+import com.ultracommerce.common.site.domain.Site;
+import com.ultracommerce.common.util.dao.DynamicDaoHelper;
+import com.ultracommerce.common.util.dao.DynamicDaoHelperImpl;
+import com.ultracommerce.common.web.UltraRequestContext;
 import org.hibernate.jpa.QueryHints;
 import org.hibernate.type.LongType;
 import org.hibernate.type.StringType;
@@ -65,7 +65,7 @@ import javax.persistence.criteria.Root;
  * Since the large catalog can be costly for the threshold count bounding inherent to {@link ThresholdCacheTranslationOverrideStrategy},
  * this strategy opts for completely caching overrides and minimizing template queries. The highest template query optimization
  * is achieved in conjunction with the 'precached.sparse.override.template.search.restrict.catalog' property set to true (false by
- * default). See com.broadleafcommerce.tenant.service.extension.MultiTenantTemplateOnlyQueryExtensionHandler for more information,
+ * default). See com.ultracommerce.tenant.service.extension.MultiTenantTemplateOnlyQueryExtensionHandler for more information,
  * since this setting assumes the translated entity is in the same catalog as the {@link Translation} instance, which may
  * not be true for all installations.
  * </p>
@@ -79,27 +79,27 @@ import javax.persistence.criteria.Root;
  * query that is portable across sites if it doesn't have to take into account the standard site. The strategy uses
  * {@link OverridePreCacheService#isActiveIsolatedSiteForType(Long, String)} to figure out this state.
  * </p>
- * This strategy is disabled by default. Please see the javadoc for com.broadleafcommerce.tenant.service.cache.SparseOverridePreCacheServiceImpl (MultiTenant only)
+ * This strategy is disabled by default. Please see the javadoc for com.ultracommerce.tenant.service.cache.SparseOverridePreCacheServiceImpl (MultiTenant only)
  * for more information on how to enable this strategy via configuration of that service.
  *
  * @see ThresholdCacheTranslationOverrideStrategy
  * @author Jeff Fischer
  */
-@Component("blSparseTranslationOverrideStrategy")
+@Component("ucSparseTranslationOverrideStrategy")
 public class SparseTranslationOverrideStrategy implements TranslationOverrideStrategy, OverridePreCacheInitializer {
 
     public static final int PRECACHED_SPARSE_OVERRIDE_ORDER = -1000;
 
-    @Resource(name = "blOverridePreCacheService")
+    @Resource(name = "ucOverridePreCacheService")
     protected OverridePreCacheService preCachedSparseOverrideService;
 
-    @Resource(name="blTemplateOnlyQueryExtensionManager")
+    @Resource(name="ucTemplateOnlyQueryExtensionManager")
     protected TemplateOnlyQueryExtensionManager extensionManager;
 
-    @PersistenceContext(unitName = "blPU")
+    @PersistenceContext(unitName = "ucPU")
     protected EntityManager em;
 
-    @Resource(name = "blTranslationDao")
+    @Resource(name = "ucTranslationDao")
     protected TranslationDao dao;
 
     DynamicDaoHelper helper = new DynamicDaoHelperImpl();
@@ -118,7 +118,7 @@ public class SparseTranslationOverrideStrategy implements TranslationOverrideStr
      * The default value is true. Set the 'precached.sparse.override.translation.template.enabled' property to change the value.
      * </p>
      * This value is meaningless if the current standard site is found to contain active isolated values for translations.
-     * Review the documentation in com.broadleafcommerce.tenant.service.cache.SparseOverridePreCacheServiceImpl for more information.
+     * Review the documentation in com.ultracommerce.tenant.service.cache.SparseOverridePreCacheServiceImpl for more information.
      */
     @Value("${precached.sparse.override.translation.template.enabled:true}")
     protected boolean templateEnabled = true;
@@ -181,7 +181,7 @@ public class SparseTranslationOverrideStrategy implements TranslationOverrideStr
                                                   String specificPropertyKey, String generalPropertyKey) {
         LocalePair override = null;
         if (preCachedSparseOverrideService.isActiveForType(Translation.class.getName())) {
-            Site currentSite = BroadleafRequestContext.getBroadleafRequestContext().getNonPersistentSite();
+            Site currentSite = UltraRequestContext.getUltraRequestContext().getNonPersistentSite();
             boolean isIsolatedActive = false;
             if (currentSite != null) {
                 isIsolatedActive = preCachedSparseOverrideService.isActiveIsolatedSiteForType(currentSite.getId(), TranslationImpl.class.getName());

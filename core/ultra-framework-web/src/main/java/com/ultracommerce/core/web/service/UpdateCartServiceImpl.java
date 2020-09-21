@@ -1,38 +1,38 @@
 /*
  * #%L
- * BroadleafCommerce Framework Web
+ * UltraCommerce Framework Web
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.web.service;
+package com.ultracommerce.core.web.service;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.currency.domain.BroadleafCurrency;
-import org.broadleafcommerce.common.extension.ExtensionResultHolder;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
-import org.broadleafcommerce.core.catalog.domain.Sku;
-import org.broadleafcommerce.core.order.domain.BundleOrderItem;
-import org.broadleafcommerce.core.order.domain.DiscreteOrderItem;
-import org.broadleafcommerce.core.order.domain.Order;
-import org.broadleafcommerce.core.order.domain.OrderItem;
-import org.broadleafcommerce.core.order.service.OrderService;
-import org.broadleafcommerce.core.order.service.call.OrderItemRequestDTO;
-import org.broadleafcommerce.core.order.service.call.UpdateCartResponse;
-import org.broadleafcommerce.core.order.service.exception.AddToCartException;
-import org.broadleafcommerce.core.order.service.exception.RemoveFromCartException;
-import org.broadleafcommerce.core.pricing.service.exception.PricingException;
+import com.ultracommerce.common.currency.domain.UltraCurrency;
+import com.ultracommerce.common.extension.ExtensionResultHolder;
+import com.ultracommerce.common.web.UltraRequestContext;
+import com.ultracommerce.core.catalog.domain.Sku;
+import com.ultracommerce.core.order.domain.BundleOrderItem;
+import com.ultracommerce.core.order.domain.DiscreteOrderItem;
+import com.ultracommerce.core.order.domain.Order;
+import com.ultracommerce.core.order.domain.OrderItem;
+import com.ultracommerce.core.order.service.OrderService;
+import com.ultracommerce.core.order.service.call.OrderItemRequestDTO;
+import com.ultracommerce.core.order.service.call.UpdateCartResponse;
+import com.ultracommerce.core.order.service.exception.AddToCartException;
+import com.ultracommerce.core.order.service.exception.RemoveFromCartException;
+import com.ultracommerce.core.pricing.service.exception.PricingException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -44,21 +44,21 @@ import javax.annotation.Resource;
  * Author: jerryocanas
  * Date: 9/26/12
  */
-@Service("blUpdateCartService")
+@Service("ucUpdateCartService")
 public class UpdateCartServiceImpl implements UpdateCartService {
     protected static final Log LOG = LogFactory.getLog(UpdateCartServiceImpl.class);
 
-    protected static BroadleafCurrency savedCurrency;
+    protected static UltraCurrency savedCurrency;
 
-    @Resource(name="blOrderService")
+    @Resource(name="ucOrderService")
     protected OrderService orderService;
     
-    @Resource(name = "blUpdateCartServiceExtensionManager")
+    @Resource(name = "ucUpdateCartServiceExtensionManager")
     protected UpdateCartServiceExtensionManager extensionManager;
 
     @Override
     public boolean currencyHasChanged() {
-        BroadleafCurrency currency = findActiveCurrency();
+        UltraCurrency currency = findActiveCurrency();
         if (getSavedCurrency() == null) {
             setSavedCurrency(currency);
         } else if (getSavedCurrency() != currency){
@@ -72,7 +72,7 @@ public class UpdateCartServiceImpl implements UpdateCartService {
         if(currentCart.getOrderItems() == null){
             return null;
         }
-        BroadleafCurrency currency = findActiveCurrency();
+        UltraCurrency currency = findActiveCurrency();
         if(currency == null){
             return null;
         }
@@ -177,14 +177,14 @@ public class UpdateCartServiceImpl implements UpdateCartService {
         }
     }
 
-    protected BroadleafCurrency findActiveCurrency(){
-        if(BroadleafRequestContext.hasLocale()){
-            return BroadleafRequestContext.getBroadleafRequestContext().getBroadleafCurrency();
+    protected UltraCurrency findActiveCurrency(){
+        if(UltraRequestContext.hasLocale()){
+            return UltraRequestContext.getUltraRequestContext().getUltraCurrency();
         }
         return null;
     }
 
-    protected boolean checkAvailabilityInLocale(DiscreteOrderItem doi, BroadleafCurrency currency) {
+    protected boolean checkAvailabilityInLocale(DiscreteOrderItem doi, UltraCurrency currency) {
         if (doi.getSku() != null && extensionManager != null) {
             Sku sku = doi.getSku();
             return sku.isAvailable();
@@ -194,12 +194,12 @@ public class UpdateCartServiceImpl implements UpdateCartService {
     }
 
     @Override
-    public void setSavedCurrency(BroadleafCurrency savedCurrency) {
+    public void setSavedCurrency(UltraCurrency savedCurrency) {
         this.savedCurrency = savedCurrency;
     }
 
     @Override
-    public BroadleafCurrency getSavedCurrency() {
+    public UltraCurrency getSavedCurrency() {
         return savedCurrency;
     }
 

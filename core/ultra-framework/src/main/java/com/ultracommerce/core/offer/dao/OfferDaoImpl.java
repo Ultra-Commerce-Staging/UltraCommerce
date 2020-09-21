@@ -1,36 +1,36 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.offer.dao;
+package com.ultracommerce.core.offer.dao;
 
-import org.broadleafcommerce.common.persistence.EntityConfiguration;
-import org.broadleafcommerce.common.persistence.Status;
-import org.broadleafcommerce.common.time.SystemTime;
-import org.broadleafcommerce.core.offer.domain.CandidateFulfillmentGroupOffer;
-import org.broadleafcommerce.core.offer.domain.CandidateItemOffer;
-import org.broadleafcommerce.core.offer.domain.CandidateOrderOffer;
-import org.broadleafcommerce.core.offer.domain.FulfillmentGroupAdjustment;
-import org.broadleafcommerce.core.offer.domain.Offer;
-import org.broadleafcommerce.core.offer.domain.OfferImpl;
-import org.broadleafcommerce.core.offer.domain.OfferInfo;
-import org.broadleafcommerce.core.offer.domain.OrderAdjustment;
-import org.broadleafcommerce.core.offer.domain.OrderItemAdjustment;
-import org.broadleafcommerce.core.offer.domain.OrderItemPriceDetailAdjustment;
-import org.broadleafcommerce.core.offer.domain.ProratedOrderItemAdjustment;
+import com.ultracommerce.common.persistence.EntityConfiguration;
+import com.ultracommerce.common.persistence.Status;
+import com.ultracommerce.common.time.SystemTime;
+import com.ultracommerce.core.offer.domain.CandidateFulfillmentGroupOffer;
+import com.ultracommerce.core.offer.domain.CandidateItemOffer;
+import com.ultracommerce.core.offer.domain.CandidateOrderOffer;
+import com.ultracommerce.core.offer.domain.FulfillmentGroupAdjustment;
+import com.ultracommerce.core.offer.domain.Offer;
+import com.ultracommerce.core.offer.domain.OfferImpl;
+import com.ultracommerce.core.offer.domain.OfferInfo;
+import com.ultracommerce.core.offer.domain.OrderAdjustment;
+import com.ultracommerce.core.offer.domain.OrderItemAdjustment;
+import com.ultracommerce.core.offer.domain.OrderItemPriceDetailAdjustment;
+import com.ultracommerce.core.offer.domain.ProratedOrderItemAdjustment;
 import org.hibernate.jpa.QueryHints;
 
 import java.util.ArrayList;
@@ -50,10 +50,10 @@ import javax.persistence.criteria.Root;
 
 public class OfferDaoImpl implements OfferDao {
 
-    @PersistenceContext(unitName="blPU")
+    @PersistenceContext(unitName="ucPU")
     protected EntityManager em;
 
-    @Resource(name="blEntityConfiguration")
+    @Resource(name="ucEntityConfiguration")
     protected EntityConfiguration entityConfiguration;
 
     protected Long currentDateResolution;
@@ -145,7 +145,7 @@ public class OfferDaoImpl implements OfferDao {
 
     @Override
     public List<Offer> readAllOffers() {
-        Query query = em.createNamedQuery("BC_READ_ALL_OFFERS");
+        Query query = em.createNamedQuery("UC_READ_ALL_OFFERS");
         return query.getResultList();
     }
 

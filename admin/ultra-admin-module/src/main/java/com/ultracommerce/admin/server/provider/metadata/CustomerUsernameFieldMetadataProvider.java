@@ -1,35 +1,35 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.admin.server.provider.metadata;
+package com.ultracommerce.admin.server.provider.metadata;
 
-import org.broadleafcommerce.common.presentation.client.VisibilityEnum;
-import org.broadleafcommerce.openadmin.dto.BasicFieldMetadata;
-import org.broadleafcommerce.openadmin.dto.FieldMetadata;
-import org.broadleafcommerce.openadmin.server.dao.provider.metadata.AbstractFieldMetadataProvider;
-import org.broadleafcommerce.openadmin.server.dao.provider.metadata.FieldMetadataProvider;
-import org.broadleafcommerce.openadmin.server.dao.provider.metadata.request.AddFieldMetadataRequest;
-import org.broadleafcommerce.openadmin.server.dao.provider.metadata.request.AddMetadataFromFieldTypeRequest;
-import org.broadleafcommerce.openadmin.server.dao.provider.metadata.request.AddMetadataFromMappingDataRequest;
-import org.broadleafcommerce.openadmin.server.dao.provider.metadata.request.LateStageAddMetadataRequest;
-import org.broadleafcommerce.openadmin.server.dao.provider.metadata.request.OverrideViaAnnotationRequest;
-import org.broadleafcommerce.openadmin.server.dao.provider.metadata.request.OverrideViaXmlRequest;
-import org.broadleafcommerce.openadmin.server.service.type.MetadataProviderResponse;
-import org.broadleafcommerce.profile.core.domain.Customer;
+import com.ultracommerce.common.presentation.client.VisibilityEnum;
+import com.ultracommerce.openadmin.dto.BasicFieldMetadata;
+import com.ultracommerce.openadmin.dto.FieldMetadata;
+import com.ultracommerce.openadmin.server.dao.provider.metadata.AbstractFieldMetadataProvider;
+import com.ultracommerce.openadmin.server.dao.provider.metadata.FieldMetadataProvider;
+import com.ultracommerce.openadmin.server.dao.provider.metadata.request.AddFieldMetadataRequest;
+import com.ultracommerce.openadmin.server.dao.provider.metadata.request.AddMetadataFromFieldTypeRequest;
+import com.ultracommerce.openadmin.server.dao.provider.metadata.request.AddMetadataFromMappingDataRequest;
+import com.ultracommerce.openadmin.server.dao.provider.metadata.request.LateStageAddMetadataRequest;
+import com.ultracommerce.openadmin.server.dao.provider.metadata.request.OverrideViaAnnotationRequest;
+import com.ultracommerce.openadmin.server.dao.provider.metadata.request.OverrideViaXmlRequest;
+import com.ultracommerce.openadmin.server.service.type.MetadataProviderResponse;
+import com.ultracommerce.profile.core.domain.Customer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -42,7 +42,7 @@ import java.util.Map;
  *
  * @author ckittrell
  */
-@Component("blCustomerUsernameFieldMetadataProvider")
+@Component("ucCustomerUsernameFieldMetadataProvider")
 @Scope("prototype")
 public class CustomerUsernameFieldMetadataProvider extends AbstractFieldMetadataProvider implements FieldMetadataProvider {
 

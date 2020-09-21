@@ -1,51 +1,51 @@
 /*
  * #%L
- * BroadleafCommerce Profile
+ * UltraCommerce Profile
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.profile.core.service;
+package com.ultracommerce.profile.core.service;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.event.BroadleafApplicationEventPublisher;
-import org.broadleafcommerce.common.id.service.IdGenerationService;
-import org.broadleafcommerce.common.rule.MvelHelper;
-import org.broadleafcommerce.common.security.util.PasswordChange;
-import org.broadleafcommerce.common.security.util.PasswordReset;
-import org.broadleafcommerce.common.security.util.PasswordUtils;
-import org.broadleafcommerce.common.service.GenericResponse;
-import org.broadleafcommerce.common.time.SystemTime;
-import org.broadleafcommerce.common.util.StringUtil;
-import org.broadleafcommerce.common.util.TransactionUtils;
-import org.broadleafcommerce.profile.core.dao.CustomerDao;
-import org.broadleafcommerce.profile.core.dao.CustomerForgotPasswordSecurityTokenDao;
-import org.broadleafcommerce.profile.core.dao.RoleDao;
-import org.broadleafcommerce.profile.core.domain.Customer;
-import org.broadleafcommerce.profile.core.domain.CustomerForgotPasswordSecurityToken;
-import org.broadleafcommerce.profile.core.domain.CustomerForgotPasswordSecurityTokenImpl;
-import org.broadleafcommerce.profile.core.domain.CustomerRole;
-import org.broadleafcommerce.profile.core.domain.CustomerRoleImpl;
-import org.broadleafcommerce.profile.core.domain.Role;
-import org.broadleafcommerce.profile.core.dto.CustomerRuleHolder;
-import org.broadleafcommerce.profile.core.event.ForgotPasswordEvent;
-import org.broadleafcommerce.profile.core.event.ForgotUsernameEvent;
-import org.broadleafcommerce.profile.core.event.RegisterCustomerEvent;
-import org.broadleafcommerce.profile.core.service.handler.PasswordUpdatedHandler;
-import org.broadleafcommerce.profile.core.service.listener.PostRegistrationObserver;
+import com.ultracommerce.common.event.UltraApplicationEventPublisher;
+import com.ultracommerce.common.id.service.IdGenerationService;
+import com.ultracommerce.common.rule.MvelHelper;
+import com.ultracommerce.common.security.util.PasswordChange;
+import com.ultracommerce.common.security.util.PasswordReset;
+import com.ultracommerce.common.security.util.PasswordUtils;
+import com.ultracommerce.common.service.GenericResponse;
+import com.ultracommerce.common.time.SystemTime;
+import com.ultracommerce.common.util.StringUtil;
+import com.ultracommerce.common.util.TransactionUtils;
+import com.ultracommerce.profile.core.dao.CustomerDao;
+import com.ultracommerce.profile.core.dao.CustomerForgotPasswordSecurityTokenDao;
+import com.ultracommerce.profile.core.dao.RoleDao;
+import com.ultracommerce.profile.core.domain.Customer;
+import com.ultracommerce.profile.core.domain.CustomerForgotPasswordSecurityToken;
+import com.ultracommerce.profile.core.domain.CustomerForgotPasswordSecurityTokenImpl;
+import com.ultracommerce.profile.core.domain.CustomerRole;
+import com.ultracommerce.profile.core.domain.CustomerRoleImpl;
+import com.ultracommerce.profile.core.domain.Role;
+import com.ultracommerce.profile.core.dto.CustomerRuleHolder;
+import com.ultracommerce.profile.core.event.ForgotPasswordEvent;
+import com.ultracommerce.profile.core.event.ForgotUsernameEvent;
+import com.ultracommerce.profile.core.event.RegisterCustomerEvent;
+import com.ultracommerce.profile.core.service.handler.PasswordUpdatedHandler;
+import com.ultracommerce.profile.core.service.listener.PostRegistrationObserver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -61,32 +61,32 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-@Service("blCustomerService")
+@Service("ucCustomerService")
 public class CustomerServiceImpl implements CustomerService {
     private static final Log LOG = LogFactory.getLog(CustomerServiceImpl.class);
     private static final int PASSWORD_LENGTH = 16;
 
     @Autowired
-    @Qualifier("blApplicationEventPublisher")
-    protected BroadleafApplicationEventPublisher eventPublisher;
+    @Qualifier("ucApplicationEventPublisher")
+    protected UltraApplicationEventPublisher eventPublisher;
 
-    @Resource(name="blCustomerDao")
+    @Resource(name="ucCustomerDao")
     protected CustomerDao customerDao;
 
-    @Resource(name = "blIdGenerationService")
+    @Resource(name = "ucIdGenerationService")
     protected IdGenerationService idGenerationService;
 
-    @Resource(name = "blCustomerForgotPasswordSecurityTokenDao")
+    @Resource(name = "ucCustomerForgotPasswordSecurityTokenDao")
     protected CustomerForgotPasswordSecurityTokenDao customerForgotPasswordSecurityTokenDao;
 
     /**
      * <p>This is simply a placeholder to be used by {@link #setupPasswordEncoder()} to determine if we're using the
      * new {@link PasswordEncoder} or the deprecated {@link org.springframework.security.authentication.encoding.PasswordEncoder PasswordEncoder}
      */
-    @Resource(name = "blPasswordEncoder")
+    @Resource(name = "ucPasswordEncoder")
     protected PasswordEncoder passwordEncoderBean;
 
-    @Resource(name = "blRoleDao")
+    @Resource(name = "ucRoleDao")
     protected RoleDao roleDao;
 
     protected int tokenExpiredMinutes = 30;

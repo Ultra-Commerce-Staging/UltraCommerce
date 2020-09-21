@@ -1,24 +1,24 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.site.domain;
+package com.ultracommerce.common.site.domain;
 
-import org.broadleafcommerce.common.admin.domain.AdminMainEntity;
-import org.broadleafcommerce.common.presentation.AdminPresentationClass;
+import com.ultracommerce.common.admin.domain.AdminMainEntity;
+import com.ultracommerce.common.presentation.AdminPresentationClass;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
@@ -36,9 +36,9 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name = "BLC_SITE_CATALOG")
+@Table(name = "UC_SITE_CATALOG")
 @Inheritance(strategy = InheritanceType.JOINED)
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region="blSiteElements")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region="ucSiteElements")
 @AdminPresentationClass(friendlyName = "SiteCatalogXrefImpl")
 public class SiteCatalogXrefImpl implements SiteCatalogXref, AdminMainEntity {
 
@@ -52,10 +52,10 @@ public class SiteCatalogXrefImpl implements SiteCatalogXref, AdminMainEntity {
     @GeneratedValue(generator = "SiteCatalogXrefId")
     @GenericGenerator(
         name="SiteCatalogXrefId",
-        strategy="org.broadleafcommerce.common.persistence.IdOverrideTableGenerator",
+        strategy="com.ultracommerce.common.persistence.IdOverrideTableGenerator",
         parameters = {
             @Parameter(name="segment_value", value="SiteCatalogXrefImpl"),
-            @Parameter(name="entity_name", value="org.broadleafcommerce.common.site.domain.SiteCatalogXrefImpl")
+            @Parameter(name="entity_name", value="com.ultracommerce.common.site.domain.SiteCatalogXrefImpl")
         }
     )
     @Column(name = "SITE_CATALOG_XREF_ID")

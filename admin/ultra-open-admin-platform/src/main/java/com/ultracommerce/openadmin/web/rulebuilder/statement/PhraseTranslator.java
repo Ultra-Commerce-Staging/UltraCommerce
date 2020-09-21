@@ -1,27 +1,27 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.openadmin.web.rulebuilder.statement;
+package com.ultracommerce.openadmin.web.rulebuilder.statement;
 
-import org.broadleafcommerce.openadmin.server.service.persistence.module.FieldManager;
-import org.broadleafcommerce.openadmin.web.rulebuilder.BLCOperator;
-import org.broadleafcommerce.openadmin.web.rulebuilder.DataDTOToMVELTranslator;
-import org.broadleafcommerce.openadmin.web.rulebuilder.MVELTranslationException;
-import org.broadleafcommerce.openadmin.web.rulebuilder.RuleBuilderFormatUtil;
+import com.ultracommerce.openadmin.server.service.persistence.module.FieldManager;
+import com.ultracommerce.openadmin.web.rulebuilder.UCOperator;
+import com.ultracommerce.openadmin.web.rulebuilder.DataDTOToMVELTranslator;
+import com.ultracommerce.openadmin.web.rulebuilder.MVELTranslationException;
+import com.ultracommerce.openadmin.web.rulebuilder.RuleBuilderFormatUtil;
 
 import java.text.ParseException;
 
@@ -181,7 +181,7 @@ public class PhraseTranslator {
 
         Expression expression = new Expression();
         expression.setField(field);
-        BLCOperator operatorId = getOperator(field, operator, value, isNegation, isFieldComparison, isIgnoreCase);
+        UCOperator operatorId = getOperator(field, operator, value, isNegation, isFieldComparison, isIgnoreCase);
         expression.setOperator(operatorId);
         expression.setValue(value);
         expression.setEntityKey(entityKey);
@@ -344,115 +344,115 @@ public class PhraseTranslator {
         return temp;
     }
 
-    protected BLCOperator getOperator(String field, String operator, String value, boolean isNegation,
+    protected UCOperator getOperator(String field, String operator, String value, boolean isNegation,
                                      boolean isFieldComparison, boolean isIgnoreCase) throws MVELTranslationException {
         if (operator.equals(DataDTOToMVELTranslator.EQUALS_OPERATOR)) {
             if (value.equals("null")) {
-                return BLCOperator.IS_NULL;
+                return UCOperator.IS_NULL;
             } else if (isFieldComparison) {
-                return BLCOperator.EQUALS_FIELD;
+                return UCOperator.EQUALS_FIELD;
             } else if (isIgnoreCase) {
-                return BLCOperator.IEQUALS;
+                return UCOperator.IEQUALS;
             } else {
-                return BLCOperator.EQUALS;
+                return UCOperator.EQUALS;
             }
         } else if (operator.equals(DataDTOToMVELTranslator.NOT_EQUALS_OPERATOR)) {
             if (value.equals("null")) {
-                return BLCOperator.NOT_NULL;
+                return UCOperator.NOT_NULL;
             } else if (isFieldComparison) {
-                return BLCOperator.NOT_EQUAL_FIELD;
+                return UCOperator.NOT_EQUAL_FIELD;
             } else if (isIgnoreCase) {
-                return BLCOperator.INOT_EQUAL;
+                return UCOperator.INOT_EQUAL;
             } else {
-                return BLCOperator.NOT_EQUAL;
+                return UCOperator.NOT_EQUAL;
             }
         } else if (operator.equals(DataDTOToMVELTranslator.GREATER_THAN_OPERATOR)) {
             if (isFieldComparison) {
-                return BLCOperator.GREATER_THAN_FIELD;
+                return UCOperator.GREATER_THAN_FIELD;
             } else {
-                return BLCOperator.GREATER_THAN;
+                return UCOperator.GREATER_THAN;
             }
         } else if (operator.equals(DataDTOToMVELTranslator.LESS_THAN_OPERATOR)) {
             if (isFieldComparison) {
-                return BLCOperator.LESS_THAN_FIELD;
+                return UCOperator.LESS_THAN_FIELD;
             } else {
-                return BLCOperator.LESS_THAN;
+                return UCOperator.LESS_THAN;
             }
         } else if (operator.equals(DataDTOToMVELTranslator.GREATER_THAN_EQUALS_OPERATOR)) {
             if (isFieldComparison) {
-                return BLCOperator.GREATER_OR_EQUAL_FIELD;
+                return UCOperator.GREATER_OR_EQUAL_FIELD;
             } else {
-                return BLCOperator.GREATER_OR_EQUAL;
+                return UCOperator.GREATER_OR_EQUAL;
             }
         } else if (operator.equals(DataDTOToMVELTranslator.LESS_THAN_EQUALS_OPERATOR)) {
             if (isFieldComparison) {
-                return BLCOperator.LESS_OR_EQUAL_FIELD;
+                return UCOperator.LESS_OR_EQUAL_FIELD;
             } else {
-                return BLCOperator.LESS_OR_EQUAL;
+                return UCOperator.LESS_OR_EQUAL;
             }
         } else if (operator.equals(DataDTOToMVELTranslator.CONTAINS_OPERATOR) || operator.equals(DataDTOToMVELTranslator.OLD_CONTAINS_OPERATOR)) {
             if (isNegation) {
                 if (isIgnoreCase) {
-                    return BLCOperator.INOT_CONTAINS;
+                    return UCOperator.INOT_CONTAINS;
                 } else {
-                    return BLCOperator.NOT_CONTAINS;
+                    return UCOperator.NOT_CONTAINS;
                 }
             } else {
                 if (isIgnoreCase) {
-                    return BLCOperator.ICONTAINS;
+                    return UCOperator.ICONTAINS;
                 }
                 if (isFieldComparison) {
-                    return BLCOperator.CONTAINS_FIELD;
+                    return UCOperator.CONTAINS_FIELD;
                 } else {
-                    return BLCOperator.CONTAINS;
+                    return UCOperator.CONTAINS;
                 }
             }
         } else if (operator.equals(DataDTOToMVELTranslator.STARTS_WITH_OPERATOR) || operator.equals(DataDTOToMVELTranslator.OLD_STARTS_WITH_OPERATOR)) {
             if (isNegation) {
                 if (isIgnoreCase) {
-                    return BLCOperator.INOT_STARTS_WITH;
+                    return UCOperator.INOT_STARTS_WITH;
                 } else {
-                    return BLCOperator.NOT_STARTS_WITH;
+                    return UCOperator.NOT_STARTS_WITH;
                 }
             } else {
                 if (isIgnoreCase) {
-                    return BLCOperator.ISTARTS_WITH;
+                    return UCOperator.ISTARTS_WITH;
                 } else if (isFieldComparison){
-                    return BLCOperator.STARTS_WITH_FIELD;
+                    return UCOperator.STARTS_WITH_FIELD;
                 } else {
-                    return BLCOperator.STARTS_WITH;
+                    return UCOperator.STARTS_WITH;
                 }
             }
         } else if (operator.equals(DataDTOToMVELTranslator.ENDS_WITH_OPERATOR) || operator.equals(DataDTOToMVELTranslator.OLD_ENDS_WITH_OPERATOR)) {
             if (isNegation) {
                 if (isIgnoreCase) {
-                    return BLCOperator.INOT_ENDS_WITH;
+                    return UCOperator.INOT_ENDS_WITH;
                 } else {
-                    return BLCOperator.NOT_ENDS_WITH;
+                    return UCOperator.NOT_ENDS_WITH;
                 }
             } else {
                 if (isIgnoreCase) {
-                    return BLCOperator.IENDS_WITH;
+                    return UCOperator.IENDS_WITH;
                 } else if (isFieldComparison) {
-                    return BLCOperator.ENDS_WITH_FIELD;
+                    return UCOperator.ENDS_WITH_FIELD;
                 } else {
-                    return BLCOperator.ENDS_WITH;
+                    return UCOperator.ENDS_WITH;
                 }
             }
         } else if (operator.equals(DataDTOToMVELTranslator.SIZE_GREATER_THAN_OPERATOR)) {
-            return BLCOperator.COUNT_GREATER_THAN;
+            return UCOperator.COUNT_GREATER_THAN;
         } else if (operator.equals(DataDTOToMVELTranslator.SIZE_GREATER_THAN_EQUALS_OPERATOR)) {
-            return BLCOperator.COUNT_GREATER_OR_EQUAL;
+            return UCOperator.COUNT_GREATER_OR_EQUAL;
         } else if (operator.equals(DataDTOToMVELTranslator.SIZE_LESS_THAN_OPERATOR)) {
-            return BLCOperator.COUNT_LESS_THAN;
+            return UCOperator.COUNT_LESS_THAN;
         } else if (operator.equals(DataDTOToMVELTranslator.SIZE_LESS_THAN_EQUALS_OPERATOR)) {
-            return BLCOperator.COUNT_LESS_OR_EQUAL;
+            return UCOperator.COUNT_LESS_OR_EQUAL;
         } else if (operator.equals(DataDTOToMVELTranslator.SIZE_EQUALS_OPERATOR)) {
-            return BLCOperator.COUNT_EQUALS;
+            return UCOperator.COUNT_EQUALS;
         } else if (operator.equals(DataDTOToMVELTranslator.SIZE_GREATER_THAN_OPERATOR + DataDTOToMVELTranslator.ZERO_OPERATOR)){
-            return BLCOperator.COLLECTION_IN;
+            return UCOperator.COLLECTION_IN;
         } else if (operator.equals(DataDTOToMVELTranslator.SIZE_EQUALS_OPERATOR + DataDTOToMVELTranslator.ZERO_OPERATOR)){
-            return BLCOperator.COLLECTION_NOT_IN;
+            return UCOperator.COLLECTION_NOT_IN;
         }
         throw new MVELTranslationException(MVELTranslationException.OPERATOR_NOT_FOUND, "Unable to identify an operator compatible with the " +
                 "rules builder: ("+(isNegation?"!":""+field+operator+value)+")");

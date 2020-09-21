@@ -1,33 +1,33 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.offer.domain;
+package com.ultracommerce.core.offer.domain;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.copy.CreateResponse;
-import org.broadleafcommerce.common.copy.MultiTenantCopyContext;
-import org.broadleafcommerce.common.currency.util.BroadleafCurrencyUtils;
-import org.broadleafcommerce.common.money.Money;
-import org.broadleafcommerce.common.persistence.DefaultPostLoaderDao;
-import org.broadleafcommerce.common.persistence.PostLoaderDao;
-import org.broadleafcommerce.common.util.HibernateUtils;
-import org.broadleafcommerce.core.order.domain.OrderItem;
-import org.broadleafcommerce.core.order.domain.OrderItemImpl;
+import com.ultracommerce.common.copy.CreateResponse;
+import com.ultracommerce.common.copy.MultiTenantCopyContext;
+import com.ultracommerce.common.currency.util.UltraCurrencyUtils;
+import com.ultracommerce.common.money.Money;
+import com.ultracommerce.common.persistence.DefaultPostLoaderDao;
+import com.ultracommerce.common.persistence.PostLoaderDao;
+import com.ultracommerce.common.util.HibernateUtils;
+import com.ultracommerce.core.order.domain.OrderItem;
+import com.ultracommerce.core.order.domain.OrderItemImpl;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
@@ -50,9 +50,9 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Entity
-@Table(name = "BLC_CANDIDATE_ITEM_OFFER")
+@Table(name = "UC_CANDIDATE_ITEM_OFFER")
 @Inheritance(strategy=InheritanceType.JOINED)
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "blOrderElements")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "ucOrderElements")
 public class CandidateItemOfferImpl implements CandidateItemOffer, Cloneable {
 
     public static final Log LOG = LogFactory.getLog(CandidateItemOfferImpl.class);
@@ -62,10 +62,10 @@ public class CandidateItemOfferImpl implements CandidateItemOffer, Cloneable {
     @GeneratedValue(generator= "CandidateItemOfferId")
     @GenericGenerator(
         name="CandidateItemOfferId",
-        strategy="org.broadleafcommerce.common.persistence.IdOverrideTableGenerator",
+        strategy="com.ultracommerce.common.persistence.IdOverrideTableGenerator",
         parameters = {
             @Parameter(name="segment_value", value="CandidateItemOfferImpl"),
-            @Parameter(name="entity_name", value="org.broadleafcommerce.core.offer.domain.CandidateItemOfferImpl")
+            @Parameter(name="entity_name", value="com.ultracommerce.core.offer.domain.CandidateItemOfferImpl")
         }
     )
     @Column(name = "CANDIDATE_ITEM_OFFER_ID")
@@ -138,7 +138,7 @@ public class CandidateItemOfferImpl implements CandidateItemOffer, Cloneable {
     
     @Override
     public Money getDiscountedPrice() {
-        return discountedPrice == null ? null : BroadleafCurrencyUtils.getMoney(discountedPrice, getOrderItem().getOrder().getCurrency());
+        return discountedPrice == null ? null : UltraCurrencyUtils.getMoney(discountedPrice, getOrderItem().getOrder().getCurrency());
     }
     
     @Override
@@ -148,7 +148,7 @@ public class CandidateItemOfferImpl implements CandidateItemOffer, Cloneable {
     
     public void checkCloneable(CandidateItemOffer itemOffer) throws CloneNotSupportedException, SecurityException, NoSuchMethodException {
         Method cloneMethod = itemOffer.getClass().getMethod("clone", new Class[]{});
-        if (cloneMethod.getDeclaringClass().getName().startsWith("org.broadleafcommerce") && !itemOffer.getClass().getName().startsWith("org.broadleafcommerce")) {
+        if (cloneMethod.getDeclaringClass().getName().startsWith("com.ultracommerce") && !itemOffer.getClass().getName().startsWith("com.ultracommerce")) {
             //subclass is not implementing the clone method
             throw new CloneNotSupportedException("Custom extensions and implementations should implement clone in order to guarantee split and merge operations are performed accurately");
         }
@@ -163,7 +163,7 @@ public class CandidateItemOfferImpl implements CandidateItemOffer, Cloneable {
             try {
                 checkCloneable(candidateItemOffer);
             } catch (CloneNotSupportedException e) {
-                LOG.warn("Clone implementation missing in inheritance hierarchy outside of Broadleaf: " + candidateItemOffer.getClass().getName(), e);
+                LOG.warn("Clone implementation missing in inheritance hierarchy outside of Ultra: " + candidateItemOffer.getClass().getName(), e);
             }
             //candidateItemOffer.setCandidateQualifiersMap(getCandidateQualifiersMap());
             //candidateItemOffer.setCandidateTargets(getCandidateTargets());

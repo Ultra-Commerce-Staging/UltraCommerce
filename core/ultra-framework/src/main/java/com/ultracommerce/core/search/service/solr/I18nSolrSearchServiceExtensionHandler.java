@@ -1,31 +1,31 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.search.service.solr;
+package com.ultracommerce.core.search.service.solr;
 
-import org.broadleafcommerce.common.extension.ExtensionResultStatusType;
-import org.broadleafcommerce.common.i18n.service.TranslationService;
-import org.broadleafcommerce.common.locale.domain.Locale;
-import org.broadleafcommerce.common.locale.service.LocaleService;
-import org.broadleafcommerce.common.util.BLCSystemProperty;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
-import org.broadleafcommerce.core.search.domain.Field;
-import org.broadleafcommerce.core.search.domain.IndexField;
-import org.broadleafcommerce.core.search.domain.solr.FieldType;
+import com.ultracommerce.common.extension.ExtensionResultStatusType;
+import com.ultracommerce.common.i18n.service.TranslationService;
+import com.ultracommerce.common.locale.domain.Locale;
+import com.ultracommerce.common.locale.service.LocaleService;
+import com.ultracommerce.common.util.UCSystemProperty;
+import com.ultracommerce.common.web.UltraRequestContext;
+import com.ultracommerce.core.search.domain.Field;
+import com.ultracommerce.core.search.domain.IndexField;
+import com.ultracommerce.core.search.domain.solr.FieldType;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -38,24 +38,24 @@ import javax.annotation.Resource;
  * 
  * @author bpolster
  */
-@Service("blI18nSolrSearchServiceExtensionHandler")
+@Service("ucI18nSolrSearchServiceExtensionHandler")
 public class I18nSolrSearchServiceExtensionHandler extends AbstractSolrSearchServiceExtensionHandler
         implements SolrSearchServiceExtensionHandler {
 
-    @Resource(name = "blSolrHelperService")
+    @Resource(name = "ucSolrHelperService")
     protected SolrHelperService shs;
 
-    @Resource(name = "blSolrSearchServiceExtensionManager")
+    @Resource(name = "ucSolrSearchServiceExtensionManager")
     protected SolrSearchServiceExtensionManager extensionManager;
 
-    @Resource(name = "blTranslationService")
+    @Resource(name = "ucTranslationService")
     protected TranslationService translationService;
 
-    @Resource(name = "blLocaleService")
+    @Resource(name = "ucLocaleService")
     protected LocaleService localeService;
 
     protected boolean getTranslationEnabled() {
-        return BLCSystemProperty.resolveBooleanSystemProperty("i18n.translation.enabled");
+        return UCSystemProperty.resolveBooleanSystemProperty("i18n.translation.enabled");
     }
 
     @PostConstruct
@@ -85,8 +85,8 @@ public class I18nSolrSearchServiceExtensionHandler extends AbstractSolrSearchSer
      */
     protected ExtensionResultStatusType getLocalePrefix(Field field, List<String> prefixList) {
         if (field.getTranslatable() && getTranslationEnabled()) {
-            if (BroadleafRequestContext.getBroadleafRequestContext() != null) {
-                Locale locale = BroadleafRequestContext.getBroadleafRequestContext().getLocale();
+            if (UltraRequestContext.getUltraRequestContext() != null) {
+                Locale locale = UltraRequestContext.getUltraRequestContext().getLocale();
                 if (locale != null) {
                     String localeCode = locale.getLocaleCode();
                     if (Boolean.FALSE.equals(locale.getUseCountryInSearchIndex())) {

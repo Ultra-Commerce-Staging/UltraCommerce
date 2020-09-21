@@ -1,32 +1,32 @@
 /*-
  * #%L
- * broadleaf-marketplace
+ * ultra-marketplace
  * %%
- * Copyright (C) 2009 - 2017 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
 /**
  * 
  */
-package org.broadleafcommerce.test.config;
+package com.ultracommerce.test.config;
 
-import org.broadleafcommerce.common.email.service.info.EmailInfo;
-import org.broadleafcommerce.common.email.service.message.MessageCreator;
-import org.broadleafcommerce.common.email.service.message.NullMessageCreator;
-import org.broadleafcommerce.common.extensibility.context.merge.Merge;
-import org.broadleafcommerce.common.web.filter.IgnorableOpenEntityManagerInViewFilter;
-import org.broadleafcommerce.test.helper.AdminTestHelper;
-import org.broadleafcommerce.test.helper.TestAdminRequestFilter;
+import com.ultracommerce.common.email.service.info.EmailInfo;
+import com.ultracommerce.common.email.service.message.MessageCreator;
+import com.ultracommerce.common.email.service.message.NullMessageCreator;
+import com.ultracommerce.common.extensibility.context.merge.Merge;
+import com.ultracommerce.common.web.filter.IgnorableOpenEntityManagerInViewFilter;
+import com.ultracommerce.test.helper.AdminTestHelper;
+import com.ultracommerce.test.helper.TestAdminRequestFilter;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -75,7 +75,7 @@ public class AdminSpringBootTestConfiguration {
     DataSource webStorageDS;
 
     @Bean
-    public MapFactoryBean blMergedDataSources() throws Exception {
+    public MapFactoryBean ucMergedDataSources() throws Exception {
         MapFactoryBean mapFactoryBean = new MapFactoryBean();
         Map<String, DataSource> sourceMap = new HashMap<>();
         sourceMap.put("jdbc/test", webDS);
@@ -86,7 +86,7 @@ public class AdminSpringBootTestConfiguration {
         return mapFactoryBean;
     }
 
-    @Merge(targetRef = "blMergedPersistenceXmlLocations", early = true)
+    @Merge(targetRef = "ucMergedPersistenceXmlLocations", early = true)
     public List<String> corePersistenceXmlLocations() {
         return Arrays.asList("classpath*:/META-INF/persistence-test.xml");
     }
@@ -97,7 +97,7 @@ public class AdminSpringBootTestConfiguration {
      *   Port: 30000
      */
     @Bean
-    public MailSender blMailSender() {
+    public MailSender ucMailSender() {
         JavaMailSenderImpl sender = new JavaMailSenderImpl();
         sender.setHost("localhost");
         sender.setPort(30000);
@@ -116,18 +116,18 @@ public class AdminSpringBootTestConfiguration {
     }
 
     @Bean
-    public TestAdminRequestFilter blTestAdminRequestFilter() {
+    public TestAdminRequestFilter ucTestAdminRequestFilter() {
         return new TestAdminRequestFilter();
     }
 
     @Bean
     @Autowired
-    public MessageCreator blMessageCreator(@Qualifier("blMailSender") JavaMailSender mailSender) {
+    public MessageCreator ucMessageCreator(@Qualifier("ucMailSender") JavaMailSender mailSender) {
         return new NullMessageCreator(mailSender);
     }
 
     @Bean
-    public EmailInfo blEmailInfo() {
+    public EmailInfo ucEmailInfo() {
         EmailInfo info = new EmailInfo();
         info.setFromAddress("support@mycompany.com");
         info.setSendAsyncPriority("2");
@@ -136,55 +136,55 @@ public class AdminSpringBootTestConfiguration {
     }
 
     @Bean
-    public EmailInfo blRegistrationEmailInfo() {
-        EmailInfo info = blEmailInfo();
+    public EmailInfo ucRegistrationEmailInfo() {
+        EmailInfo info = ucEmailInfo();
         info.setSubject("You have successfully registered!");
         info.setEmailTemplate("register-email");
         return info;
     }
 
     @Bean
-    public EmailInfo blForgotPasswordEmailInfo() {
-        EmailInfo info = blEmailInfo();
+    public EmailInfo ucForgotPasswordEmailInfo() {
+        EmailInfo info = ucEmailInfo();
         info.setSubject("Reset password request");
         info.setEmailTemplate("resetPassword-email");
         return info;
     }
 
     @Bean
-    public EmailInfo blOrderConfirmationEmailInfo() {
-        EmailInfo info = blEmailInfo();
+    public EmailInfo ucOrderConfirmationEmailInfo() {
+        EmailInfo info = ucEmailInfo();
         info.setSubject("Your order with The Heat Clinic");
         info.setEmailTemplate("orderConfirmation-email");
         return info;
     }
 
     @Bean
-    public EmailInfo blFulfillmentOrderTrackingEmailInfo() {
-        EmailInfo info = blEmailInfo();
+    public EmailInfo ucFulfillmentOrderTrackingEmailInfo() {
+        EmailInfo info = ucEmailInfo();
         info.setSubject("Your order with The Heat Clinic Has Shipped");
         info.setEmailTemplate("fulfillmentOrderTracking-email");
         return info;
     }
 
     @Bean
-    public EmailInfo blReturnAuthorizationEmailInfo() {
-        EmailInfo info = blEmailInfo();
+    public EmailInfo ucReturnAuthorizationEmailInfo() {
+        EmailInfo info = ucEmailInfo();
         info.setSubject("Your return with The Heat Clinic");
         info.setEmailTemplate("returnAuthorization-email");
         return info;
     }
 
     @Bean
-    public EmailInfo blReturnConfirmationEmailInfo() {
-        EmailInfo info = blEmailInfo();
+    public EmailInfo ucReturnConfirmationEmailInfo() {
+        EmailInfo info = ucEmailInfo();
         info.setSubject("Your return with The Heat Clinic");
         info.setEmailTemplate("returnConfirmation-email");
         return info;
     }
 
     @Bean
-    public AdminTestHelper blAdminTestHelper() {
+    public AdminTestHelper ucAdminTestHelper() {
         return new AdminTestHelper();
     }
 }

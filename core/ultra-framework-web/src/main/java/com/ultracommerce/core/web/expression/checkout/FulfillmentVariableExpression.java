@@ -1,37 +1,37 @@
 /*
  * #%L
- * BroadleafCommerce Framework Web
+ * UltraCommerce Framework Web
  * %%
- * Copyright (C) 2009 - 2017 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.web.expression.checkout;
+package com.ultracommerce.core.web.expression.checkout;
 
-import org.broadleafcommerce.common.vendor.service.exception.FulfillmentPriceException;
-import org.broadleafcommerce.common.web.expression.BroadleafVariableExpression;
-import org.broadleafcommerce.core.order.domain.FulfillmentGroup;
-import org.broadleafcommerce.core.order.domain.FulfillmentOption;
-import org.broadleafcommerce.core.order.domain.NullOrderImpl;
-import org.broadleafcommerce.core.order.domain.Order;
-import org.broadleafcommerce.core.order.domain.OrderMultishipOption;
-import org.broadleafcommerce.core.order.service.FulfillmentGroupService;
-import org.broadleafcommerce.core.order.service.FulfillmentOptionService;
-import org.broadleafcommerce.core.order.service.OrderMultishipOptionService;
-import org.broadleafcommerce.core.pricing.service.FulfillmentPricingService;
-import org.broadleafcommerce.core.pricing.service.fulfillment.provider.FulfillmentEstimationResponse;
-import org.broadleafcommerce.core.web.order.CartState;
-import org.broadleafcommerce.core.web.order.service.CartStateService;
-import org.broadleafcommerce.presentation.condition.ConditionalOnTemplating;
+import com.ultracommerce.common.vendor.service.exception.FulfillmentPriceException;
+import com.ultracommerce.common.web.expression.UltraVariableExpression;
+import com.ultracommerce.core.order.domain.FulfillmentGroup;
+import com.ultracommerce.core.order.domain.FulfillmentOption;
+import com.ultracommerce.core.order.domain.NullOrderImpl;
+import com.ultracommerce.core.order.domain.Order;
+import com.ultracommerce.core.order.domain.OrderMultishipOption;
+import com.ultracommerce.core.order.service.FulfillmentGroupService;
+import com.ultracommerce.core.order.service.FulfillmentOptionService;
+import com.ultracommerce.core.order.service.OrderMultishipOptionService;
+import com.ultracommerce.core.pricing.service.FulfillmentPricingService;
+import com.ultracommerce.core.pricing.service.fulfillment.provider.FulfillmentEstimationResponse;
+import com.ultracommerce.core.web.order.CartState;
+import com.ultracommerce.core.web.order.service.CartStateService;
+import com.ultracommerce.presentation.condition.ConditionalOnTemplating;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -43,23 +43,23 @@ import javax.annotation.Resource;
 /**
  * @author Chris Kittrell (ckittrell)
  */
-@Component("blFulfillmentVariableExpression")
+@Component("ucFulfillmentVariableExpression")
 @ConditionalOnTemplating
-public class FulfillmentVariableExpression implements BroadleafVariableExpression {
+public class FulfillmentVariableExpression implements UltraVariableExpression {
 
-    @Resource(name = "blCartStateService")
+    @Resource(name = "ucCartStateService")
     protected CartStateService cartStateService;
 
-    @Resource(name = "blFulfillmentGroupService")
+    @Resource(name = "ucFulfillmentGroupService")
     protected FulfillmentGroupService fulfillmentGroupService;
 
-    @Resource(name = "blFulfillmentOptionService")
+    @Resource(name = "ucFulfillmentOptionService")
     protected FulfillmentOptionService fulfillmentOptionService;
 
-    @Resource(name = "blFulfillmentPricingService")
+    @Resource(name = "ucFulfillmentPricingService")
     protected FulfillmentPricingService fulfillmentPricingService;
 
-    @Resource(name = "blOrderMultishipOptionService")
+    @Resource(name = "ucOrderMultishipOptionService")
     protected OrderMultishipOptionService orderMultishipOptionService;
 
     @Override

@@ -1,35 +1,35 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.copy;
+package com.ultracommerce.common.copy;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.exception.ExceptionHelper;
-import org.broadleafcommerce.common.exception.ServiceException;
-import org.broadleafcommerce.common.service.GenericEntityService;
-import org.broadleafcommerce.common.site.domain.Catalog;
-import org.broadleafcommerce.common.site.domain.Site;
-import org.broadleafcommerce.common.util.StreamCapableTransactionalOperationAdapter;
-import org.broadleafcommerce.common.util.StreamingTransactionCapableUtil;
-import org.broadleafcommerce.common.util.tenant.IdentityExecutionUtils;
-import org.broadleafcommerce.common.util.tenant.IdentityOperation;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
-import org.broadleafcommerce.common.web.EnforceEnterpriseCollectionBehaviorState;
+import com.ultracommerce.common.exception.ExceptionHelper;
+import com.ultracommerce.common.exception.ServiceException;
+import com.ultracommerce.common.service.GenericEntityService;
+import com.ultracommerce.common.site.domain.Catalog;
+import com.ultracommerce.common.site.domain.Site;
+import com.ultracommerce.common.util.StreamCapableTransactionalOperationAdapter;
+import com.ultracommerce.common.util.StreamingTransactionCapableUtil;
+import com.ultracommerce.common.util.tenant.IdentityExecutionUtils;
+import com.ultracommerce.common.util.tenant.IdentityOperation;
+import com.ultracommerce.common.web.UltraRequestContext;
+import com.ultracommerce.common.web.EnforceEnterpriseCollectionBehaviorState;
 import org.springframework.core.Ordered;
 
 import java.lang.reflect.Field;
@@ -51,7 +51,7 @@ import javax.persistence.OneToOne;
 
 /**
  * Abstract class for copying entities to a new catalog as required during derived catalog propagation. Subclasses generally
- * call {@link #copyEntitiesOfType(Class, org.broadleafcommerce.common.site.domain.Site, org.broadleafcommerce.common.site.domain.Catalog, MultiTenantCopyContext)}
+ * call {@link #copyEntitiesOfType(Class, com.ultracommerce.common.site.domain.Site, com.ultracommerce.common.site.domain.Catalog, MultiTenantCopyContext)}
  * one or more times inside of their {@link #copyEntities(MultiTenantCopyContext)} implementation to clone and persist
  * an entity object tree.
  * 
@@ -61,13 +61,13 @@ import javax.persistence.OneToOne;
 public abstract class MultiTenantCopier implements Ordered {
     protected static final Log LOG = LogFactory.getLog(MultiTenantCopier.class);
     
-    @Resource(name = "blGenericEntityService")
+    @Resource(name = "ucGenericEntityService")
     protected GenericEntityService genericEntityService;
     
-    @Resource(name = "blMultiTenantCopierExtensionManager")
+    @Resource(name = "ucMultiTenantCopierExtensionManager")
     protected MultiTenantCopierExtensionManager extensionManager;
 
-    @Resource(name="blStreamingTransactionCapableUtil")
+    @Resource(name="ucStreamingTransactionCapableUtil")
     protected StreamingTransactionCapableUtil transUtil;
     
     protected int order = 0;
@@ -105,14 +105,14 @@ public abstract class MultiTenantCopier implements Ordered {
             context.clearOriginalIdentifiers();
             genericEntityService.clearAutoFlushMode();
             Object copy = copyOperation.execute(original);
-            BroadleafRequestContext.getBroadleafRequestContext().setEnforceEnterpriseCollectionBehaviorState(EnforceEnterpriseCollectionBehaviorState.FALSE);
+            UltraRequestContext.getUltraRequestContext().setEnforceEnterpriseCollectionBehaviorState(EnforceEnterpriseCollectionBehaviorState.FALSE);
             persistCopyObjectTreeInternal(copy, new HashSet<Integer>(), context);
             genericEntityService.flush();
         } catch (Exception e) {
             LOG.error("Unable to persist the copy object tree", e);
             throw ExceptionHelper.refineException(e);
         } finally {
-            BroadleafRequestContext.getBroadleafRequestContext().setEnforceEnterpriseCollectionBehaviorState(EnforceEnterpriseCollectionBehaviorState.TRUE);
+            UltraRequestContext.getUltraRequestContext().setEnforceEnterpriseCollectionBehaviorState(EnforceEnterpriseCollectionBehaviorState.TRUE);
             context.clearOriginalIdentifiers();
             genericEntityService.enableAutoFlushMode();
         }

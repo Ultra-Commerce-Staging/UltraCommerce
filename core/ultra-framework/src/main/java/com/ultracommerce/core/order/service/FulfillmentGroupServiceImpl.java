@@ -1,40 +1,40 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.order.service;
+package com.ultracommerce.core.order.service;
 
 import org.apache.commons.collections4.CollectionUtils;
-import org.broadleafcommerce.core.order.dao.FulfillmentGroupDao;
-import org.broadleafcommerce.core.order.dao.FulfillmentGroupItemDao;
-import org.broadleafcommerce.core.order.domain.BundleOrderItem;
-import org.broadleafcommerce.core.order.domain.DiscreteOrderItem;
-import org.broadleafcommerce.core.order.domain.FulfillmentGroup;
-import org.broadleafcommerce.core.order.domain.FulfillmentGroupFee;
-import org.broadleafcommerce.core.order.domain.FulfillmentGroupItem;
-import org.broadleafcommerce.core.order.domain.FulfillmentOption;
-import org.broadleafcommerce.core.order.domain.Order;
-import org.broadleafcommerce.core.order.domain.OrderItem;
-import org.broadleafcommerce.core.order.domain.OrderMultishipOption;
-import org.broadleafcommerce.core.order.service.call.FulfillmentGroupItemRequest;
-import org.broadleafcommerce.core.order.service.call.FulfillmentGroupRequest;
-import org.broadleafcommerce.core.order.service.type.FulfillmentGroupStatusType;
-import org.broadleafcommerce.core.order.service.type.FulfillmentType;
-import org.broadleafcommerce.core.pricing.service.exception.PricingException;
-import org.broadleafcommerce.profile.core.domain.Address;
+import com.ultracommerce.core.order.dao.FulfillmentGroupDao;
+import com.ultracommerce.core.order.dao.FulfillmentGroupItemDao;
+import com.ultracommerce.core.order.domain.BundleOrderItem;
+import com.ultracommerce.core.order.domain.DiscreteOrderItem;
+import com.ultracommerce.core.order.domain.FulfillmentGroup;
+import com.ultracommerce.core.order.domain.FulfillmentGroupFee;
+import com.ultracommerce.core.order.domain.FulfillmentGroupItem;
+import com.ultracommerce.core.order.domain.FulfillmentOption;
+import com.ultracommerce.core.order.domain.Order;
+import com.ultracommerce.core.order.domain.OrderItem;
+import com.ultracommerce.core.order.domain.OrderMultishipOption;
+import com.ultracommerce.core.order.service.call.FulfillmentGroupItemRequest;
+import com.ultracommerce.core.order.service.call.FulfillmentGroupRequest;
+import com.ultracommerce.core.order.service.type.FulfillmentGroupStatusType;
+import com.ultracommerce.core.order.service.type.FulfillmentType;
+import com.ultracommerce.core.pricing.service.exception.PricingException;
+import com.ultracommerce.profile.core.domain.Address;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -48,23 +48,23 @@ import java.util.Map.Entry;
 
 import javax.annotation.Resource;
 
-@Service("blFulfillmentGroupService")
+@Service("ucFulfillmentGroupService")
 public class FulfillmentGroupServiceImpl implements FulfillmentGroupService {
 
-    @Resource(name="blFulfillmentGroupDao")
+    @Resource(name="ucFulfillmentGroupDao")
     protected FulfillmentGroupDao fulfillmentGroupDao;
 
-    @Resource(name = "blFulfillmentGroupItemDao")
+    @Resource(name = "ucFulfillmentGroupItemDao")
     protected FulfillmentGroupItemDao fulfillmentGroupItemDao;
 
-    @Resource(name = "blOrderService")
+    @Resource(name = "ucOrderService")
     protected OrderService orderService;
 
-    @Resource(name = "blOrderMultishipOptionService")
+    @Resource(name = "ucOrderMultishipOptionService")
     protected OrderMultishipOptionService orderMultishipOptionService;
 
     @Override
-    @Transactional("blTransactionManager")
+    @Transactional("ucTransactionManager")
     public FulfillmentGroup save(FulfillmentGroup fulfillmentGroup) {
         if (fulfillmentGroup.getSequence() == null) {
             fulfillmentGroup.setSequence(
@@ -86,13 +86,13 @@ public class FulfillmentGroupServiceImpl implements FulfillmentGroupService {
     }
 
     @Override
-    @Transactional("blTransactionManager")
+    @Transactional("ucTransactionManager")
     public void delete(FulfillmentGroup fulfillmentGroup) {
         fulfillmentGroupDao.delete(fulfillmentGroup);
     }
 
     @Override
-    @Transactional("blTransactionManager")
+    @Transactional("ucTransactionManager")
     public FulfillmentGroup addFulfillmentGroupToOrder(FulfillmentGroupRequest fulfillmentGroupRequest, boolean priceOrder) throws PricingException {
         FulfillmentGroup fg = fulfillmentGroupDao.create();
         fg.setAddress(fulfillmentGroupRequest.getAddress());
@@ -114,14 +114,14 @@ public class FulfillmentGroupServiceImpl implements FulfillmentGroupService {
     }
 
     @Override
-    //@Transactional("blTransactionManager")
+    //@Transactional("ucTransactionManager")
     public FulfillmentGroup addItemToFulfillmentGroup(FulfillmentGroupItemRequest fulfillmentGroupItemRequest,
             boolean priceOrder) throws PricingException {
         return addItemToFulfillmentGroup(fulfillmentGroupItemRequest, priceOrder, true);
     }
 
     @Override
-    //@Transactional("blTransactionManager")
+    //@Transactional("ucTransactionManager")
     public FulfillmentGroup addItemToFulfillmentGroup(FulfillmentGroupItemRequest fulfillmentGroupItemRequest,
             boolean priceOrder, boolean save) throws PricingException {
         if (priceOrder && !save) {
@@ -203,7 +203,7 @@ public class FulfillmentGroupServiceImpl implements FulfillmentGroupService {
     }
 
     @Override
-    @Transactional("blTransactionManager")
+    @Transactional("ucTransactionManager")
     public void removeOrderItemFromFullfillmentGroups(Order order, OrderItem orderItem) {
         List<FulfillmentGroup> fulfillmentGroups = order.getFulfillmentGroups();
         for (FulfillmentGroup fulfillmentGroup : fulfillmentGroups) {
@@ -228,7 +228,7 @@ public class FulfillmentGroupServiceImpl implements FulfillmentGroupService {
     }
 
     @Override
-    @Transactional("blTransactionManager")
+    @Transactional("ucTransactionManager")
     public Order collapseToOneShippableFulfillmentGroup(Order order, boolean priceOrder) throws PricingException {
         if (order.getFulfillmentGroups() == null || order.getFulfillmentGroups().size() < 2) {
             return order;
@@ -295,7 +295,7 @@ public class FulfillmentGroupServiceImpl implements FulfillmentGroupService {
     }
 
     @Override
-    @Transactional("blTransactionManager")
+    @Transactional("ucTransactionManager")
     public Order matchFulfillmentGroupsToMultishipOptions(Order order, boolean priceOrder) throws PricingException {
         List<OrderMultishipOption> multishipOptions =  orderMultishipOptionService.findOrderMultishipOptions(order.getId());
 
@@ -444,7 +444,7 @@ public class FulfillmentGroupServiceImpl implements FulfillmentGroupService {
     }
 
     @Override
-    @Transactional("blTransactionManager")
+    @Transactional("ucTransactionManager")
     public Order removeAllFulfillmentGroupsFromOrder(Order order, boolean priceOrder) throws PricingException {
         if (order.getFulfillmentGroups() != null) {
             for (Iterator<FulfillmentGroup> iterator = order.getFulfillmentGroups().iterator(); iterator.hasNext();) {

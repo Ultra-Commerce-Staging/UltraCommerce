@@ -1,49 +1,49 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.openadmin.server.service.persistence.module;
+package com.ultracommerce.openadmin.server.service.persistence.module;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.exception.SecurityServiceException;
-import org.broadleafcommerce.common.exception.ServiceException;
-import org.broadleafcommerce.common.money.Money;
-import org.broadleafcommerce.common.presentation.client.OperationType;
-import org.broadleafcommerce.common.presentation.client.PersistencePerspectiveItemType;
-import org.broadleafcommerce.common.sandbox.SandBoxHelper;
-import org.broadleafcommerce.common.value.ValueAssignable;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
-import org.broadleafcommerce.openadmin.dto.BasicFieldMetadata;
-import org.broadleafcommerce.openadmin.dto.CriteriaTransferObject;
-import org.broadleafcommerce.openadmin.dto.DynamicResultSet;
-import org.broadleafcommerce.openadmin.dto.Entity;
-import org.broadleafcommerce.openadmin.dto.FieldMetadata;
-import org.broadleafcommerce.openadmin.dto.ForeignKey;
-import org.broadleafcommerce.openadmin.dto.MapStructure;
-import org.broadleafcommerce.openadmin.dto.MergedPropertyType;
-import org.broadleafcommerce.openadmin.dto.PersistencePackage;
-import org.broadleafcommerce.openadmin.dto.PersistencePerspective;
-import org.broadleafcommerce.openadmin.dto.Property;
-import org.broadleafcommerce.openadmin.dto.SimpleValueMapStructure;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.criteria.FilterMapping;
-import org.broadleafcommerce.openadmin.server.service.persistence.validation.RequiredPropertyValidator;
+import com.ultracommerce.common.exception.SecurityServiceException;
+import com.ultracommerce.common.exception.ServiceException;
+import com.ultracommerce.common.money.Money;
+import com.ultracommerce.common.presentation.client.OperationType;
+import com.ultracommerce.common.presentation.client.PersistencePerspectiveItemType;
+import com.ultracommerce.common.sandbox.SandBoxHelper;
+import com.ultracommerce.common.value.ValueAssignable;
+import com.ultracommerce.common.web.UltraRequestContext;
+import com.ultracommerce.openadmin.dto.BasicFieldMetadata;
+import com.ultracommerce.openadmin.dto.CriteriaTransferObject;
+import com.ultracommerce.openadmin.dto.DynamicResultSet;
+import com.ultracommerce.openadmin.dto.Entity;
+import com.ultracommerce.openadmin.dto.FieldMetadata;
+import com.ultracommerce.openadmin.dto.ForeignKey;
+import com.ultracommerce.openadmin.dto.MapStructure;
+import com.ultracommerce.openadmin.dto.MergedPropertyType;
+import com.ultracommerce.openadmin.dto.PersistencePackage;
+import com.ultracommerce.openadmin.dto.PersistencePerspective;
+import com.ultracommerce.openadmin.dto.Property;
+import com.ultracommerce.openadmin.dto.SimpleValueMapStructure;
+import com.ultracommerce.openadmin.server.service.persistence.module.criteria.FilterMapping;
+import com.ultracommerce.openadmin.server.service.persistence.validation.RequiredPropertyValidator;
 import org.hibernate.mapping.PersistentClass;
 import org.hibernate.type.StringType;
 import org.hibernate.type.Type;
@@ -70,11 +70,11 @@ import javax.annotation.Resource;
  * @author jfischer
  *
  */
-@Component("blMapStructurePersistenceModule")
+@Component("ucMapStructurePersistenceModule")
 @Scope("prototype")
 public class MapStructurePersistenceModule extends BasicPersistenceModule {
 
-    @Resource(name="blSandBoxHelper")
+    @Resource(name="ucSandBoxHelper")
     protected SandBoxHelper sandBoxHelper;
 
     private static final Log LOG = LogFactory.getLog(MapStructurePersistenceModule.class);
@@ -548,7 +548,7 @@ public class MapStructurePersistenceModule extends BasicPersistenceModule {
                     identifier = prop.getValue();
                 }
                 valueInstance = (Serializable) getPersistenceManager().getDynamicEntityDao().find(valueClass, identifier);
-                BroadleafRequestContext context = BroadleafRequestContext.getBroadleafRequestContext();
+                UltraRequestContext context = UltraRequestContext.getUltraRequestContext();
                 if (sandBoxHelper.isSandBoxable(valueInstance.getClass().getName()) &&
                         context != null && !context.isProductionSandBox()) {
                     if (sandBoxHelper.isPromote() && !sandBoxHelper.isReject()) {

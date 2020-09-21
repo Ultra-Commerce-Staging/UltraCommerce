@@ -1,26 +1,26 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2017 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.extensibility.jpa.convert;
+package com.ultracommerce.common.extensibility.jpa.convert;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.extensibility.jpa.copy.AbstractClassTransformer;
+import com.ultracommerce.common.extensibility.jpa.copy.AbstractClassTransformer;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -43,29 +43,29 @@ import javassist.bytecode.annotation.Annotation;
 import javassist.bytecode.annotation.StringMemberValue;
 
 /**
- * This {@link BroadleafClassTransformer} changes the name of the Table for an
+ * This {@link UltraClassTransformer} changes the name of the Table for an
  * entity before Hibernate sees it. This allows us to safely change/alter the names
  * of Tables for entities on patch releases.
  * <p>
- * Example of changing the Table name of {@link Product} to "BLC_ALTER_PRODUCT"
+ * Example of changing the Table name of {@link Product} to "UC_ALTER_PRODUCT"
  * <p>
  * In applicationContext.xml
  * <p>
  * ```xml
- * <bean id="blAlterProductTableClassTransformer" class="org.broadleafcommerce.common.extensibility.jpa.convert.AlterTableNameClassTransformer">
- * <constructor-arg name="tableName" value="BLC_ALTER_PRODUCT" />
- * <constructor-arg name="targetedClass" value="org.broadleafcommerce.core.catalog.domain.ProductImpl" />
+ * <bean id="ucAlterProductTableClassTransformer" class="com.ultracommerce.common.extensibility.jpa.convert.AlterTableNameClassTransformer">
+ * <constructor-arg name="tableName" value="UC_ALTER_PRODUCT" />
+ * <constructor-arg name="targetedClass" value="com.ultracommerce.core.catalog.domain.ProductImpl" />
  * </bean>
  * <bean id="customClassTransformers" class="org.springframework.beans.factory.config.ListFactoryBean">
  * <property name="sourceList">
  * <list>
- * <ref bean="blAlterProductTableClassTransformer" />
+ * <ref bean="ucAlterProductTableClassTransformer" />
  * </list>
  * </property>
  * </bean>
- * <bean class="org.broadleafcommerce.common.extensibility.context.merge.LateStageMergeBeanPostProcessor">
+ * <bean class="com.ultracommerce.common.extensibility.context.merge.LateStageMergeBeanPostProcessor">
  * <property name="collectionRef" value="customClassTransformers" />
- * <property name="targetRef" value="blMergedClassTransformers" />
+ * <property name="targetRef" value="ucMergedClassTransformers" />
  * <property name="placement" value="SPECIFIC"/>
  * <property name="position" value="0"/>
  * </bean>
@@ -75,7 +75,7 @@ import javassist.bytecode.annotation.StringMemberValue;
  * <p>
  * Created by ReggieCole on 4/3/17.
  */
-public class AlterTableNameClassTransformer extends AbstractClassTransformer implements BroadleafClassTransformer {
+public class AlterTableNameClassTransformer extends AbstractClassTransformer implements UltraClassTransformer {
 
     private static final Log LOG = LogFactory.getLog(AlterTableNameClassTransformer.class);
 

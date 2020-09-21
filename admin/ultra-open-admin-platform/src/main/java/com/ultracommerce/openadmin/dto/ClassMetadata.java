@@ -1,28 +1,28 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.openadmin.dto;
+package com.ultracommerce.openadmin.dto;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.broadleafcommerce.common.util.BLCMapUtils;
-import org.broadleafcommerce.common.util.BLCMessageUtils;
-import org.broadleafcommerce.common.util.TypedClosure;
+import com.ultracommerce.common.util.UCMapUtils;
+import com.ultracommerce.common.util.UCMessageUtils;
+import com.ultracommerce.common.util.TypedClosure;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -65,7 +65,7 @@ public class ClassMetadata implements Serializable {
 
     public Map<String, Property> getPMap() {
         if (pMap == null) {
-            pMap = BLCMapUtils.keyedMap(properties, new TypedClosure<String, Property>() {
+            pMap = UCMapUtils.keyedMap(properties, new TypedClosure<String, Property>() {
 
                 @Override
                 public String getKey(Property value) {
@@ -170,7 +170,7 @@ public class ClassMetadata implements Serializable {
         for (TabMetadata tab : tabAndGroupMetadata.values()) {
             for (GroupMetadata group : tab.getGroupMetadata().values()) {
                 String key = group.getGroupName();
-                String displayValue = BLCMessageUtils.getMessage(tab.getTabName()) + " : " + BLCMessageUtils.getMessage(group.getGroupName());
+                String displayValue = UCMessageUtils.getMessage(tab.getTabName()) + " : " + UCMessageUtils.getMessage(group.getGroupName());
                 result.add(new String[]{key, displayValue});
             }
         }

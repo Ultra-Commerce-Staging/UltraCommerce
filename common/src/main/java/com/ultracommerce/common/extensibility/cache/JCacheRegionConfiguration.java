@@ -1,21 +1,21 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2020 Broadleaf Commerce
+ * Copyright (C) 2009 - 2020 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.extensibility.cache;
+package com.ultracommerce.common.extensibility.cache;
 
 import javax.cache.configuration.Configuration;
 
@@ -25,7 +25,7 @@ import javax.cache.configuration.Configuration;
  * If {@link #configuration} is set then it will be used to create the region otherwise the other properties will be used.
  * If this class is subclassed then {@link JCacheConfigurationBuilder} will likely also need to be overridden in order to utilize any new properties.
  * 
- * By default instances of this class are defined in Broadleaf to set the default configuration for known cache regions. If you would like to override
+ * By default instances of this class are defined in Ultra to set the default configuration for known cache regions. If you would like to override
  * cache regions using this DTO when targeting ehcache then set the property jcache.create.cache.forceJavaConfig to true. When targeting any other jcache
  * implementation simply create an instance of this DTO for each new region or region override as a bean.
  * 

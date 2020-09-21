@@ -1,27 +1,27 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
 
-package org.broadleafcommerce.openadmin.web.form.component;
+package com.ultracommerce.openadmin.web.form.component;
 
 import org.apache.commons.lang3.StringUtils;
-import org.broadleafcommerce.common.util.BLCMessageUtils;
-import org.broadleafcommerce.openadmin.dto.Entity;
-import org.broadleafcommerce.openadmin.web.form.entity.Field;
+import com.ultracommerce.common.util.UCMessageUtils;
+import com.ultracommerce.openadmin.dto.Entity;
+import com.ultracommerce.openadmin.web.form.entity.Field;
 import org.codehaus.jettison.json.JSONObject;
 
 import java.util.ArrayList;
@@ -263,7 +263,7 @@ public class ListGridRecord {
         if (getIsError()) {
             String msgToUser = getErrorMessage();
             if (msgToUser == null) {
-                msgToUser = BLCMessageUtils.getMessage(getErrorKey());
+                msgToUser = UCMessageUtils.getMessage(getErrorKey());
             }
 
             return new ListGridRecordIcon()
@@ -279,8 +279,8 @@ public class ListGridRecord {
 
         if (getIsDirty()) {
             return new ListGridRecordIcon()
-                .withCssClass("blc-icon-site-updates")
-                .withMessage(BLCMessageUtils.getMessage("listgrid.record.edited"))
+                .withCssClass("uc-icon-site-updates")
+                .withMessage(UCMessageUtils.getMessage("listgrid.record.edited"))
                 .withHasDetails(false);
         }
         

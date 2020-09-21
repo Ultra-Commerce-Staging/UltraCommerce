@@ -1,1 +1,1 @@
-org.broadleafcommerce.common.persistence.transaction.BroadleafCommonServiceContributor
+com.ultracommerce.common.persistence.transaction.UltraCommonServiceContributor

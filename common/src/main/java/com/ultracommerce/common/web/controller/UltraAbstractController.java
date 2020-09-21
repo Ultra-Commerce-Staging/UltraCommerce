@@ -1,26 +1,26 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.web.controller;
+package com.ultracommerce.common.web.controller;
 
 import org.apache.commons.lang3.StringUtils;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
-import org.broadleafcommerce.common.web.deeplink.DeepLink;
-import org.broadleafcommerce.common.web.deeplink.DeepLinkService;
+import com.ultracommerce.common.web.UltraRequestContext;
+import com.ultracommerce.common.web.deeplink.DeepLink;
+import com.ultracommerce.common.web.deeplink.DeepLinkService;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
@@ -38,14 +38,14 @@ import javax.servlet.http.HttpServletResponse;
  * An abstract controller that provides convenience methods and resource declarations for its  children
  * 
  * Operations that are shared between all controllers belong here.   To use composition rather than
- * extension, implementors can utilize BroadleafControllerUtility.
+ * extension, implementors can utilize UltraControllerUtility.
  * 
- * @see BroadleafControllerUtility
+ * @see UltraControllerUtility
  * 
  * @author apazzolini
  * @author bpolster
  */
-public abstract class BroadleafAbstractController {
+public abstract class UltraAbstractController {
     
     
     /**
@@ -55,7 +55,7 @@ public abstract class BroadleafAbstractController {
      * @return - whether or not it was an AJAX request
      */
     protected boolean isAjaxRequest(HttpServletRequest request) {
-        return BroadleafControllerUtility.isAjaxRequest(request);       
+        return UltraControllerUtility.isAjaxRequest(request);       
     }
     
     /**
@@ -88,7 +88,7 @@ public abstract class BroadleafAbstractController {
             return;
         }
 
-        BroadleafRequestContext brc = BroadleafRequestContext.getBroadleafRequestContext();
+        UltraRequestContext brc = UltraRequestContext.getUltraRequestContext();
         if (brc.getSandBox() != null) {
             List<DeepLink> links = service.getLinks(item);
             if (links.size() == 1) {

@@ -1,29 +1,29 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.openadmin.web.service;
+package com.ultracommerce.openadmin.web.service;
 
-import org.broadleafcommerce.common.extension.ExtensionHandler;
-import org.broadleafcommerce.common.extension.ExtensionResultStatusType;
-import org.broadleafcommerce.openadmin.dto.Entity;
-import org.broadleafcommerce.openadmin.server.security.domain.AdminSection;
-import org.broadleafcommerce.openadmin.web.form.component.ListGrid;
-import org.broadleafcommerce.openadmin.web.form.component.ListGridRecord;
-import org.broadleafcommerce.openadmin.web.form.entity.EntityForm;
+import com.ultracommerce.common.extension.ExtensionHandler;
+import com.ultracommerce.common.extension.ExtensionResultStatusType;
+import com.ultracommerce.openadmin.dto.Entity;
+import com.ultracommerce.openadmin.server.security.domain.AdminSection;
+import com.ultracommerce.openadmin.web.form.component.ListGrid;
+import com.ultracommerce.openadmin.web.form.component.ListGridRecord;
+import com.ultracommerce.openadmin.web.form.entity.EntityForm;
 
 /**
  * Extension handler for various methods from {@link FormBuilderService}
@@ -57,7 +57,7 @@ public interface FormBuilderExtensionHandler extends ExtensionHandler {
      * <p>This methods is always invoked <i><b>before</b></i> {@link #modifyPopulatedEntityForm(EntityForm, Entity)}.
      * 
      * @param ef the {@link EntityForm} that has not yet been populated with values from an entity
-     * @see {@link FormBuilderService#populateEntityForm(org.broadleafcommerce.openadmin.dto.ClassMetadata, EntityForm)}
+     * @see {@link FormBuilderService#populateEntityForm(com.ultracommerce.openadmin.dto.ClassMetadata, EntityForm)}
      * @return
      */
     public ExtensionResultStatusType modifyUnpopulatedEntityForm(EntityForm ef);
@@ -80,7 +80,7 @@ public interface FormBuilderExtensionHandler extends ExtensionHandler {
      * @param ef the {@link EntityForm} being populated
      * @param entity the {@link Entity} that the {@link EntityForm} has used to populate all of the values for its fields
      * @return whether or not it was handled
-     * @see {@link FormBuilderService#populateEntityForm(org.broadleafcommerce.openadmin.dto.ClassMetadata, Entity, EntityForm)}
+     * @see {@link FormBuilderService#populateEntityForm(com.ultracommerce.openadmin.dto.ClassMetadata, Entity, EntityForm)}
      */
     public ExtensionResultStatusType modifyPopulatedEntityForm(EntityForm ef, Entity entity);
     
@@ -99,7 +99,7 @@ public interface FormBuilderExtensionHandler extends ExtensionHandler {
      *  
      * @param ef the {@link EntityForm} that has been built with all 
      * @return whether or not it was handled
-     * @see {@link FormBuilderService#populateEntityForm(org.broadleafcommerce.openadmin.dto.ClassMetadata, org.broadleafcommerce.openadmin.dto.Entity, java.util.Map, EntityForm)
+     * @see {@link FormBuilderService#populateEntityForm(com.ultracommerce.openadmin.dto.ClassMetadata, com.ultracommerce.openadmin.dto.Entity, java.util.Map, EntityForm)
      */
     public ExtensionResultStatusType modifyDetailEntityForm(EntityForm ef);
     

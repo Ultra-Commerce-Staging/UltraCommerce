@@ -1,31 +1,31 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.rating.domain;
+package com.ultracommerce.core.rating.domain;
 
-import org.broadleafcommerce.common.presentation.AdminPresentation;
-import org.broadleafcommerce.common.presentation.AdminPresentationClass;
-import org.broadleafcommerce.common.presentation.AdminPresentationCollection;
-import org.broadleafcommerce.common.presentation.AdminPresentationToOneLookup;
-import org.broadleafcommerce.common.presentation.PopulateToOneFieldsEnum;
-import org.broadleafcommerce.common.presentation.client.SupportedFieldType;
-import org.broadleafcommerce.core.rating.service.type.ReviewStatusType;
-import org.broadleafcommerce.profile.core.domain.Customer;
-import org.broadleafcommerce.profile.core.domain.CustomerImpl;
+import com.ultracommerce.common.presentation.AdminPresentation;
+import com.ultracommerce.common.presentation.AdminPresentationClass;
+import com.ultracommerce.common.presentation.AdminPresentationCollection;
+import com.ultracommerce.common.presentation.AdminPresentationToOneLookup;
+import com.ultracommerce.common.presentation.PopulateToOneFieldsEnum;
+import com.ultracommerce.common.presentation.client.SupportedFieldType;
+import com.ultracommerce.core.rating.service.type.ReviewStatusType;
+import com.ultracommerce.profile.core.domain.Customer;
+import com.ultracommerce.profile.core.domain.CustomerImpl;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Index;
 import org.hibernate.annotations.Parameter;
@@ -48,7 +48,7 @@ import javax.persistence.Table;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "BLC_REVIEW_DETAIL")
+@Table(name = "UC_REVIEW_DETAIL")
 @AdminPresentationClass(friendlyName = "ReviewDetail", populateToOneFields = PopulateToOneFieldsEnum.TRUE)
 public class ReviewDetailImpl implements ReviewDetail, Serializable {
 
@@ -58,10 +58,10 @@ public class ReviewDetailImpl implements ReviewDetail, Serializable {
     @GeneratedValue(generator = "ReviewDetailId")
     @GenericGenerator(
         name="ReviewDetailId",
-        strategy="org.broadleafcommerce.common.persistence.IdOverrideTableGenerator",
+        strategy="com.ultracommerce.common.persistence.IdOverrideTableGenerator",
         parameters = {
             @Parameter(name="segment_value", value="ReviewDetailImpl"),
-            @Parameter(name="entity_name", value="org.broadleafcommerce.core.rating.domain.ReviewDetailImpl")
+            @Parameter(name="entity_name", value="com.ultracommerce.core.rating.domain.ReviewDetailImpl")
         }
     )
     @Column(name = "REVIEW_DETAIL_ID")
@@ -86,8 +86,8 @@ public class ReviewDetailImpl implements ReviewDetail, Serializable {
     @Index(name="REVIEWDETAIL_STATUS_INDEX", columnNames={"REVIEW_STATUS"})
     @AdminPresentation(friendlyName = "ReviewDetail_status",
         prominent = true,
-        fieldType = SupportedFieldType.BROADLEAF_ENUMERATION,
-        broadleafEnumeration = "org.broadleafcommerce.core.rating.service.type.ReviewStatusType")
+        fieldType = SupportedFieldType.ULTRA_ENUMERATION,
+        ultraEnumeration = "com.ultracommerce.core.rating.service.type.ReviewStatusType")
     protected String reviewStatus;
 
     @Column(name = "HELPFUL_COUNT", nullable = false)

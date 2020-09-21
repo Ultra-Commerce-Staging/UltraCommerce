@@ -1,21 +1,21 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2018 Broadleaf Commerce
+ * Copyright (C) 2009 - 2018 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.event;
+package com.ultracommerce.common.event;
 
 import org.springframework.context.ApplicationContext;
 
@@ -23,9 +23,9 @@ import java.util.Map;
 
 /**
  * <p>
- * A BroadleafApplicationEvent used so that we can communicate with the ScheduledJobsAndEvents module without having a dependency on it.
+ * A UltraApplicationEvent used so that we can communicate with the ScheduledJobsAndEvents module without having a dependency on it.
  * By publishing a Spring Event with this detail, the ScheduledJobsAndEvents module will listen for this event and create a corresponding
- * com.broadleafcommerce.jobsevents.domain.SystemEvent to be consumed.
+ * com.ultracommerce.jobsevents.domain.SystemEvent to be consumed.
  *
  * <p>
  * To send an event, inject the {@link ApplicationContext} and publish the event:
@@ -36,30 +36,30 @@ import java.util.Map;
  *
  * ...
  *
- * appCtx.publishEvent(new BroadleafSystemEvent("CONSUMER_TYPE", BroadleafEventScopeType.VM, BroadleafEventWorkerType.SITE, true);
+ * appCtx.publishEvent(new UltraSystemEvent("CONSUMER_TYPE", UltraEventScopeType.VM, UltraEventWorkerType.SITE, true);
  * </pre>
  *
  * @see ApplicationContext#publishEvent(org.springframework.context.ApplicationEvent)
  * @author Jay Aisenbrey (cja769)
  */
-public class BroadleafSystemEvent extends BroadleafApplicationEvent {
+public class UltraSystemEvent extends UltraApplicationEvent {
 
     private static final long serialVersionUID = 1L;
 
-    protected Map<String, BroadleafSystemEventDetail> detailMap;
+    protected Map<String, UltraSystemEventDetail> detailMap;
     protected String type;
-    protected BroadleafEventScopeType scopeType;
-    protected BroadleafEventWorkerType workerType;
+    protected UltraEventScopeType scopeType;
+    protected UltraEventWorkerType workerType;
     protected boolean universal;
 
     /**
-     * @param type should match the com.broadleafcommerce.jobsevents.service.SystemEventConsumer#getType
+     * @param type should match the com.ultracommerce.jobsevents.service.SystemEventConsumer#getType
      * @param detailMap details passed to the event consumer
      * @param scopeType how the event should be consumed
      * @param workerType what type of workers should consume it
      * @param universal used for a performance optimization when sending multiple events at the same time, usually <b>true</b>
      */
-    public BroadleafSystemEvent(String type, Map<String, BroadleafSystemEventDetail> detailMap, BroadleafEventScopeType scopeType, BroadleafEventWorkerType workerType, boolean universal) {
+    public UltraSystemEvent(String type, Map<String, UltraSystemEventDetail> detailMap, UltraEventScopeType scopeType, UltraEventWorkerType workerType, boolean universal) {
         super(type);
         this.detailMap = detailMap;
         this.type = type;
@@ -69,9 +69,9 @@ public class BroadleafSystemEvent extends BroadleafApplicationEvent {
     }
 
     /**
-     * @see BroadleafSystemEvent#BroadleafSystemEvent(String, Map, BroadleafEventScopeType, BroadleafEventWorkerType, boolean)
+     * @see UltraSystemEvent#UltraSystemEvent(String, Map, UltraEventScopeType, UltraEventWorkerType, boolean)
      */
-    public BroadleafSystemEvent(String type, BroadleafEventScopeType scopeType, BroadleafEventWorkerType workerType, boolean universal) {
+    public UltraSystemEvent(String type, UltraEventScopeType scopeType, UltraEventWorkerType workerType, boolean universal) {
         super(type);
         this.type = type;
         this.scopeType = scopeType;
@@ -79,11 +79,11 @@ public class BroadleafSystemEvent extends BroadleafApplicationEvent {
         this.universal = universal;
     }
 
-    public Map<String, BroadleafSystemEventDetail> getDetailMap() {
+    public Map<String, UltraSystemEventDetail> getDetailMap() {
         return detailMap;
     }
 
-    public void setDetailMap(Map<String, BroadleafSystemEventDetail> detailMap) {
+    public void setDetailMap(Map<String, UltraSystemEventDetail> detailMap) {
         this.detailMap = detailMap;
     }
 
@@ -95,19 +95,19 @@ public class BroadleafSystemEvent extends BroadleafApplicationEvent {
         this.type = type;
     }
 
-    public BroadleafEventScopeType getScopeType() {
+    public UltraEventScopeType getScopeType() {
         return scopeType;
     }
 
-    public void setScopeType(BroadleafEventScopeType scopeType) {
+    public void setScopeType(UltraEventScopeType scopeType) {
         this.scopeType = scopeType;
     }
 
-    public BroadleafEventWorkerType getWorkerType() {
+    public UltraEventWorkerType getWorkerType() {
         return workerType;
     }
 
-    public void setWorkerType(BroadleafEventWorkerType workerType) {
+    public void setWorkerType(UltraEventWorkerType workerType) {
         this.workerType = workerType;
     }
 
@@ -129,7 +129,7 @@ public class BroadleafSystemEvent extends BroadleafApplicationEvent {
      *
      * @author Jay Aisenbrey (cja769)
      */
-    public static enum BroadleafEventScopeType {
+    public static enum UltraEventScopeType {
         /**
          * All nodes will execute
          */
@@ -169,7 +169,7 @@ public class BroadleafSystemEvent extends BroadleafApplicationEvent {
      *
      * @author Jay Aisenbrey (cja769)
      */
-    public static enum BroadleafEventWorkerType {
+    public static enum UltraEventWorkerType {
         SITE, ADMIN, ANY
     }
 }

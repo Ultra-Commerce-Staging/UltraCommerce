@@ -1,34 +1,34 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.search.domain;
+package com.ultracommerce.core.search.domain;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.broadleafcommerce.common.admin.domain.AdminMainEntity;
-import org.broadleafcommerce.common.copy.CreateResponse;
-import org.broadleafcommerce.common.copy.MultiTenantCopyContext;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransform;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformMember;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformTypes;
-import org.broadleafcommerce.common.presentation.AdminPresentation;
-import org.broadleafcommerce.common.presentation.AdminPresentationCollection;
-import org.broadleafcommerce.common.presentation.AdminPresentationToOneLookup;
-import org.broadleafcommerce.common.presentation.client.VisibilityEnum;
+import com.ultracommerce.common.admin.domain.AdminMainEntity;
+import com.ultracommerce.common.copy.CreateResponse;
+import com.ultracommerce.common.copy.MultiTenantCopyContext;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransform;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransformMember;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransformTypes;
+import com.ultracommerce.common.presentation.AdminPresentation;
+import com.ultracommerce.common.presentation.AdminPresentationCollection;
+import com.ultracommerce.common.presentation.AdminPresentationToOneLookup;
+import com.ultracommerce.common.presentation.client.VisibilityEnum;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -58,8 +58,8 @@ import javax.persistence.Table;
  */
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "BLC_INDEX_FIELD")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "blStandardElements")
+@Table(name = "UC_INDEX_FIELD")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "ucStandardElements")
 @DirectCopyTransform({
         @DirectCopyTransformMember(templateTokens = DirectCopyTransformTypes.MULTITENANT_CATALOG),
         @DirectCopyTransformMember(templateTokens = DirectCopyTransformTypes.ARCHIVE_ONLY)
@@ -72,10 +72,10 @@ public class IndexFieldImpl implements IndexField, Serializable, IndexFieldAdmin
     @GeneratedValue(generator = "IndexFieldId")
     @GenericGenerator(
             name="IndexFieldId",
-            strategy="org.broadleafcommerce.common.persistence.IdOverrideTableGenerator",
+            strategy="com.ultracommerce.common.persistence.IdOverrideTableGenerator",
             parameters = {
                     @Parameter(name="segment_value", value="IndexFieldImpl"),
-                    @Parameter(name="entity_name", value="org.broadleafcommerce.core.search.domain.IndexFieldImpl")
+                    @Parameter(name="entity_name", value="com.ultracommerce.core.search.domain.IndexFieldImpl")
             }
     )
     @Column(name = "INDEX_FIELD_ID")
@@ -100,7 +100,7 @@ public class IndexFieldImpl implements IndexField, Serializable, IndexFieldAdmin
     protected Field field;
 
     @OneToMany(mappedBy = "indexField", targetEntity = IndexFieldTypeImpl.class, cascade = CascadeType.ALL)
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region="blStandardElements")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region="ucStandardElements")
     @BatchSize(size = 50)
     @Where(clause = "(ARCHIVED != 'Y' OR ARCHIVED IS NULL)")
     @AdminPresentationCollection(friendlyName = "IndexFieldImpl_fieldTypes", order = 1000)

@@ -1,28 +1,28 @@
 /*
  * #%L
- * BroadleafCommerce Integration
+ * UltraCommerce Integration
  * %%
- * Copyright (C) 2009 - 2017 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
 /**
  * 
  */
-package org.broadleafcommerce.test.config;
+package com.ultracommerce.test.config;
 
-import org.broadleafcommerce.common.config.BroadleafEnvironmentConfiguringApplicationListener;
-import org.broadleafcommerce.test.TestNGSiteIntegrationSetup;
-import org.broadleafcommerce.test.junit.JUnitSiteIntegrationSetup;
+import com.ultracommerce.common.config.UltraEnvironmentConfiguringApplicationListener;
+import com.ultracommerce.test.TestNGSiteIntegrationSetup;
+import com.ultracommerce.test.junit.JUnitSiteIntegrationSetup;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -39,9 +39,9 @@ import java.lang.annotation.Target;
  * any type of test that uses spring-test (e.g. TestNG, Spock, JUnit).
  * 
  * <p>
- * If you need to customize the application context to add your own configuration (and not only use the Broadleaf out of the box beans) you
+ * If you need to customize the application context to add your own configuration (and not only use the Ultra out of the box beans) you
  * will need to use one of the superclasses, {@link JUnitSiteIntegrationSetup} or {@link TestNGSiteIntegrationSetup}. Otherwise you will
- * not get the inheriting strategy with all of the Broadleaf beans plus your custom ones.
+ * not get the inheriting strategy with all of the Ultra beans plus your custom ones.
  * 
  * <p>
  * Example usage:
@@ -49,8 +49,8 @@ import java.lang.annotation.Target;
  * 
  * <pre>
  * {@literal @}RunWith(SpringRunner.class)
- * {@literal @}BroadleafSiteIntegrationTest
- * public class ExampleBroadleafJUnitTest {
+ * {@literal @}UltraSiteIntegrationTest
+ * public class ExampleUltraJUnitTest {
  *     
  *     {@literal @}Autowired
  *     private CatalogService catalogService;
@@ -64,8 +64,8 @@ import java.lang.annotation.Target;
  * 
  * <h2>TestNG</h2>
  * <pre>
- * {@literal @}BroadleafSiteIntegrationTest
- * public class ExampleBroadleafTestNGTest extends AbstractTestNGSpringContextTests {
+ * {@literal @}UltraSiteIntegrationTest
+ * public class ExampleUltraTestNGTest extends AbstractTestNGSpringContextTests {
  *     
  *     {@literal @}Autowired
  *     private CatalogService catalogService;
@@ -79,7 +79,7 @@ import java.lang.annotation.Target;
  * 
  * <h2>Spock</h2>
  * <pre>
- * {@literal @}BroadleafSiteIntegrationTest
+ * {@literal @}UltraSiteIntegrationTest
  * class SpockExampleTest extends Specification {
  *
  *     {@literal @}Resource
@@ -98,13 +98,13 @@ import java.lang.annotation.Target;
  * <h2>JUnit</h2>
  * 
  * <pre>
- * {@literal @}ContextHierarchy({@literal @}ContextConfiguration(name = BroadleafSiteIntegrationTest.CONTEXT_NAME))
- * public class ExampleBroadleafJUnitTest extends JUnitSiteIntegrationSetup {
+ * {@literal @}ContextHierarchy({@literal @}ContextConfiguration(name = UltraSiteIntegrationTest.CONTEXT_NAME))
+ * public class ExampleUltraJUnitTest extends JUnitSiteIntegrationSetup {
  *     
  *     {@literal @}Configuration
  *     public static class CustomConfiguration {
  *         {@literal @}Bean
- *         public CatalogService blCatalogService() {
+ *         public CatalogService ucCatalogService() {
  *             return MyCatalogService();
  *         }
  *     }
@@ -121,13 +121,13 @@ import java.lang.annotation.Target;
  * 
  * <h2>TestNG</h2>
  * <pre>
- * {@literal @}ContextHierarchy({@literal @}ContextConfiguration(name = BroadleafSiteIntegrationTest.CONTEXT_NAME))
- * public class ExampleBroadleafTestNGTest extends AbstractTestNGSpringContextTests {
+ * {@literal @}ContextHierarchy({@literal @}ContextConfiguration(name = UltraSiteIntegrationTest.CONTEXT_NAME))
+ * public class ExampleUltraTestNGTest extends AbstractTestNGSpringContextTests {
  *     
  *     {@literal @}Configuration
  *     public static class CustomConfiguration {
  *         {@literal @}Bean
- *         public CatalogService blCatalogService() {
+ *         public CatalogService ucCatalogService() {
  *             return MyCatalogService();
  *         }
  *     }
@@ -144,13 +144,13 @@ import java.lang.annotation.Target;
  * 
  * <h2>Spock</h2>
  * <pre>
- * {@literal @}ContextHierarchy({@literal @}ContextConfiguration(name = BroadleafSiteIntegrationTest.CONTEXT_NAME))
+ * {@literal @}ContextHierarchy({@literal @}ContextConfiguration(name = UltraSiteIntegrationTest.CONTEXT_NAME))
  * class SpockExampleTest extends SpockSiteIntegrationSetup {
  * 
  *     {@literal @}Configuration
  *     public static class CustomConfiguration {
  *         {@literal @}Bean
- *         public CatalogService blCatalogService() {
+ *         public CatalogService ucCatalogService() {
  *             return MyCatalogService();
  *         }
  *     }
@@ -167,7 +167,7 @@ import java.lang.annotation.Target;
  * </pre>
  * 
  * <p>
- * When used within the Enterprise module, you cannot use both this annotation along with {@link BroadleafAdminIntegrationTest}. This is because
+ * When used within the Enterprise module, you cannot use both this annotation along with {@link UltraAdminIntegrationTest}. This is because
  * class transformation can be different depending on the context. For this reason, you usually need to split out your "site" and "admin"
  * tests into different JVM runs. This can be done with the following surefire configuration in Maven that brings everything contained
  * within a package that contains {@code adminjvm} into a completely separate JVM execution from anything in {@code sitejvm}.
@@ -213,18 +213,18 @@ import java.lang.annotation.Target;
  * 
  * @see JUnitSiteIntegrationSetup
  * @see TestNGSiteIntegrationSetup
- * @see BroadleafAdminIntegrationTest
+ * @see UltraAdminIntegrationTest
  * @author Phillip Verheyden (phillipuniverse)
  */
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@ContextConfiguration(name = BroadleafSiteIntegrationTest.CONTEXT_NAME,
-    initializers = BroadleafEnvironmentConfiguringApplicationListener.class,
+@ContextConfiguration(name = UltraSiteIntegrationTest.CONTEXT_NAME,
+    initializers = UltraEnvironmentConfiguringApplicationListener.class,
     classes = SiteTestContextConfiguration.class)
 @WebAppConfiguration
 @ActiveProfiles("mbeansdisabled")
-public @interface BroadleafSiteIntegrationTest {
+public @interface UltraSiteIntegrationTest {
 
     public static final String CONTEXT_NAME = "siteRoot";
 }

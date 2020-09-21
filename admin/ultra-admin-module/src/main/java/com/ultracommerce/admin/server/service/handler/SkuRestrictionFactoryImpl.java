@@ -1,35 +1,35 @@
 /*
  * #%L
- * BroadleafCommerce Admin Module
+ * UltraCommerce Admin Module
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.admin.server.service.handler;
+package com.ultracommerce.admin.server.service.handler;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.criteria.FieldPath;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.criteria.FieldPathBuilder;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.criteria.Restriction;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.criteria.RestrictionFactory;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.criteria.predicate.BetweenDatePredicateProvider;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.criteria.predicate.BetweenPredicateProvider;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.criteria.predicate.CollectionSizeEqualPredicateProvider;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.criteria.predicate.EqPredicateProvider;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.criteria.predicate.IsNullPredicateProvider;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.criteria.predicate.LikePredicateProvider;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.criteria.predicate.PredicateProvider;
+import com.ultracommerce.openadmin.server.service.persistence.module.criteria.FieldPath;
+import com.ultracommerce.openadmin.server.service.persistence.module.criteria.FieldPathBuilder;
+import com.ultracommerce.openadmin.server.service.persistence.module.criteria.Restriction;
+import com.ultracommerce.openadmin.server.service.persistence.module.criteria.RestrictionFactory;
+import com.ultracommerce.openadmin.server.service.persistence.module.criteria.predicate.BetweenDatePredicateProvider;
+import com.ultracommerce.openadmin.server.service.persistence.module.criteria.predicate.BetweenPredicateProvider;
+import com.ultracommerce.openadmin.server.service.persistence.module.criteria.predicate.CollectionSizeEqualPredicateProvider;
+import com.ultracommerce.openadmin.server.service.persistence.module.criteria.predicate.EqPredicateProvider;
+import com.ultracommerce.openadmin.server.service.persistence.module.criteria.predicate.IsNullPredicateProvider;
+import com.ultracommerce.openadmin.server.service.persistence.module.criteria.predicate.LikePredicateProvider;
+import com.ultracommerce.openadmin.server.service.persistence.module.criteria.predicate.PredicateProvider;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -50,10 +50,10 @@ import javax.persistence.criteria.Predicate;
  * on Skus then Sku searches/filters should instead go through a Product first
  */
 @Deprecated
-@Component("blSkuRestrictionFactory")
+@Component("ucSkuRestrictionFactory")
 public class SkuRestrictionFactoryImpl implements RestrictionFactory {
 
-    @Resource(name="blRestrictionFactory")
+    @Resource(name="ucRestrictionFactory")
     protected RestrictionFactory delegate;
 
     protected static final String DEFAULT_SKU_PATH_PREFIX = "product.defaultSku.";

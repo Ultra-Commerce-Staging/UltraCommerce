@@ -1,29 +1,29 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.search.service.solr.index;
+package com.ultracommerce.core.search.service.solr.index;
 
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.common.SolrInputDocument;
-import org.broadleafcommerce.common.exception.ServiceException;
-import org.broadleafcommerce.common.locale.domain.Locale;
-import org.broadleafcommerce.core.catalog.domain.Indexable;
-import org.broadleafcommerce.core.search.domain.IndexField;
+import com.ultracommerce.common.exception.ServiceException;
+import com.ultracommerce.common.locale.domain.Locale;
+import com.ultracommerce.core.catalog.domain.Indexable;
+import com.ultracommerce.core.search.domain.IndexField;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -32,7 +32,7 @@ import java.util.List;
 /**
  * Service exposing several methods for creating a Solr index based on catalog product data.
  *
- * @see org.broadleafcommerce.core.search.service.solr.index.SolrIndexCachedOperation
+ * @see com.ultracommerce.core.search.service.solr.index.SolrIndexCachedOperation
  * @author Andre Azzolini (apazzolini)
  * @author Jeff Fischer
  * @author Phillip Verheyden (phillipuniverse)
@@ -276,7 +276,7 @@ public interface SolrIndexService {
 
     /**
      * SolrIndexService exposes {@link #buildIncrementalIndex(int, int, boolean)}.
-     * By wrapping the call to this method inside of a {@link org.broadleafcommerce.core.search.service.solr.index.SolrIndexCachedOperation.CacheOperation},
+     * By wrapping the call to this method inside of a {@link com.ultracommerce.core.search.service.solr.index.SolrIndexCachedOperation.CacheOperation},
      * a single cache will be used for all the contained calls to buildIncrementalIndex. Here's an example:
      * {@code
      *  performCachedOperation(new SolrIndexCachedOperation.CacheOperation() {

@@ -1,68 +1,68 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.openadmin.server.service;
+package com.ultracommerce.openadmin.server.service;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.admin.domain.AdminMainEntity;
-import org.broadleafcommerce.common.exception.ServiceException;
-import org.broadleafcommerce.common.persistence.EntityConfiguration;
-import org.broadleafcommerce.common.presentation.client.AddMethodType;
-import org.broadleafcommerce.common.presentation.client.PersistencePerspectiveItemType;
-import org.broadleafcommerce.common.presentation.client.SupportedFieldType;
-import org.broadleafcommerce.common.util.BLCMessageUtils;
-import org.broadleafcommerce.common.util.BLCSystemProperty;
-import org.broadleafcommerce.common.util.dao.DynamicDaoHelper;
-import org.broadleafcommerce.common.util.dao.DynamicDaoHelperImpl;
-import org.broadleafcommerce.openadmin.dto.AdornedTargetCollectionMetadata;
-import org.broadleafcommerce.openadmin.dto.AdornedTargetList;
-import org.broadleafcommerce.openadmin.dto.BasicCollectionMetadata;
-import org.broadleafcommerce.openadmin.dto.BasicFieldMetadata;
-import org.broadleafcommerce.openadmin.dto.ClassMetadata;
-import org.broadleafcommerce.openadmin.dto.CollectionMetadata;
-import org.broadleafcommerce.openadmin.dto.CriteriaTransferObject;
-import org.broadleafcommerce.openadmin.dto.DynamicResultSet;
-import org.broadleafcommerce.openadmin.dto.Entity;
-import org.broadleafcommerce.openadmin.dto.FieldMetadata;
-import org.broadleafcommerce.openadmin.dto.FilterAndSortCriteria;
-import org.broadleafcommerce.openadmin.dto.GroupMetadata;
-import org.broadleafcommerce.openadmin.dto.MapMetadata;
-import org.broadleafcommerce.openadmin.dto.MapStructure;
-import org.broadleafcommerce.openadmin.dto.ParentRecordStructure;
-import org.broadleafcommerce.openadmin.dto.PersistencePackage;
-import org.broadleafcommerce.openadmin.dto.Property;
-import org.broadleafcommerce.openadmin.dto.SectionCrumb;
-import org.broadleafcommerce.openadmin.dto.TabMetadata;
-import org.broadleafcommerce.openadmin.exception.EntityNotFoundException;
-import org.broadleafcommerce.openadmin.server.dao.DynamicEntityDao;
-import org.broadleafcommerce.openadmin.server.domain.FetchPageRequest;
-import org.broadleafcommerce.openadmin.server.domain.PersistencePackageRequest;
-import org.broadleafcommerce.openadmin.server.factory.PersistencePackageFactory;
-import org.broadleafcommerce.openadmin.server.service.extension.CriteriaTransferObjectExtensionManager;
-import org.broadleafcommerce.openadmin.server.service.persistence.PersistenceManagerFactory;
-import org.broadleafcommerce.openadmin.server.service.persistence.PersistenceResponse;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.BasicPersistenceModule;
-import org.broadleafcommerce.openadmin.web.form.entity.DynamicEntityFormInfo;
-import org.broadleafcommerce.openadmin.web.form.entity.EntityForm;
-import org.broadleafcommerce.openadmin.web.form.entity.Field;
-import org.broadleafcommerce.openadmin.web.form.entity.Tab;
+import com.ultracommerce.common.admin.domain.AdminMainEntity;
+import com.ultracommerce.common.exception.ServiceException;
+import com.ultracommerce.common.persistence.EntityConfiguration;
+import com.ultracommerce.common.presentation.client.AddMethodType;
+import com.ultracommerce.common.presentation.client.PersistencePerspectiveItemType;
+import com.ultracommerce.common.presentation.client.SupportedFieldType;
+import com.ultracommerce.common.util.UCMessageUtils;
+import com.ultracommerce.common.util.UCSystemProperty;
+import com.ultracommerce.common.util.dao.DynamicDaoHelper;
+import com.ultracommerce.common.util.dao.DynamicDaoHelperImpl;
+import com.ultracommerce.openadmin.dto.AdornedTargetCollectionMetadata;
+import com.ultracommerce.openadmin.dto.AdornedTargetList;
+import com.ultracommerce.openadmin.dto.BasicCollectionMetadata;
+import com.ultracommerce.openadmin.dto.BasicFieldMetadata;
+import com.ultracommerce.openadmin.dto.ClassMetadata;
+import com.ultracommerce.openadmin.dto.CollectionMetadata;
+import com.ultracommerce.openadmin.dto.CriteriaTransferObject;
+import com.ultracommerce.openadmin.dto.DynamicResultSet;
+import com.ultracommerce.openadmin.dto.Entity;
+import com.ultracommerce.openadmin.dto.FieldMetadata;
+import com.ultracommerce.openadmin.dto.FilterAndSortCriteria;
+import com.ultracommerce.openadmin.dto.GroupMetadata;
+import com.ultracommerce.openadmin.dto.MapMetadata;
+import com.ultracommerce.openadmin.dto.MapStructure;
+import com.ultracommerce.openadmin.dto.ParentRecordStructure;
+import com.ultracommerce.openadmin.dto.PersistencePackage;
+import com.ultracommerce.openadmin.dto.Property;
+import com.ultracommerce.openadmin.dto.SectionCrumb;
+import com.ultracommerce.openadmin.dto.TabMetadata;
+import com.ultracommerce.openadmin.exception.EntityNotFoundException;
+import com.ultracommerce.openadmin.server.dao.DynamicEntityDao;
+import com.ultracommerce.openadmin.server.domain.FetchPageRequest;
+import com.ultracommerce.openadmin.server.domain.PersistencePackageRequest;
+import com.ultracommerce.openadmin.server.factory.PersistencePackageFactory;
+import com.ultracommerce.openadmin.server.service.extension.CriteriaTransferObjectExtensionManager;
+import com.ultracommerce.openadmin.server.service.persistence.PersistenceManagerFactory;
+import com.ultracommerce.openadmin.server.service.persistence.PersistenceResponse;
+import com.ultracommerce.openadmin.server.service.persistence.module.BasicPersistenceModule;
+import com.ultracommerce.openadmin.web.form.entity.DynamicEntityFormInfo;
+import com.ultracommerce.openadmin.web.form.entity.EntityForm;
+import com.ultracommerce.openadmin.web.form.entity.Field;
+import com.ultracommerce.openadmin.web.form.entity.Tab;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.stereotype.Service;
 
@@ -81,21 +81,21 @@ import javax.persistence.PersistenceContext;
 /**
  * @author Andre Azzolini (apazzolini)
  */
-@Service("blAdminEntityService")
+@Service("ucAdminEntityService")
 public class AdminEntityServiceImpl implements AdminEntityService {
 
     protected static final Log LOG = LogFactory.getLog(AdminEntityServiceImpl.class);
 
-    @Resource(name = "blDynamicEntityRemoteService")
+    @Resource(name = "ucDynamicEntityRemoteService")
     protected DynamicEntityService service;
 
-    @Resource(name = "blPersistencePackageFactory")
+    @Resource(name = "ucPersistencePackageFactory")
     protected PersistencePackageFactory persistencePackageFactory;
 
-    @PersistenceContext(unitName = "blPU")
+    @PersistenceContext(unitName = "ucPU")
     protected EntityManager em;
 
-    @Resource(name = "blEntityConfiguration")
+    @Resource(name = "ucEntityConfiguration")
     protected EntityConfiguration entityConfiguration;
 
     @Resource
@@ -460,7 +460,7 @@ public class AdminEntityServiceImpl implements AdminEntityService {
                     Map<String, Tab> tabMap = new HashMap<String, Tab>();
                     Tab tab = new Tab();
                     tab.setKey(tabName);
-                    tab.setTitle(BLCMessageUtils.getMessage(tabName));
+                    tab.setTitle(UCMessageUtils.getMessage(tabName));
                     tab.setOrder(tabOrder);
                     tabMap.put(tab.getTitle(), tab);
                     drs.setUnselectedTabMetadata(tabMap);
@@ -1032,7 +1032,7 @@ public class AdminEntityServiceImpl implements AdminEntityService {
     }
 
     protected int getDefaultMaxResults() {
-        return BLCSystemProperty.resolveIntSystemProperty("admin.default.max.results", 50);
+        return UCSystemProperty.resolveIntSystemProperty("admin.default.max.results", 50);
     }
 
     protected Object toIdFieldType(String id, Class<?> entityClass) {

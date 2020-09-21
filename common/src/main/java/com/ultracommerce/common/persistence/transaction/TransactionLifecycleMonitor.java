@@ -1,27 +1,27 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2017 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.persistence.transaction;
+package com.ultracommerce.common.persistence.transaction;
 
 import org.apache.commons.lang3.ArrayUtils;
-import org.broadleafcommerce.common.event.BroadleafApplicationListener;
-import org.broadleafcommerce.common.exception.ExceptionHelper;
-import org.broadleafcommerce.common.logging.SupportLogManager;
-import org.broadleafcommerce.common.logging.SupportLogger;
+import com.ultracommerce.common.event.UltraApplicationListener;
+import com.ultracommerce.common.exception.ExceptionHelper;
+import com.ultracommerce.common.logging.SupportLogManager;
+import com.ultracommerce.common.logging.SupportLogger;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -133,8 +133,8 @@ import javax.persistence.EntityManager;
  *
  * @author Jeff Fischer
  */
-@Component("blTransactionLifecycleMonitor")
-public class TransactionLifecycleMonitor implements BroadleafApplicationListener<TransactionLifecycleEvent>, ApplicationContextAware, SmartLifecycle, SqlStatementLoggable {
+@Component("ucTransactionLifecycleMonitor")
+public class TransactionLifecycleMonitor implements UltraApplicationListener<TransactionLifecycleEvent>, ApplicationContextAware, SmartLifecycle, SqlStatementLoggable {
 
     private static SupportLogger logger = SupportLogManager.getLogger("TransactionLogging", TransactionLifecycleMonitor.class);
     private static ApplicationContext context = null;
@@ -193,7 +193,7 @@ public class TransactionLifecycleMonitor implements BroadleafApplicationListener
     public synchronized void init() {
         if (!isStarted) {
             if (instance == null) {
-                instance = (TransactionLifecycleMonitor) context.getBean("blTransactionLifecycleMonitor");
+                instance = (TransactionLifecycleMonitor) context.getBean("ucTransactionLifecycleMonitor");
             }
             if (isAtLeastOneTransactionManagerEnabled()) {
                 timer.schedule(new TimerTask() {

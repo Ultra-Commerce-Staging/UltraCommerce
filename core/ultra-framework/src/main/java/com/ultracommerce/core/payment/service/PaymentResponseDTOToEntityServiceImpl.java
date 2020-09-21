@@ -1,75 +1,75 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.payment.service;
+package com.ultracommerce.core.payment.service;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.i18n.domain.ISOCountry;
-import org.broadleafcommerce.common.i18n.service.ISOService;
-import org.broadleafcommerce.common.payment.PaymentAdditionalFieldType;
-import org.broadleafcommerce.common.payment.dto.AddressDTO;
-import org.broadleafcommerce.common.payment.dto.PaymentResponseDTO;
-import org.broadleafcommerce.common.util.StringUtil;
-import org.broadleafcommerce.core.order.domain.FulfillmentGroup;
-import org.broadleafcommerce.core.order.domain.Order;
-import org.broadleafcommerce.core.order.service.FulfillmentGroupService;
-import org.broadleafcommerce.core.payment.domain.OrderPayment;
-import org.broadleafcommerce.profile.core.domain.Address;
-import org.broadleafcommerce.profile.core.domain.Country;
-import org.broadleafcommerce.profile.core.domain.CountrySubdivision;
-import org.broadleafcommerce.profile.core.domain.CustomerPayment;
-import org.broadleafcommerce.profile.core.domain.Phone;
-import org.broadleafcommerce.profile.core.domain.State;
-import org.broadleafcommerce.profile.core.service.AddressService;
-import org.broadleafcommerce.profile.core.service.CountryService;
-import org.broadleafcommerce.profile.core.service.CountrySubdivisionService;
-import org.broadleafcommerce.profile.core.service.PhoneService;
-import org.broadleafcommerce.profile.core.service.StateService;
+import com.ultracommerce.common.i18n.domain.ISOCountry;
+import com.ultracommerce.common.i18n.service.ISOService;
+import com.ultracommerce.common.payment.PaymentAdditionalFieldType;
+import com.ultracommerce.common.payment.dto.AddressDTO;
+import com.ultracommerce.common.payment.dto.PaymentResponseDTO;
+import com.ultracommerce.common.util.StringUtil;
+import com.ultracommerce.core.order.domain.FulfillmentGroup;
+import com.ultracommerce.core.order.domain.Order;
+import com.ultracommerce.core.order.service.FulfillmentGroupService;
+import com.ultracommerce.core.payment.domain.OrderPayment;
+import com.ultracommerce.profile.core.domain.Address;
+import com.ultracommerce.profile.core.domain.Country;
+import com.ultracommerce.profile.core.domain.CountrySubdivision;
+import com.ultracommerce.profile.core.domain.CustomerPayment;
+import com.ultracommerce.profile.core.domain.Phone;
+import com.ultracommerce.profile.core.domain.State;
+import com.ultracommerce.profile.core.service.AddressService;
+import com.ultracommerce.profile.core.service.CountryService;
+import com.ultracommerce.profile.core.service.CountrySubdivisionService;
+import com.ultracommerce.profile.core.service.PhoneService;
+import com.ultracommerce.profile.core.service.StateService;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 
 /**
  * @author Elbert Bautista (elbertbautista)
  */
-@Service("blPaymentResponseDTOToEntityService")
+@Service("ucPaymentResponseDTOToEntityService")
 public class PaymentResponseDTOToEntityServiceImpl implements PaymentResponseDTOToEntityService {
 
     private static final Log LOG = LogFactory.getLog(PaymentResponseDTOToEntityServiceImpl.class);
 
-    @Resource(name = "blAddressService")
+    @Resource(name = "ucAddressService")
     protected AddressService addressService;
 
-    @Resource(name = "blStateService")
+    @Resource(name = "ucStateService")
     protected StateService stateService;
 
-    @Resource(name = "blCountryService")
+    @Resource(name = "ucCountryService")
     protected CountryService countryService;
 
-    @Resource(name = "blISOService")
+    @Resource(name = "ucISOService")
     protected ISOService isoService;
 
-    @Resource(name = "blPhoneService")
+    @Resource(name = "ucPhoneService")
     protected PhoneService phoneService;
 
-    @Resource(name = "blFulfillmentGroupService")
+    @Resource(name = "ucFulfillmentGroupService")
     protected FulfillmentGroupService fulfillmentGroupService;
 
-    @Resource(name = "blCountrySubdivisionService")
+    @Resource(name = "ucCountrySubdivisionService")
     protected CountrySubdivisionService countrySubdivisionService;
 
     @Override
@@ -115,7 +115,7 @@ public class PaymentResponseDTOToEntityServiceImpl implements PaymentResponseDTO
         }
         if (state == null) {
             LOG.warn("The given state from the response: " + StringUtil.sanitize(dto.getAddressStateRegion()) + " could not be found"
-                    + " as a state abbreviation in BLC_STATE");
+                    + " as a state abbreviation in UC_STATE");
         }
         address.setState(state);
         
@@ -138,10 +138,10 @@ public class PaymentResponseDTOToEntityServiceImpl implements PaymentResponseDTO
         }
         if (country == null) {
             LOG.warn("The given country from the response: " + StringUtil.sanitize(dto.getAddressCountryCode()) + " could not be found"
-                    + " as a country abbreviation in BLC_COUNTRY");
+                    + " as a country abbreviation in UC_COUNTRY");
         } else if (isoCountry == null) {
             LOG.error("The given country from the response: " + StringUtil.sanitize(dto.getAddressCountryCode()) + " could not be found"
-                    + " as a country alpha-2 code in BLC_ISO_COUNTRY");
+                    + " as a country alpha-2 code in UC_ISO_COUNTRY");
         }
 
         address.setCountry(country);

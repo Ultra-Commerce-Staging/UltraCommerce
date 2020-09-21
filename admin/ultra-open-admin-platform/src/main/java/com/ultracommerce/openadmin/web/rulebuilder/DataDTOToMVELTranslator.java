@@ -1,29 +1,29 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.openadmin.web.rulebuilder;
+package com.ultracommerce.openadmin.web.rulebuilder;
 
 import org.apache.commons.lang.StringUtils;
-import org.broadleafcommerce.common.presentation.client.SupportedFieldType;
-import org.broadleafcommerce.common.util.FormatUtil;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.FieldManager;
-import org.broadleafcommerce.openadmin.web.rulebuilder.dto.DataDTO;
-import org.broadleafcommerce.openadmin.web.rulebuilder.dto.ExpressionDTO;
-import org.broadleafcommerce.openadmin.web.rulebuilder.service.RuleBuilderFieldService;
+import com.ultracommerce.common.presentation.client.SupportedFieldType;
+import com.ultracommerce.common.util.FormatUtil;
+import com.ultracommerce.openadmin.server.service.persistence.module.FieldManager;
+import com.ultracommerce.openadmin.web.rulebuilder.dto.DataDTO;
+import com.ultracommerce.openadmin.web.rulebuilder.dto.ExpressionDTO;
+import com.ultracommerce.openadmin.web.rulebuilder.service.RuleBuilderFieldService;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -72,15 +72,15 @@ public class DataDTOToMVELTranslator {
 
     protected void buildMVEL(DataDTO dataDTO, StringBuffer sb, String entityKey, String groupOperator,
                              RuleBuilderFieldService fieldService) throws MVELTranslationException {
-        BLCOperator operator = null;
+        UCOperator operator = null;
         if (dataDTO instanceof ExpressionDTO) {
-            operator = BLCOperator.valueOf(((ExpressionDTO) dataDTO).getOperator());
+            operator = UCOperator.valueOf(((ExpressionDTO) dataDTO).getOperator());
         } else {
-            operator = BLCOperator.valueOf(dataDTO.getCondition());
+            operator = UCOperator.valueOf(dataDTO.getCondition());
         }
         ArrayList<DataDTO> groups = dataDTO.getRules();
         if (sb.length() != 0 && sb.charAt(sb.length() - 1) != '(' && groupOperator != null) {
-            BLCOperator groupOp = BLCOperator.valueOf(groupOperator);
+            UCOperator groupOp = UCOperator.valueOf(groupOperator);
             switch(groupOp) {
                 default:
                     sb.append("&&");
@@ -93,10 +93,10 @@ public class DataDTOToMVELTranslator {
             buildExpression((ExpressionDTO)dataDTO, sb, entityKey, operator, fieldService);
         } else {
             boolean includeTopLevelParenthesis = false;
-            if (sb.length() != 0 || BLCOperator.NOT.equals(operator) || (sb.length() == 0 && groupOperator != null)) {
+            if (sb.length() != 0 || UCOperator.NOT.equals(operator) || (sb.length() == 0 && groupOperator != null)) {
                 includeTopLevelParenthesis = true;
             }
-            if (BLCOperator.NOT.equals(operator)) {
+            if (UCOperator.NOT.equals(operator)) {
                 sb.append("!");
             }
             if (includeTopLevelParenthesis) sb.append("(");
@@ -108,7 +108,7 @@ public class DataDTOToMVELTranslator {
     }
 
     protected void buildExpression(ExpressionDTO expressionDTO, StringBuffer sb, String entityKey,
-            BLCOperator operator, RuleBuilderFieldService fieldService)
+            UCOperator operator, RuleBuilderFieldService fieldService)
             throws MVELTranslationException {
         String field = expressionDTO.getId();
         String overrideEntityKey = fieldService.getOverrideFieldEntityKey(field);
@@ -519,7 +519,7 @@ public class DataDTOToMVELTranslator {
             }
         } else {
             switch(type) {
-                case BROADLEAF_ENUMERATION:
+                case ULTRA_ENUMERATION:
                     response.append(buildFieldName(entityKey, convertedField));
                     response.append(".getType()");
                     break;

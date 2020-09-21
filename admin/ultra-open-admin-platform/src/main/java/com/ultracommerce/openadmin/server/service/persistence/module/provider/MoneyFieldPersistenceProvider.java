@@ -1,28 +1,28 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.openadmin.server.service.persistence.module.provider;
+package com.ultracommerce.openadmin.server.service.persistence.module.provider;
 
 import org.apache.commons.lang3.StringUtils;
-import org.broadleafcommerce.common.currency.util.CurrencyCodeIdentifiable;
-import org.broadleafcommerce.common.presentation.client.SupportedFieldType;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
-import org.broadleafcommerce.openadmin.dto.Property;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.provider.request.ExtractValueRequest;
+import com.ultracommerce.common.currency.util.CurrencyCodeIdentifiable;
+import com.ultracommerce.common.presentation.client.SupportedFieldType;
+import com.ultracommerce.common.web.UltraRequestContext;
+import com.ultracommerce.openadmin.dto.Property;
+import com.ultracommerce.openadmin.server.service.persistence.module.provider.request.ExtractValueRequest;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -35,7 +35,7 @@ import java.util.Locale;
  * @author Andre Azzolini (apazzolini)
  */
 @Scope("prototype")
-@Component("blMoneyFieldPersistenceProvider")
+@Component("ucMoneyFieldPersistenceProvider")
 public class MoneyFieldPersistenceProvider extends AbstractMoneyFieldPersistenceProvider {
     
     @Override
@@ -50,7 +50,7 @@ public class MoneyFieldPersistenceProvider extends AbstractMoneyFieldPersistence
     
     @Override
     protected Locale getLocale(ExtractValueRequest extractValueRequest, Property property) {
-        BroadleafRequestContext brc = BroadleafRequestContext.getBroadleafRequestContext();
+        UltraRequestContext brc = UltraRequestContext.getUltraRequestContext();
         return brc.getJavaLocale();
     }
 
@@ -71,7 +71,7 @@ public class MoneyFieldPersistenceProvider extends AbstractMoneyFieldPersistence
                 //do nothing
             }
         }
-        BroadleafRequestContext brc = BroadleafRequestContext.getBroadleafRequestContext();
+        UltraRequestContext brc = UltraRequestContext.getUltraRequestContext();
         return brc.getJavaCurrency();
     }
     

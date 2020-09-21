@@ -1,27 +1,27 @@
 /*
  * #%L
- * BroadleafCommerce Profile
+ * UltraCommerce Profile
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.profile.core.dao;
+package com.ultracommerce.profile.core.dao;
 
-import org.broadleafcommerce.common.persistence.EntityConfiguration;
-import org.broadleafcommerce.profile.core.domain.Country;
-import org.broadleafcommerce.profile.core.domain.CountryImpl;
-import org.broadleafcommerce.profile.core.domain.State;
-import org.broadleafcommerce.profile.core.domain.StateImpl;
+import com.ultracommerce.common.persistence.EntityConfiguration;
+import com.ultracommerce.profile.core.domain.Country;
+import com.ultracommerce.profile.core.domain.CountryImpl;
+import com.ultracommerce.profile.core.domain.State;
+import com.ultracommerce.profile.core.domain.StateImpl;
 import org.hibernate.jpa.QueryHints;
 import org.springframework.stereotype.Repository;
 
@@ -32,16 +32,16 @@ import javax.persistence.Query;
 import java.util.List;
 
 /**
- * @deprecated - use {@link org.broadleafcommerce.profile.core.dao.CountrySubdivisionDaoImpl} instead.
+ * @deprecated - use {@link com.ultracommerce.profile.core.dao.CountrySubdivisionDaoImpl} instead.
  */
 @Deprecated
-@Repository("blStateDao")
+@Repository("ucStateDao")
 public class StateDaoImpl implements StateDao {
 
-    @PersistenceContext(unitName = "blPU")
+    @PersistenceContext(unitName = "ucPU")
     protected EntityManager em;
 
-    @Resource(name = "blEntityConfiguration")
+    @Resource(name = "ucEntityConfiguration")
     protected EntityConfiguration entityConfiguration;
 
     public State findStateByAbbreviation(String abbreviation) {
@@ -50,14 +50,14 @@ public class StateDaoImpl implements StateDao {
 
     @SuppressWarnings("unchecked")
     public List<State> findStates() {
-        Query query = em.createNamedQuery("BC_FIND_STATES");
+        Query query = em.createNamedQuery("UC_FIND_STATES");
         query.setHint(QueryHints.HINT_CACHEABLE, true);
         return query.getResultList();
     }
 
     @SuppressWarnings("unchecked")
     public List<State> findStates(String countryAbbreviation) {
-        Query query = em.createNamedQuery("BC_FIND_STATES_BY_COUNTRY_ABBREVIATION");
+        Query query = em.createNamedQuery("UC_FIND_STATES_BY_COUNTRY_ABBREVIATION");
         query.setParameter("countryAbbreviation", countryAbbreviation);
         query.setHint(QueryHints.HINT_CACHEABLE, true);
         return query.getResultList();
@@ -69,7 +69,7 @@ public class StateDaoImpl implements StateDao {
 
     @SuppressWarnings("unchecked")
     public List<Country> findCountries() {
-        Query query = em.createNamedQuery("BC_FIND_COUNTRIES");
+        Query query = em.createNamedQuery("UC_FIND_COUNTRIES");
         query.setHint(QueryHints.HINT_CACHEABLE, true);
         return query.getResultList();
     }

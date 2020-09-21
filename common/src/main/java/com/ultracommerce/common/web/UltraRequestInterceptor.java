@@ -1,21 +1,21 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.web;
+package com.ultracommerce.common.web;
 
 import org.springframework.ui.ModelMap;
 import org.springframework.web.context.request.WebRequest;
@@ -25,19 +25,19 @@ import javax.annotation.Resource;
 
 
 /**
- * <p>Interceptor responsible for setting up the BroadleafRequestContext for the life of the request. This interceptor
- * should be the very first one in the list, as other interceptors might also use {@link BroadleafRequestContext}.</p>
+ * <p>Interceptor responsible for setting up the UltraRequestContext for the life of the request. This interceptor
+ * should be the very first one in the list, as other interceptors might also use {@link UltraRequestContext}.</p>
  * 
- * <p>Note that in Servlet applications you should be using the {@link BroadleafRequestFilter}.</p>
+ * <p>Note that in Servlet applications you should be using the {@link UltraRequestFilter}.</p>
  * 
  * @author Phillip Verheyden
- * @see {@link BroadleafRequestProcessor}
- * @see {@link BroadleafRequestContext}
+ * @see {@link UltraRequestProcessor}
+ * @see {@link UltraRequestContext}
  */
-public class BroadleafRequestInterceptor implements WebRequestInterceptor {
+public class UltraRequestInterceptor implements WebRequestInterceptor {
 
-    @Resource(name = "blRequestProcessor")
-    protected BroadleafRequestProcessor requestProcessor;
+    @Resource(name = "ucRequestProcessor")
+    protected UltraRequestProcessor requestProcessor;
 
     @Override
     public void preHandle(WebRequest request) throws Exception {

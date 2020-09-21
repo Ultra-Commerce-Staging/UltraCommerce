@@ -1,25 +1,25 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.openadmin.web.filter;
+package com.ultracommerce.openadmin.web.filter;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.web.filter.AbstractIgnorableOncePerRequestFilter;
+import com.ultracommerce.common.web.filter.AbstractIgnorableOncePerRequestFilter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -31,9 +31,9 @@ import java.util.Set;
 /**
  * @author Jeff Fischer
  */
-public abstract class AbstractBroadleafAdminRequestFilter extends AbstractIgnorableOncePerRequestFilter {
+public abstract class AbstractUltraAdminRequestFilter extends AbstractIgnorableOncePerRequestFilter {
 
-    private final Log LOG = LogFactory.getLog(AbstractBroadleafAdminRequestFilter.class);
+    private final Log LOG = LogFactory.getLog(AbstractUltraAdminRequestFilter.class);
 
     private Set<String> ignoreSuffixes;
 
@@ -43,7 +43,7 @@ public abstract class AbstractBroadleafAdminRequestFilter extends AbstractIgnora
     /**
      * Determines if the passed in URL should be processed by the content management system.
      * <p/>
-     * By default, this method returns false for any BLC-Admin URLs and service calls and for all
+     * By default, this method returns false for any UC-Admin URLs and service calls and for all
      * common image/digital mime-types (as determined by an internal call to {@code getIgnoreSuffixes}.
      * <p/>
      * This check is called with the {@code doFilterInternal} method to short-circuit the content
@@ -58,7 +58,7 @@ public abstract class AbstractBroadleafAdminRequestFilter extends AbstractIgnora
             String suffix = requestURI.substring(pos);
             if (getIgnoreSuffixes().contains(suffix.toLowerCase())) {
                 if (LOG.isTraceEnabled()) {
-                    LOG.trace("BroadleafProcessURLFilter ignoring request due to suffix " + requestURI);
+                    LOG.trace("UltraProcessURLFilter ignoring request due to suffix " + requestURI);
                 }
                 return false;
             }

@@ -1,28 +1,28 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.email.dao;
+package com.ultracommerce.common.email.dao;
 
-import org.broadleafcommerce.common.email.domain.EmailTarget;
-import org.broadleafcommerce.common.email.domain.EmailTracking;
-import org.broadleafcommerce.common.email.domain.EmailTrackingClicks;
-import org.broadleafcommerce.common.email.domain.EmailTrackingOpens;
-import org.broadleafcommerce.common.persistence.EntityConfiguration;
-import org.broadleafcommerce.common.time.SystemTime;
+import com.ultracommerce.common.email.domain.EmailTarget;
+import com.ultracommerce.common.email.domain.EmailTracking;
+import com.ultracommerce.common.email.domain.EmailTrackingClicks;
+import com.ultracommerce.common.email.domain.EmailTrackingOpens;
+import com.ultracommerce.common.persistence.EntityConfiguration;
+import com.ultracommerce.common.time.SystemTime;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;
@@ -33,20 +33,20 @@ import javax.persistence.PersistenceContext;
  * @author jfischer
  *
  */
-@Repository("blEmailReportingDao")
+@Repository("ucEmailReportingDao")
 public class EmailReportingDaoImpl implements EmailReportingDao {
 
-    @PersistenceContext(unitName="blPU")
+    @PersistenceContext(unitName="ucPU")
     protected EntityManager em;
 
-    @Resource(name="blEntityConfiguration")
+    @Resource(name="ucEntityConfiguration")
     protected EntityConfiguration entityConfiguration;
 
     /* (non-Javadoc)
      * @see WebReportingDao#createTracking(java.lang.String, java.lang.String, java.lang.String)
      */
     public Long createTracking(String emailAddress, String type, String extraValue) {
-        EmailTracking tracking = (EmailTracking) entityConfiguration.createEntityInstance("org.broadleafcommerce.common.email.domain.EmailTracking");
+        EmailTracking tracking = (EmailTracking) entityConfiguration.createEntityInstance("com.ultracommerce.common.email.domain.EmailTracking");
         tracking.setDateSent(SystemTime.asDate());
         tracking.setEmailAddress(emailAddress);
         tracking.setType(type);
@@ -57,17 +57,17 @@ public class EmailReportingDaoImpl implements EmailReportingDao {
     }
 
     public EmailTarget createTarget() {
-        EmailTarget target = (EmailTarget) entityConfiguration.createEntityInstance("org.broadleafcommerce.common.email.domain.EmailTarget");
+        EmailTarget target = (EmailTarget) entityConfiguration.createEntityInstance("com.ultracommerce.common.email.domain.EmailTarget");
         return target;
     }
 
     @SuppressWarnings("unchecked")
     public EmailTracking retrieveTracking(Long emailId) {
-        return (EmailTracking) em.find(entityConfiguration.lookupEntityClass("org.broadleafcommerce.common.email.domain.EmailTracking"), emailId);
+        return (EmailTracking) em.find(entityConfiguration.lookupEntityClass("com.ultracommerce.common.email.domain.EmailTracking"), emailId);
     }
 
     public void recordOpen(Long emailId, String userAgent) {
-        EmailTrackingOpens opens = (EmailTrackingOpens) entityConfiguration.createEntityInstance("org.broadleafcommerce.common.email.domain.EmailTrackingOpens");
+        EmailTrackingOpens opens = (EmailTrackingOpens) entityConfiguration.createEntityInstance("com.ultracommerce.common.email.domain.EmailTrackingOpens");
         opens.setEmailTracking(retrieveTracking(emailId));
         opens.setDateOpened(SystemTime.asDate());
         opens.setUserAgent(userAgent);
@@ -76,7 +76,7 @@ public class EmailReportingDaoImpl implements EmailReportingDao {
     }
 
     public void recordClick(Long emailId, String customerId, String destinationUri, String queryString) {
-        EmailTrackingClicks clicks = (EmailTrackingClicks) entityConfiguration.createEntityInstance("org.broadleafcommerce.common.email.domain.EmailTrackingClicks");
+        EmailTrackingClicks clicks = (EmailTrackingClicks) entityConfiguration.createEntityInstance("com.ultracommerce.common.email.domain.EmailTrackingClicks");
         clicks.setEmailTracking(retrieveTracking(emailId));
         clicks.setDateClicked(SystemTime.asDate());
         clicks.setDestinationUri(destinationUri);

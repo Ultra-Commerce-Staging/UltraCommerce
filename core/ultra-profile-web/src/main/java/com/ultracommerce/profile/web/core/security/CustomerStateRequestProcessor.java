@@ -1,33 +1,33 @@
 /*
  * #%L
- * BroadleafCommerce Profile Web
+ * UltraCommerce Profile Web
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.profile.web.core.security;
+package com.ultracommerce.profile.web.core.security;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.extension.ExtensionResultHolder;
-import org.broadleafcommerce.common.extension.ExtensionResultStatusType;
-import org.broadleafcommerce.common.util.BLCRequestUtils;
-import org.broadleafcommerce.common.web.AbstractBroadleafWebRequestProcessor;
-import org.broadleafcommerce.common.web.BroadleafRequestCustomerResolverImpl;
-import org.broadleafcommerce.profile.core.domain.Customer;
-import org.broadleafcommerce.profile.core.service.CustomerService;
-import org.broadleafcommerce.profile.web.core.CustomerState;
-import org.broadleafcommerce.profile.web.core.CustomerStateRefresher;
+import com.ultracommerce.common.extension.ExtensionResultHolder;
+import com.ultracommerce.common.extension.ExtensionResultStatusType;
+import com.ultracommerce.common.util.UCRequestUtils;
+import com.ultracommerce.common.web.AbstractUltraWebRequestProcessor;
+import com.ultracommerce.common.web.UltraRequestCustomerResolverImpl;
+import com.ultracommerce.profile.core.domain.Customer;
+import com.ultracommerce.profile.core.service.CustomerService;
+import com.ultracommerce.profile.web.core.CustomerState;
+import com.ultracommerce.profile.web.core.CustomerStateRefresher;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.ApplicationEventPublisherAware;
@@ -49,37 +49,37 @@ import javax.annotation.Resource;
  * @author Phillip Verheyden
  * @see {@link CustomerStateFilter}
  */
-@Component("blCustomerStateRequestProcessor")
-public class CustomerStateRequestProcessor extends AbstractBroadleafWebRequestProcessor implements ApplicationEventPublisherAware {
+@Component("ucCustomerStateRequestProcessor")
+public class CustomerStateRequestProcessor extends AbstractUltraWebRequestProcessor implements ApplicationEventPublisherAware {
 
     /** Logger for this class and subclasses */
     protected final Log logger = LogFactory.getLog(getClass());
 
-    public static final String BLC_RULE_MAP_PARAM = "blRuleMap";
+    public static final String UC_RULE_MAP_PARAM = "ucRuleMap";
 
-    @Resource(name="blCustomerService")
+    @Resource(name="ucCustomerService")
     protected CustomerService customerService;
     
-    @Resource(name = "blCustomerMergeExtensionManager")
+    @Resource(name = "ucCustomerMergeExtensionManager")
     protected CustomerMergeExtensionManager customerMergeExtensionManager;
 
-    @Resource(name = "blAnonymousCustomerExtensionManager")
+    @Resource(name = "ucAnonymousCustomerExtensionManager")
     protected AnonymousCustomerExtensionManager anonymousCustomerExtensionManager;
 
     protected ApplicationEventPublisher eventPublisher;
 
-    public static final String ANONYMOUS_CUSTOMER_SESSION_ATTRIBUTE_NAME = "_blc_anonymousCustomer";
-    public static final String ANONYMOUS_CUSTOMER_ID_SESSION_ATTRIBUTE_NAME = "_blc_anonymousCustomerId";
-    private static final String LAST_PUBLISHED_EVENT_CLASS_SESSION_ATTRIBUTE_NAME = "_blc_lastPublishedEventClass";
-    private static final String LAST_PUBLISHED_EVENT_USERNAME_SESSION_ATTRIBUTE_NAME = "_blc_lastPublishedEventUsername";
-    public static final String OVERRIDE_CUSTOMER_SESSION_ATTR_NAME = "_blc_overrideCustomerId";
-    public static final String ANONYMOUS_CUSTOMER_MERGED_SESSION_ATTRIBUTE_NAME = "_blc_anonymousCustomerMerged";
+    public static final String ANONYMOUS_CUSTOMER_SESSION_ATTRIBUTE_NAME = "_uc_anonymousCustomer";
+    public static final String ANONYMOUS_CUSTOMER_ID_SESSION_ATTRIBUTE_NAME = "_uc_anonymousCustomerId";
+    private static final String LAST_PUBLISHED_EVENT_CLASS_SESSION_ATTRIBUTE_NAME = "_uc_lastPublishedEventClass";
+    private static final String LAST_PUBLISHED_EVENT_USERNAME_SESSION_ATTRIBUTE_NAME = "_uc_lastPublishedEventUsername";
+    public static final String OVERRIDE_CUSTOMER_SESSION_ATTR_NAME = "_uc_overrideCustomerId";
+    public static final String ANONYMOUS_CUSTOMER_MERGED_SESSION_ATTRIBUTE_NAME = "_uc_anonymousCustomerMerged";
 
     @Override
     public void process(WebRequest request) {
         Customer customer = null;
         Long overrideId = null;
-        if (BLCRequestUtils.isOKtoUseSession(request)) {
+        if (UCRequestUtils.isOKtoUseSession(request)) {
             overrideId = (Long) request.getAttribute(OVERRIDE_CUSTOMER_SESSION_ATTR_NAME, WebRequest.SCOPE_SESSION);
         }
         if (overrideId != null) {
@@ -91,7 +91,7 @@ public class CustomerStateRequestProcessor extends AbstractBroadleafWebRequestPr
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             if ((authentication != null) && !(authentication instanceof AnonymousAuthenticationToken)) {
                 String userName = authentication.getName();
-                customer = (Customer) BroadleafRequestCustomerResolverImpl.getRequestCustomerResolver().getCustomer(request);
+                customer = (Customer) UltraRequestCustomerResolverImpl.getRequestCustomerResolver().getCustomer(request);
                 if (userName != null && (customer == null || !userName.equals(customer.getUsername()))) {
                     // can only get here if the authenticated user does not match the user in session
                     customer = customerService.readCustomerByUsername(userName);
@@ -100,8 +100,8 @@ public class CustomerStateRequestProcessor extends AbstractBroadleafWebRequestPr
                     }
                 }
                 if (customer != null) {
-                    String lastPublishedEventClass = (String) BLCRequestUtils.getSessionAttributeIfOk(request, LAST_PUBLISHED_EVENT_CLASS_SESSION_ATTRIBUTE_NAME);
-                    String eventUsername = (String) BLCRequestUtils.getSessionAttributeIfOk(request, LAST_PUBLISHED_EVENT_USERNAME_SESSION_ATTRIBUTE_NAME);
+                    String lastPublishedEventClass = (String) UCRequestUtils.getSessionAttributeIfOk(request, LAST_PUBLISHED_EVENT_CLASS_SESSION_ATTRIBUTE_NAME);
+                    String eventUsername = (String) UCRequestUtils.getSessionAttributeIfOk(request, LAST_PUBLISHED_EVENT_USERNAME_SESSION_ATTRIBUTE_NAME);
                     
                     if (authentication instanceof RememberMeAuthenticationToken) {
                         // set transient property of customer
@@ -150,19 +150,19 @@ public class CustomerStateRequestProcessor extends AbstractBroadleafWebRequestPr
 
         // Setup customer for content rule processing
         @SuppressWarnings("unchecked")
-        Map<String,Object> ruleMap = (Map<String, Object>) request.getAttribute(BLC_RULE_MAP_PARAM, WebRequest.SCOPE_REQUEST);
+        Map<String,Object> ruleMap = (Map<String, Object>) request.getAttribute(UC_RULE_MAP_PARAM, WebRequest.SCOPE_REQUEST);
         if (ruleMap == null) {
             ruleMap = new HashMap<String,Object>();
         }
         ruleMap.put("customer", customer);
-        request.setAttribute(BLC_RULE_MAP_PARAM, ruleMap, WebRequest.SCOPE_REQUEST);
+        request.setAttribute(UC_RULE_MAP_PARAM, ruleMap, WebRequest.SCOPE_REQUEST);
         
     }
     
     protected void publishEvent(ApplicationEvent event, WebRequest request, String eventClass, String username) {
         eventPublisher.publishEvent(event);
-        BLCRequestUtils.setSessionAttributeIfOk(request, LAST_PUBLISHED_EVENT_CLASS_SESSION_ATTRIBUTE_NAME, eventClass);
-        BLCRequestUtils.setSessionAttributeIfOk(request, LAST_PUBLISHED_EVENT_USERNAME_SESSION_ATTRIBUTE_NAME, username);
+        UCRequestUtils.setSessionAttributeIfOk(request, LAST_PUBLISHED_EVENT_CLASS_SESSION_ATTRIBUTE_NAME, eventClass);
+        UCRequestUtils.setSessionAttributeIfOk(request, LAST_PUBLISHED_EVENT_USERNAME_SESSION_ATTRIBUTE_NAME, username);
     }
     
     /**
@@ -173,7 +173,7 @@ public class CustomerStateRequestProcessor extends AbstractBroadleafWebRequestPr
      * @return
      */
     protected Customer mergeCustomerIfRequired(WebRequest request, Customer customer) {
-        if (BLCRequestUtils.isOKtoUseSession(request)) {
+        if (UCRequestUtils.isOKtoUseSession(request)) {
             //Don't call this if it has already been called
             if (request.getAttribute(getAnonymousCustomerMergedSessionAttributeName(), WebRequest.SCOPE_SESSION) == null) {
                 //Set this so we don't do this every time.
@@ -268,7 +268,7 @@ public class CustomerStateRequestProcessor extends AbstractBroadleafWebRequestPr
         //and store the entire customer in session (don't persist to DB just yet)
         if (customer == null) {
             customer = customerService.createNewCustomer();
-            if (BLCRequestUtils.isOKtoUseSession(request)) {
+            if (UCRequestUtils.isOKtoUseSession(request)) {
                 request.setAttribute(getAnonymousCustomerSessionAttributeName(), customer, WebRequest.SCOPE_SESSION);
             }
         }
@@ -297,7 +297,7 @@ public class CustomerStateRequestProcessor extends AbstractBroadleafWebRequestPr
             }
         }
 
-        if (BLCRequestUtils.isOKtoUseSession(request)) {
+        if (UCRequestUtils.isOKtoUseSession(request)) {
             Customer anonymousCustomer = (Customer) request.getAttribute(getAnonymousCustomerSessionAttributeName(),
                     WebRequest.SCOPE_SESSION);
             if (anonymousCustomer == null) {
@@ -331,13 +331,13 @@ public class CustomerStateRequestProcessor extends AbstractBroadleafWebRequestPr
 
     /**
      * <p>Returns the session attribute to store the anonymous customer ID. This session attribute should be used to track
-     * anonymous customers that have not registered but have state in the database. When users first visit the Broadleaf
+     * anonymous customers that have not registered but have state in the database. When users first visit the Ultra
      * site, a new {@link Customer} is instantiated but is <b>only saved in session</b> and not persisted to the database. However,
      * once that user adds something to the cart, that {@link Customer} is now saved in the database and it no longer makes
      * sense to pull back a full {@link Customer} object from session, as any session-based {@link Customer} will be out of
      * date in regards to Hibernate (specifically with lists).</p>
      * 
-     * <p>So, once Broadleaf detects that the session-based {@link Customer} has been persisted, it should remove the session-based
+     * <p>So, once Ultra detects that the session-based {@link Customer} has been persisted, it should remove the session-based
      * {@link Customer} and then utilize just the customer ID from session.</p>
      * 
      * @see {@link CustomerStateRefresher}
@@ -363,7 +363,7 @@ public class CustomerStateRequestProcessor extends AbstractBroadleafWebRequestPr
      * @see {@link CustomerState}
      */
     public static String getCustomerRequestAttributeName() {
-        return BroadleafRequestCustomerResolverImpl.getRequestCustomerResolver().getCustomerRequestAttributeName();
+        return UltraRequestCustomerResolverImpl.getRequestCustomerResolver().getCustomerRequestAttributeName();
     }
     
     /**

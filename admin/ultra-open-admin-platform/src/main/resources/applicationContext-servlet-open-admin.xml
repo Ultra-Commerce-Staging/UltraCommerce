@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
   #%L
-  BroadleafCommerce Open Admin Platform
+  UltraCommerce Open Admin Platform
   %%
-  Copyright (C) 2009 - 2016 Broadleaf Commerce
+  Copyright (C) 2009 - 2016 Ultra Commerce
   %%
-  Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
-  (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
-  unless the restrictions on use therein are violated and require payment to Broadleaf in which case
-  the Broadleaf End User License Agreement (EULA), Version 1.1
-  (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+  Licensed under the Ultra Fair Use License Agreement, Version 1.0
+  (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+  unless the restrictions on use therein are violated and require payment to Ultra in which case
+  the Ultra End User License Agreement (EULA), Version 1.1
+  (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
   shall apply.
   
   Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
-  between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+  between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
   #L%
   -->
 
@@ -29,21 +29,21 @@
 
     <aop:config/>
     
-    <!-- Scan Broadleaf defined web utility classes -->
-    <context:component-scan base-package="org.broadleafcommerce.openadmin.web.controller">
-        <context:exclude-filter type="annotation" expression="org.broadleafcommerce.common.config.PostAutoConfiguration"/>
+    <!-- Scan Ultra defined web utility classes -->
+    <context:component-scan base-package="com.ultracommerce.openadmin.web.controller">
+        <context:exclude-filter type="annotation" expression="com.ultracommerce.common.config.PostAutoConfiguration"/>
     </context:component-scan>
     
     <bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
         <property name="order" value="1"/>
     </bean>
 
-    <bean id="blAdminExceptionResolver" class="org.broadleafcommerce.openadmin.web.handler.AdminMappingExceptionResolver">
+    <bean id="ucAdminExceptionResolver" class="com.ultracommerce.openadmin.web.handler.AdminMappingExceptionResolver">
         <property name="showDebugMessage" value="${exception.showDebugMessage}" />
         <property name="order" value="#{T(org.springframework.core.Ordered).LOWEST_PRECEDENCE - 50}" />
     </bean>
     
-    <bean id="blAdminTranslationControllerExtensionListeners" class="org.springframework.beans.factory.config.ListFactoryBean">
+    <bean id="ucAdminTranslationControllerExtensionListeners" class="org.springframework.beans.factory.config.ListFactoryBean">
         <property name="sourceList">
             <list>
             </list>

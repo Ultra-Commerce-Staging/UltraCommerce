@@ -1,53 +1,53 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.openadmin.server.dao.provider.metadata;
+package com.ultracommerce.openadmin.server.dao.provider.metadata;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.presentation.AdminPresentationMap;
-import org.broadleafcommerce.common.presentation.AdminPresentationOperationTypes;
-import org.broadleafcommerce.common.presentation.FieldValueConfiguration;
-import org.broadleafcommerce.common.presentation.client.OperationType;
-import org.broadleafcommerce.common.presentation.client.PersistencePerspectiveItemType;
-import org.broadleafcommerce.common.presentation.client.UnspecifiedBooleanType;
-import org.broadleafcommerce.common.presentation.override.AdminPresentationMapOverride;
-import org.broadleafcommerce.common.presentation.override.AdminPresentationMergeEntry;
-import org.broadleafcommerce.common.presentation.override.AdminPresentationMergeOverride;
-import org.broadleafcommerce.common.presentation.override.AdminPresentationMergeOverrides;
-import org.broadleafcommerce.common.presentation.override.AdminPresentationOverrides;
-import org.broadleafcommerce.common.presentation.override.PropertyType;
-import org.broadleafcommerce.openadmin.dto.FieldMetadata;
-import org.broadleafcommerce.openadmin.dto.ForeignKey;
-import org.broadleafcommerce.openadmin.dto.MapMetadata;
-import org.broadleafcommerce.openadmin.dto.MapStructure;
-import org.broadleafcommerce.openadmin.dto.PersistencePerspective;
-import org.broadleafcommerce.openadmin.dto.SimpleValueMapStructure;
-import org.broadleafcommerce.openadmin.dto.override.FieldMetadataOverride;
-import org.broadleafcommerce.openadmin.dto.override.MetadataOverride;
-import org.broadleafcommerce.openadmin.server.dao.DynamicEntityDao;
-import org.broadleafcommerce.openadmin.server.dao.FieldInfo;
-import org.broadleafcommerce.openadmin.server.dao.provider.metadata.request.AddFieldMetadataRequest;
-import org.broadleafcommerce.openadmin.server.dao.provider.metadata.request.AddMetadataFromFieldTypeRequest;
-import org.broadleafcommerce.openadmin.server.dao.provider.metadata.request.OverrideViaAnnotationRequest;
-import org.broadleafcommerce.openadmin.server.dao.provider.metadata.request.OverrideViaXmlRequest;
-import org.broadleafcommerce.openadmin.server.service.type.MetadataProviderResponse;
+import com.ultracommerce.common.presentation.AdminPresentationMap;
+import com.ultracommerce.common.presentation.AdminPresentationOperationTypes;
+import com.ultracommerce.common.presentation.FieldValueConfiguration;
+import com.ultracommerce.common.presentation.client.OperationType;
+import com.ultracommerce.common.presentation.client.PersistencePerspectiveItemType;
+import com.ultracommerce.common.presentation.client.UnspecifiedBooleanType;
+import com.ultracommerce.common.presentation.override.AdminPresentationMapOverride;
+import com.ultracommerce.common.presentation.override.AdminPresentationMergeEntry;
+import com.ultracommerce.common.presentation.override.AdminPresentationMergeOverride;
+import com.ultracommerce.common.presentation.override.AdminPresentationMergeOverrides;
+import com.ultracommerce.common.presentation.override.AdminPresentationOverrides;
+import com.ultracommerce.common.presentation.override.PropertyType;
+import com.ultracommerce.openadmin.dto.FieldMetadata;
+import com.ultracommerce.openadmin.dto.ForeignKey;
+import com.ultracommerce.openadmin.dto.MapMetadata;
+import com.ultracommerce.openadmin.dto.MapStructure;
+import com.ultracommerce.openadmin.dto.PersistencePerspective;
+import com.ultracommerce.openadmin.dto.SimpleValueMapStructure;
+import com.ultracommerce.openadmin.dto.override.FieldMetadataOverride;
+import com.ultracommerce.openadmin.dto.override.MetadataOverride;
+import com.ultracommerce.openadmin.server.dao.DynamicEntityDao;
+import com.ultracommerce.openadmin.server.dao.FieldInfo;
+import com.ultracommerce.openadmin.server.dao.provider.metadata.request.AddFieldMetadataRequest;
+import com.ultracommerce.openadmin.server.dao.provider.metadata.request.AddMetadataFromFieldTypeRequest;
+import com.ultracommerce.openadmin.server.dao.provider.metadata.request.OverrideViaAnnotationRequest;
+import com.ultracommerce.openadmin.server.dao.provider.metadata.request.OverrideViaXmlRequest;
+import com.ultracommerce.openadmin.server.service.type.MetadataProviderResponse;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -61,7 +61,7 @@ import java.util.Map;
 /**
  * @author Jeff Fischer
  */
-@Component("blMapFieldMetadataProvider")
+@Component("ucMapFieldMetadataProvider")
 @Scope("prototype")
 public class MapFieldMetadataProvider extends AdvancedCollectionFieldMetadataProvider {
 
@@ -441,7 +441,7 @@ public class MapFieldMetadataProvider extends AdvancedCollectionFieldMetadataPro
 
         metadata.setTargetClass(targetClass.getName());
         metadata.setFieldName(field.getName());
-        org.broadleafcommerce.openadmin.dto.OperationTypes dtoOperationTypes = new org.broadleafcommerce.openadmin.dto.OperationTypes(OperationType.MAP, OperationType.MAP, OperationType.MAP, OperationType.MAP, OperationType.MAP);
+        com.ultracommerce.openadmin.dto.OperationTypes dtoOperationTypes = new com.ultracommerce.openadmin.dto.OperationTypes(OperationType.MAP, OperationType.MAP, OperationType.MAP, OperationType.MAP, OperationType.MAP);
         if (map.getAddType() != null) {
             dtoOperationTypes.setAddType(map.getAddType());
         }

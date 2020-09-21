@@ -1,33 +1,33 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.order.domain;
+package com.ultracommerce.core.order.domain;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.copy.CreateResponse;
-import org.broadleafcommerce.common.copy.MultiTenantCopyContext;
-import org.broadleafcommerce.common.currency.util.BroadleafCurrencyUtils;
-import org.broadleafcommerce.common.money.Money;
-import org.broadleafcommerce.common.presentation.AdminPresentation;
-import org.broadleafcommerce.common.presentation.override.AdminPresentationMergeEntry;
-import org.broadleafcommerce.common.presentation.override.AdminPresentationMergeOverride;
-import org.broadleafcommerce.common.presentation.override.AdminPresentationMergeOverrides;
-import org.broadleafcommerce.common.presentation.override.PropertyType;
+import com.ultracommerce.common.copy.CreateResponse;
+import com.ultracommerce.common.copy.MultiTenantCopyContext;
+import com.ultracommerce.common.currency.util.UltraCurrencyUtils;
+import com.ultracommerce.common.money.Money;
+import com.ultracommerce.common.presentation.AdminPresentation;
+import com.ultracommerce.common.presentation.override.AdminPresentationMergeEntry;
+import com.ultracommerce.common.presentation.override.AdminPresentationMergeOverride;
+import com.ultracommerce.common.presentation.override.AdminPresentationMergeOverrides;
+import com.ultracommerce.common.presentation.override.PropertyType;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
@@ -48,8 +48,8 @@ import javax.persistence.Table;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "BLC_BUND_ITEM_FEE_PRICE")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE, region = "blOrderElements")
+@Table(name = "UC_BUND_ITEM_FEE_PRICE")
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE, region = "ucOrderElements")
 @AdminPresentationMergeOverrides(
     {
         @AdminPresentationMergeOverride(name = "", mergeEntries =
@@ -66,10 +66,10 @@ public class BundleOrderItemFeePriceImpl implements BundleOrderItemFeePrice  {
     @GeneratedValue(generator = "BundleOrderItemFeePriceId")
     @GenericGenerator(
         name="BundleOrderItemFeePriceId",
-        strategy="org.broadleafcommerce.common.persistence.IdOverrideTableGenerator",
+        strategy="com.ultracommerce.common.persistence.IdOverrideTableGenerator",
         parameters = {
             @Parameter(name="segment_value", value="BundleOrderItemFeePriceImpl"),
-            @Parameter(name="entity_name", value="org.broadleafcommerce.core.order.domain.BundleOrderItemFeePriceImpl")
+            @Parameter(name="entity_name", value="com.ultracommerce.core.order.domain.BundleOrderItemFeePriceImpl")
         }
     )
     @Column(name = "BUND_ITEM_FEE_PRICE_ID")
@@ -157,14 +157,14 @@ public class BundleOrderItemFeePriceImpl implements BundleOrderItemFeePrice  {
 
     public void checkCloneable(BundleOrderItemFeePrice bundleFeePrice) throws CloneNotSupportedException, SecurityException, NoSuchMethodException {
         Method cloneMethod = bundleFeePrice.getClass().getMethod("clone", new Class[]{});
-        if (cloneMethod.getDeclaringClass().getName().startsWith("org.broadleafcommerce") && !bundleFeePrice.getClass().getName().startsWith("org.broadleafcommerce")) {
+        if (cloneMethod.getDeclaringClass().getName().startsWith("com.ultracommerce") && !bundleFeePrice.getClass().getName().startsWith("com.ultracommerce")) {
             //subclass is not implementing the clone method
             throw new CloneNotSupportedException("Custom extensions and implementations should implement clone in order to guarantee split and merge operations are performed accurately");
         }
     }
 
     protected Money convertToMoney(BigDecimal amount) {
-        return amount == null ? null : BroadleafCurrencyUtils.getMoney(amount, bundleOrderItem.getOrder().getCurrency());
+        return amount == null ? null : UltraCurrencyUtils.getMoney(amount, bundleOrderItem.getOrder().getCurrency());
     }
 
     @Override
@@ -176,7 +176,7 @@ public class BundleOrderItemFeePriceImpl implements BundleOrderItemFeePrice  {
             try {
                 checkCloneable(clone);
             } catch (CloneNotSupportedException e) {
-                LOG.warn("Clone implementation missing in inheritance hierarchy outside of Broadleaf: " + clone.getClass().getName(), e);
+                LOG.warn("Clone implementation missing in inheritance hierarchy outside of Ultra: " + clone.getClass().getName(), e);
             }
             clone.setAmount(convertToMoney(amount));
             clone.setName(name);

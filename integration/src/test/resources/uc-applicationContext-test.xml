@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
   #%L
-  BroadleafCommerce Integration
+  UltraCommerce Integration
   %%
-  Copyright (C) 2009 - 2016 Broadleaf Commerce
+  Copyright (C) 2009 - 2016 Ultra Commerce
   %%
-  Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
-  (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
-  unless the restrictions on use therein are violated and require payment to Broadleaf in which case
-  the Broadleaf End User License Agreement (EULA), Version 1.1
-  (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+  Licensed under the Ultra Fair Use License Agreement, Version 1.0
+  (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+  unless the restrictions on use therein are violated and require payment to Ultra in which case
+  the Ultra End User License Agreement (EULA), Version 1.1
+  (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
   shall apply.
   
   Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
-  between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+  between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
   #L%
   -->
 
@@ -29,52 +29,52 @@
                         http://www.springframework.org/schema/tx
                         http://www.springframework.org/schema/tx/spring-tx.xsd">
 
-    <context:component-scan base-package="org.broadleafcommerce.common.web"/>
-    <context:component-scan base-package="org.broadleafcommerce.core.web"/>
-    <context:component-scan base-package="org.broadleafcommerce.cms.file"/>
+    <context:component-scan base-package="com.ultracommerce.common.web"/>
+    <context:component-scan base-package="com.ultracommerce.core.web"/>
+    <context:component-scan base-package="com.ultracommerce.cms.file"/>
     
-    <bean id="blDefaultErrorHandler" class="org.broadleafcommerce.core.workflow.SilentErrorHandler"/>
+    <bean id="ucDefaultErrorHandler" class="com.ultracommerce.core.workflow.SilentErrorHandler"/>
 
-    <bean id="blTestRollbackHandler" class="org.broadleafcommerce.core.workflow.state.test.TestRollbackHandler"/>
+    <bean id="ucTestRollbackHandler" class="com.ultracommerce.core.workflow.state.test.TestRollbackHandler"/>
     
-    <bean id="blTestPaymentConfigurationServices" class="org.springframework.beans.factory.config.ListFactoryBean">
+    <bean id="ucTestPaymentConfigurationServices" class="org.springframework.beans.factory.config.ListFactoryBean">
         <property name="sourceList">
             <list>
-                <ref bean="blNullIntegrationGatewayConfigurationService"/>
+                <ref bean="ucNullIntegrationGatewayConfigurationService"/>
             </list>
         </property>
     </bean>
-    <bean class="org.broadleafcommerce.common.extensibility.context.merge.LateStageMergeBeanPostProcessor">
-        <property name="collectionRef" value="blTestPaymentConfigurationServices"/>
-        <property name="targetRef" value="blPaymentGatewayConfigurationServices"/>
+    <bean class="com.ultracommerce.common.extensibility.context.merge.LateStageMergeBeanPostProcessor">
+        <property name="collectionRef" value="ucTestPaymentConfigurationServices"/>
+        <property name="targetRef" value="ucPaymentGatewayConfigurationServices"/>
     </bean>
     
     <!-- Test pricing with the simple tax provider -->
-    <bean id="blSimpleTaxProvider" class="org.broadleafcommerce.core.pricing.service.tax.provider.SimpleTaxProvider"
+    <bean id="ucSimpleTaxProvider" class="com.ultracommerce.core.pricing.service.tax.provider.SimpleTaxProvider"
           p:defaultItemTaxRate="0.05" />
           
     <bean id="testTaxProviders" class="org.springframework.beans.factory.config.ListFactoryBean">
         <property name="sourceList">
             <list>
-                <ref bean="blSimpleTaxProvider" />
+                <ref bean="ucSimpleTaxProvider" />
             </list>
         </property>
     </bean>
 
-    <bean class="org.broadleafcommerce.common.extensibility.context.merge.LateStageMergeBeanPostProcessor">
+    <bean class="com.ultracommerce.common.extensibility.context.merge.LateStageMergeBeanPostProcessor">
         <property name="collectionRef" value="testTaxProviders"/>
-        <property name="targetRef" value="blTaxProviders"/>
+        <property name="targetRef" value="ucTaxProviders"/>
     </bean>
     
     <!-- Configuration used in WorkflowTests -->
-    <bean p:order="8080" id="blTotalActivity"
-          class="org.broadleafcommerce.core.pricing.service.workflow.TotalActivity"/>
+    <bean p:order="8080" id="ucTotalActivity"
+          class="com.ultracommerce.core.pricing.service.workflow.TotalActivity"/>
 
-    <bean id="blCheckoutWorkflowActivities-it" class="org.springframework.beans.factory.config.ListFactoryBean">
+    <bean id="ucCheckoutWorkflowActivities-it" class="org.springframework.beans.factory.config.ListFactoryBean">
         <property name="sourceList">
             <list>
                 <!-- The order properties defined here matter; these are used in WorkflowTest and could also be added to
-                     by bean definitions in bl-applicationContext-test-module.xml -->
+                     by bean definitions in uc-applicationContext-test-module.xml -->
                 <!--
                     The final configuration of this workflow should be:
                     0  100 - PassThroughActivity
@@ -91,88 +91,88 @@
                     11 7000 - framework activity
                     12 8000 - TestExampleModuleActivity
                 -->
-                <bean p:order="100" class="org.broadleafcommerce.core.workflow.PassThroughActivity"/>
-                <bean p:order="5000" class="org.broadleafcommerce.core.workflow.state.test.TestRollbackActivity">
+                <bean p:order="100" class="com.ultracommerce.core.workflow.PassThroughActivity"/>
+                <bean p:order="5000" class="com.ultracommerce.core.workflow.state.test.TestRollbackActivity">
                     <property name="errorHandler">
-                        <bean class="org.broadleafcommerce.core.workflow.state.test.TestPassThroughRollbackErrorHandler"/>
+                        <bean class="com.ultracommerce.core.workflow.state.test.TestPassThroughRollbackErrorHandler"/>
                     </property>
                 </bean>
-                <bean p:order="3000" class="org.broadleafcommerce.core.workflow.PassThroughActivity"/>
+                <bean p:order="3000" class="com.ultracommerce.core.workflow.PassThroughActivity"/>
             </list>
         </property>
     </bean>
 
-    <bean class="org.broadleafcommerce.common.extensibility.context.merge.LateStageMergeBeanPostProcessor">
-        <property name="collectionRef" value="blCheckoutWorkflowActivities-it"/>
-        <property name="targetRef" value="blCheckoutWorkflowActivities"/>
+    <bean class="com.ultracommerce.common.extensibility.context.merge.LateStageMergeBeanPostProcessor">
+        <property name="collectionRef" value="ucCheckoutWorkflowActivities-it"/>
+        <property name="targetRef" value="ucCheckoutWorkflowActivities"/>
     </bean>
 
-    <bean id="blCheckoutWorkflow" class="org.broadleafcommerce.core.workflow.SequenceProcessor">
+    <bean id="ucCheckoutWorkflow" class="com.ultracommerce.core.workflow.SequenceProcessor">
         <property name="processContextFactory">
-            <bean class="org.broadleafcommerce.core.checkout.service.workflow.CheckoutProcessContextFactory"/>
+            <bean class="com.ultracommerce.core.checkout.service.workflow.CheckoutProcessContextFactory"/>
         </property>
-        <property name="activities" ref="blCheckoutWorkflowActivities"/>
-        <property name="defaultErrorHandler" ref="blDefaultErrorHandler"/>
+        <property name="activities" ref="ucCheckoutWorkflowActivities"/>
+        <property name="defaultErrorHandler" ref="ucDefaultErrorHandler"/>
     </bean>
     
-    <bean id="testRollbackWorkflow" class="org.broadleafcommerce.core.workflow.SequenceProcessor">
+    <bean id="testRollbackWorkflow" class="com.ultracommerce.core.workflow.SequenceProcessor">
         <property name="processContextFactory">
-            <bean class="org.broadleafcommerce.common.workflow.DummyProcessContextFactory"/>
+            <bean class="com.ultracommerce.common.workflow.DummyProcessContextFactory"/>
         </property>
         <property name="activities">
             <list>
-                <bean class="org.broadleafcommerce.common.workflow.SimpleActivity">
+                <bean class="com.ultracommerce.common.workflow.SimpleActivity">
                     <constructor-arg value="Activity1"></constructor-arg>
                     <property name="rollbackHandler">
-                        <bean class="org.broadleafcommerce.common.workflow.SimpleRollbackHandler" />
+                        <bean class="com.ultracommerce.common.workflow.SimpleRollbackHandler" />
                     </property>
                 </bean>
-                <bean class="org.broadleafcommerce.common.workflow.SimpleActivity">
+                <bean class="com.ultracommerce.common.workflow.SimpleActivity">
                     <constructor-arg value="Activity2"></constructor-arg>
                     <property name="rollbackHandler">
-                        <bean class="org.broadleafcommerce.common.workflow.SimpleRollbackHandler" />
+                        <bean class="com.ultracommerce.common.workflow.SimpleRollbackHandler" />
                     </property>
                 </bean>
-                <bean class="org.broadleafcommerce.common.workflow.NestedActivity">
+                <bean class="com.ultracommerce.common.workflow.NestedActivity">
                     <constructor-arg name="workflow">
-                        <bean class="org.broadleafcommerce.core.workflow.SequenceProcessor">
+                        <bean class="com.ultracommerce.core.workflow.SequenceProcessor">
                             <property name="processContextFactory">
-                                <bean class="org.broadleafcommerce.common.workflow.DummyProcessContextFactory"/>
+                                <bean class="com.ultracommerce.common.workflow.DummyProcessContextFactory"/>
                             </property>
                             <property name="activities">
                                 <list>
-                                    <bean class="org.broadleafcommerce.common.workflow.SimpleActivity">
+                                    <bean class="com.ultracommerce.common.workflow.SimpleActivity">
                                         <constructor-arg value="ActivityA"></constructor-arg>
                                         <property name="rollbackHandler">
-                                            <bean class="org.broadleafcommerce.common.workflow.SimpleRollbackHandler" />
+                                            <bean class="com.ultracommerce.common.workflow.SimpleRollbackHandler" />
                                         </property>
                                     </bean>
-                                    <bean class="org.broadleafcommerce.common.workflow.ExceptionActivity" />
+                                    <bean class="com.ultracommerce.common.workflow.ExceptionActivity" />
                                 </list>
                             </property>
-                            <property name="defaultErrorHandler" ref="blSilentErrorHandler"/>
+                            <property name="defaultErrorHandler" ref="ucSilentErrorHandler"/>
                         </bean>
                     </constructor-arg>
                 </bean>
             </list>
         </property>
-        <property name="defaultErrorHandler" ref="blSilentErrorHandler"/>
+        <property name="defaultErrorHandler" ref="ucSilentErrorHandler"/>
     </bean>
     
-    <bean id="blMergedCacheConfigLocations-it" class="org.springframework.beans.factory.config.ListFactoryBean">
+    <bean id="ucMergedCacheConfigLocations-it" class="org.springframework.beans.factory.config.ListFactoryBean">
         <property name="sourceList">
             <list>
-                <value>classpath:bl-override-ehcache.xml</value>
+                <value>classpath:uc-override-ehcache.xml</value>
             </list>
         </property>
     </bean>
 
-    <bean class="org.broadleafcommerce.common.extensibility.context.merge.EarlyStageMergeBeanPostProcessor">
-        <property name="collectionRef" value="blMergedCacheConfigLocations-it"/>
-        <property name="targetRef" value="blMergedCacheConfigLocations"/>
+    <bean class="com.ultracommerce.common.extensibility.context.merge.EarlyStageMergeBeanPostProcessor">
+        <property name="collectionRef" value="ucMergedCacheConfigLocations-it"/>
+        <property name="targetRef" value="ucMergedCacheConfigLocations"/>
     </bean>
 
-    <bean id="blMergedPersistenceXmlLocations-it" class="org.springframework.beans.factory.config.ListFactoryBean">
+    <bean id="ucMergedPersistenceXmlLocations-it" class="org.springframework.beans.factory.config.ListFactoryBean">
         <property name="sourceList">
             <list>
                 <value>classpath*:/META-INF/persistence-test.xml</value>
@@ -180,35 +180,35 @@
         </property>
     </bean>
 
-    <bean class="org.broadleafcommerce.common.extensibility.context.merge.EarlyStageMergeBeanPostProcessor">
-        <property name="collectionRef" value="blMergedPersistenceXmlLocations-it"/>
-        <property name="targetRef" value="blMergedPersistenceXmlLocations"/>
+    <bean class="com.ultracommerce.common.extensibility.context.merge.EarlyStageMergeBeanPostProcessor">
+        <property name="collectionRef" value="ucMergedPersistenceXmlLocations-it"/>
+        <property name="targetRef" value="ucMergedPersistenceXmlLocations"/>
     </bean>
     
-    <bean id="blEntityManagerFactoryAssetStorageInfo" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean" depends-on="blCacheManager">
-        <property name="jpaVendorAdapter" ref="blJpaVendorAdapter"/>
-        <property name="persistenceUnitManager" ref="blPersistenceUnitManager" />
-        <property name="persistenceUnitName" value="blCMSStorage"/>
+    <bean id="ucEntityManagerFactoryAssetStorageInfo" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean" depends-on="ucCacheManager">
+        <property name="jpaVendorAdapter" ref="ucJpaVendorAdapter"/>
+        <property name="persistenceUnitManager" ref="ucPersistenceUnitManager" />
+        <property name="persistenceUnitName" value="ucCMSStorage"/>
     </bean>
 
-    <bean id="blMergedDataSources" class="org.springframework.beans.factory.config.MapFactoryBean">
+    <bean id="ucMergedDataSources" class="org.springframework.beans.factory.config.MapFactoryBean">
         <property name="sourceMap">
             <map>
-                <entry key="jdbc/test" value-ref="blDS"/>
-                <entry key="jdbc/testCMS" value-ref="blDS"/>
-                <entry key="jdbc/testSecure" value-ref="blDS"/>
+                <entry key="jdbc/test" value-ref="ucDS"/>
+                <entry key="jdbc/testCMS" value-ref="ucDS"/>
+                <entry key="jdbc/testSecure" value-ref="ucDS"/>
             </map>
         </property>
     </bean>
 
-    <bean id="blDS" primary="true" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+    <bean id="ucDS" primary="true" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
         <property name="driverClassName" value="org.hsqldb.jdbcDriver"/>
-        <property name="url" value="jdbc:hsqldb:mem:broadleaf"/>
+        <property name="url" value="jdbc:hsqldb:mem:ultra"/>
         <property name="username" value="sa"/>
         <property name="password" value=""/>
     </bean>
 
-    <bean id="blMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+    <bean id="ucMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
         <property name="host">
             <value>localhost</value>
         </property>
@@ -228,29 +228,29 @@
 
     <bean id="baseEmailInfo" abstract="true">
         <property name="sendEmailReliableAsync" value="false"/>
-        <property name="fromAddress" value="test@broadleafcommerce.org"/>
+        <property name="fromAddress" value="test@ultracommerce.org"/>
         <property name="sendAsyncPriority" value="8"/>
     </bean>
 
-    <bean id="blMessageCreator" class="org.broadleafcommerce.common.email.service.message.NullMessageCreator">
-        <constructor-arg ref="blMailSender"/>
+    <bean id="ucMessageCreator" class="com.ultracommerce.common.email.service.message.NullMessageCreator">
+        <constructor-arg ref="ucMailSender"/>
     </bean>
 
     <bean id="serviceStatusEmail"
-          class="org.broadleafcommerce.common.email.service.info.EmailInfo"
+          class="com.ultracommerce.common.email.service.info.EmailInfo"
           parent="baseEmailInfo">
     </bean>
 
     <bean id="compositeStatusHandler"
-          class="org.broadleafcommerce.common.vendor.service.monitor.handler.CompositeStatusHandler">
+          class="com.ultracommerce.common.vendor.service.monitor.handler.CompositeStatusHandler">
         <property name="handlers">
             <list>
-                <bean class="org.broadleafcommerce.common.vendor.service.monitor.handler.LogStatusHandler"/>
-                <bean class="org.broadleafcommerce.common.vendor.service.monitor.handler.EmailStatusHandler">
+                <bean class="com.ultracommerce.common.vendor.service.monitor.handler.LogStatusHandler"/>
+                <bean class="com.ultracommerce.common.vendor.service.monitor.handler.EmailStatusHandler">
                     <property name="emailInfo" ref="serviceStatusEmail"/>
                     <property name="emailTarget">
-                        <bean class="org.broadleafcommerce.common.email.domain.EmailTargetImpl">
-                            <property name="emailAddress" value="test@broadleafcommerce.org"/>
+                        <bean class="com.ultracommerce.common.email.domain.EmailTargetImpl">
+                            <property name="emailAddress" value="test@ultracommerce.org"/>
                         </bean>
                     </property>
                 </bean>
@@ -258,23 +258,23 @@
         </property>
     </bean>
 
-    <tx:advice id="blTxAdvice" transaction-manager="blTransactionManager">
+    <tx:advice id="ucTxAdvice" transaction-manager="ucTransactionManager">
         <tx:attributes>
             <tx:method name="*" propagation="REQUIRED"/>
         </tx:attributes>
     </tx:advice>
 
-    <bean id="blOfferTimeZoneProcessor" class="org.broadleafcommerce.core.offer.TestOfferTimeZoneProcessorImpl"/>
+    <bean id="ucOfferTimeZoneProcessor" class="com.ultracommerce.core.offer.TestOfferTimeZoneProcessorImpl"/>
     
-    <bean id="blNamedOperationManager" class="org.broadleafcommerce.cms.file.service.operation.NamedOperationManagerImpl">
+    <bean id="ucNamedOperationManager" class="com.ultracommerce.cms.file.service.operation.NamedOperationManagerImpl">
         <property name="namedOperationComponents">
             <list>
-                <ref bean="blStaticMapNamedOperationComponent"/>
+                <ref bean="ucStaticMapNamedOperationComponent"/>
             </list>
         </property>
     </bean>
 
-    <bean id="blStaticMapNamedOperations-it" class="org.springframework.beans.factory.config.MapFactoryBean">
+    <bean id="ucStaticMapNamedOperations-it" class="org.springframework.beans.factory.config.MapFactoryBean">
         <property name="sourceMap">
             <map>
                 <entry key="smallAdminThumbnail">
@@ -299,9 +299,9 @@
         </property>
     </bean>
 
-    <bean class="org.broadleafcommerce.common.extensibility.context.merge.LateStageMergeBeanPostProcessor">
-        <property name="collectionRef" value="blStaticMapNamedOperations-it" />
-        <property name="targetRef" value="blStaticMapNamedOperations" />
+    <bean class="com.ultracommerce.common.extensibility.context.merge.LateStageMergeBeanPostProcessor">
+        <property name="collectionRef" value="ucStaticMapNamedOperations-it" />
+        <property name="targetRef" value="ucStaticMapNamedOperations" />
     </bean>
 
 </beans>

@@ -1,21 +1,21 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.util;
+package com.ultracommerce.common.util;
 
 import org.hibernate.CacheMode;
 import org.hibernate.Session;
@@ -37,7 +37,7 @@ import javax.persistence.PersistenceUnit;
  */
 public class HibernateUtils {
     
-    public static final String DEFAULT_ENTITY_MANAGER_NAME = "blPU";
+    public static final String DEFAULT_ENTITY_MANAGER_NAME = "ucPU";
     
     /**
      * <p>Ensure a domain object is an actual persisted object and not a Hibernate proxy object by getting its real implementation.
@@ -94,7 +94,7 @@ public class HibernateUtils {
     }
     
     /**
-     * Attempts to execute the operation without L2 or query cache engaged.  This method uses the {@link PersistenceUnit} name "blPU".  If no {@link EntityManager} is bound to the thread, 
+     * Attempts to execute the operation without L2 or query cache engaged.  This method uses the {@link PersistenceUnit} name "ucPU".  If no {@link EntityManager} is bound to the thread, 
      * then the operation is performed without modifying the cache mode.  Note that this does not create an {@link EntityManager} if one is not already initialized.
      * 
      * @param operation
@@ -124,7 +124,7 @@ public class HibernateUtils {
     }
     
     /**
-     * Retrieves the current, default {@link EntityManager}, with the {@link PersistenceUnit} name "blPU", or null if it has not been initialized and bound to the Thread.
+     * Retrieves the current, default {@link EntityManager}, with the {@link PersistenceUnit} name "ucPU", or null if it has not been initialized and bound to the Thread.
      * 
      * @return
      */

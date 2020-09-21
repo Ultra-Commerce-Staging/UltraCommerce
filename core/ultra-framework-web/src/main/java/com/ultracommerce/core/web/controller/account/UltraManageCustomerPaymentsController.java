@@ -1,35 +1,35 @@
 /*
  * #%L
- * BroadleafCommerce Framework Web
+ * UltraCommerce Framework Web
  * %%
- * Copyright (C) 2009 - 2017 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.web.controller.account;
+package com.ultracommerce.core.web.controller.account;
 
 
 import org.apache.commons.lang.StringUtils;
-import org.broadleafcommerce.common.web.controller.BroadleafAbstractController;
-import org.broadleafcommerce.core.web.checkout.model.PaymentInfoForm;
-import org.broadleafcommerce.core.web.controller.account.validator.AccountPaymentInfoFormValidator;
-import org.broadleafcommerce.core.web.payment.service.SavedPaymentService;
-import org.broadleafcommerce.core.web.service.InitBinderService;
-import org.broadleafcommerce.profile.core.domain.Customer;
-import org.broadleafcommerce.profile.core.domain.CustomerPayment;
-import org.broadleafcommerce.profile.core.service.AddressService;
-import org.broadleafcommerce.profile.core.service.CustomerAddressService;
-import org.broadleafcommerce.profile.core.service.CustomerPaymentService;
-import org.broadleafcommerce.profile.web.core.CustomerState;
+import com.ultracommerce.common.web.controller.UltraAbstractController;
+import com.ultracommerce.core.web.checkout.model.PaymentInfoForm;
+import com.ultracommerce.core.web.controller.account.validator.AccountPaymentInfoFormValidator;
+import com.ultracommerce.core.web.payment.service.SavedPaymentService;
+import com.ultracommerce.core.web.service.InitBinderService;
+import com.ultracommerce.profile.core.domain.Customer;
+import com.ultracommerce.profile.core.domain.CustomerPayment;
+import com.ultracommerce.profile.core.service.AddressService;
+import com.ultracommerce.profile.core.service.CustomerAddressService;
+import com.ultracommerce.profile.core.service.CustomerPaymentService;
+import com.ultracommerce.profile.web.core.CustomerState;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.ServletRequestDataBinder;
@@ -44,27 +44,27 @@ import javax.servlet.http.HttpServletRequest;
  * @author Chris Kittrell (ckittrell)
  * @author Jacob Mitash
  */
-public class BroadleafManageCustomerPaymentsController extends BroadleafAbstractController {
+public class UltraManageCustomerPaymentsController extends UltraAbstractController {
 
     protected static String customerPaymentView = "account/manageCustomerPayments";
     protected static String customerPaymentRedirect = "redirect:/account/payments";
 
-    @Resource(name = "blSavedPaymentService")
+    @Resource(name = "ucSavedPaymentService")
     protected SavedPaymentService savedPaymentService;
 
-    @Resource(name = "blCustomerPaymentService")
+    @Resource(name = "ucCustomerPaymentService")
     protected CustomerPaymentService customerPaymentService;
 
-    @Resource(name = "blCustomerAddressService")
+    @Resource(name = "ucCustomerAddressService")
     protected CustomerAddressService customerAddressService;
 
-    @Resource(name = "blAccountPaymentInfoFormValidator")
+    @Resource(name = "ucAccountPaymentInfoFormValidator")
     protected AccountPaymentInfoFormValidator paymentInfoFormValidator;
 
-    @Resource(name = "blAddressService")
+    @Resource(name = "ucAddressService")
     protected AddressService addressService;
 
-    @Resource(name = "blInitBinderService")
+    @Resource(name = "ucInitBinderService")
     protected InitBinderService initBinderService;
 
 

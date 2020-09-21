@@ -1,29 +1,29 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.payment.service;
+package com.ultracommerce.core.payment.service;
 
-import org.broadleafcommerce.common.money.Money;
-import org.broadleafcommerce.common.payment.PaymentType;
-import org.broadleafcommerce.core.order.domain.Order;
-import org.broadleafcommerce.core.payment.domain.OrderPayment;
-import org.broadleafcommerce.core.payment.domain.PaymentLog;
-import org.broadleafcommerce.core.payment.domain.PaymentTransaction;
-import org.broadleafcommerce.profile.core.domain.CustomerPayment;
+import com.ultracommerce.common.money.Money;
+import com.ultracommerce.common.payment.PaymentType;
+import com.ultracommerce.core.order.domain.Order;
+import com.ultracommerce.core.payment.domain.OrderPayment;
+import com.ultracommerce.core.payment.domain.PaymentLog;
+import com.ultracommerce.core.payment.domain.PaymentTransaction;
+import com.ultracommerce.profile.core.domain.CustomerPayment;
 
 import java.util.List;
 
@@ -56,9 +56,9 @@ public interface OrderPaymentService {
 
     /**
      * <p>
-     * Create an {@link org.broadleafcommerce.core.payment.domain.OrderPayment} with a single
-     * {@link org.broadleafcommerce.common.payment.PaymentTransactionType#UNCONFIRMED}
-     * {@link org.broadleafcommerce.core.payment.domain.PaymentTransaction} initialized with the
+     * Create an {@link com.ultracommerce.core.payment.domain.OrderPayment} with a single
+     * {@link com.ultracommerce.common.payment.PaymentTransactionType#UNCONFIRMED}
+     * {@link com.ultracommerce.core.payment.domain.PaymentTransaction} initialized with the
      * passed in amount and order.
      *
      * <p>
@@ -74,11 +74,11 @@ public interface OrderPaymentService {
 
     /**
      * <p>
-     * Create a {@link org.broadleafcommerce.profile.core.domain.CustomerPayment} token for the passed in Customer
-     * given a {@link org.broadleafcommerce.core.payment.domain.PaymentTransaction}. This assumes that the
+     * Create a {@link com.ultracommerce.profile.core.domain.CustomerPayment} token for the passed in Customer
+     * given a {@link com.ultracommerce.core.payment.domain.PaymentTransaction}. This assumes that the
      * token and any additional request attributes needed to do another transaction for this specific gateway
-     * has already been persisted to the {@link org.broadleafcommerce.core.payment.domain.PaymentTransaction#getAdditionalFields()} map.
-     * Specifically, the {@link org.broadleafcommerce.common.payment.PaymentAdditionalFieldType#TOKEN} has been set.
+     * has already been persisted to the {@link com.ultracommerce.core.payment.domain.PaymentTransaction#getAdditionalFields()} map.
+     * Specifically, the {@link com.ultracommerce.common.payment.PaymentAdditionalFieldType#TOKEN} has been set.
      *
      * <p>
      * Used typically during the complete checkout flow when a token needs to be saved from
@@ -91,16 +91,16 @@ public interface OrderPaymentService {
 
     /**
      * <p>
-     * Will attempt to populate the {@link org.broadleafcommerce.profile.core.domain.CustomerPayment#setPaymentToken(String)}
-     * by looking at the {@link org.broadleafcommerce.core.payment.domain.PaymentTransaction#getAdditionalFields()}
-     * for key {@link org.broadleafcommerce.common.payment.PaymentAdditionalFieldType#TOKEN}.
+     * Will attempt to populate the {@link com.ultracommerce.profile.core.domain.CustomerPayment#setPaymentToken(String)}
+     * by looking at the {@link com.ultracommerce.core.payment.domain.PaymentTransaction#getAdditionalFields()}
+     * for key {@link com.ultracommerce.common.payment.PaymentAdditionalFieldType#TOKEN}.
      *
      * <p>
      * Usually used during a checkout flow when there is a direct response from the gateway (e.g. transparent redirect).
      *
      * @param customerPayment
      * @param transaction
-     * @see {@link org.broadleafcommerce.core.checkout.service.workflow.ValidateAndConfirmPaymentActivity}
+     * @see {@link com.ultracommerce.core.checkout.service.workflow.ValidateAndConfirmPaymentActivity}
      */
     public void populateCustomerPaymentToken(CustomerPayment customerPayment, PaymentTransaction transaction);
 

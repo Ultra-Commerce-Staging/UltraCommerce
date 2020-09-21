@@ -1,28 +1,28 @@
 /*
  * #%L
- * BroadleafCommerce CMS Module
+ * UltraCommerce CMS Module
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.cms.structure.service;
+package com.ultracommerce.cms.structure.service;
 
-import org.broadleafcommerce.cms.structure.domain.StructuredContent;
-import org.broadleafcommerce.cms.structure.domain.StructuredContentType;
-import org.broadleafcommerce.common.locale.domain.Locale;
-import org.broadleafcommerce.common.persistence.EntityConfiguration;
-import org.broadleafcommerce.common.sandbox.domain.SandBox;
-import org.broadleafcommerce.common.structure.dto.StructuredContentDTO;
+import com.ultracommerce.cms.structure.domain.StructuredContent;
+import com.ultracommerce.cms.structure.domain.StructuredContentType;
+import com.ultracommerce.common.locale.domain.Locale;
+import com.ultracommerce.common.persistence.EntityConfiguration;
+import com.ultracommerce.common.sandbox.domain.SandBox;
+import com.ultracommerce.common.structure.dto.StructuredContentDTO;
 import org.hibernate.Criteria;
 
 import java.util.List;
@@ -100,7 +100,7 @@ public interface StructuredContentService {
     List<StructuredContent> findAllContentItems();
     
     /**
-     * Follows the same rules as {@link #findContentItems(org.broadleafcommerce.common.sandbox.domain.SandBox, org.hibernate.Criteria) findContentItems}.
+     * Follows the same rules as {@link #findContentItems(com.ultracommerce.common.sandbox.domain.SandBox, org.hibernate.Criteria) findContentItems}.
      *
      * @return the count of items in this sandbox that match the passed in Criteria
      */
@@ -132,7 +132,7 @@ public interface StructuredContentService {
      * @param ruleDTOs - a Map of objects that will be used in MVEL processing.
      * @param secure - set to true if the request is being served over https
      * @return - The matching items
-     * @see org.broadleafcommerce.cms.web.structure.DisplayContentTag
+     * @see com.ultracommerce.cms.web.structure.DisplayContentTag
      */
     List<StructuredContentDTO> lookupStructuredContentItemsByType(StructuredContentType contentType, Locale locale, Integer count, Map<String,Object> ruleDTOs, boolean secure);
 
@@ -154,7 +154,7 @@ public interface StructuredContentService {
      * @param ruleDTOs - a Map of objects that will be used in MVEL processing.
      * @param secure - set to true if the request is being served over https
      * @return - The matching items
-     * @see org.broadleafcommerce.cms.web.structure.DisplayContentTag
+     * @see com.ultracommerce.cms.web.structure.DisplayContentTag
      */
     List<StructuredContentDTO> lookupStructuredContentItemsByName(String contentName, Locale locale, Integer count, Map<String,Object> ruleDTOs, boolean secure);
 
@@ -179,7 +179,7 @@ public interface StructuredContentService {
      * @param ruleDTOs - a Map of objects that will be used in MVEL processing.
      * @param secure - set to true if the request is being served over https
      * @return - The matching items
-     * @see org.broadleafcommerce.cms.web.structure.DisplayContentTag
+     * @see com.ultracommerce.cms.web.structure.DisplayContentTag
      */
     List<StructuredContentDTO> lookupStructuredContentItemsByName(StructuredContentType contentType, String contentName, Locale locale, Integer count, Map<String,Object> ruleDTOs, boolean secure);
 
@@ -193,7 +193,7 @@ public interface StructuredContentService {
 
     /**
      * Converts a StructuredContent into a StructuredContentDTO.   If the item contains fields with
-     * broadleaf cms urls, the urls are converted to utilize the domain.
+     * ultra cms urls, the urls are converted to utilize the domain.
      * 
      * The StructuredContentDTO is built via the {@link EntityConfiguration}. To override the actual type that is returned,
      * include an override in an applicationContext like any other entity override.

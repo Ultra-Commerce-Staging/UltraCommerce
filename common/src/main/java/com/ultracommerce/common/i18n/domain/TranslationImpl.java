@@ -1,34 +1,34 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
 
-package org.broadleafcommerce.common.i18n.domain;
+package com.ultracommerce.common.i18n.domain;
 
-import org.broadleafcommerce.common.copy.CreateResponse;
-import org.broadleafcommerce.common.copy.MultiTenantCopyContext;
-import org.broadleafcommerce.common.exception.ExceptionHelper;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransform;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformMember;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformTypes;
-import org.broadleafcommerce.common.presentation.AdminPresentation;
-import org.broadleafcommerce.common.presentation.AdminPresentationClass;
-import org.broadleafcommerce.common.presentation.PopulateToOneFieldsEnum;
-import org.broadleafcommerce.common.presentation.RequiredOverride;
-import org.broadleafcommerce.common.presentation.client.VisibilityEnum;
+import com.ultracommerce.common.copy.CreateResponse;
+import com.ultracommerce.common.copy.MultiTenantCopyContext;
+import com.ultracommerce.common.exception.ExceptionHelper;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransform;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransformMember;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransformTypes;
+import com.ultracommerce.common.presentation.AdminPresentation;
+import com.ultracommerce.common.presentation.AdminPresentationClass;
+import com.ultracommerce.common.presentation.PopulateToOneFieldsEnum;
+import com.ultracommerce.common.presentation.RequiredOverride;
+import com.ultracommerce.common.presentation.client.VisibilityEnum;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
@@ -49,11 +49,11 @@ import javax.persistence.Lob;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@javax.persistence.Table(name = "BLC_TRANSLATION")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "blTranslationElements")
+@javax.persistence.Table(name = "UC_TRANSLATION")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "ucTranslationElements")
 @AdminPresentationClass(populateToOneFields = PopulateToOneFieldsEnum.TRUE, friendlyName = "TranslationImpl_baseTranslation")
 //multi-column indexes don't appear to get exported correctly when declared at the field level, so declaring here as a workaround
-@Table(appliesTo = "BLC_TRANSLATION", indexes = {
+@Table(appliesTo = "UC_TRANSLATION", indexes = {
         @Index(name = "TRANSLATION_INDEX", columnNames = { "ENTITY_TYPE", "ENTITY_ID", "FIELD_NAME", "LOCALE_CODE" })
 })
 @DirectCopyTransform({
@@ -69,10 +69,10 @@ public class TranslationImpl implements Serializable, Translation {
     @GeneratedValue(generator = "TranslationId")
     @GenericGenerator(
             name = "TranslationId",
-            strategy = "org.broadleafcommerce.common.persistence.IdOverrideTableGenerator",
+            strategy = "com.ultracommerce.common.persistence.IdOverrideTableGenerator",
             parameters = {
                     @Parameter(name = "segment_value", value = "TranslationImpl"),
-                    @Parameter(name = "entity_name", value = "org.broadleafcommerce.common.i18n.domain.TranslationImpl")
+                    @Parameter(name = "entity_name", value = "com.ultracommerce.common.i18n.domain.TranslationImpl")
             })
     @Column(name = "TRANSLATION_ID")
     protected Long id;

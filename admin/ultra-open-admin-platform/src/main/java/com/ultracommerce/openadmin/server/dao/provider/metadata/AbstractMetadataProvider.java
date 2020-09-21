@@ -1,24 +1,24 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.openadmin.server.dao.provider.metadata;
+package com.ultracommerce.openadmin.server.dao.provider.metadata;
 
-import org.broadleafcommerce.openadmin.dto.override.MetadataOverride;
-import org.broadleafcommerce.openadmin.server.dao.DynamicEntityDao;
+import com.ultracommerce.openadmin.dto.override.MetadataOverride;
+import com.ultracommerce.openadmin.server.dao.DynamicEntityDao;
 
 import java.util.Map;
 
@@ -31,15 +31,15 @@ public abstract class AbstractMetadataProvider {
 
     protected Map<String, Map<String, MetadataOverride>> metadataOverrides;
 
-    @Resource(name="blMetadataOverrides")
+    @Resource(name="ucMetadataOverrides")
     public void setMetadataOverrides(Map metadataOverrides) {
         try {
             this.metadataOverrides = metadataOverrides;
         } catch (Throwable e) {
             throw new IllegalArgumentException(
                     "Unable to assign metadataOverrides. You are likely using an obsolete spring application context " +
-                    "configuration for this value. Please utilize the xmlns:mo=\"http://schema.broadleafcommerce.org/mo\" namespace " +
-                    "and http://schema.broadleafcommerce.org/mo http://schema.broadleafcommerce.org/mo/mo.xsd schemaLocation " +
+                    "configuration for this value. Please utilize the xmlns:mo=\"http://schema.ultracommerce.org/mo\" namespace " +
+                    "and http://schema.ultracommerce.org/mo http://schema.ultracommerce.org/mo/mo.xsd schemaLocation " +
                     "in the xml schema config for your app context. This will allow you to use the appropriate <mo:override> element to configure your overrides.", e);
         }
     }

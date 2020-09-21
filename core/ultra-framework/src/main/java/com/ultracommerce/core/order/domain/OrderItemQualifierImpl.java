@@ -1,29 +1,29 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.order.domain;
+package com.ultracommerce.core.order.domain;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.persistence.DefaultPostLoaderDao;
-import org.broadleafcommerce.common.persistence.PostLoaderDao;
-import org.broadleafcommerce.common.util.HibernateUtils;
-import org.broadleafcommerce.core.offer.domain.Offer;
-import org.broadleafcommerce.core.offer.domain.OfferImpl;
+import com.ultracommerce.common.persistence.DefaultPostLoaderDao;
+import com.ultracommerce.common.persistence.PostLoaderDao;
+import com.ultracommerce.common.util.HibernateUtils;
+import com.ultracommerce.core.offer.domain.Offer;
+import com.ultracommerce.core.offer.domain.OfferImpl;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
@@ -42,9 +42,9 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Entity
-@Table(name = "BLC_ITEM_OFFER_QUALIFIER")
+@Table(name = "UC_ITEM_OFFER_QUALIFIER")
 @Inheritance(strategy=InheritanceType.JOINED)
-@Cache(usage=CacheConcurrencyStrategy.NONSTRICT_READ_WRITE, region="blOrderElements")
+@Cache(usage=CacheConcurrencyStrategy.NONSTRICT_READ_WRITE, region="ucOrderElements")
 public class OrderItemQualifierImpl implements OrderItemQualifier {
 
     public static final Log LOG = LogFactory.getLog(OrderItemQualifierImpl.class);
@@ -54,10 +54,10 @@ public class OrderItemQualifierImpl implements OrderItemQualifier {
     @GeneratedValue(generator = "OrderItemQualifierId")
     @GenericGenerator(
         name = "OrderItemQualifierId",
-        strategy="org.broadleafcommerce.common.persistence.IdOverrideTableGenerator",
+        strategy="com.ultracommerce.common.persistence.IdOverrideTableGenerator",
         parameters = {
             @Parameter(name = "segment_value", value = "OrderItemQualifierImpl"),
-            @Parameter(name = "entity_name", value = "org.broadleafcommerce.core.order.domain.OrderItemQualifierImpl")
+            @Parameter(name = "entity_name", value = "com.ultracommerce.core.order.domain.OrderItemQualifierImpl")
         }
     )
     @Column(name = "ITEM_OFFER_QUALIFIER_ID")

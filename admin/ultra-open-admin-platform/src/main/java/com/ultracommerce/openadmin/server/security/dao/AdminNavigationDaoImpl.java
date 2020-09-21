@@ -1,27 +1,27 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.openadmin.server.security.dao;
+package com.ultracommerce.openadmin.server.security.dao;
 
-import org.broadleafcommerce.common.persistence.EntityConfiguration;
-import org.broadleafcommerce.common.util.dao.TypedQueryBuilder;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
-import org.broadleafcommerce.openadmin.server.security.domain.AdminModule;
-import org.broadleafcommerce.openadmin.server.security.domain.AdminSection;
+import com.ultracommerce.common.persistence.EntityConfiguration;
+import com.ultracommerce.common.util.dao.TypedQueryBuilder;
+import com.ultracommerce.common.web.UltraRequestContext;
+import com.ultracommerce.openadmin.server.security.domain.AdminModule;
+import com.ultracommerce.openadmin.server.security.domain.AdminSection;
 import org.hibernate.jpa.QueryHints;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.CollectionUtils;
@@ -42,13 +42,13 @@ import javax.servlet.http.HttpServletRequest;
  * @author elbertbautista
  *
  */
-@Repository("blAdminNavigationDao")
+@Repository("ucAdminNavigationDao")
 public class AdminNavigationDaoImpl implements AdminNavigationDao {
 
-    @PersistenceContext(unitName = "blPU")
+    @PersistenceContext(unitName = "ucPU")
     protected EntityManager em;
 
-    @Resource(name="blEntityConfiguration")
+    @Resource(name="ucEntityConfiguration")
     protected EntityConfiguration entityConfiguration;
     
     @Override
@@ -68,9 +68,9 @@ public class AdminNavigationDaoImpl implements AdminNavigationDao {
 
     @Override
     public List<AdminModule> readAllAdminModules() {
-        Query query = em.createNamedQuery("BC_READ_ALL_ADMIN_MODULES");
+        Query query = em.createNamedQuery("UC_READ_ALL_ADMIN_MODULES");
         query.setHint(QueryHints.HINT_CACHEABLE, true);
-        query.setHint(QueryHints.HINT_CACHE_REGION, "blAdminSecurityQuery");
+        query.setHint(QueryHints.HINT_CACHE_REGION, "ucAdminSecurityQuery");
         List<AdminModule> modules = query.getResultList();
         return modules;
     }
@@ -85,9 +85,9 @@ public class AdminNavigationDaoImpl implements AdminNavigationDao {
 
     @Override
     public List<AdminSection> readAllAdminSections() {
-        Query query = em.createNamedQuery("BC_READ_ALL_ADMIN_SECTIONS");
+        Query query = em.createNamedQuery("UC_READ_ALL_ADMIN_SECTIONS");
         query.setHint(org.hibernate.jpa.QueryHints.HINT_CACHEABLE, true);
-        query.setHint(QueryHints.HINT_CACHE_REGION, "blAdminSecurityQuery");
+        query.setHint(QueryHints.HINT_CACHE_REGION, "ucAdminSecurityQuery");
         List<AdminSection> sections = query.getResultList();
         return sections;
     }
@@ -146,10 +146,10 @@ public class AdminNavigationDaoImpl implements AdminNavigationDao {
 
     @Override
     public AdminSection readAdminSectionByURI(String uri) {
-        Query query = em.createNamedQuery("BC_READ_ADMIN_SECTION_BY_URI");
+        Query query = em.createNamedQuery("UC_READ_ADMIN_SECTION_BY_URI");
         query.setParameter("uri", uri);
         query.setHint(org.hibernate.jpa.QueryHints.HINT_CACHEABLE, true);
-        query.setHint(QueryHints.HINT_CACHE_REGION, "blAdminSecurityQuery");
+        query.setHint(QueryHints.HINT_CACHE_REGION, "ucAdminSecurityQuery");
         AdminSection adminSection = null;
         try {
              adminSection = (AdminSection) query.getSingleResult();
@@ -161,9 +161,9 @@ public class AdminNavigationDaoImpl implements AdminNavigationDao {
 
     @Override
     public AdminSection readAdminSectionBySectionKey(String sectionKey) {
-        Query query = em.createNamedQuery("BC_READ_ADMIN_SECTION_BY_SECTION_KEY");
+        Query query = em.createNamedQuery("UC_READ_ADMIN_SECTION_BY_SECTION_KEY");
         query.setHint(org.hibernate.jpa.QueryHints.HINT_CACHEABLE, true);
-        query.setHint(QueryHints.HINT_CACHE_REGION, "blAdminSecurityQuery");
+        query.setHint(QueryHints.HINT_CACHE_REGION, "ucAdminSecurityQuery");
         query.setParameter("sectionKey", sectionKey);
         AdminSection adminSection = null;
         try {
@@ -176,7 +176,7 @@ public class AdminNavigationDaoImpl implements AdminNavigationDao {
 
     @Override
     public String getSectionKey(boolean withTypeKey) {
-        HttpServletRequest request = BroadleafRequestContext.getBroadleafRequestContext().getRequest();
+        HttpServletRequest request = UltraRequestContext.getUltraRequestContext().getRequest();
 
         if (request != null) {
             String originatingUri = new UrlPathHelper().getOriginatingRequestUri(request);

@@ -1,29 +1,29 @@
 /*
  * #%L
- * BroadleafCommerce Admin Module
+ * UltraCommerce Admin Module
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-(function($, BLCAdmin) {
+(function($, UCAdmin) {
     
-    // Add utility functions for offers to the BLCAdmin object
-    BLCAdmin.offer = {
+    // Add utility functions for offers to the UCAdmin object
+    UCAdmin.offer = {
 
         initValueFieldStyle : function ($form) {
             if (!$form.find("#fields\\'value\\'\\.value").parent().hasClass('input-group')) {
                 var inputGroup = $("<div>", {'class' : 'input-group'});
-                var inputGroupIcon = $("<i>", {'class' : BLCAdmin.messages.percentIconClass});
+                var inputGroupIcon = $("<i>", {'class' : UCAdmin.messages.percentIconClass});
                 var inputGroupAddon = $("<span>", {'class' : 'input-group-addon'});
                 inputGroupAddon.append(inputGroupIcon);
                 $form.find("#fields\\'value\\'\\.value").wrap(inputGroup).before(inputGroupAddon);
@@ -39,11 +39,11 @@
     
         addOnChangeTriggers : function($form) {
             $form.find('#field-type').on('change', function() {
-                BLCAdmin.offer.initializeOfferTypeField($form);
+                UCAdmin.offer.initializeOfferTypeField($form);
             });
 
             $form.find('#field-discountType').on('change', function() {
-                BLCAdmin.offer.initializeDiscountTypeField($form);
+                UCAdmin.offer.initializeDiscountTypeField($form);
             });
         },
         
@@ -66,9 +66,9 @@
 
             $form.find("#fields\\'value\\'\\.value").siblings().find('i').removeClass();
             if (offerDiscountType == "PERCENT_OFF") {
-                $form.find("#fields\\'value\\'\\.value").siblings().find('i').addClass(BLCAdmin.messages.percentIconClass);
+                $form.find("#fields\\'value\\'\\.value").siblings().find('i').addClass(UCAdmin.messages.percentIconClass);
             } else {
-                $form.find("#fields\\'value\\'\\.value").siblings().find('i').addClass(BLCAdmin.messages.currencyIconClass);
+                $form.find("#fields\\'value\\'\\.value").siblings().find('i').addClass(UCAdmin.messages.currencyIconClass);
             }
         },
         
@@ -103,36 +103,36 @@
         
     };
 
-    BLCAdmin.addExcludedSelectizeSelector(".query-builder-rules-container select");
+    UCAdmin.addExcludedSelectizeSelector(".query-builder-rules-container select");
 
-    BLCAdmin.addInitializationHandler(function($container) {
+    UCAdmin.addInitializationHandler(function($container) {
         var $form = $container.closest('form.offer-form');
-        BLCAdmin.offer.addOnChangeTriggers($form);
+        UCAdmin.offer.addOnChangeTriggers($form);
     });
 
-    BLCAdmin.addFieldInitializationHandler(function($container) {
+    UCAdmin.addFieldInitializationHandler(function($container) {
         var $form = $container.closest('form.offer-form');
-        BLCAdmin.offer.initializeOfferFormFields($form);
-        BLCAdmin.offer.initValueFieldStyle($form);
+        UCAdmin.offer.initializeOfferFormFields($form);
+        UCAdmin.offer.initValueFieldStyle($form);
     });
     
-    $.each(['org.broadleafcommerce.core.offer.domain.Offer'], function(idx, clazz) {
+    $.each(['com.ultracommerce.core.offer.domain.Offer'], function(idx, clazz) {
 
-        BLCAdmin.addDependentFieldHandler(
+        UCAdmin.addDependentFieldHandler(
             clazz,
             '#field-showAdvancedVisibilityOptions',
             '#field-offerMatchRules---TIME',
             'true'
         );
 
-        BLCAdmin.addDependentFieldHandler(
+        UCAdmin.addDependentFieldHandler(
             clazz,
             '#field-type',
             '#field-applyToSalePrice',
             'ORDER_ITEM'
         );
 
-        BLCAdmin.addDependentFieldHandler(
+        UCAdmin.addDependentFieldHandler(
             clazz,
             '#field-maxUsesPerCustomer',
             '#field-maxUsesPerCustomerPeriod',
@@ -141,7 +141,7 @@
             }
         );
 
-        BLCAdmin.addDependentFieldHandler(
+        UCAdmin.addDependentFieldHandler(
             clazz,
             '#field-useListForDiscounts',
             '#offerPriceData',
@@ -161,4 +161,4 @@
     function hideShippingFields(compareValue) {
         return (compareValue == 'ORDER_ITEM' || compareValue == 'ORDER');
     }
-})(jQuery, BLCAdmin);
+})(jQuery, UCAdmin);

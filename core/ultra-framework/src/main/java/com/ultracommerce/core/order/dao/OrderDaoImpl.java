@@ -1,42 +1,42 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.order.dao;
+package com.ultracommerce.core.order.dao;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.locale.domain.Locale;
-import org.broadleafcommerce.common.persistence.EntityConfiguration;
-import org.broadleafcommerce.common.util.BLCSystemProperty;
-import org.broadleafcommerce.common.util.StreamCapableTransactionalOperationAdapter;
-import org.broadleafcommerce.common.util.StreamingTransactionCapableUtil;
-import org.broadleafcommerce.common.util.dao.TypedQueryBuilder;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
-import org.broadleafcommerce.core.order.domain.NullOrderImpl;
-import org.broadleafcommerce.core.order.domain.Order;
-import org.broadleafcommerce.core.order.domain.OrderImpl;
-import org.broadleafcommerce.core.order.domain.OrderLock;
-import org.broadleafcommerce.core.order.service.type.OrderStatus;
-import org.broadleafcommerce.core.payment.domain.OrderPayment;
-import org.broadleafcommerce.core.payment.domain.PaymentTransaction;
-import org.broadleafcommerce.profile.core.dao.CustomerDao;
-import org.broadleafcommerce.profile.core.domain.Customer;
+import com.ultracommerce.common.locale.domain.Locale;
+import com.ultracommerce.common.persistence.EntityConfiguration;
+import com.ultracommerce.common.util.UCSystemProperty;
+import com.ultracommerce.common.util.StreamCapableTransactionalOperationAdapter;
+import com.ultracommerce.common.util.StreamingTransactionCapableUtil;
+import com.ultracommerce.common.util.dao.TypedQueryBuilder;
+import com.ultracommerce.common.web.UltraRequestContext;
+import com.ultracommerce.core.order.domain.NullOrderImpl;
+import com.ultracommerce.core.order.domain.Order;
+import com.ultracommerce.core.order.domain.OrderImpl;
+import com.ultracommerce.core.order.domain.OrderLock;
+import com.ultracommerce.core.order.service.type.OrderStatus;
+import com.ultracommerce.core.payment.domain.OrderPayment;
+import com.ultracommerce.core.payment.domain.PaymentTransaction;
+import com.ultracommerce.profile.core.dao.CustomerDao;
+import com.ultracommerce.profile.core.domain.Customer;
 import org.hibernate.jpa.AvailableSettings;
 import org.hibernate.jpa.QueryHints;
 import org.springframework.stereotype.Repository;
@@ -51,25 +51,25 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-@Repository("blOrderDao")
+@Repository("ucOrderDao")
 public class OrderDaoImpl implements OrderDao {
 
     private static final Log LOG = LogFactory.getLog(OrderDaoImpl.class);
     private static final String ORDER_LOCK_KEY = UUID.randomUUID().toString();
 
-    @PersistenceContext(unitName = "blPU")
+    @PersistenceContext(unitName = "ucPU")
     protected EntityManager em;
 
-    @Resource(name = "blEntityConfiguration")
+    @Resource(name = "ucEntityConfiguration")
     protected EntityConfiguration entityConfiguration;
 
-    @Resource(name = "blCustomerDao")
+    @Resource(name = "ucCustomerDao")
     protected CustomerDao customerDao;
 
-    @Resource(name = "blOrderDaoExtensionManager")
+    @Resource(name = "ucOrderDaoExtensionManager")
     protected OrderDaoExtensionManager extensionManager;
 
-    @Resource(name = "blStreamingTransactionCapableUtil")
+    @Resource(name = "ucStreamingTransactionCapableUtil")
     protected StreamingTransactionCapableUtil transUtil;
     
     @Override
@@ -100,7 +100,7 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
-    @Transactional("blTransactionManager")
+    @Transactional("ucTransactionManager")
     public Order readOrderById(final Long orderId, boolean refresh) {
         Order order = readOrderById(orderId);
         if (refresh) {
@@ -191,7 +191,7 @@ public class OrderDaoImpl implements OrderDao {
         if (orderStatus == null) {
             return readOrdersForCustomer(customer.getId());
         } else {
-            final Query query = em.createNamedQuery("BC_READ_ORDERS_BY_CUSTOMER_ID_AND_STATUS");
+            final Query query = em.createNamedQuery("UC_READ_ORDERS_BY_CUSTOMER_ID_AND_STATUS");
             query.setParameter("customerId", customer.getId());
             query.setParameter("orderStatus", orderStatus.getType());
             return query.getResultList();
@@ -201,7 +201,7 @@ public class OrderDaoImpl implements OrderDao {
     @Override
     @SuppressWarnings("unchecked")
     public List<Order> readOrdersForCustomer(final Long customerId) {
-        final Query query = em.createNamedQuery("BC_READ_ORDERS_BY_CUSTOMER_ID");
+        final Query query = em.createNamedQuery("UC_READ_ORDERS_BY_CUSTOMER_ID");
         query.setParameter("customerId", customerId);
         return query.getResultList();
     }
@@ -209,7 +209,7 @@ public class OrderDaoImpl implements OrderDao {
     @Override
     public Order readCartForCustomer(final Customer customer) {
         Order order = null;
-        final Query query = em.createNamedQuery("BC_READ_ORDERS_BY_CUSTOMER_ID_AND_NAME_NULL");
+        final Query query = em.createNamedQuery("UC_READ_ORDERS_BY_CUSTOMER_ID_AND_NAME_NULL");
         query.setParameter("customerId", customer.getId());
         query.setParameter("orderStatus", OrderStatus.IN_PROCESS.getType());
         query.setHint(QueryHints.HINT_CACHEABLE, true);
@@ -230,9 +230,9 @@ public class OrderDaoImpl implements OrderDao {
             if (customerDao.readCustomerById(customer.getId()) != null) {
                 throw new IllegalArgumentException("Attempting to save a customer with an id (" + customer.getId() + ") " +
                         "that already exists in the database. This can occur when legacy customers have been migrated to " +
-                        "Broadleaf customers, but the batchStart setting has not been declared for id generation. In " +
+                        "Ultra customers, but the batchStart setting has not been declared for id generation. In " +
                         "such a case, the defaultBatchStart property of IdGenerationDaoImpl (spring id of " +
-                        "blIdGenerationDao) should be set to the appropriate start value.");
+                        "ucIdGenerationDao) should be set to the appropriate start value.");
             }
             customer = customerDao.save(customer);
         }
@@ -240,9 +240,9 @@ public class OrderDaoImpl implements OrderDao {
         order.setEmailAddress(customer.getEmailAddress());
         order.setStatus(OrderStatus.IN_PROCESS);
 
-        if (BroadleafRequestContext.getBroadleafRequestContext() != null) {
-            order.setCurrency(BroadleafRequestContext.getBroadleafRequestContext().getBroadleafCurrency());
-            order.setLocale(BroadleafRequestContext.getBroadleafRequestContext().getLocale());
+        if (UltraRequestContext.getUltraRequestContext() != null) {
+            order.setCurrency(UltraRequestContext.getUltraRequestContext().getUltraCurrency());
+            order.setLocale(UltraRequestContext.getUltraRequestContext().getLocale());
         }
 
         if (extensionManager != null) {
@@ -266,7 +266,7 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public Order create() {
-        final Order order = ((Order) entityConfiguration.createEntityInstance("org.broadleafcommerce.core.order.domain.Order"));
+        final Order order = ((Order) entityConfiguration.createEntityInstance("com.ultracommerce.core.order.domain.Order"));
 
         return order;
     }
@@ -281,7 +281,7 @@ public class OrderDaoImpl implements OrderDao {
     @Override
     @SuppressWarnings("unchecked")
     public Order readNamedOrderForCustomer(final Customer customer, final String name) {
-        final Query query = em.createNamedQuery("BC_READ_NAMED_ORDER_FOR_CUSTOMER");
+        final Query query = em.createNamedQuery("UC_READ_NAMED_ORDER_FOR_CUSTOMER");
         query.setParameter("customerId", customer.getId());
         query.setParameter("orderStatus", OrderStatus.NAMED.getType());
         query.setParameter("orderName", name);
@@ -290,10 +290,10 @@ public class OrderDaoImpl implements OrderDao {
         List<Order> orders = query.getResultList();
         
         // Filter out orders that don't match the current locale (if one is set)
-        if (BroadleafRequestContext.getBroadleafRequestContext() != null) {
+        if (UltraRequestContext.getUltraRequestContext() != null) {
             ListIterator<Order> iter = orders.listIterator();
             while (iter.hasNext()) {
-                Locale locale = BroadleafRequestContext.getBroadleafRequestContext().getLocale();
+                Locale locale = UltraRequestContext.getUltraRequestContext().getLocale();
                 Order order = iter.next();
                 if (locale != null && !locale.equals(order.getLocale())) {
                     iter.remove();
@@ -316,7 +316,7 @@ public class OrderDaoImpl implements OrderDao {
             return null;
         }
 
-        final Query query = em.createNamedQuery("BC_READ_ORDER_BY_ORDER_NUMBER");
+        final Query query = em.createNamedQuery("UC_READ_ORDER_BY_ORDER_NUMBER");
         query.setParameter("orderNumber", orderNumber);
         List<Order> orders = query.getResultList();
         return orders == null || orders.isEmpty() ? null : orders.get(0);
@@ -360,7 +360,7 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
-    @Transactional("blTransactionManager")
+    @Transactional("ucTransactionManager")
     public Order updatePrices(Order order) {
         order = em.merge(order);
         if (order.updatePrices()) {
@@ -373,7 +373,7 @@ public class OrderDaoImpl implements OrderDao {
     public boolean acquireLock(Order order) {
         String orderLockKey = getOrderLockKey();
         // First, we'll see if there's a record of a lock for this order
-        Query q = em.createNamedQuery("BC_ORDER_LOCK_READ");
+        Query q = em.createNamedQuery("UC_ORDER_LOCK_READ");
         q.setParameter("orderId", order.getId());
         q.setParameter("key", orderLockKey);
         q.setHint(QueryHints.HINT_CACHEABLE, false);
@@ -399,7 +399,7 @@ public class OrderDaoImpl implements OrderDao {
         // We weren't successful in creating a lock, which means that there was some previously created lock
         // for this order. We'll attempt to update the status from unlocked to locked. If that is successful,
         // we acquired the lock. 
-        q = em.createNamedQuery("BC_ORDER_LOCK_ACQUIRE");
+        q = em.createNamedQuery("UC_ORDER_LOCK_ACQUIRE");
         q.setParameter("orderId", order.getId());
         q.setParameter("currentTime", System.currentTimeMillis());
         q.setParameter("key", orderLockKey);
@@ -418,7 +418,7 @@ public class OrderDaoImpl implements OrderDao {
             transUtil.runTransactionalOperation(new StreamCapableTransactionalOperationAdapter() {
                 @Override
                 public void execute() throws Throwable {
-                    Query q = em.createNamedQuery("BC_ORDER_LOCK_RELEASE");
+                    Query q = em.createNamedQuery("UC_ORDER_LOCK_RELEASE");
                     q.setParameter("orderId", order.getId());
                     q.setParameter("key", getOrderLockKey());
                     q.setHint(QueryHints.HINT_CACHEABLE, false);
@@ -442,11 +442,11 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     protected Boolean getDatabaseOrderLockSessionAffinity() {
-        return BLCSystemProperty.resolveBooleanSystemProperty("order.lock.database.session.affinity", true);
+        return UCSystemProperty.resolveBooleanSystemProperty("order.lock.database.session.affinity", true);
     }
 
     protected Long getDatabaseOrderLockTimeToLive() {
-        return BLCSystemProperty.resolveLongSystemProperty("order.lock.database.time.to.live", -1L);
+        return UCSystemProperty.resolveLongSystemProperty("order.lock.database.time.to.live", -1L);
     }
 
     @Override
@@ -454,7 +454,7 @@ public class OrderDaoImpl implements OrderDao {
         if (StringUtils.isEmpty(email)) {
             return Collections.emptyList();
         }
-        TypedQuery<Order> query = em.createNamedQuery("BC_READ_ORDERS_BY_EMAIL", Order.class);
+        TypedQuery<Order> query = em.createNamedQuery("UC_READ_ORDERS_BY_EMAIL", Order.class);
         query.setParameter("email", email);
         List<Order> orders = query.getResultList();
         return orders != null ? orders : new ArrayList<Order>();

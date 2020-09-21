@@ -1,24 +1,24 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-(function($, BLCAdmin) {
+(function($, UCAdmin) {
     
-    // Add utility functions for list grids to the BLCAdmin object
-    BLCAdmin.history = {
+    // Add utility functions for list grids to the UCAdmin object
+    UCAdmin.history = {
             
         pushUrl : function(url, state) {
             
@@ -93,7 +93,7 @@
         },
         
         getUrlParameters : function() {
-            return BLC.getUrlParameters();
+            return UC.getUrlParameters();
         },
         
         replaceUrlParameter : function(param, value, state) {
@@ -112,14 +112,14 @@
         }
     };
     
-})(jQuery, BLCAdmin);
+})(jQuery, UCAdmin);
 
 $(document).ready(function() {
     
     // If we have HTML5 history, bind the popstate event
     if (!!(window.history && history.pushState)) {
         window.onpopstate = function(event) {
-            BLCAdmin.history.popState(document.location.href, event.state, event);
+            UCAdmin.history.popState(document.location.href, event.state, event);
         }
     }
     

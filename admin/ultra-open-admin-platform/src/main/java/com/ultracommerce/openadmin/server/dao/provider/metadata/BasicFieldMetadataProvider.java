@@ -1,61 +1,61 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
 
-package org.broadleafcommerce.openadmin.server.dao.provider.metadata;
+package com.ultracommerce.openadmin.server.dao.provider.metadata;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.enumeration.domain.DataDrivenEnumerationValueImpl;
-import org.broadleafcommerce.common.presentation.AdminPresentation;
-import org.broadleafcommerce.common.presentation.AdminPresentationDataDrivenEnumeration;
-import org.broadleafcommerce.common.presentation.AdminPresentationToOneLookup;
-import org.broadleafcommerce.common.presentation.ConfigurationItem;
-import org.broadleafcommerce.common.presentation.FieldValueConfiguration;
-import org.broadleafcommerce.common.presentation.OptionFilterParam;
-import org.broadleafcommerce.common.presentation.OptionFilterParamType;
-import org.broadleafcommerce.common.presentation.RequiredOverride;
-import org.broadleafcommerce.common.presentation.ValidationConfiguration;
-import org.broadleafcommerce.common.presentation.client.LookupType;
-import org.broadleafcommerce.common.presentation.client.SupportedFieldType;
-import org.broadleafcommerce.common.presentation.client.VisibilityEnum;
-import org.broadleafcommerce.common.presentation.override.AdminPresentationDataDrivenEnumerationOverride;
-import org.broadleafcommerce.common.presentation.override.AdminPresentationMergeEntry;
-import org.broadleafcommerce.common.presentation.override.AdminPresentationMergeOverride;
-import org.broadleafcommerce.common.presentation.override.AdminPresentationMergeOverrides;
-import org.broadleafcommerce.common.presentation.override.AdminPresentationOverride;
-import org.broadleafcommerce.common.presentation.override.AdminPresentationOverrides;
-import org.broadleafcommerce.common.presentation.override.AdminPresentationToOneLookupOverride;
-import org.broadleafcommerce.common.presentation.override.PropertyType;
-import org.broadleafcommerce.common.util.StringUtil;
-import org.broadleafcommerce.openadmin.dto.BasicFieldMetadata;
-import org.broadleafcommerce.openadmin.dto.FieldMetadata;
-import org.broadleafcommerce.openadmin.dto.override.FieldMetadataOverride;
-import org.broadleafcommerce.openadmin.dto.override.MetadataOverride;
-import org.broadleafcommerce.openadmin.server.dao.DynamicEntityDao;
-import org.broadleafcommerce.openadmin.server.dao.FieldInfo;
-import org.broadleafcommerce.openadmin.server.dao.provider.metadata.request.AddFieldMetadataRequest;
-import org.broadleafcommerce.openadmin.server.dao.provider.metadata.request.OverrideViaAnnotationRequest;
-import org.broadleafcommerce.openadmin.server.dao.provider.metadata.request.OverrideViaXmlRequest;
-import org.broadleafcommerce.openadmin.server.service.persistence.PersistenceManagerFactory;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.FieldManager;
-import org.broadleafcommerce.openadmin.server.service.type.MetadataProviderResponse;
+import com.ultracommerce.common.enumeration.domain.DataDrivenEnumerationValueImpl;
+import com.ultracommerce.common.presentation.AdminPresentation;
+import com.ultracommerce.common.presentation.AdminPresentationDataDrivenEnumeration;
+import com.ultracommerce.common.presentation.AdminPresentationToOneLookup;
+import com.ultracommerce.common.presentation.ConfigurationItem;
+import com.ultracommerce.common.presentation.FieldValueConfiguration;
+import com.ultracommerce.common.presentation.OptionFilterParam;
+import com.ultracommerce.common.presentation.OptionFilterParamType;
+import com.ultracommerce.common.presentation.RequiredOverride;
+import com.ultracommerce.common.presentation.ValidationConfiguration;
+import com.ultracommerce.common.presentation.client.LookupType;
+import com.ultracommerce.common.presentation.client.SupportedFieldType;
+import com.ultracommerce.common.presentation.client.VisibilityEnum;
+import com.ultracommerce.common.presentation.override.AdminPresentationDataDrivenEnumerationOverride;
+import com.ultracommerce.common.presentation.override.AdminPresentationMergeEntry;
+import com.ultracommerce.common.presentation.override.AdminPresentationMergeOverride;
+import com.ultracommerce.common.presentation.override.AdminPresentationMergeOverrides;
+import com.ultracommerce.common.presentation.override.AdminPresentationOverride;
+import com.ultracommerce.common.presentation.override.AdminPresentationOverrides;
+import com.ultracommerce.common.presentation.override.AdminPresentationToOneLookupOverride;
+import com.ultracommerce.common.presentation.override.PropertyType;
+import com.ultracommerce.common.util.StringUtil;
+import com.ultracommerce.openadmin.dto.BasicFieldMetadata;
+import com.ultracommerce.openadmin.dto.FieldMetadata;
+import com.ultracommerce.openadmin.dto.override.FieldMetadataOverride;
+import com.ultracommerce.openadmin.dto.override.MetadataOverride;
+import com.ultracommerce.openadmin.server.dao.DynamicEntityDao;
+import com.ultracommerce.openadmin.server.dao.FieldInfo;
+import com.ultracommerce.openadmin.server.dao.provider.metadata.request.AddFieldMetadataRequest;
+import com.ultracommerce.openadmin.server.dao.provider.metadata.request.OverrideViaAnnotationRequest;
+import com.ultracommerce.openadmin.server.dao.provider.metadata.request.OverrideViaXmlRequest;
+import com.ultracommerce.openadmin.server.service.persistence.PersistenceManagerFactory;
+import com.ultracommerce.openadmin.server.service.persistence.module.FieldManager;
+import com.ultracommerce.openadmin.server.service.type.MetadataProviderResponse;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
@@ -80,7 +80,7 @@ import javax.persistence.criteria.Root;
 /**
  * @author Jeff Fischer
  */
-@Component("blBasicFieldMetadataProvider")
+@Component("ucBasicFieldMetadataProvider")
 @Scope("prototype")
 public class BasicFieldMetadataProvider extends FieldMetadataProviderAdapter {
 
@@ -409,8 +409,8 @@ public class BasicFieldMetadataProvider extends FieldMetadataProviderAdapter {
                 fieldMetadataOverride.setTab(stringValue);
             } else if (entry.getKey().equals(PropertyType.AdminPresentation.COLUMNWIDTH)) {
                 fieldMetadataOverride.setColumnWidth(stringValue);
-            } else if (entry.getKey().equals(PropertyType.AdminPresentation.BROADLEAFENUMERATION)) {
-                fieldMetadataOverride.setBroadleafEnumeration(stringValue);
+            } else if (entry.getKey().equals(PropertyType.AdminPresentation.ULTRAENUMERATION)) {
+                fieldMetadataOverride.setUltraEnumeration(stringValue);
             }  else if (entry.getKey().equals(PropertyType.AdminPresentation.HIDEENUMERATIONIFEMPTY)) {
                 fieldMetadataOverride.setHideEnumerationIfEmpty(StringUtils.isEmpty(stringValue) ? entry.getValue().booleanOverrideValue() :
                         Boolean.parseBoolean(stringValue));
@@ -534,7 +534,7 @@ public class BasicFieldMetadataProvider extends FieldMetadataProviderAdapter {
             AdminPresentationDataDrivenEnumeration dataDrivenEnumeration) {
         if (annot != null) {
             FieldMetadataOverride override = new FieldMetadataOverride();
-            override.setBroadleafEnumeration(annot.broadleafEnumeration());
+            override.setUltraEnumeration(annot.ultraEnumeration());
             override.setHideEnumerationIfEmpty(annot.hideEnumerationIfEmpty());
             override.setFieldComponentRenderer(annot.fieldComponentRenderer());
             override.setFieldComponentRendererTemplate(annot.fieldComponentRendererTemplate());
@@ -744,12 +744,12 @@ public class BasicFieldMetadataProvider extends FieldMetadataProviderAdapter {
         if (basicFieldMetadata.getColumnWidth() != null) {
             metadata.setColumnWidth(basicFieldMetadata.getColumnWidth());
         }
-        if (basicFieldMetadata.getBroadleafEnumeration() != null) {
-            metadata.setBroadleafEnumeration(basicFieldMetadata.getBroadleafEnumeration());
+        if (basicFieldMetadata.getUltraEnumeration() != null) {
+            metadata.setUltraEnumeration(basicFieldMetadata.getUltraEnumeration());
         }
-        if (!StringUtils.isEmpty(metadata.getBroadleafEnumeration()) && metadata.getFieldType() == SupportedFieldType.BROADLEAF_ENUMERATION) {
+        if (!StringUtils.isEmpty(metadata.getUltraEnumeration()) && metadata.getFieldType() == SupportedFieldType.ULTRA_ENUMERATION) {
             try {
-                setupBroadleafEnumeration(metadata.getBroadleafEnumeration(), metadata, dynamicEntityDao);
+                setupUltraEnumeration(metadata.getUltraEnumeration(), metadata, dynamicEntityDao);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }

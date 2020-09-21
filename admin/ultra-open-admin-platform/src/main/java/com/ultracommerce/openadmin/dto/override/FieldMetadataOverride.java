@@ -1,31 +1,31 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.openadmin.dto.override;
+package com.ultracommerce.openadmin.dto.override;
 
-import org.broadleafcommerce.common.presentation.client.AddMethodType;
-import org.broadleafcommerce.common.presentation.client.AdornedTargetAddMethodType;
-import org.broadleafcommerce.common.presentation.client.LookupType;
-import org.broadleafcommerce.common.presentation.client.OperationType;
-import org.broadleafcommerce.common.presentation.client.RuleBuilderDisplayType;
-import org.broadleafcommerce.common.presentation.client.SupportedFieldType;
-import org.broadleafcommerce.common.presentation.client.UnspecifiedBooleanType;
-import org.broadleafcommerce.common.presentation.client.VisibilityEnum;
-import org.broadleafcommerce.openadmin.dto.MergedPropertyType;
+import com.ultracommerce.common.presentation.client.AddMethodType;
+import com.ultracommerce.common.presentation.client.AdornedTargetAddMethodType;
+import com.ultracommerce.common.presentation.client.LookupType;
+import com.ultracommerce.common.presentation.client.OperationType;
+import com.ultracommerce.common.presentation.client.RuleBuilderDisplayType;
+import com.ultracommerce.common.presentation.client.SupportedFieldType;
+import com.ultracommerce.common.presentation.client.UnspecifiedBooleanType;
+import com.ultracommerce.common.presentation.client.VisibilityEnum;
+import com.ultracommerce.openadmin.dto.MergedPropertyType;
 
 import java.io.Serializable;
 import java.util.List;
@@ -107,7 +107,7 @@ public class FieldMetadataOverride extends MetadataOverride {
     private Boolean largeEntry;
     private Boolean prominent;
     private String columnWidth;
-    private String broadleafEnumeration;
+    private String ultraEnumeration;
     private Boolean hideEnumerationIfEmpty;
     private SupportedFieldType fieldComponentRenderer;
     private String fieldComponentRendererTemplate;
@@ -328,12 +328,12 @@ public class FieldMetadataOverride extends MetadataOverride {
         this.columnWidth = columnWidth;
     }
 
-    public String getBroadleafEnumeration() {
-        return broadleafEnumeration;
+    public String getUltraEnumeration() {
+        return ultraEnumeration;
     }
 
-    public void setBroadleafEnumeration(String broadleafEnumeration) {
-        this.broadleafEnumeration = broadleafEnumeration;
+    public void setUltraEnumeration(String ultraEnumeration) {
+        this.ultraEnumeration = ultraEnumeration;
     }
 
     public Boolean getHideEnumerationIfEmpty() {

@@ -1,60 +1,60 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.openadmin.web.controller;
+package com.ultracommerce.openadmin.web.controller;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.exception.ServiceException;
-import org.broadleafcommerce.common.persistence.EntityConfiguration;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
-import org.broadleafcommerce.common.web.JsonResponse;
-import org.broadleafcommerce.common.web.controller.BroadleafAbstractController;
-import org.broadleafcommerce.openadmin.dto.BasicFieldMetadata;
-import org.broadleafcommerce.openadmin.dto.ClassMetadata;
-import org.broadleafcommerce.openadmin.dto.ClassTree;
-import org.broadleafcommerce.openadmin.dto.CriteriaTransferObject;
-import org.broadleafcommerce.openadmin.dto.DynamicResultSet;
-import org.broadleafcommerce.openadmin.dto.Entity;
-import org.broadleafcommerce.openadmin.dto.FieldMetadata;
-import org.broadleafcommerce.openadmin.dto.FilterAndSortCriteria;
-import org.broadleafcommerce.openadmin.dto.Property;
-import org.broadleafcommerce.openadmin.dto.SectionCrumb;
-import org.broadleafcommerce.openadmin.dto.SortDirection;
-import org.broadleafcommerce.openadmin.security.ClassNameRequestParamValidationService;
-import org.broadleafcommerce.openadmin.server.domain.FetchPageRequest;
-import org.broadleafcommerce.openadmin.server.domain.PersistencePackageRequest;
-import org.broadleafcommerce.openadmin.server.security.domain.AdminSection;
-import org.broadleafcommerce.openadmin.server.security.remote.SecurityVerifier;
-import org.broadleafcommerce.openadmin.server.security.service.navigation.AdminNavigationService;
-import org.broadleafcommerce.openadmin.server.service.AdminEntityService;
-import org.broadleafcommerce.openadmin.server.service.AdminSectionCustomCriteriaService;
-import org.broadleafcommerce.openadmin.server.service.extension.FilterProductTypePersistenceHandlerExtensionManager;
-import org.broadleafcommerce.openadmin.server.service.persistence.PersistenceResponse;
-import org.broadleafcommerce.openadmin.web.form.component.ListGrid;
-import org.broadleafcommerce.openadmin.web.form.entity.DynamicEntityFormInfo;
-import org.broadleafcommerce.openadmin.web.form.entity.EntityForm;
-import org.broadleafcommerce.openadmin.web.form.entity.EntityFormValidator;
-import org.broadleafcommerce.openadmin.web.form.entity.Field;
-import org.broadleafcommerce.openadmin.web.form.entity.FieldGroup;
-import org.broadleafcommerce.openadmin.web.form.entity.Tab;
-import org.broadleafcommerce.openadmin.web.service.FormBuilderService;
+import com.ultracommerce.common.exception.ServiceException;
+import com.ultracommerce.common.persistence.EntityConfiguration;
+import com.ultracommerce.common.web.UltraRequestContext;
+import com.ultracommerce.common.web.JsonResponse;
+import com.ultracommerce.common.web.controller.UltraAbstractController;
+import com.ultracommerce.openadmin.dto.BasicFieldMetadata;
+import com.ultracommerce.openadmin.dto.ClassMetadata;
+import com.ultracommerce.openadmin.dto.ClassTree;
+import com.ultracommerce.openadmin.dto.CriteriaTransferObject;
+import com.ultracommerce.openadmin.dto.DynamicResultSet;
+import com.ultracommerce.openadmin.dto.Entity;
+import com.ultracommerce.openadmin.dto.FieldMetadata;
+import com.ultracommerce.openadmin.dto.FilterAndSortCriteria;
+import com.ultracommerce.openadmin.dto.Property;
+import com.ultracommerce.openadmin.dto.SectionCrumb;
+import com.ultracommerce.openadmin.dto.SortDirection;
+import com.ultracommerce.openadmin.security.ClassNameRequestParamValidationService;
+import com.ultracommerce.openadmin.server.domain.FetchPageRequest;
+import com.ultracommerce.openadmin.server.domain.PersistencePackageRequest;
+import com.ultracommerce.openadmin.server.security.domain.AdminSection;
+import com.ultracommerce.openadmin.server.security.remote.SecurityVerifier;
+import com.ultracommerce.openadmin.server.security.service.navigation.AdminNavigationService;
+import com.ultracommerce.openadmin.server.service.AdminEntityService;
+import com.ultracommerce.openadmin.server.service.AdminSectionCustomCriteriaService;
+import com.ultracommerce.openadmin.server.service.extension.FilterProductTypePersistenceHandlerExtensionManager;
+import com.ultracommerce.openadmin.server.service.persistence.PersistenceResponse;
+import com.ultracommerce.openadmin.web.form.component.ListGrid;
+import com.ultracommerce.openadmin.web.form.entity.DynamicEntityFormInfo;
+import com.ultracommerce.openadmin.web.form.entity.EntityForm;
+import com.ultracommerce.openadmin.web.form.entity.EntityFormValidator;
+import com.ultracommerce.openadmin.web.form.entity.Field;
+import com.ultracommerce.openadmin.web.form.entity.FieldGroup;
+import com.ultracommerce.openadmin.web.form.entity.Tab;
+import com.ultracommerce.openadmin.web.service.FormBuilderService;
 import org.springframework.ui.Model;
 import org.springframework.util.MultiValueMap;
 import org.springframework.validation.BindingResult;
@@ -78,7 +78,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author elbertbautista
  * @author apazzolini
  */
-public abstract class AdminAbstractController extends BroadleafAbstractController {
+public abstract class AdminAbstractController extends UltraAbstractController {
     protected static final Log LOG = LogFactory.getLog(AdminAbstractController.class);
 
     public static final String FILTER_VALUE_SEPARATOR = "|";
@@ -94,34 +94,34 @@ public abstract class AdminAbstractController extends BroadleafAbstractControlle
     // RESOURCE DECLARATIONS *
     // ***********************
 
-    @Resource(name = "blAdminEntityService")
+    @Resource(name = "ucAdminEntityService")
     protected AdminEntityService service;
 
-    @Resource(name = "blFormBuilderService")
+    @Resource(name = "ucFormBuilderService")
     protected FormBuilderService formService;
     
-    @Resource(name = "blAdminNavigationService")
+    @Resource(name = "ucAdminNavigationService")
     protected AdminNavigationService adminNavigationService;
     
-    @Resource(name = "blEntityConfiguration")
+    @Resource(name = "ucEntityConfiguration")
     protected EntityConfiguration entityConfiguration;
 
-    @Resource(name = "blEntityFormValidator")
+    @Resource(name = "ucEntityFormValidator")
     protected EntityFormValidator entityFormValidator;
     
-    @Resource(name="blAdminSecurityRemoteService")
+    @Resource(name="ucAdminSecurityRemoteService")
     protected SecurityVerifier adminRemoteSecurityService;
 
-    @Resource(name = "blAdminSectionCustomCriteriaService")
+    @Resource(name = "ucAdminSectionCustomCriteriaService")
     protected AdminSectionCustomCriteriaService customCriteriaService;
 
-    @Resource(name = "blAdminAbstractControllerExtensionManager")
+    @Resource(name = "ucAdminAbstractControllerExtensionManager")
     protected AdminAbstractControllerExtensionManager extensionManager;
 
-    @Resource(name="blClassNameRequestParamValidationService")
+    @Resource(name="ucClassNameRequestParamValidationService")
     protected ClassNameRequestParamValidationService validationService;
 
-    @Resource(name = "blFilterProductTypePersistenceHandlerExtensionManager")
+    @Resource(name = "ucFilterProductTypePersistenceHandlerExtensionManager")
     protected FilterProductTypePersistenceHandlerExtensionManager filterProductTypeExtensionManager;
 
     // *********************************************************
@@ -413,7 +413,7 @@ public abstract class AdminAbstractController extends BroadleafAbstractControlle
         String sectionKey = pathVars.get("sectionKey");
         
         AdminSection typedEntitySection = null;
-        HttpServletRequest request = BroadleafRequestContext.getBroadleafRequestContext().getRequest();
+        HttpServletRequest request = UltraRequestContext.getUltraRequestContext().getRequest();
         if (request != null) {
             typedEntitySection = (AdminSection) request.getAttribute("typedEntitySection");
         }
@@ -425,7 +425,7 @@ public abstract class AdminAbstractController extends BroadleafAbstractControlle
     }
     
     /**
-     * <p>Helper method to return an array of {@link org.broadleafcommerce.openadmin.dto.FilterAndSortCriteria} based on a map of propertyName -> list of criteria
+     * <p>Helper method to return an array of {@link com.ultracommerce.openadmin.dto.FilterAndSortCriteria} based on a map of propertyName -> list of criteria
      * value. This will also grab the sorts off of the request parameters, if any.</p>
      * 
      * <p>The multi-valued map allows users to specify multiple criteria values per property, as well as multiple sort
@@ -440,7 +440,7 @@ public abstract class AdminAbstractController extends BroadleafAbstractControlle
      * 
      * @param requestParams usually a {@link MultiValueMap} that has been bound by a controller to receive all of the
      * request parameters that are not explicitly named
-     * @return the final array of {@link org.broadleafcommerce.openadmin.dto.FilterAndSortCriteria} to pass to the fetch
+     * @return the final array of {@link com.ultracommerce.openadmin.dto.FilterAndSortCriteria} to pass to the fetch
      * 
      * @see {@link #getSortPropertyNames(Map)}
      * @see {@link #getSortDirections(Map)}
@@ -880,7 +880,7 @@ public abstract class AdminAbstractController extends BroadleafAbstractControlle
     }
 
     protected String translateErrorMessage(ObjectError error) {
-        BroadleafRequestContext context = BroadleafRequestContext.getBroadleafRequestContext();
+        UltraRequestContext context = UltraRequestContext.getUltraRequestContext();
         if (context != null && context.getMessageSource() != null && error.getDefaultMessage() == null) {
             return context.getMessageSource().getMessage(error.getCode(), null, error.getCode(), context.getJavaLocale());
         } else if (context != null && context.getMessageSource() != null && error.getDefaultMessage() != null) {

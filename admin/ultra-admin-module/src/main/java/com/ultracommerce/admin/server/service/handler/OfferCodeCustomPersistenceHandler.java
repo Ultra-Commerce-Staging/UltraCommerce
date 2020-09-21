@@ -1,46 +1,46 @@
 /*
  * #%L
- * BroadleafCommerce Admin Module
+ * UltraCommerce Admin Module
  * %%
- * Copyright (C) 2009 - 2019 Broadleaf Commerce
+ * Copyright (C) 2009 - 2019 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.admin.server.service.handler;
+package com.ultracommerce.admin.server.service.handler;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.exception.ServiceException;
-import org.broadleafcommerce.core.offer.dao.OfferCodeDao;
-import org.broadleafcommerce.core.offer.domain.OfferCode;
-import org.broadleafcommerce.openadmin.dto.Entity;
-import org.broadleafcommerce.openadmin.dto.FieldMetadata;
-import org.broadleafcommerce.openadmin.dto.PersistencePackage;
-import org.broadleafcommerce.openadmin.dto.PersistencePerspective;
-import org.broadleafcommerce.openadmin.server.dao.DynamicEntityDao;
-import org.broadleafcommerce.openadmin.server.service.handler.ClassCustomPersistenceHandlerAdapter;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.RecordHelper;
+import com.ultracommerce.common.exception.ServiceException;
+import com.ultracommerce.core.offer.dao.OfferCodeDao;
+import com.ultracommerce.core.offer.domain.OfferCode;
+import com.ultracommerce.openadmin.dto.Entity;
+import com.ultracommerce.openadmin.dto.FieldMetadata;
+import com.ultracommerce.openadmin.dto.PersistencePackage;
+import com.ultracommerce.openadmin.dto.PersistencePerspective;
+import com.ultracommerce.openadmin.server.dao.DynamicEntityDao;
+import com.ultracommerce.openadmin.server.service.handler.ClassCustomPersistenceHandlerAdapter;
+import com.ultracommerce.openadmin.server.service.persistence.module.RecordHelper;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.util.Map;
 
-@Component("blOfferCodeCustomPersistenceHandler")
+@Component("ucOfferCodeCustomPersistenceHandler")
 public class OfferCodeCustomPersistenceHandler extends ClassCustomPersistenceHandlerAdapter {
 
     private static final Log LOG = LogFactory.getLog(OfferCodeCustomPersistenceHandler.class);
     private static final String ERROR_MESSAGE_KEY = "OfferCode_Duplication_Validation_Failure";
 
-    @Resource(name = "blOfferCodeDao")
+    @Resource(name = "ucOfferCodeDao")
     protected OfferCodeDao offerCodeDao;
 
     @Override

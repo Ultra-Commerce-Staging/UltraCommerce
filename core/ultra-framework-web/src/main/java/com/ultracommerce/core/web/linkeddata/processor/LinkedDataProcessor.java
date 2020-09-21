@@ -1,29 +1,29 @@
 /*
  * #%L
- * BroadleafCommerce Framework Web
+ * UltraCommerce Framework Web
  * %%
- * Copyright (C) 2009 - 2017 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.web.linkeddata.processor;
+package com.ultracommerce.core.web.linkeddata.processor;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.core.web.linkeddata.generator.LinkedDataGenerator;
-import org.broadleafcommerce.presentation.dialect.AbstractBroadleafTagReplacementProcessor;
-import org.broadleafcommerce.presentation.model.BroadleafTemplateContext;
-import org.broadleafcommerce.presentation.model.BroadleafTemplateElement;
-import org.broadleafcommerce.presentation.model.BroadleafTemplateModel;
+import com.ultracommerce.core.web.linkeddata.generator.LinkedDataGenerator;
+import com.ultracommerce.presentation.dialect.AbstractUltraTagReplacementProcessor;
+import com.ultracommerce.presentation.model.UltraTemplateContext;
+import com.ultracommerce.presentation.model.UltraTemplateElement;
+import com.ultracommerce.presentation.model.UltraTemplateModel;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.springframework.stereotype.Component;
@@ -41,22 +41,22 @@ import javax.servlet.http.HttpServletRequest;
  * @author Jacob Mitash
  * @author Nathan Moore (nathanmoore).
  */
-@Component("blLinkedDataProcessor")
-public class LinkedDataProcessor extends AbstractBroadleafTagReplacementProcessor {
+@Component("ucLinkedDataProcessor")
+public class LinkedDataProcessor extends AbstractUltraTagReplacementProcessor {
     private final Log LOG = LogFactory.getLog(LinkedDataProcessor.class);
 
-    @Resource(name = "blLinkedDataGenerators")
+    @Resource(name = "ucLinkedDataGenerators")
     protected List<LinkedDataGenerator> linkedDataGenerators;
 
     @Override
-    public BroadleafTemplateModel getReplacementModel(final String s, final Map<String, String> map, 
-                                                      final BroadleafTemplateContext context) {
+    public UltraTemplateModel getReplacementModel(final String s, final Map<String, String> map, 
+                                                      final UltraTemplateContext context) {
         String linkedDataText = "<script type=\"application/ld+json\">\n" +
                                     getData(context.getRequest()) +
                                 "\n</script>";
 
-        final BroadleafTemplateModel model = context.createModel();
-        final BroadleafTemplateElement linkedData = context.createTextElement(linkedDataText);
+        final UltraTemplateModel model = context.createModel();
+        final UltraTemplateElement linkedData = context.createTextElement(linkedDataText);
         model.addElement(linkedData);
 
         return model;

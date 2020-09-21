@@ -1,26 +1,26 @@
 /*
  * #%L
- * BroadleafCommerce Framework Web
+ * UltraCommerce Framework Web
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.web.controller.account.validator;
+package com.ultracommerce.core.web.controller.account.validator;
 
-import org.broadleafcommerce.common.security.util.PasswordChange;
-import org.broadleafcommerce.common.util.BLCSystemProperty;
-import org.broadleafcommerce.profile.core.service.CustomerService;
-import org.broadleafcommerce.profile.web.core.CustomerState;
+import com.ultracommerce.common.security.util.PasswordChange;
+import com.ultracommerce.common.util.UCSystemProperty;
+import com.ultracommerce.profile.core.service.CustomerService;
+import com.ultracommerce.profile.web.core.CustomerState;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -29,12 +29,12 @@ import org.springframework.validation.Validator;
 
 import javax.annotation.Resource;
 
-@Component("blChangePasswordValidator")
+@Component("ucChangePasswordValidator")
 public class ChangePasswordValidator implements Validator {
 
     private static final String DEFAULT_VALID_PASSWORD_REGEX = "[^\\s]{6,}";
 
-    @Resource(name = "blCustomerService")
+    @Resource(name = "ucCustomerService")
     protected CustomerService customerService;
 
     @Value("${enable.current.password.check:true}")
@@ -70,7 +70,7 @@ public class ChangePasswordValidator implements Validator {
     }
 
     public static String getValidPasswordRegex() {
-        return BLCSystemProperty.resolveSystemProperty("password.valid.regex", DEFAULT_VALID_PASSWORD_REGEX);
+        return UCSystemProperty.resolveSystemProperty("password.valid.regex", DEFAULT_VALID_PASSWORD_REGEX);
     }
 
     @Override

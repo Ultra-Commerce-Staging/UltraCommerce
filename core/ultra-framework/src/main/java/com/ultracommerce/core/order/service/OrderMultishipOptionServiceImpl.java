@@ -1,29 +1,29 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.order.service;
+package com.ultracommerce.core.order.service;
 
-import org.broadleafcommerce.core.order.dao.OrderMultishipOptionDao;
-import org.broadleafcommerce.core.order.domain.DiscreteOrderItem;
-import org.broadleafcommerce.core.order.domain.Order;
-import org.broadleafcommerce.core.order.domain.OrderMultishipOption;
-import org.broadleafcommerce.core.order.domain.OrderMultishipOptionImpl;
-import org.broadleafcommerce.core.order.service.call.OrderMultishipOptionDTO;
-import org.broadleafcommerce.profile.core.service.AddressService;
+import com.ultracommerce.core.order.dao.OrderMultishipOptionDao;
+import com.ultracommerce.core.order.domain.DiscreteOrderItem;
+import com.ultracommerce.core.order.domain.Order;
+import com.ultracommerce.core.order.domain.OrderMultishipOption;
+import com.ultracommerce.core.order.domain.OrderMultishipOptionImpl;
+import com.ultracommerce.core.order.service.call.OrderMultishipOptionDTO;
+import com.ultracommerce.profile.core.service.AddressService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -38,22 +38,22 @@ import javax.annotation.Resource;
  * 
  * @author Andre Azzolini (apazzolini)
  */
-@Service("blOrderMultishipOptionService")
+@Service("ucOrderMultishipOptionService")
 public class OrderMultishipOptionServiceImpl implements OrderMultishipOptionService {
 
-    @Resource(name = "blOrderMultishipOptionDao")
+    @Resource(name = "ucOrderMultishipOptionDao")
     OrderMultishipOptionDao orderMultishipOptionDao;
     
-    @Resource(name = "blAddressService")
+    @Resource(name = "ucAddressService")
     protected AddressService addressService;
     
-    @Resource(name = "blOrderItemService")
+    @Resource(name = "ucOrderItemService")
     protected OrderItemService orderItemService;
     
-    @Resource(name = "blFulfillmentOptionService")
+    @Resource(name = "ucFulfillmentOptionService")
     protected FulfillmentOptionService fulfillmentOptionService;
     
-    @Resource(name = "blFulfillmentGroupService")
+    @Resource(name = "ucFulfillmentGroupService")
     protected FulfillmentGroupService fulfillmentGroupService;
 
     @Override

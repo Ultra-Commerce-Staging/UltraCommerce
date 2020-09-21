@@ -1,25 +1,25 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.presentation;
+package com.ultracommerce.common.presentation;
 
-import org.broadleafcommerce.common.presentation.client.RuleBuilderDisplayType;
-import org.broadleafcommerce.common.presentation.client.SupportedFieldType;
-import org.broadleafcommerce.common.presentation.client.VisibilityEnum;
+import com.ultracommerce.common.presentation.client.RuleBuilderDisplayType;
+import com.ultracommerce.common.presentation.client.SupportedFieldType;
+import com.ultracommerce.common.presentation.client.VisibilityEnum;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -61,7 +61,7 @@ public @interface AdminPresentation {
     /**
      * Optional - only required if you want to restrict this field
      *
-     * If a security level is specified, it is registered with org.broadleafcommerce.openadmin.client.security.SecurityManager
+     * If a security level is specified, it is registered with com.ultracommerce.openadmin.client.security.SecurityManager
      * The SecurityManager checks the permission of the current user to 
      * determine if this field should be disabled based on the specified level.
      * 
@@ -227,14 +227,14 @@ public @interface AdminPresentation {
     String columnWidth() default "*";
     
     /**
-     * Optional - only required for BROADLEAF_ENUMERATION field types
+     * Optional - only required for ULTRA_ENUMERATION field types
      *
-     * For fields with a SupportedFieldType of BROADLEAF_ENUMERATION,
-     * you must specify the fully qualified class name of the Broadleaf Enumeration here.
+     * For fields with a SupportedFieldType of ULTRA_ENUMERATION,
+     * you must specify the fully qualified class name of the Ultra Enumeration here.
      * 
-     * @return Broadleaf enumeration class name
+     * @return Ultra enumeration class name
      */
-    String broadleafEnumeration() default "";
+    String ultraEnumeration() default "";
 
     /**
      * <p>Optional - only required if you want to hide this field when there are no enumeration options provided</p>

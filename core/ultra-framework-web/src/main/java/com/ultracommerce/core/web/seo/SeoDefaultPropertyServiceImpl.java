@@ -1,39 +1,39 @@
 /*
  * #%L
- * broadleaf-enterprise
+ * ultra-enterprise
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.web.seo;
+package com.ultracommerce.core.web.seo;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.media.domain.Media;
-import org.broadleafcommerce.common.page.dto.PageDTO;
-import org.broadleafcommerce.common.web.BaseUrlResolver;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
-import org.broadleafcommerce.common.web.util.BroadleafUrlParamUtils;
-import org.broadleafcommerce.core.catalog.dao.CategoryDao;
-import org.broadleafcommerce.core.catalog.domain.Category;
-import org.broadleafcommerce.core.catalog.domain.CategoryMediaXref;
-import org.broadleafcommerce.core.catalog.domain.Product;
-import org.broadleafcommerce.core.catalog.domain.Sku;
-import org.broadleafcommerce.core.catalog.domain.SkuMediaXref;
-import org.broadleafcommerce.core.search.service.SearchService;
-import org.broadleafcommerce.core.web.service.SearchFacetDTOService;
-import org.broadleafcommerce.presentation.condition.ConditionalOnTemplating;
+import com.ultracommerce.common.media.domain.Media;
+import com.ultracommerce.common.page.dto.PageDTO;
+import com.ultracommerce.common.web.BaseUrlResolver;
+import com.ultracommerce.common.web.UltraRequestContext;
+import com.ultracommerce.common.web.util.UltraUrlParamUtils;
+import com.ultracommerce.core.catalog.dao.CategoryDao;
+import com.ultracommerce.core.catalog.domain.Category;
+import com.ultracommerce.core.catalog.domain.CategoryMediaXref;
+import com.ultracommerce.core.catalog.domain.Product;
+import com.ultracommerce.core.catalog.domain.Sku;
+import com.ultracommerce.core.catalog.domain.SkuMediaXref;
+import com.ultracommerce.core.search.service.SearchService;
+import com.ultracommerce.core.web.service.SearchFacetDTOService;
+import com.ultracommerce.presentation.condition.ConditionalOnTemplating;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
@@ -46,7 +46,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Chris Kittrell (ckittrell)
  */
-@Service("blSeoDefaultPropertyService")
+@Service("ucSeoDefaultPropertyService")
 @ConditionalOnTemplating
 public class SeoDefaultPropertyServiceImpl implements SeoDefaultPropertyService {
 
@@ -55,16 +55,16 @@ public class SeoDefaultPropertyServiceImpl implements SeoDefaultPropertyService 
     @Autowired
     protected Environment env;
 
-    @Resource(name = "blBaseUrlResolver")
+    @Resource(name = "ucBaseUrlResolver")
     protected BaseUrlResolver urlResolver;
 
-    @Resource(name = "blSearchFacetDTOService")
+    @Resource(name = "ucSearchFacetDTOService")
     protected SearchFacetDTOService facetService;
 
-    @Resource(name = "blSearchService")
+    @Resource(name = "ucSearchService")
     protected SearchService searchService;
 
-    @Resource(name = "blCategoryDao")
+    @Resource(name = "ucCategoryDao")
     protected CategoryDao categoryDao;
 
     @Override
@@ -213,7 +213,7 @@ public class SeoDefaultPropertyServiceImpl implements SeoDefaultPropertyService 
     }
 
     protected boolean shouldIncludeProductPagination(int pageNumber) {
-        HttpServletRequest request = BroadleafRequestContext.getBroadleafRequestContext().getRequest();
+        HttpServletRequest request = UltraRequestContext.getUltraRequestContext().getRequest();
 
         String productPaginationParam = getProductPaginationParam();
         String productPaginationParamValue = request.getParameter(productPaginationParam);
@@ -243,7 +243,7 @@ public class SeoDefaultPropertyServiceImpl implements SeoDefaultPropertyService 
         if (shouldIncludeProductPagination(pageNumber)) {
             String productPaginationParam = getProductPaginationParam();
 
-            canonicalUrl = BroadleafUrlParamUtils.addPaginationParam(canonicalUrl, productPaginationParam, pageNumber);
+            canonicalUrl = UltraUrlParamUtils.addPaginationParam(canonicalUrl, productPaginationParam, pageNumber);
         }
 
         return canonicalUrl;
@@ -251,7 +251,7 @@ public class SeoDefaultPropertyServiceImpl implements SeoDefaultPropertyService 
 
     protected Integer getCurrentProductPageNumber() {
         try {
-            HttpServletRequest request = BroadleafRequestContext.getBroadleafRequestContext().getRequest();
+            HttpServletRequest request = UltraRequestContext.getUltraRequestContext().getRequest();
 
             String productPaginationParam = getProductPaginationParam();
             String productPaginationParamValue = request.getParameter(productPaginationParam);
@@ -293,7 +293,7 @@ public class SeoDefaultPropertyServiceImpl implements SeoDefaultPropertyService 
     }
 
     protected boolean shouldIncludeCategoryPagination(int pageNumber) {
-        HttpServletRequest request = BroadleafRequestContext.getBroadleafRequestContext().getRequest();
+        HttpServletRequest request = UltraRequestContext.getUltraRequestContext().getRequest();
 
         String categoryPaginationParam = getCategoryPaginationParam();
         String categoryPaginationParamValue = request.getParameter(categoryPaginationParam);
@@ -318,7 +318,7 @@ public class SeoDefaultPropertyServiceImpl implements SeoDefaultPropertyService 
         if (shouldIncludeCategoryPagination(pageNumber)) {
             String categoryPaginationParam = getCategoryPaginationParam();
 
-            canonicalUrl = BroadleafUrlParamUtils.addPaginationParam(canonicalUrl, categoryPaginationParam, pageNumber);
+            canonicalUrl = UltraUrlParamUtils.addPaginationParam(canonicalUrl, categoryPaginationParam, pageNumber);
         }
 
         return canonicalUrl;
@@ -326,7 +326,7 @@ public class SeoDefaultPropertyServiceImpl implements SeoDefaultPropertyService 
 
     protected Integer getCurrentCategoryPageNumber() {
         try {
-            HttpServletRequest request = BroadleafRequestContext.getBroadleafRequestContext().getRequest();
+            HttpServletRequest request = UltraRequestContext.getUltraRequestContext().getRequest();
 
             String categoryPaginationParam = getCategoryPaginationParam();
             String categoryPaginationParamValue = request.getParameter(categoryPaginationParam);
@@ -352,7 +352,7 @@ public class SeoDefaultPropertyServiceImpl implements SeoDefaultPropertyService 
 
     protected int getPageSize() {
         try {
-            HttpServletRequest request = BroadleafRequestContext.getBroadleafRequestContext().getRequest();
+            HttpServletRequest request = UltraRequestContext.getUltraRequestContext().getRequest();
             String pageSize = request.getParameter("pageSize");
 
             if (StringUtils.isBlank(pageSize)) {

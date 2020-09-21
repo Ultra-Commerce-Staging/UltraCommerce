@@ -1,33 +1,33 @@
 /*
  * #%L
- * BroadleafCommerce CMS Module
+ * UltraCommerce CMS Module
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.cms.web;
+package com.ultracommerce.cms.web;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.cms.url.domain.URLHandler;
-import org.broadleafcommerce.cms.url.service.URLHandlerService;
-import org.broadleafcommerce.cms.url.type.URLRedirectType;
-import org.broadleafcommerce.common.admin.condition.ConditionalOnNotAdmin;
-import org.broadleafcommerce.common.util.BLCSystemProperty;
-import org.broadleafcommerce.common.util.UrlUtil;
-import org.broadleafcommerce.common.web.filter.AbstractIgnorableOncePerRequestFilter;
-import org.broadleafcommerce.common.web.filter.FilterOrdered;
+import com.ultracommerce.cms.url.domain.URLHandler;
+import com.ultracommerce.cms.url.service.URLHandlerService;
+import com.ultracommerce.cms.url.type.URLRedirectType;
+import com.ultracommerce.common.admin.condition.ConditionalOnNotAdmin;
+import com.ultracommerce.common.util.UCSystemProperty;
+import com.ultracommerce.common.util.UrlUtil;
+import com.ultracommerce.common.web.filter.AbstractIgnorableOncePerRequestFilter;
+import com.ultracommerce.common.web.filter.FilterOrdered;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -47,22 +47,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Responsible for setting up the site and locale used by Broadleaf Commerce components.
+ * Responsible for setting up the site and locale used by Ultra Commerce components.
  *
  * @author bpolster
  */
-@Component("blURLHandlerFilter")
+@Component("ucURLHandlerFilter")
 @ConditionalOnNotAdmin
 public class URLHandlerFilter extends AbstractIgnorableOncePerRequestFilter {
 
     private static final Log LOG = LogFactory.getLog(URLHandlerFilter.class);
 
     @Autowired
-    @Qualifier("blURLHandlerService")
+    @Qualifier("ucURLHandlerService")
     private URLHandlerService urlHandlerService;
 
     @Autowired
-    @Qualifier("blURLHandlerFilterExtensionManager")
+    @Qualifier("ucURLHandlerFilterExtensionManager")
     private URLHandlerFilterExtensionManager extensionManager;
 
     @Value("${request.uri.encoding}")
@@ -164,7 +164,7 @@ public class URLHandlerFilter extends AbstractIgnorableOncePerRequestFilter {
     }
 
     protected boolean getPreserveQueryStringOnRedirect() {
-        return BLCSystemProperty.resolveBooleanSystemProperty("preserveQueryStringOnRedirect");
+        return UCSystemProperty.resolveBooleanSystemProperty("preserveQueryStringOnRedirect");
     }
 
     @Override

@@ -1,30 +1,30 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.rating.dao;
+package com.ultracommerce.core.rating.dao;
 
-import org.broadleafcommerce.common.persistence.EntityConfiguration;
-import org.broadleafcommerce.common.util.dao.BatchRetrieveDao;
-import org.broadleafcommerce.core.rating.domain.RatingDetail;
-import org.broadleafcommerce.core.rating.domain.RatingSummary;
-import org.broadleafcommerce.core.rating.domain.RatingSummaryImpl;
-import org.broadleafcommerce.core.rating.domain.ReviewDetail;
-import org.broadleafcommerce.core.rating.service.type.RatingType;
-import org.broadleafcommerce.profile.core.domain.Customer;
+import com.ultracommerce.common.persistence.EntityConfiguration;
+import com.ultracommerce.common.util.dao.BatchRetrieveDao;
+import com.ultracommerce.core.rating.domain.RatingDetail;
+import com.ultracommerce.core.rating.domain.RatingSummary;
+import com.ultracommerce.core.rating.domain.RatingSummaryImpl;
+import com.ultracommerce.core.rating.domain.ReviewDetail;
+import com.ultracommerce.core.rating.service.type.RatingType;
+import com.ultracommerce.profile.core.domain.Customer;
 import org.hibernate.jpa.QueryHints;
 import org.springframework.stereotype.Repository;
 
@@ -37,13 +37,13 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-@Repository("blRatingSummaryDao")
+@Repository("ucRatingSummaryDao")
 public class RatingSummaryDaoImpl extends BatchRetrieveDao implements RatingSummaryDao {
 
-    @PersistenceContext(unitName = "blPU")
+    @PersistenceContext(unitName = "ucPU")
     protected EntityManager em;
 
-    @Resource(name="blEntityConfiguration")
+    @Resource(name="ucEntityConfiguration")
     protected EntityConfiguration entityConfiguration;
 
     @Override
@@ -91,7 +91,7 @@ public class RatingSummaryDaoImpl extends BatchRetrieveDao implements RatingSumm
 
     @Override
     public List<RatingSummary> readRatingSummaries(final List<String> itemIds, final RatingType type) {
-        final Query query = em.createNamedQuery("BC_READ_RATING_SUMMARIES_BY_ITEM_ID_AND_TYPE");
+        final Query query = em.createNamedQuery("UC_READ_RATING_SUMMARIES_BY_ITEM_ID_AND_TYPE");
         query.setParameter("ratingType", type.getType());
         query.setHint(QueryHints.HINT_CACHEABLE, true);
         query.setHint(QueryHints.HINT_CACHE_REGION, "query.Catalog");
@@ -102,7 +102,7 @@ public class RatingSummaryDaoImpl extends BatchRetrieveDao implements RatingSumm
 
     @Override
     public RatingSummary readRatingSummary(final String itemId, final RatingType type) {
-        final Query query = em.createNamedQuery("BC_READ_RATING_SUMMARY_BY_ITEM_ID_AND_TYPE");
+        final Query query = em.createNamedQuery("UC_READ_RATING_SUMMARY_BY_ITEM_ID_AND_TYPE");
         query.setParameter("itemId", itemId);
         query.setParameter("ratingType", type.getType());
         query.setHint(QueryHints.HINT_CACHEABLE, true);
@@ -120,7 +120,7 @@ public class RatingSummaryDaoImpl extends BatchRetrieveDao implements RatingSumm
 
     @Override
     public RatingDetail readRating(final Long customerId, final Long ratingSummaryId) {
-        final Query query = em.createNamedQuery("BC_READ_RATING_DETAIL_BY_CUSTOMER_ID_AND_RATING_SUMMARY_ID");
+        final Query query = em.createNamedQuery("UC_READ_RATING_DETAIL_BY_CUSTOMER_ID_AND_RATING_SUMMARY_ID");
         query.setParameter("customerId", customerId);
         query.setParameter("ratingSummaryId", ratingSummaryId);
         query.setHint(QueryHints.HINT_CACHEABLE, true);
@@ -138,7 +138,7 @@ public class RatingSummaryDaoImpl extends BatchRetrieveDao implements RatingSumm
 
     @Override
     public ReviewDetail readReview(final Long customerId, final Long ratingSummaryId) {
-        final Query query = em.createNamedQuery("BC_READ_REVIEW_DETAIL_BY_CUSTOMER_ID_AND_RATING_SUMMARY_ID");
+        final Query query = em.createNamedQuery("UC_READ_REVIEW_DETAIL_BY_CUSTOMER_ID_AND_RATING_SUMMARY_ID");
         query.setParameter("customerId", customerId);
         query.setParameter("ratingSummaryId", ratingSummaryId);
         query.setHint(QueryHints.HINT_CACHEABLE, true);

@@ -1,27 +1,27 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
 ;(function($, window, undefined) {
     'use strict';
 
-    $.fn.broadleafNavigation = function(options) {
+    $.fn.ultraNavigation = function(options) {
 
         var initNav = function() {
-            $.each($('.secondary-nav .blc-module'), function(key, value) {
+            $.each($('.secondary-nav .uc-module'), function(key, value) {
                 if ($(value).hasClass('active')) {
                     $(value).show();
                 } else {
@@ -30,7 +30,7 @@
             });
         };
 
-        $(document).on('click', '.blc-navigation li a', function(e) {
+        $(document).on('click', '.uc-navigation li a', function(e) {
 
             e.preventDefault();
 
@@ -44,7 +44,7 @@
                 $('.secondary-nav').show();
 
                 // Remove 'active' class from all links on main nav
-                $.each($('.blc-navigation li a'), function (key, value) {
+                $.each($('.uc-navigation li a'), function (key, value) {
                     $(value).removeClass('active');
                 });
 
@@ -52,16 +52,16 @@
                 $(this).addClass('active');
 
                 // Remove 'active' class from all links on secondary nav
-                $.each($('.secondary-nav .blc-module'), function (key, value) {
+                $.each($('.secondary-nav .uc-module'), function (key, value) {
                     $(value).removeClass('active');
                 });
 
                 // Add 'active' class to current link on secondary nav
-                var content = $('.secondary-nav .blc-module #' + this.id).closest('div');
+                var content = $('.secondary-nav .uc-module #' + this.id).closest('div');
                 content.addClass('active');
 
                 // Show or hide secondary nav based on 'active' class
-                $.each($('.secondary-nav .blc-module'), function (key, value) {
+                $.each($('.secondary-nav .uc-module'), function (key, value) {
                     if ($(value).hasClass('active')) {
                         $(value).show();
                     } else {

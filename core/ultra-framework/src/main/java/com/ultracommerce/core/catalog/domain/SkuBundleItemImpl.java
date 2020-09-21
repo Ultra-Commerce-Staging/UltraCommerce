@@ -1,41 +1,41 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.catalog.domain;
+package com.ultracommerce.core.catalog.domain;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.broadleafcommerce.common.copy.CreateResponse;
-import org.broadleafcommerce.common.copy.MultiTenantCopyContext;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransform;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformMember;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformTypes;
-import org.broadleafcommerce.common.money.Money;
-import org.broadleafcommerce.common.persistence.DefaultPostLoaderDao;
-import org.broadleafcommerce.common.persistence.PostLoaderDao;
-import org.broadleafcommerce.common.presentation.AdminPresentation;
-import org.broadleafcommerce.common.presentation.AdminPresentationToOneLookup;
-import org.broadleafcommerce.common.presentation.RequiredOverride;
-import org.broadleafcommerce.common.presentation.ValidationConfiguration;
-import org.broadleafcommerce.common.presentation.client.SupportedFieldType;
-import org.broadleafcommerce.common.presentation.client.VisibilityEnum;
-import org.broadleafcommerce.common.util.HibernateUtils;
-import org.broadleafcommerce.core.catalog.service.dynamic.DynamicSkuPrices;
-import org.broadleafcommerce.core.catalog.service.dynamic.SkuPricingConsiderationContext;
+import com.ultracommerce.common.copy.CreateResponse;
+import com.ultracommerce.common.copy.MultiTenantCopyContext;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransform;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransformMember;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransformTypes;
+import com.ultracommerce.common.money.Money;
+import com.ultracommerce.common.persistence.DefaultPostLoaderDao;
+import com.ultracommerce.common.persistence.PostLoaderDao;
+import com.ultracommerce.common.presentation.AdminPresentation;
+import com.ultracommerce.common.presentation.AdminPresentationToOneLookup;
+import com.ultracommerce.common.presentation.RequiredOverride;
+import com.ultracommerce.common.presentation.ValidationConfiguration;
+import com.ultracommerce.common.presentation.client.SupportedFieldType;
+import com.ultracommerce.common.presentation.client.VisibilityEnum;
+import com.ultracommerce.common.util.HibernateUtils;
+import com.ultracommerce.core.catalog.service.dynamic.DynamicSkuPrices;
+import com.ultracommerce.core.catalog.service.dynamic.SkuPricingConsiderationContext;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
@@ -63,8 +63,8 @@ import javax.persistence.Transient;
 @Deprecated
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "BLC_SKU_BUNDLE_ITEM")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "blProducts")
+@Table(name = "UC_SKU_BUNDLE_ITEM")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "ucProducts")
 @DirectCopyTransform({
         @DirectCopyTransformMember(templateTokens = DirectCopyTransformTypes.SANDBOX, skipOverlaps=true),
         @DirectCopyTransformMember(templateTokens = DirectCopyTransformTypes.MULTITENANT_CATALOG)
@@ -78,10 +78,10 @@ public class SkuBundleItemImpl implements SkuBundleItem, SkuBundleItemAdminPrese
     @GeneratedValue(generator = "SkuBundleItemId")
     @GenericGenerator(
         name="SkuBundleItemId",
-        strategy="org.broadleafcommerce.common.persistence.IdOverrideTableGenerator",
+        strategy="com.ultracommerce.common.persistence.IdOverrideTableGenerator",
         parameters = {
             @Parameter(name = "segment_value", value = "SkuBundleItemImpl"),
-            @Parameter(name = "entity_name", value = "org.broadleafcommerce.core.catalog.domain.SkuBundleItemImpl")
+            @Parameter(name = "entity_name", value = "com.ultracommerce.core.catalog.domain.SkuBundleItemImpl")
         }
     )
     @Column(name = "SKU_BUNDLE_ITEM_ID")
@@ -112,7 +112,7 @@ public class SkuBundleItemImpl implements SkuBundleItem, SkuBundleItemAdminPrese
     @AdminPresentation(friendlyName = "Sku",
         group = GroupName.General, order = FieldOrder.SKU,
         prominent = true, gridOrder = FieldOrder.SKU,
-        validationConfigurations = @ValidationConfiguration(validationImplementation = "blProductBundleSkuBundleItemValidator"))
+        validationConfigurations = @ValidationConfiguration(validationImplementation = "ucProductBundleSkuBundleItemValidator"))
     @AdminPresentationToOneLookup()
     protected Sku sku;
 

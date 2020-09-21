@@ -1,39 +1,39 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.order.domain;
+package com.ultracommerce.core.order.domain;
 
-import org.broadleafcommerce.common.audit.Auditable;
-import org.broadleafcommerce.common.copy.CreateResponse;
-import org.broadleafcommerce.common.copy.MultiTenantCopyContext;
-import org.broadleafcommerce.common.currency.domain.BroadleafCurrency;
-import org.broadleafcommerce.common.locale.domain.Locale;
-import org.broadleafcommerce.common.money.Money;
-import org.broadleafcommerce.core.catalog.domain.Sku;
-import org.broadleafcommerce.core.offer.domain.Adjustment;
-import org.broadleafcommerce.core.offer.domain.CandidateOrderOffer;
-import org.broadleafcommerce.core.offer.domain.Offer;
-import org.broadleafcommerce.core.offer.domain.OfferCode;
-import org.broadleafcommerce.core.offer.domain.OfferInfo;
-import org.broadleafcommerce.core.offer.domain.OrderAdjustment;
-import org.broadleafcommerce.core.order.service.call.ActivityMessageDTO;
-import org.broadleafcommerce.core.order.service.type.OrderStatus;
-import org.broadleafcommerce.core.payment.domain.OrderPayment;
-import org.broadleafcommerce.profile.core.domain.Customer;
+import com.ultracommerce.common.audit.Auditable;
+import com.ultracommerce.common.copy.CreateResponse;
+import com.ultracommerce.common.copy.MultiTenantCopyContext;
+import com.ultracommerce.common.currency.domain.UltraCurrency;
+import com.ultracommerce.common.locale.domain.Locale;
+import com.ultracommerce.common.money.Money;
+import com.ultracommerce.core.catalog.domain.Sku;
+import com.ultracommerce.core.offer.domain.Adjustment;
+import com.ultracommerce.core.offer.domain.CandidateOrderOffer;
+import com.ultracommerce.core.offer.domain.Offer;
+import com.ultracommerce.core.offer.domain.OfferCode;
+import com.ultracommerce.core.offer.domain.OfferInfo;
+import com.ultracommerce.core.offer.domain.OrderAdjustment;
+import com.ultracommerce.core.order.service.call.ActivityMessageDTO;
+import com.ultracommerce.core.order.service.type.OrderStatus;
+import com.ultracommerce.core.payment.domain.OrderPayment;
+import com.ultracommerce.profile.core.domain.Customer;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -353,12 +353,12 @@ public class NullOrderImpl implements Order {
     }
 
     @Override
-    public BroadleafCurrency getCurrency() {
+    public UltraCurrency getCurrency() {
         return null;
     }
 
     @Override
-    public void setCurrency(BroadleafCurrency currency) {
+    public void setCurrency(UltraCurrency currency) {
         throw new UnsupportedOperationException("NullOrder does not support any modification operations.");
     }
 
@@ -422,7 +422,7 @@ public class NullOrderImpl implements Order {
     }
 
     @Override
-    public Long getBroadleafAccountId() {
+    public Long getUltraAccountId() {
         return null;
     }
 }

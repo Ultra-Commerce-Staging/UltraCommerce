@@ -1,32 +1,32 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
 
-package org.broadleafcommerce.openadmin.server.service.persistence.module.criteria;
+package com.ultracommerce.openadmin.server.service.persistence.module.criteria;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
-import org.broadleafcommerce.common.exception.NoPossibleResultsException;
-import org.broadleafcommerce.openadmin.dto.ClassTree;
-import org.broadleafcommerce.openadmin.dto.SortDirection;
-import org.broadleafcommerce.openadmin.server.dao.DynamicEntityDao;
-import org.broadleafcommerce.openadmin.server.security.remote.SecurityVerifier;
-import org.broadleafcommerce.openadmin.server.security.service.RowLevelSecurityService;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.EmptyFilterValues;
+import com.ultracommerce.common.exception.NoPossibleResultsException;
+import com.ultracommerce.openadmin.dto.ClassTree;
+import com.ultracommerce.openadmin.dto.SortDirection;
+import com.ultracommerce.openadmin.server.dao.DynamicEntityDao;
+import com.ultracommerce.openadmin.server.security.remote.SecurityVerifier;
+import com.ultracommerce.openadmin.server.security.service.RowLevelSecurityService;
+import com.ultracommerce.openadmin.server.service.persistence.module.EmptyFilterValues;
 import org.hibernate.type.SingleColumnType;
 import org.springframework.stereotype.Service;
 
@@ -53,16 +53,16 @@ import javax.persistence.criteria.Root;
 /**
  * @author Jeff Fischer
  */
-@Service("blCriteriaTranslator")
+@Service("ucCriteriaTranslator")
 public class CriteriaTranslatorImpl implements CriteriaTranslator {
 
-    @Resource(name = "blCriteriaTranslatorEventHandlers")
+    @Resource(name = "ucCriteriaTranslatorEventHandlers")
     protected List<CriteriaTranslatorEventHandler> eventHandlers = new ArrayList<CriteriaTranslatorEventHandler>();
 
-    @Resource(name = "blRowLevelSecurityService")
+    @Resource(name = "ucRowLevelSecurityService")
     protected RowLevelSecurityService rowSecurityService;
 
-    @Resource(name = "blAdminSecurityRemoteService")
+    @Resource(name = "ucAdminSecurityRemoteService")
     protected SecurityVerifier adminSecurityService;
 
     @Override
@@ -233,7 +233,7 @@ public class CriteriaTranslatorImpl implements CriteriaTranslator {
 
     /**
      * This method is deprecated in favor of {@link #addRestrictions(String, List, CriteriaBuilder, Root, List, List, CriteriaQuery)}
-     * It will be removed in Broadleaf version 3.1.0.
+     * It will be removed in Ultra version 3.1.0.
      * 
      * @param ceilingEntity
      * @param filterMappings

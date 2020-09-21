@@ -1,28 +1,28 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.presentation.override;
+package com.ultracommerce.common.presentation.override;
 
-import org.broadleafcommerce.common.presentation.AdminPresentationMapKey;
-import org.broadleafcommerce.common.presentation.AdminPresentationOperationTypes;
-import org.broadleafcommerce.common.presentation.OptionFilterParam;
-import org.broadleafcommerce.common.presentation.FieldValueConfiguration;
-import org.broadleafcommerce.common.presentation.ValidationConfiguration;
-import org.broadleafcommerce.common.presentation.client.OperationType;
+import com.ultracommerce.common.presentation.AdminPresentationMapKey;
+import com.ultracommerce.common.presentation.AdminPresentationOperationTypes;
+import com.ultracommerce.common.presentation.OptionFilterParam;
+import com.ultracommerce.common.presentation.FieldValueConfiguration;
+import com.ultracommerce.common.presentation.ValidationConfiguration;
+import com.ultracommerce.common.presentation.client.OperationType;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -32,12 +32,12 @@ import java.lang.annotation.Target;
 /**
  * Represents a override value for a specific admin presentation property.
  *
- * @see org.broadleafcommerce.common.presentation.AdminPresentation
- * @see org.broadleafcommerce.common.presentation.AdminPresentationToOneLookup
- * @see org.broadleafcommerce.common.presentation.AdminPresentationDataDrivenEnumeration
- * @see org.broadleafcommerce.common.presentation.AdminPresentationCollection
- * @see org.broadleafcommerce.common.presentation.AdminPresentationAdornedTargetCollection
- * @see org.broadleafcommerce.common.presentation.AdminPresentationMap
+ * @see com.ultracommerce.common.presentation.AdminPresentation
+ * @see com.ultracommerce.common.presentation.AdminPresentationToOneLookup
+ * @see com.ultracommerce.common.presentation.AdminPresentationDataDrivenEnumeration
+ * @see com.ultracommerce.common.presentation.AdminPresentationCollection
+ * @see com.ultracommerce.common.presentation.AdminPresentationAdornedTargetCollection
+ * @see com.ultracommerce.common.presentation.AdminPresentationMap
  * @author Jeff Fischer
  */
 @Retention(RetentionPolicy.RUNTIME)
@@ -154,7 +154,7 @@ public @interface AdminPresentationMergeEntry {
 
     /**
      * Property for overriding the validation configuration for a field annotated with the
-     * {@link org.broadleafcommerce.common.presentation.AdminPresentation} annotation.
+     * {@link com.ultracommerce.common.presentation.AdminPresentation} annotation.
      *
      * @return the validation config override
      */
@@ -162,9 +162,9 @@ public @interface AdminPresentationMergeEntry {
 
     /**
      * Property for overriding the operationTypes for an advanced collection. See
-     * {@link org.broadleafcommerce.common.presentation.AdminPresentationCollection},
-     * {@link org.broadleafcommerce.common.presentation.AdminPresentationAdornedTargetCollection} and
-     * {@link org.broadleafcommerce.common.presentation.AdminPresentationMap} for default values for each type.
+     * {@link com.ultracommerce.common.presentation.AdminPresentationCollection},
+     * {@link com.ultracommerce.common.presentation.AdminPresentationAdornedTargetCollection} and
+     * {@link com.ultracommerce.common.presentation.AdminPresentationMap} for default values for each type.
      *
      * @return the operationType override
      */
@@ -174,7 +174,7 @@ public @interface AdminPresentationMergeEntry {
 
     /**
      * Property for overriding the filter configuration for a field annotated with the
-     * {@link org.broadleafcommerce.common.presentation.AdminPresentationDataDrivenEnumeration} annotation.
+     * {@link com.ultracommerce.common.presentation.AdminPresentationDataDrivenEnumeration} annotation.
      *
      * @return the option filter configuration
      */
@@ -182,7 +182,7 @@ public @interface AdminPresentationMergeEntry {
 
     /**
      * Property for overriding the map key configuration for a field annotated with the
-     * {@link org.broadleafcommerce.common.presentation.AdminPresentationMap} annotation.
+     * {@link com.ultracommerce.common.presentation.AdminPresentationMap} annotation.
      *
      * @return the map key configuration
      */

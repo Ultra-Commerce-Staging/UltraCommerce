@@ -1,27 +1,27 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2017 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
 /**
  * 
  */
-package org.broadleafcommerce.test.common.properties;
+package com.ultracommerce.test.common.properties;
 
-import org.broadleafcommerce.common.config.BroadleafEnvironmentConfiguringApplicationListener;
-import org.broadleafcommerce.common.config.BroadleafEnvironmentConfigurer;
+import com.ultracommerce.common.config.UltraEnvironmentConfiguringApplicationListener;
+import com.ultracommerce.common.config.UltraEnvironmentConfigurer;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -39,18 +39,18 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @author Phillip Verheyden (phillipuniverse)
  */
 @RunWith(SpringRunner.class)
-@ContextConfiguration(initializers = BroadleafEnvironmentConfiguringApplicationListener.class)
+@ContextConfiguration(initializers = UltraEnvironmentConfiguringApplicationListener.class)
 @DirtiesContext
 public class DeprecatedRuntimeEnvironmentTest {
 
     @BeforeClass
     public static void setRuntimeEnvironment() {
-        System.setProperty(BroadleafEnvironmentConfigurer.DEPRECATED_RUNTIME_ENVIRONMENT_KEY, "production");
+        System.setProperty(UltraEnvironmentConfigurer.DEPRECATED_RUNTIME_ENVIRONMENT_KEY, "production");
     }
     
     @AfterClass
     public static void clearRuntimeEnvironment() {
-        System.clearProperty(BroadleafEnvironmentConfigurer.DEPRECATED_RUNTIME_ENVIRONMENT_KEY);
+        System.clearProperty(UltraEnvironmentConfigurer.DEPRECATED_RUNTIME_ENVIRONMENT_KEY);
     }
     
     @Autowired

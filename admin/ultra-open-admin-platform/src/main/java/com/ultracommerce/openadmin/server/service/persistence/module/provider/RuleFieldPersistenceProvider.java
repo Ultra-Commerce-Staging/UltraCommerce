@@ -1,57 +1,57 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.openadmin.server.service.persistence.module.provider;
+package com.ultracommerce.openadmin.server.service.persistence.module.provider;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.broadleafcommerce.common.exception.ExceptionHelper;
-import org.broadleafcommerce.common.extension.ExtensionResultHolder;
-import org.broadleafcommerce.common.extension.ExtensionResultStatusType;
-import org.broadleafcommerce.common.presentation.RuleIdentifier;
-import org.broadleafcommerce.common.presentation.client.SupportedFieldType;
-import org.broadleafcommerce.common.rule.QuantityBasedRule;
-import org.broadleafcommerce.common.rule.SimpleRule;
-import org.broadleafcommerce.common.sandbox.SandBoxHelper;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
-import org.broadleafcommerce.openadmin.dto.BasicFieldMetadata;
-import org.broadleafcommerce.openadmin.dto.Entity;
-import org.broadleafcommerce.openadmin.dto.FieldMetadata;
-import org.broadleafcommerce.openadmin.dto.Property;
-import org.broadleafcommerce.openadmin.server.service.persistence.ParentEntityPersistenceException;
-import org.broadleafcommerce.openadmin.server.service.persistence.PersistenceException;
-import org.broadleafcommerce.openadmin.server.service.persistence.PersistenceManagerFactory;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.FieldManager;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.FieldNotAvailableException;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.provider.extension.RuleFieldPersistenceProviderCascadeExtensionManager;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.provider.extension.RuleFieldPersistenceProviderExtensionManager;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.provider.request.AddFilterPropertiesRequest;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.provider.request.ExtractValueRequest;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.provider.request.PopulateValueRequest;
-import org.broadleafcommerce.openadmin.server.service.type.MetadataProviderResponse;
-import org.broadleafcommerce.openadmin.web.rulebuilder.DataDTOToMVELTranslator;
-import org.broadleafcommerce.openadmin.web.rulebuilder.MVELToDataWrapperTranslator;
-import org.broadleafcommerce.openadmin.web.rulebuilder.MVELTranslationException;
-import org.broadleafcommerce.openadmin.web.rulebuilder.dto.DataDTO;
-import org.broadleafcommerce.openadmin.web.rulebuilder.dto.DataWrapper;
-import org.broadleafcommerce.openadmin.web.rulebuilder.service.RuleBuilderFieldServiceFactory;
+import com.ultracommerce.common.exception.ExceptionHelper;
+import com.ultracommerce.common.extension.ExtensionResultHolder;
+import com.ultracommerce.common.extension.ExtensionResultStatusType;
+import com.ultracommerce.common.presentation.RuleIdentifier;
+import com.ultracommerce.common.presentation.client.SupportedFieldType;
+import com.ultracommerce.common.rule.QuantityBasedRule;
+import com.ultracommerce.common.rule.SimpleRule;
+import com.ultracommerce.common.sandbox.SandBoxHelper;
+import com.ultracommerce.common.web.UltraRequestContext;
+import com.ultracommerce.openadmin.dto.BasicFieldMetadata;
+import com.ultracommerce.openadmin.dto.Entity;
+import com.ultracommerce.openadmin.dto.FieldMetadata;
+import com.ultracommerce.openadmin.dto.Property;
+import com.ultracommerce.openadmin.server.service.persistence.ParentEntityPersistenceException;
+import com.ultracommerce.openadmin.server.service.persistence.PersistenceException;
+import com.ultracommerce.openadmin.server.service.persistence.PersistenceManagerFactory;
+import com.ultracommerce.openadmin.server.service.persistence.module.FieldManager;
+import com.ultracommerce.openadmin.server.service.persistence.module.FieldNotAvailableException;
+import com.ultracommerce.openadmin.server.service.persistence.module.provider.extension.RuleFieldPersistenceProviderCascadeExtensionManager;
+import com.ultracommerce.openadmin.server.service.persistence.module.provider.extension.RuleFieldPersistenceProviderExtensionManager;
+import com.ultracommerce.openadmin.server.service.persistence.module.provider.request.AddFilterPropertiesRequest;
+import com.ultracommerce.openadmin.server.service.persistence.module.provider.request.ExtractValueRequest;
+import com.ultracommerce.openadmin.server.service.persistence.module.provider.request.PopulateValueRequest;
+import com.ultracommerce.openadmin.server.service.type.MetadataProviderResponse;
+import com.ultracommerce.openadmin.web.rulebuilder.DataDTOToMVELTranslator;
+import com.ultracommerce.openadmin.web.rulebuilder.MVELToDataWrapperTranslator;
+import com.ultracommerce.openadmin.web.rulebuilder.MVELTranslationException;
+import com.ultracommerce.openadmin.web.rulebuilder.dto.DataDTO;
+import com.ultracommerce.openadmin.web.rulebuilder.dto.DataWrapper;
+import com.ultracommerce.openadmin.web.rulebuilder.service.RuleBuilderFieldServiceFactory;
 import org.hibernate.Session;
 import org.springframework.context.annotation.Scope;
 import org.springframework.core.annotation.AnnotationUtils;
@@ -73,7 +73,7 @@ import java.util.*;
  *
  * @author Jeff Fischer
  */
-@Component("blRuleFieldPersistenceProvider")
+@Component("ucRuleFieldPersistenceProvider")
 @Scope("prototype")
 public class RuleFieldPersistenceProvider extends FieldPersistenceProviderAdapter {
 
@@ -89,19 +89,19 @@ public class RuleFieldPersistenceProvider extends FieldPersistenceProviderAdapte
                 extractValueRequest.getMetadata().getFieldType() == SupportedFieldType.RULE_SIMPLE_TIME;
     }
 
-    @Resource(name = "blRuleBuilderFieldServiceFactory")
+    @Resource(name = "ucRuleBuilderFieldServiceFactory")
     protected RuleBuilderFieldServiceFactory ruleBuilderFieldServiceFactory;
 
-    @Resource(name = "blSandBoxHelper")
+    @Resource(name = "ucSandBoxHelper")
     protected SandBoxHelper sandBoxHelper;
 
-    @Resource(name = "blRuleFieldExtractionUtility")
+    @Resource(name = "ucRuleFieldExtractionUtility")
     protected RuleFieldExtractionUtility ruleFieldExtractionUtility;
     
-    @Resource(name = "blRuleFieldPersistenceProviderExtensionManager")
+    @Resource(name = "ucRuleFieldPersistenceProviderExtensionManager")
     protected RuleFieldPersistenceProviderExtensionManager extensionManager;
 
-    @Resource(name = "blRuleFieldPersistenceProviderCascadeExtensionManager")
+    @Resource(name = "ucRuleFieldPersistenceProviderCascadeExtensionManager")
     protected RuleFieldPersistenceProviderCascadeExtensionManager cascadeExtensionManager;
 
     @Override
@@ -303,7 +303,7 @@ public class RuleFieldPersistenceProvider extends FieldPersistenceProviderAdapte
                         } else {
                             //Since this class explicitly removes the simple rule - we must also preserve the id of the element
                             //as the CacheInvalidationProducer will need this in order to remove the member cache instance as well.
-                            BroadleafRequestContext context = BroadleafRequestContext.getBroadleafRequestContext();
+                            UltraRequestContext context = UltraRequestContext.getUltraRequestContext();
                             context.getAdditionalProperties().put("deletedSimpleRule", rule);
 
                             populateValueRequest.getPersistenceManager().getDynamicEntityDao().remove(rule);
@@ -686,7 +686,7 @@ public class RuleFieldPersistenceProvider extends FieldPersistenceProviderAdapte
                 Iterator<QuantityBasedRule> itr = criteriaList.iterator();
                 //Since this class explicitly removes the quantity based rule - we must also preserve the id of the element
                 //as the CacheInvalidationProducer will need this in order to remove each collection member cache instance as well.
-                BroadleafRequestContext context = BroadleafRequestContext.getBroadleafRequestContext();
+                UltraRequestContext context = UltraRequestContext.getUltraRequestContext();
                 Object deletedQuantityBasedRules = context.getAdditionalProperties().get("deletedQuantityBasedRules");
                 if (deletedQuantityBasedRules == null) {
                     context.getAdditionalProperties().put("deletedQuantityBasedRules", new HashSet<QuantityBasedRule>());

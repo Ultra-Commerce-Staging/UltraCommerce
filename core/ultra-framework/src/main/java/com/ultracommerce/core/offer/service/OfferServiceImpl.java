@@ -1,57 +1,57 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.offer.service;
+package com.ultracommerce.core.offer.service;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.persistence.EntityDuplicateModifier;
-import org.broadleafcommerce.common.persistence.EntityDuplicator;
-import org.broadleafcommerce.common.sandbox.SandBoxHelper;
-import org.broadleafcommerce.common.util.StreamCapableTransactionalOperationAdapter;
-import org.broadleafcommerce.common.util.StreamingTransactionCapableUtil;
-import org.broadleafcommerce.core.offer.dao.CustomerOfferDao;
-import org.broadleafcommerce.core.offer.dao.OfferCodeDao;
-import org.broadleafcommerce.core.offer.dao.OfferDao;
-import org.broadleafcommerce.core.offer.domain.Adjustment;
-import org.broadleafcommerce.core.offer.domain.CustomerOffer;
-import org.broadleafcommerce.core.offer.domain.Offer;
-import org.broadleafcommerce.core.offer.domain.OfferCode;
-import org.broadleafcommerce.core.offer.domain.OfferImpl;
-import org.broadleafcommerce.core.offer.domain.OrderItemPriceDetailAdjustment;
-import org.broadleafcommerce.core.offer.service.discount.domain.PromotableCandidateFulfillmentGroupOffer;
-import org.broadleafcommerce.core.offer.service.discount.domain.PromotableCandidateItemOffer;
-import org.broadleafcommerce.core.offer.service.discount.domain.PromotableCandidateOrderOffer;
-import org.broadleafcommerce.core.offer.service.discount.domain.PromotableItemFactory;
-import org.broadleafcommerce.core.offer.service.discount.domain.PromotableOrder;
-import org.broadleafcommerce.core.offer.service.processor.FulfillmentGroupOfferProcessor;
-import org.broadleafcommerce.core.offer.service.processor.ItemOfferProcessor;
-import org.broadleafcommerce.core.offer.service.processor.OrderOfferProcessor;
-import org.broadleafcommerce.core.offer.service.type.CustomerMaxUsesStrategyType;
-import org.broadleafcommerce.core.offer.service.type.OfferType;
-import org.broadleafcommerce.core.order.domain.FulfillmentGroup;
-import org.broadleafcommerce.core.order.domain.Order;
-import org.broadleafcommerce.core.order.domain.OrderItem;
-import org.broadleafcommerce.core.order.domain.OrderItemPriceDetail;
-import org.broadleafcommerce.core.order.service.OrderService;
-import org.broadleafcommerce.core.pricing.service.exception.PricingException;
-import org.broadleafcommerce.profile.core.domain.Customer;
+import com.ultracommerce.common.persistence.EntityDuplicateModifier;
+import com.ultracommerce.common.persistence.EntityDuplicator;
+import com.ultracommerce.common.sandbox.SandBoxHelper;
+import com.ultracommerce.common.util.StreamCapableTransactionalOperationAdapter;
+import com.ultracommerce.common.util.StreamingTransactionCapableUtil;
+import com.ultracommerce.core.offer.dao.CustomerOfferDao;
+import com.ultracommerce.core.offer.dao.OfferCodeDao;
+import com.ultracommerce.core.offer.dao.OfferDao;
+import com.ultracommerce.core.offer.domain.Adjustment;
+import com.ultracommerce.core.offer.domain.CustomerOffer;
+import com.ultracommerce.core.offer.domain.Offer;
+import com.ultracommerce.core.offer.domain.OfferCode;
+import com.ultracommerce.core.offer.domain.OfferImpl;
+import com.ultracommerce.core.offer.domain.OrderItemPriceDetailAdjustment;
+import com.ultracommerce.core.offer.service.discount.domain.PromotableCandidateFulfillmentGroupOffer;
+import com.ultracommerce.core.offer.service.discount.domain.PromotableCandidateItemOffer;
+import com.ultracommerce.core.offer.service.discount.domain.PromotableCandidateOrderOffer;
+import com.ultracommerce.core.offer.service.discount.domain.PromotableItemFactory;
+import com.ultracommerce.core.offer.service.discount.domain.PromotableOrder;
+import com.ultracommerce.core.offer.service.processor.FulfillmentGroupOfferProcessor;
+import com.ultracommerce.core.offer.service.processor.ItemOfferProcessor;
+import com.ultracommerce.core.offer.service.processor.OrderOfferProcessor;
+import com.ultracommerce.core.offer.service.type.CustomerMaxUsesStrategyType;
+import com.ultracommerce.core.offer.service.type.OfferType;
+import com.ultracommerce.core.order.domain.FulfillmentGroup;
+import com.ultracommerce.core.order.domain.Order;
+import com.ultracommerce.core.order.domain.OrderItem;
+import com.ultracommerce.core.order.domain.OrderItemPriceDetail;
+import com.ultracommerce.core.order.service.OrderService;
+import com.ultracommerce.core.pricing.service.exception.PricingException;
+import com.ultracommerce.profile.core.domain.Customer;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -72,56 +72,56 @@ import javax.persistence.PersistenceContext;
 /**
  * The Class OfferServiceImpl.
  */
-@Service("blOfferService")
+@Service("ucOfferService")
 public class OfferServiceImpl implements OfferService {
     
     private static final Log LOG = LogFactory.getLog(OfferServiceImpl.class);
 
     // should be called outside of Offer service after Offer service is executed
-    @Resource(name="blCustomerOfferDao")
+    @Resource(name="ucCustomerOfferDao")
     protected CustomerOfferDao customerOfferDao;
 
-    @Resource(name="blOfferCodeDao")
+    @Resource(name="ucOfferCodeDao")
     protected OfferCodeDao offerCodeDao;
     
-    @Resource(name="blOfferAuditService")
+    @Resource(name="ucOfferAuditService")
     protected OfferAuditService offerAuditService;
 
-    @Resource(name="blOfferDao")
+    @Resource(name="ucOfferDao")
     protected OfferDao offerDao;
     
-    @Resource(name="blOrderOfferProcessor")
+    @Resource(name="ucOrderOfferProcessor")
     protected OrderOfferProcessor orderOfferProcessor;
     
-    @Resource(name="blItemOfferProcessor")
+    @Resource(name="ucItemOfferProcessor")
     protected ItemOfferProcessor itemOfferProcessor;
     
-    @Resource(name="blFulfillmentGroupOfferProcessor")
+    @Resource(name="ucFulfillmentGroupOfferProcessor")
     protected FulfillmentGroupOfferProcessor fulfillmentGroupOfferProcessor;
     
-    @Resource(name="blPromotableItemFactory")
+    @Resource(name="ucPromotableItemFactory")
     protected PromotableItemFactory promotableItemFactory;
 
-    @Resource(name = "blOfferServiceExtensionManager")
+    @Resource(name = "ucOfferServiceExtensionManager")
     protected OfferServiceExtensionManager extensionManager;
 
-    @Resource(name = "blOrderService")
+    @Resource(name = "ucOrderService")
     protected OrderService orderService;
 
-    @Resource(name = "blSandBoxHelper")
+    @Resource(name = "ucSandBoxHelper")
     protected SandBoxHelper sandBoxHelper;
 
-    @PersistenceContext(unitName="blPU")
+    @PersistenceContext(unitName="ucPU")
     protected EntityManager em;
 
-    @Resource(name="blStreamingTransactionCapableUtil")
+    @Resource(name="ucStreamingTransactionCapableUtil")
     protected StreamingTransactionCapableUtil transUtil;
 
-    @Resource(name="blEntityDuplicator")
+    @Resource(name="ucEntityDuplicator")
     protected EntityDuplicator duplicator;
 
     /**
-     * @deprecated Add {@link EntityDuplicateModifier}s to {@code blEntityDuplicationHelpers}
+     * @deprecated Add {@link EntityDuplicateModifier}s to {@code ucEntityDuplicationHelpers}
      */
     @Deprecated
     protected EntityDuplicateModifier<Offer> offerDuplicateModifier;
@@ -132,13 +132,13 @@ public class OfferServiceImpl implements OfferService {
     }
 
     @Override
-    @Transactional("blTransactionManager")
+    @Transactional("ucTransactionManager")
     public Offer save(Offer offer) {
         return offerDao.save(offer);
     }
 
     @Override
-    @Transactional("blTransactionManager")
+    @Transactional("ucTransactionManager")
     public OfferCode saveOfferCode(OfferCode offerCode) {
         offerCode.setOffer(offerDao.save(offerCode.getOffer()));
         return offerCodeDao.save(offerCode);
@@ -372,13 +372,13 @@ public class OfferServiceImpl implements OfferService {
      *
      */
     @Override
-    @Transactional("blTransactionManager")
+    @Transactional("ucTransactionManager")
     public Order applyAndSaveOffersToOrder(List<Offer> offers, Order order) throws PricingException {
         /*
         TODO rather than a threadlocal, we should update the "shouldPrice" boolean on the service API to
         use a richer object to describe the parameters of the pricing call. This object would include
         the pricing boolean, but would also include a list of activities to include or exclude in the
-        call - see http://jira.broadleafcommerce.org/browse/BLC-664
+        call - see http://jira.ultracommerce.org/browse/UC-664
          */
         OfferContext offerContext = OfferContext.getOfferContext();
         if (offerContext == null || offerContext.executePromotionCalculation) {
@@ -467,21 +467,21 @@ public class OfferServiceImpl implements OfferService {
      }
 
     @Override
-    @Transactional("blTransactionManager")
+    @Transactional("ucTransactionManager")
     @Deprecated
     public void applyOffersToOrder(List<Offer> offers, Order order) throws PricingException {
         applyAndSaveOffersToOrder(offers, order);
     }
 
     @Override
-    @Transactional("blTransactionManager")
+    @Transactional("ucTransactionManager")
     @Deprecated
     public void applyFulfillmentGroupOffersToOrder(List<Offer> offers, Order order) throws PricingException {
         applyAndSaveFulfillmentGroupOffersToOrder(offers, order);
     }
 
     @Override
-    @Transactional("blTransactionManager")
+    @Transactional("ucTransactionManager")
     public Order applyAndSaveFulfillmentGroupOffersToOrder(List<Offer> offers, Order order) throws PricingException {
         OfferContext offerContext = OfferContext.getOfferContext();
         if (offerContext == null || offerContext.executePromotionCalculation) {
@@ -518,7 +518,7 @@ public class OfferServiceImpl implements OfferService {
             if (checkUsingCustomer) {
                 currentUses = offerAuditService.countUsesByCustomer(order, order.getCustomer().getId(), offer.getId(), offer.getMinimumDaysPerUsage());
             } else {
-                currentUses = offerAuditService.countUsesByAccount(order, order.getBroadleafAccountId(), offer.getId(), offer.getMinimumDaysPerUsage());
+                currentUses = offerAuditService.countUsesByAccount(order, order.getUltraAccountId(), offer.getId(), offer.getMinimumDaysPerUsage());
             }
             
             if (currentUses >= offer.getMaxUsesPerCustomer()) {
@@ -626,7 +626,7 @@ public class OfferServiceImpl implements OfferService {
     }
     
     @Override
-    @Transactional("blTransactionManager")
+    @Transactional("ucTransactionManager")
     public Boolean deleteOfferCode(OfferCode code) {
         if (offerCodeDao.offerCodeIsUsed(code)) {
             return false;
@@ -636,7 +636,7 @@ public class OfferServiceImpl implements OfferService {
         return true;
     }
 
-    @Transactional("blTransactionManager")
+    @Transactional("ucTransactionManager")
     @Override
     public Offer duplicate(Long originalOfferId) {
         return duplicator.copy(OfferImpl.class, originalOfferId);

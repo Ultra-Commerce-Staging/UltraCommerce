@@ -1,29 +1,29 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.web;
+package com.ultracommerce.common.web;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.admin.condition.ConditionalOnNotAdmin;
-import org.broadleafcommerce.common.exception.SiteNotFoundException;
-import org.broadleafcommerce.common.web.exception.HaltFilterChainException;
-import org.broadleafcommerce.common.web.filter.AbstractIgnorableOncePerRequestFilter;
-import org.broadleafcommerce.common.web.filter.FilterOrdered;
+import com.ultracommerce.common.admin.condition.ConditionalOnNotAdmin;
+import com.ultracommerce.common.exception.SiteNotFoundException;
+import com.ultracommerce.common.web.exception.HaltFilterChainException;
+import com.ultracommerce.common.web.filter.AbstractIgnorableOncePerRequestFilter;
+import com.ultracommerce.common.web.filter.FilterOrdered;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -40,28 +40,28 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Responsible for setting up the theme used by Broadleaf Commerce components.  This Filter is specifically
+ * Responsible for setting up the theme used by Ultra Commerce components.  This Filter is specifically
  * placed after the CustomerState is established to that a Content Targeter altering the Theme can make
  * use of Customer/CustomerSegment attributes.
  *
  * @author Stanislav Fedorov
  */
-@Component("blThemeResolverFilter")
+@Component("ucThemeResolverFilter")
 @ConditionalOnNotAdmin
-public class BroadleafThemeResolverFilter extends AbstractIgnorableOncePerRequestFilter {
+public class UltraThemeResolverFilter extends AbstractIgnorableOncePerRequestFilter {
 
     private final Log LOG = LogFactory.getLog(getClass());
 
     // Properties to manage URLs that will not be processed by this filter.
-    private static final String BLC_ADMIN_GWT = "org.broadleafcommerce.admin";
-    private static final String BLC_ADMIN_PREFIX = "blcadmin";
-    private static final String BLC_ADMIN_SERVICE = ".service";
+    private static final String UC_ADMIN_GWT = "com.ultracommerce.admin";
+    private static final String UC_ADMIN_PREFIX = "ucadmin";
+    private static final String UC_ADMIN_SERVICE = ".service";
 
     private Set<String> ignoreSuffixes;
 
     @Autowired
-    @Qualifier("blThemeProcessor")
-    protected BroadleafThemeProcessor themeProcessor;
+    @Qualifier("ucThemeProcessor")
+    protected UltraThemeProcessor themeProcessor;
 
     @Override
     protected void doFilterInternalUnlessIgnored(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException, ServletException {
@@ -108,7 +108,7 @@ public class BroadleafThemeResolverFilter extends AbstractIgnorableOncePerReques
     /**
      * Determines if the passed in URL should be processed by the content management system.
      * <p/>
-     * By default, this method returns false for any BLC-Admin URLs and service calls and for all common image/digital mime-types (as determined by an internal call to {@code getIgnoreSuffixes}.
+     * By default, this method returns false for any UC-Admin URLs and service calls and for all common image/digital mime-types (as determined by an internal call to {@code getIgnoreSuffixes}.
      * <p/>
      * This check is called with the {@code doFilterInternal} method to short-circuit the content processing which can be expensive for requests that do not require it.
      *
@@ -121,7 +121,7 @@ public class BroadleafThemeResolverFilter extends AbstractIgnorableOncePerReques
     }
 
     protected boolean shouldProcessURL(HttpServletRequest request, String requestURI, boolean ignoreSessionCheck) {
-        if (requestURI.contains(BLC_ADMIN_GWT) || requestURI.endsWith(BLC_ADMIN_SERVICE) || requestURI.contains(BLC_ADMIN_PREFIX)) {
+        if (requestURI.contains(UC_ADMIN_GWT) || requestURI.endsWith(UC_ADMIN_SERVICE) || requestURI.contains(UC_ADMIN_PREFIX)) {
             return false;
         }
         return true;

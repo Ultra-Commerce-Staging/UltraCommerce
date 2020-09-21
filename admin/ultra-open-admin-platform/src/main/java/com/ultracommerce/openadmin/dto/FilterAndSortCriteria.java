@@ -1,27 +1,27 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
 
-package org.broadleafcommerce.openadmin.dto;
+package com.ultracommerce.openadmin.dto;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.broadleafcommerce.common.util.BLCCollectionUtils;
-import org.broadleafcommerce.common.util.TypedPredicate;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.criteria.RestrictionType;
+import com.ultracommerce.common.util.UCCollectionUtils;
+import com.ultracommerce.common.util.TypedPredicate;
+import com.ultracommerce.openadmin.server.service.persistence.module.criteria.RestrictionType;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -42,8 +42,8 @@ public class FilterAndSortCriteria {
     public static final String LOWER_COUNT_PARAMETER = "lowerCount";
     public static final String PAGE_SIZE_PARAMETER = "pageSize";
 
-    public static final String IS_NULL_FILTER_VALUE = new String("BLC_SPECIAL_FILTER_VALUE:NULL").intern();
-    public static final String IS_NOT_NULL_FILTER_VALUE = new String("BLC_SPECIAL_FILTER_VALUE:NOT_NULL").intern();
+    public static final String IS_NULL_FILTER_VALUE = new String("UC_SPECIAL_FILTER_VALUE:NULL").intern();
+    public static final String IS_NOT_NULL_FILTER_VALUE = new String("UC_SPECIAL_FILTER_VALUE:NOT_NULL").intern();
 
     protected String propertyId;
     protected List<String> filterValues = new ArrayList<String>();
@@ -135,12 +135,12 @@ public class FilterAndSortCriteria {
 
     public List<String> getFilterValues() {
         // We want values that are NOT special
-        return BLCCollectionUtils.selectList(filterValues, getPredicateForSpecialValues(false));
+        return UCCollectionUtils.selectList(filterValues, getPredicateForSpecialValues(false));
     }
 
     public List<String> getSpecialFilterValues() {
         // We want values that ARE special
-        return BLCCollectionUtils.selectList(filterValues, getPredicateForSpecialValues(true));
+        return UCCollectionUtils.selectList(filterValues, getPredicateForSpecialValues(true));
     }
 
     public void setFilterValues(List<String> filterValues) {
@@ -173,8 +173,8 @@ public class FilterAndSortCriteria {
     }
 
     /**
-     * Useful when you want to explicitly define the type of pre-built {@link org.broadleafcommerce.openadmin.server.service.persistence.module.criteria.Restriction}
-     * instance to be used. The available, pre-built restrictions are defined in the Spring configured map "blRestrictionFactoryMap".
+     * Useful when you want to explicitly define the type of pre-built {@link com.ultracommerce.openadmin.server.service.persistence.module.criteria.Restriction}
+     * instance to be used. The available, pre-built restrictions are defined in the Spring configured map "ucRestrictionFactoryMap".
      *
      * @param restrictionType
      */

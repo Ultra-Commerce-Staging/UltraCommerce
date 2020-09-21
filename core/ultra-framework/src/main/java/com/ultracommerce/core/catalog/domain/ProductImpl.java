@@ -1,57 +1,57 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
 
-package org.broadleafcommerce.core.catalog.domain;
+package com.ultracommerce.core.catalog.domain;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.map.MultiValueMap;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.admin.domain.AdminMainEntity;
-import org.broadleafcommerce.common.copy.CreateResponse;
-import org.broadleafcommerce.common.copy.MultiTenantCopyContext;
-import org.broadleafcommerce.common.extensibility.jpa.clone.ClonePolicy;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransform;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformMember;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformTypes;
-import org.broadleafcommerce.common.media.domain.Media;
-import org.broadleafcommerce.common.money.Money;
-import org.broadleafcommerce.common.persistence.ArchiveStatus;
-import org.broadleafcommerce.common.persistence.Status;
-import org.broadleafcommerce.common.presentation.AdminPresentation;
-import org.broadleafcommerce.common.presentation.AdminPresentationAdornedTargetCollection;
-import org.broadleafcommerce.common.presentation.AdminPresentationCollection;
-import org.broadleafcommerce.common.presentation.AdminPresentationToOneLookup;
-import org.broadleafcommerce.common.presentation.ConfigurationItem;
-import org.broadleafcommerce.common.presentation.RequiredOverride;
-import org.broadleafcommerce.common.presentation.ValidationConfiguration;
-import org.broadleafcommerce.common.presentation.client.VisibilityEnum;
-import org.broadleafcommerce.common.presentation.override.AdminPresentationMergeEntry;
-import org.broadleafcommerce.common.presentation.override.AdminPresentationMergeOverride;
-import org.broadleafcommerce.common.presentation.override.AdminPresentationMergeOverrides;
-import org.broadleafcommerce.common.presentation.override.PropertyType;
-import org.broadleafcommerce.common.template.TemplatePathContainer;
-import org.broadleafcommerce.common.util.DateUtil;
-import org.broadleafcommerce.common.vendor.service.type.ContainerShapeType;
-import org.broadleafcommerce.common.vendor.service.type.ContainerSizeType;
-import org.broadleafcommerce.common.web.Locatable;
-import org.broadleafcommerce.core.search.domain.FieldEntity;
+import com.ultracommerce.common.admin.domain.AdminMainEntity;
+import com.ultracommerce.common.copy.CreateResponse;
+import com.ultracommerce.common.copy.MultiTenantCopyContext;
+import com.ultracommerce.common.extensibility.jpa.clone.ClonePolicy;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransform;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransformMember;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransformTypes;
+import com.ultracommerce.common.media.domain.Media;
+import com.ultracommerce.common.money.Money;
+import com.ultracommerce.common.persistence.ArchiveStatus;
+import com.ultracommerce.common.persistence.Status;
+import com.ultracommerce.common.presentation.AdminPresentation;
+import com.ultracommerce.common.presentation.AdminPresentationAdornedTargetCollection;
+import com.ultracommerce.common.presentation.AdminPresentationCollection;
+import com.ultracommerce.common.presentation.AdminPresentationToOneLookup;
+import com.ultracommerce.common.presentation.ConfigurationItem;
+import com.ultracommerce.common.presentation.RequiredOverride;
+import com.ultracommerce.common.presentation.ValidationConfiguration;
+import com.ultracommerce.common.presentation.client.VisibilityEnum;
+import com.ultracommerce.common.presentation.override.AdminPresentationMergeEntry;
+import com.ultracommerce.common.presentation.override.AdminPresentationMergeOverride;
+import com.ultracommerce.common.presentation.override.AdminPresentationMergeOverrides;
+import com.ultracommerce.common.presentation.override.PropertyType;
+import com.ultracommerce.common.template.TemplatePathContainer;
+import com.ultracommerce.common.util.DateUtil;
+import com.ultracommerce.common.vendor.service.type.ContainerShapeType;
+import com.ultracommerce.common.vendor.service.type.ContainerSizeType;
+import com.ultracommerce.common.web.Locatable;
+import com.ultracommerce.core.search.domain.FieldEntity;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -100,24 +100,24 @@ import javax.persistence.Transient;
  * your own version of {@link Product}. <br>
  * <br>
  * This implementation uses a Hibernate implementation of JPA configured through
- * annotations. The Entity references the following tables: BLC_PRODUCT,
- * BLC_PRODUCT_SKU_XREF, BLC_PRODUCT_IMAGE
+ * annotations. The Entity references the following tables: UC_PRODUCT,
+ * UC_PRODUCT_SKU_XREF, UC_PRODUCT_IMAGE
  *
  * @author btaylor
  * @see {@link Product}, {@link SkuImpl}, {@link CategoryImpl}
  */
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@javax.persistence.Table(name = "BLC_PRODUCT")
+@javax.persistence.Table(name = "UC_PRODUCT")
 //multi-column indexes don't appear to get exported correctly when declared at the field level, so declaring here as a workaround
-@org.hibernate.annotations.Table(appliesTo = "BLC_PRODUCT", indexes = {
+@org.hibernate.annotations.Table(appliesTo = "UC_PRODUCT", indexes = {
         @Index(name = "PRODUCT_URL_INDEX",
                 columnNames = {"URL", "URL_KEY"}
         ),
         @Index(name = "PRODUCT_URL_KEY_INDEX",
                 columnNames = {"URL_KEY"})
 })
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "blProducts")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "ucProducts")
 @AdminPresentationMergeOverrides(
         {
                 @AdminPresentationMergeOverride(name = "defaultSku.displayTemplate", mergeEntries =
@@ -131,7 +131,7 @@ import javax.persistence.Transient;
                 @AdminPresentationMergeOverride(name = "defaultSku.activeEndDate", mergeEntries =
                 @AdminPresentationMergeEntry(propertyType = PropertyType.AdminPresentation.VALIDATIONCONFIGURATIONS, validationConfigurations = {
                         @ValidationConfiguration(
-                                validationImplementation = "blAfterStartDateValidator",
+                                validationImplementation = "ucAfterStartDateValidator",
                                 configurationItems = {
                                         @ConfigurationItem(itemName = "otherField", itemValue = "defaultSku.activeStartDate")
                                 })
@@ -164,10 +164,10 @@ public class ProductImpl implements Product, ProductAdminPresentation, Status, A
     @GeneratedValue(generator = "ProductId")
     @GenericGenerator(
             name = "ProductId",
-            strategy = "org.broadleafcommerce.common.persistence.IdOverrideTableGenerator",
+            strategy = "com.ultracommerce.common.persistence.IdOverrideTableGenerator",
             parameters = {
                     @Parameter(name = "segment_value", value = "ProductImpl"),
-                    @Parameter(name = "entity_name", value = "org.broadleafcommerce.core.catalog.domain.ProductImpl")
+                    @Parameter(name = "entity_name", value = "com.ultracommerce.core.catalog.domain.ProductImpl")
             })
     @Column(name = "PRODUCT_ID")
     @AdminPresentation(friendlyName = "ProductImpl_Product_ID", visibility = VisibilityEnum.HIDDEN_ALL)
@@ -183,9 +183,9 @@ public class ProductImpl implements Product, ProductAdminPresentation, Status, A
             columnWidth = "260px",
             requiredOverride = RequiredOverride.REQUIRED,
             validationConfigurations = {
-                    @ValidationConfiguration(validationImplementation = "blUriPropertyValidator"),
+                    @ValidationConfiguration(validationImplementation = "ucUriPropertyValidator"),
                     @ValidationConfiguration(
-                            validationImplementation = "blUniqueValueValidator",
+                            validationImplementation = "ucUniqueValueValidator",
                             configurationItems = {
                                     @ConfigurationItem(
                                             itemName = ConfigurationItem.ERROR_MESSAGE,
@@ -229,7 +229,7 @@ public class ProductImpl implements Product, ProductAdminPresentation, Status, A
     protected Boolean isFeaturedProduct = false;
 
     @OneToOne(targetEntity = SkuImpl.class, cascade = {CascadeType.ALL})
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "blProducts")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "ucProducts")
     @Cascade(value = {org.hibernate.annotations.CascadeType.ALL})
     @JoinColumn(name = "DEFAULT_SKU_ID")
     @ClonePolicy(toOneProperty = "defaultProduct")
@@ -268,7 +268,7 @@ public class ProductImpl implements Product, ProductAdminPresentation, Status, A
 
     @OneToMany(mappedBy = "product", targetEntity = CrossSaleProductImpl.class, cascade = {CascadeType.ALL})
     @Cascade(value = {org.hibernate.annotations.CascadeType.ALL, org.hibernate.annotations.CascadeType.DELETE_ORPHAN})
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "blProducts")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "ucProducts")
     @OrderBy(value = "sequence")
     @AdminPresentationAdornedTargetCollection(friendlyName = "crossSaleProductsTitle",
             tab = TabName.Marketing, order = 1000,
@@ -280,7 +280,7 @@ public class ProductImpl implements Product, ProductAdminPresentation, Status, A
 
     @OneToMany(mappedBy = "product", targetEntity = UpSaleProductImpl.class, cascade = {CascadeType.ALL})
     @Cascade(value = {org.hibernate.annotations.CascadeType.ALL, org.hibernate.annotations.CascadeType.DELETE_ORPHAN})
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "blProducts")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "ucProducts")
     @OrderBy(value = "sequence")
     @AdminPresentationAdornedTargetCollection(friendlyName = "upsaleProductsTitle",
             tab = TabName.Marketing, order = 2000,
@@ -291,7 +291,7 @@ public class ProductImpl implements Product, ProductAdminPresentation, Status, A
     protected List<RelatedProduct> upSaleProducts = new ArrayList<RelatedProduct>();
 
     @OneToMany(fetch = FetchType.LAZY, targetEntity = SkuImpl.class, mappedBy = "product", cascade = CascadeType.ALL)
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "blProducts")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "ucProducts")
     @BatchSize(size = 50)
     @AdminPresentationCollection(friendlyName = "ProductImpl_Additional_Skus",
             tab = TabName.ProductOptions, order = 1000)
@@ -311,7 +311,7 @@ public class ProductImpl implements Product, ProductAdminPresentation, Status, A
     @OneToMany(targetEntity = CategoryProductXrefImpl.class, mappedBy = "product",
             cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @OrderBy(value = "displayOrder")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "blProducts")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "ucProducts")
     @BatchSize(size = 50)
     @AdminPresentationAdornedTargetCollection(friendlyName = "allParentCategoriesTitle",
             tab = TabName.Marketing, order = 3000,
@@ -321,7 +321,7 @@ public class ProductImpl implements Product, ProductAdminPresentation, Status, A
     protected List<CategoryProductXref> allParentCategoryXrefs = new ArrayList<CategoryProductXref>();
 
     @OneToMany(mappedBy = "product", targetEntity = ProductAttributeImpl.class, cascade = {CascadeType.ALL})
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "blProducts")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "ucProducts")
     @BatchSize(size = 50)
     @AdminPresentationCollection(friendlyName = "productAttributesTitle",
             tab = TabName.General, order = 6000)
@@ -329,11 +329,11 @@ public class ProductImpl implements Product, ProductAdminPresentation, Status, A
 
     @OneToMany(targetEntity = ProductOptionXrefImpl.class, mappedBy = "product",
             cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "blProducts")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "ucProducts")
     @BatchSize(size = 50)
     @AdminPresentationAdornedTargetCollection(friendlyName = "productOptionsTitle",
             tab = TabName.ProductOptions,
-            joinEntityClass = "org.broadleafcommerce.core.catalog.domain.ProductOptionXrefImpl",
+            joinEntityClass = "com.ultracommerce.core.catalog.domain.ProductOptionXrefImpl",
             targetObjectProperty = "productOption",
             parentObjectProperty = "product",
             gridVisibleFields = {"name", "type", "required"})

@@ -1,32 +1,32 @@
 /*
  * #%L
- * BroadleafCommerce Framework Web
+ * UltraCommerce Framework Web
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.web.processor;
+package com.ultracommerce.common.web.processor;
 
-import org.broadleafcommerce.common.exception.ServiceException;
-import org.broadleafcommerce.common.security.handler.CsrfFilter;
-import org.broadleafcommerce.common.security.service.ExploitProtectionService;
-import org.broadleafcommerce.common.security.service.StaleStateProtectionService;
-import org.broadleafcommerce.presentation.condition.ConditionalOnTemplating;
-import org.broadleafcommerce.presentation.dialect.AbstractBroadleafModelModifierProcessor;
-import org.broadleafcommerce.presentation.model.BroadleafTemplateContext;
-import org.broadleafcommerce.presentation.model.BroadleafTemplateElement;
-import org.broadleafcommerce.presentation.model.BroadleafTemplateModel;
-import org.broadleafcommerce.presentation.model.BroadleafTemplateModelModifierDTO;
+import com.ultracommerce.common.exception.ServiceException;
+import com.ultracommerce.common.security.handler.CsrfFilter;
+import com.ultracommerce.common.security.service.ExploitProtectionService;
+import com.ultracommerce.common.security.service.StaleStateProtectionService;
+import com.ultracommerce.presentation.condition.ConditionalOnTemplating;
+import com.ultracommerce.presentation.dialect.AbstractUltraModelModifierProcessor;
+import com.ultracommerce.presentation.model.UltraTemplateContext;
+import com.ultracommerce.presentation.model.UltraTemplateElement;
+import com.ultracommerce.presentation.model.UltraTemplateModel;
+import com.ultracommerce.presentation.model.UltraTemplateModelModifierDTO;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -41,14 +41,14 @@ import javax.annotation.Resource;
  * @author apazzolini
  * @see {@link CsrfFilter}
  */
-@Component("blFormProcessor")
+@Component("ucFormProcessor")
 @ConditionalOnTemplating
-public class FormProcessor extends AbstractBroadleafModelModifierProcessor {
+public class FormProcessor extends AbstractUltraModelModifierProcessor {
     
-    @Resource(name = "blExploitProtectionService")
+    @Resource(name = "ucExploitProtectionService")
     protected ExploitProtectionService eps;
 
-    @Resource(name = "blStaleStateProtectionService")
+    @Resource(name = "ucStaleStateProtectionService")
     protected StaleStateProtectionService spps;
     
     @Override
@@ -62,11 +62,11 @@ public class FormProcessor extends AbstractBroadleafModelModifierProcessor {
     }
     
     @Override
-    public BroadleafTemplateModelModifierDTO getInjectedModelAndTagAttributes(String rootTagName, Map<String, String> rootTagAttributes, BroadleafTemplateContext context) {
+    public UltraTemplateModelModifierDTO getInjectedModelAndTagAttributes(String rootTagName, Map<String, String> rootTagAttributes, UltraTemplateContext context) {
         Map<String, String> formAttributes = new HashMap<>();
         formAttributes.putAll(rootTagAttributes);
-        BroadleafTemplateModel model = context.createModel();
-        BroadleafTemplateModelModifierDTO dto = new BroadleafTemplateModelModifierDTO();
+        UltraTemplateModel model = context.createModel();
+        UltraTemplateModelModifierDTO dto = new UltraTemplateModelModifierDTO();
 
         // If the form will be not be submitted with a GET, we must add the CSRF token
         // We do this instead of checking for a POST because post is default if nothing is specified
@@ -96,7 +96,7 @@ public class FormProcessor extends AbstractBroadleafModelModifierProcessor {
                     csrfAttributes.put("type", "hidden");
                     csrfAttributes.put("name", eps.getCsrfTokenParameter());
                     csrfAttributes.put("value", csrfToken);
-                    BroadleafTemplateElement csrfTag = context.createStandaloneElement("input", csrfAttributes, true);
+                    UltraTemplateElement csrfTag = context.createStandaloneElement("input", csrfAttributes, true);
                     model.addElement(csrfTag);
 
                     if (stateVersionToken != null) {
@@ -105,7 +105,7 @@ public class FormProcessor extends AbstractBroadleafModelModifierProcessor {
                         stateVersionAttributes.put("type", "hidden");
                         stateVersionAttributes.put("name", spps.getStateVersionTokenParameter());
                         stateVersionAttributes.put("value", stateVersionToken);
-                        BroadleafTemplateElement stateVersionTag = context.createStandaloneElement("input", stateVersionAttributes, true);
+                        UltraTemplateElement stateVersionTag = context.createStandaloneElement("input", stateVersionAttributes, true);
                         model.addElement(stateVersionTag);
                     }
                     dto.setModel(model);

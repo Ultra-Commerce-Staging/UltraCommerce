@@ -1,43 +1,43 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.catalog.dao;
+package com.ultracommerce.core.catalog.dao;
 
 import org.apache.commons.lang.StringUtils;
-import org.broadleafcommerce.common.extension.ExtensionResultHolder;
-import org.broadleafcommerce.common.extension.ExtensionResultStatusType;
-import org.broadleafcommerce.common.logging.SupportLogManager;
-import org.broadleafcommerce.common.logging.SupportLogger;
-import org.broadleafcommerce.common.persistence.EntityConfiguration;
-import org.broadleafcommerce.common.persistence.Status;
-import org.broadleafcommerce.common.sandbox.SandBoxHelper;
-import org.broadleafcommerce.common.time.SystemTime;
-import org.broadleafcommerce.common.util.DateUtil;
-import org.broadleafcommerce.common.util.dao.TypedQueryBuilder;
-import org.broadleafcommerce.core.catalog.domain.Category;
-import org.broadleafcommerce.core.catalog.domain.CategoryImpl;
-import org.broadleafcommerce.core.catalog.domain.CategoryProductXref;
-import org.broadleafcommerce.core.catalog.domain.CategoryProductXrefImpl;
-import org.broadleafcommerce.core.catalog.domain.Product;
-import org.broadleafcommerce.core.catalog.domain.ProductBundle;
-import org.broadleafcommerce.core.catalog.domain.ProductImpl;
-import org.broadleafcommerce.core.catalog.domain.Sku;
-import org.broadleafcommerce.core.catalog.service.type.ProductType;
-import org.broadleafcommerce.core.search.domain.SearchCriteria;
+import com.ultracommerce.common.extension.ExtensionResultHolder;
+import com.ultracommerce.common.extension.ExtensionResultStatusType;
+import com.ultracommerce.common.logging.SupportLogManager;
+import com.ultracommerce.common.logging.SupportLogger;
+import com.ultracommerce.common.persistence.EntityConfiguration;
+import com.ultracommerce.common.persistence.Status;
+import com.ultracommerce.common.sandbox.SandBoxHelper;
+import com.ultracommerce.common.time.SystemTime;
+import com.ultracommerce.common.util.DateUtil;
+import com.ultracommerce.common.util.dao.TypedQueryBuilder;
+import com.ultracommerce.core.catalog.domain.Category;
+import com.ultracommerce.core.catalog.domain.CategoryImpl;
+import com.ultracommerce.core.catalog.domain.CategoryProductXref;
+import com.ultracommerce.core.catalog.domain.CategoryProductXrefImpl;
+import com.ultracommerce.core.catalog.domain.Product;
+import com.ultracommerce.core.catalog.domain.ProductBundle;
+import com.ultracommerce.core.catalog.domain.ProductImpl;
+import com.ultracommerce.core.catalog.domain.Sku;
+import com.ultracommerce.core.catalog.service.type.ProductType;
+import com.ultracommerce.core.search.domain.SearchCriteria;
 import org.hibernate.jpa.QueryHints;
 
 import java.math.BigDecimal;
@@ -71,16 +71,16 @@ public class ProductDaoImpl implements ProductDao {
 
     private static final SupportLogger logger = SupportLogManager.getLogger("Enterprise", ProductDaoImpl.class);
 
-    @PersistenceContext(unitName="blPU")
+    @PersistenceContext(unitName="ucPU")
     protected EntityManager em;
 
-    @Resource(name="blEntityConfiguration")
+    @Resource(name="ucEntityConfiguration")
     protected EntityConfiguration entityConfiguration;
 
-    @Resource(name="blSandBoxHelper")
+    @Resource(name="ucSandBoxHelper")
     protected SandBoxHelper sandBoxHelper;
 
-    @Resource(name = "blProductDaoExtensionManager")
+    @Resource(name = "ucProductDaoExtensionManager")
     protected ProductDaoExtensionManager extensionManager;
 
     protected Long currentDateResolution;
@@ -141,7 +141,7 @@ public class ProductDaoImpl implements ProductDao {
 
     @Override
     public List<Product> readProductsByName(String searchName) {
-        TypedQuery<Product> query = em.createNamedQuery("BC_READ_PRODUCTS_BY_NAME", Product.class);
+        TypedQuery<Product> query = em.createNamedQuery("UC_READ_PRODUCTS_BY_NAME", Product.class);
         query.setParameter("name", searchName + '%');
         query.setHint(QueryHints.HINT_CACHEABLE, true);
         query.setHint(QueryHints.HINT_CACHE_REGION, "query.Catalog");
@@ -151,7 +151,7 @@ public class ProductDaoImpl implements ProductDao {
 
     @Override
     public List<Product> readProductsByName(@Nonnull String searchName, @Nonnull int limit, @Nonnull int offset) {
-        TypedQuery<Product> query = em.createNamedQuery("BC_READ_PRODUCTS_BY_NAME", Product.class);
+        TypedQuery<Product> query = em.createNamedQuery("UC_READ_PRODUCTS_BY_NAME", Product.class);
         query.setParameter("name", searchName + '%');
         query.setFirstResult(offset);
         query.setMaxResults(limit);
@@ -174,7 +174,7 @@ public class ProductDaoImpl implements ProductDao {
     }
 
     protected List<Product> readActiveProductsByCategoryInternal(Long categoryId, Date currentDate) {
-        TypedQuery<Product> query = em.createNamedQuery("BC_READ_ACTIVE_PRODUCTS_BY_CATEGORY", Product.class);
+        TypedQuery<Product> query = em.createNamedQuery("UC_READ_ACTIVE_PRODUCTS_BY_CATEGORY", Product.class);
         query.setParameter("categoryId", sandBoxHelper.mergeCloneIds(CategoryImpl.class, categoryId));
         query.setParameter("currentDate", currentDate);
         query.setHint(QueryHints.HINT_CACHEABLE, true);
@@ -433,7 +433,7 @@ public class ProductDaoImpl implements ProductDao {
     }
 
     public List<Product> readActiveProductsByCategoryInternal(Long categoryId, Date currentDate, int limit, int offset) {
-        TypedQuery<Product> query = em.createNamedQuery("BC_READ_ACTIVE_PRODUCTS_BY_CATEGORY", Product.class);
+        TypedQuery<Product> query = em.createNamedQuery("UC_READ_ACTIVE_PRODUCTS_BY_CATEGORY", Product.class);
         query.setParameter("categoryId", sandBoxHelper.mergeCloneIds(CategoryImpl.class, categoryId));
         query.setParameter("currentDate", currentDate);
         query.setFirstResult(offset);
@@ -446,7 +446,7 @@ public class ProductDaoImpl implements ProductDao {
 
     @Override
     public List<Product> readProductsByCategory(Long categoryId) {
-        TypedQuery<Product> query = em.createNamedQuery("BC_READ_PRODUCTS_BY_CATEGORY", Product.class);
+        TypedQuery<Product> query = em.createNamedQuery("UC_READ_PRODUCTS_BY_CATEGORY", Product.class);
         query.setParameter("categoryId", sandBoxHelper.mergeCloneIds(CategoryImpl.class, categoryId));
         query.setHint(QueryHints.HINT_CACHEABLE, true);
         query.setHint(QueryHints.HINT_CACHE_REGION, "query.Catalog");
@@ -456,7 +456,7 @@ public class ProductDaoImpl implements ProductDao {
 
     @Override
     public List<Product> readProductsByCategory(Long categoryId, int limit, int offset) {
-        TypedQuery<Product> query = em.createNamedQuery("BC_READ_PRODUCTS_BY_CATEGORY", Product.class);
+        TypedQuery<Product> query = em.createNamedQuery("UC_READ_PRODUCTS_BY_CATEGORY", Product.class);
         query.setParameter("categoryId", sandBoxHelper.mergeCloneIds(CategoryImpl.class, categoryId));
         query.setFirstResult(offset);
         query.setMaxResults(limit);
@@ -480,7 +480,7 @@ public class ProductDaoImpl implements ProductDao {
     @Override
     public List<ProductBundle> readAutomaticProductBundles() {
         Date currentDate = DateUtil.getCurrentDateAfterFactoringInDateResolution(cachedDate, getCurrentDateResolution());
-        TypedQuery<ProductBundle> query = em.createNamedQuery("BC_READ_AUTOMATIC_PRODUCT_BUNDLES", ProductBundle.class);
+        TypedQuery<ProductBundle> query = em.createNamedQuery("UC_READ_AUTOMATIC_PRODUCT_BUNDLES", ProductBundle.class);
         query.setParameter("currentDate", currentDate);
         query.setParameter("autoBundle", Boolean.TRUE);
         query.setHint(QueryHints.HINT_CACHEABLE, true);
@@ -511,7 +511,7 @@ public class ProductDaoImpl implements ProductDao {
         String urlKey = uri.substring(uri.lastIndexOf('/'));        
         Query query;
     
-        query = em.createNamedQuery("BC_READ_PRODUCTS_BY_OUTGOING_URL");
+        query = em.createNamedQuery("UC_READ_PRODUCTS_BY_OUTGOING_URL");
         query.setParameter("url", uri);
         query.setParameter("urlKey", urlKey);
         query.setParameter("currentDate", DateUtil.getCurrentDateAfterFactoringInDateResolution(cachedDate, getCurrentDateResolution()));

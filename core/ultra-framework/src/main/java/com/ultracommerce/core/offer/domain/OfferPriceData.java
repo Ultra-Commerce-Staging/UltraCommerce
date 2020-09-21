@@ -1,26 +1,26 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2018 Broadleaf Commerce
+ * Copyright (C) 2009 - 2018 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.offer.domain;
+package com.ultracommerce.core.offer.domain;
 
-import org.broadleafcommerce.common.copy.MultiTenantCloneable;
-import org.broadleafcommerce.common.persistence.Status;
-import org.broadleafcommerce.core.offer.service.type.OfferDiscountType;
-import org.broadleafcommerce.core.offer.service.type.OfferPriceDataIdentifierType;
+import com.ultracommerce.common.copy.MultiTenantCloneable;
+import com.ultracommerce.common.persistence.Status;
+import com.ultracommerce.core.offer.service.type.OfferDiscountType;
+import com.ultracommerce.core.offer.service.type.OfferPriceDataIdentifierType;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;

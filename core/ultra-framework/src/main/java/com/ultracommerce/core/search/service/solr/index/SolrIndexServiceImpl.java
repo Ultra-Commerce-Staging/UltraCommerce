@@ -1,21 +1,21 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.search.service.solr.index;
+package com.ultracommerce.core.search.service.solr.index;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.ObjectUtils;
@@ -26,38 +26,38 @@ import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.common.SolrInputDocument;
 import org.apache.solr.common.SolrInputField;
-import org.broadleafcommerce.common.exception.ExceptionHelper;
-import org.broadleafcommerce.common.exception.ServiceException;
-import org.broadleafcommerce.common.extension.ExtensionResultStatusType;
-import org.broadleafcommerce.common.locale.domain.Locale;
-import org.broadleafcommerce.common.locale.service.LocaleService;
-import org.broadleafcommerce.common.sandbox.SandBoxHelper;
-import org.broadleafcommerce.common.site.domain.Catalog;
-import org.broadleafcommerce.common.util.BLCCollectionUtils;
-import org.broadleafcommerce.common.util.StopWatch;
-import org.broadleafcommerce.common.util.StringUtil;
-import org.broadleafcommerce.common.util.TransactionUtils;
-import org.broadleafcommerce.common.util.TypedTransformer;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
-import org.broadleafcommerce.core.catalog.dao.ProductDao;
-import org.broadleafcommerce.core.catalog.domain.Indexable;
-import org.broadleafcommerce.core.catalog.service.CatalogService;
-import org.broadleafcommerce.core.catalog.service.dynamic.DynamicSkuActiveDatesService;
-import org.broadleafcommerce.core.catalog.service.dynamic.DynamicSkuPricingService;
-import org.broadleafcommerce.core.catalog.service.dynamic.SkuActiveDateConsiderationContext;
-import org.broadleafcommerce.core.catalog.service.dynamic.SkuPricingConsiderationContext;
-import org.broadleafcommerce.core.search.dao.CatalogStructure;
-import org.broadleafcommerce.core.search.dao.FieldDao;
-import org.broadleafcommerce.core.search.dao.IndexFieldDao;
-import org.broadleafcommerce.core.search.dao.SearchFacetDao;
-import org.broadleafcommerce.core.search.dao.SolrIndexDao;
-import org.broadleafcommerce.core.search.domain.Field;
-import org.broadleafcommerce.core.search.domain.FieldEntity;
-import org.broadleafcommerce.core.search.domain.IndexField;
-import org.broadleafcommerce.core.search.domain.IndexFieldType;
-import org.broadleafcommerce.core.search.domain.solr.FieldType;
-import org.broadleafcommerce.core.search.service.solr.SolrConfiguration;
-import org.broadleafcommerce.core.search.service.solr.SolrHelperService;
+import com.ultracommerce.common.exception.ExceptionHelper;
+import com.ultracommerce.common.exception.ServiceException;
+import com.ultracommerce.common.extension.ExtensionResultStatusType;
+import com.ultracommerce.common.locale.domain.Locale;
+import com.ultracommerce.common.locale.service.LocaleService;
+import com.ultracommerce.common.sandbox.SandBoxHelper;
+import com.ultracommerce.common.site.domain.Catalog;
+import com.ultracommerce.common.util.UCCollectionUtils;
+import com.ultracommerce.common.util.StopWatch;
+import com.ultracommerce.common.util.StringUtil;
+import com.ultracommerce.common.util.TransactionUtils;
+import com.ultracommerce.common.util.TypedTransformer;
+import com.ultracommerce.common.web.UltraRequestContext;
+import com.ultracommerce.core.catalog.dao.ProductDao;
+import com.ultracommerce.core.catalog.domain.Indexable;
+import com.ultracommerce.core.catalog.service.CatalogService;
+import com.ultracommerce.core.catalog.service.dynamic.DynamicSkuActiveDatesService;
+import com.ultracommerce.core.catalog.service.dynamic.DynamicSkuPricingService;
+import com.ultracommerce.core.catalog.service.dynamic.SkuActiveDateConsiderationContext;
+import com.ultracommerce.core.catalog.service.dynamic.SkuPricingConsiderationContext;
+import com.ultracommerce.core.search.dao.CatalogStructure;
+import com.ultracommerce.core.search.dao.FieldDao;
+import com.ultracommerce.core.search.dao.IndexFieldDao;
+import com.ultracommerce.core.search.dao.SearchFacetDao;
+import com.ultracommerce.core.search.dao.SolrIndexDao;
+import com.ultracommerce.core.search.domain.Field;
+import com.ultracommerce.core.search.domain.FieldEntity;
+import com.ultracommerce.core.search.domain.IndexField;
+import com.ultracommerce.core.search.domain.IndexFieldType;
+import com.ultracommerce.core.search.domain.solr.FieldType;
+import com.ultracommerce.core.search.service.solr.SolrConfiguration;
+import com.ultracommerce.core.search.service.solr.SolrHelperService;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -89,12 +89,12 @@ import javax.annotation.Resource;
  * @author Andre Azzolini (apazzolini)
  * @author Jeff Fischer
  */
-@Service("blSolrIndexService")
+@Service("ucSolrIndexService")
 public class SolrIndexServiceImpl implements SolrIndexService, InitializingBean {
 
     private static final Log LOG = LogFactory.getLog(SolrIndexServiceImpl.class);
 
-    @Qualifier("blCatalogSolrConfiguration")
+    @Qualifier("ucCatalogSolrConfiguration")
     @Autowired(required = false)
     protected SolrConfiguration solrConfiguration;
 
@@ -119,37 +119,37 @@ public class SolrIndexServiceImpl implements SolrIndexService, InitializingBean 
     @Value(value = "${solr.catalog.useLegacySolrIndexer:true}")
     protected boolean useLegacySolrIndexer = true;
 
-    @Resource(name = "blProductDao")
+    @Resource(name = "ucProductDao")
     protected ProductDao productDao;
 
-    @Resource(name = "blCatalogService")
+    @Resource(name = "ucCatalogService")
     protected CatalogService catalogService;
 
-    @Resource(name = "blFieldDao")
+    @Resource(name = "ucFieldDao")
     protected FieldDao fieldDao;
 
-    @Resource(name = "blLocaleService")
+    @Resource(name = "ucLocaleService")
     protected LocaleService localeService;
 
-    @Resource(name = "blSolrHelperService")
+    @Resource(name = "ucSolrHelperService")
     protected SolrHelperService shs;
 
-    @Resource(name = "blSolrIndexServiceExtensionManager")
+    @Resource(name = "ucSolrIndexServiceExtensionManager")
     protected SolrIndexServiceExtensionManager extensionManager;
 
-    @Resource(name = "blTransactionManager")
+    @Resource(name = "ucTransactionManager")
     protected PlatformTransactionManager transactionManager;
 
-    @Resource(name = "blSolrIndexDao")
+    @Resource(name = "ucSolrIndexDao")
     protected SolrIndexDao solrIndexDao;
 
-    @Resource(name = "blSandBoxHelper")
+    @Resource(name = "ucSandBoxHelper")
     protected SandBoxHelper sandBoxHelper;
 
-    @Resource(name = "blSearchFacetDao")
+    @Resource(name = "ucSearchFacetDao")
     protected SearchFacetDao searchFacetDao;
 
-    @Resource(name = "blIndexFieldDao")
+    @Resource(name = "ucIndexFieldDao")
     protected IndexFieldDao indexFieldDao;
 
     @Override
@@ -293,7 +293,7 @@ public class SolrIndexServiceImpl implements SolrIndexService, InitializingBean 
     protected String buildPageNumberMessage(int page, Long totalPages) {
         String pageNumberMessage = String.format("Building page number %s of %s", page, totalPages);
 
-        Catalog currentCatalog = BroadleafRequestContext.getBroadleafRequestContext().getCurrentCatalog();
+        Catalog currentCatalog = UltraRequestContext.getUltraRequestContext().getCurrentCatalog();
         if (currentCatalog != null) {
             pageNumberMessage += String.format(" for catalog: %s", currentCatalog.getName());
         }
@@ -417,7 +417,7 @@ public class SolrIndexServiceImpl implements SolrIndexService, InitializingBean 
             Collection<SolrInputDocument> documents = new ArrayList<>();
             List<Locale> locales = getAllLocales();
 
-            List<Long> productIds = BLCCollectionUtils.collectList(indexables, new TypedTransformer<Long>() {
+            List<Long> productIds = UCCollectionUtils.collectList(indexables, new TypedTransformer<Long>() {
                 @Override
                 public Long transform(Object input) {
                     return shs.getCurrentProductId((Indexable) input);
@@ -723,7 +723,7 @@ public class SolrIndexServiceImpl implements SolrIndexService, InitializingBean 
     @Override
     public Object[] saveState() {
          return new Object[] {
-             BroadleafRequestContext.getBroadleafRequestContext(),
+             UltraRequestContext.getUltraRequestContext(),
              SkuPricingConsiderationContext.getSkuPricingConsiderationContext(),
              SkuPricingConsiderationContext.getSkuPricingService(),
              SkuActiveDateConsiderationContext.getSkuActiveDatesService()
@@ -733,7 +733,7 @@ public class SolrIndexServiceImpl implements SolrIndexService, InitializingBean 
     @Override
     @SuppressWarnings("rawtypes")
     public void restoreState(Object[] pack) {
-         BroadleafRequestContext.setBroadleafRequestContext((BroadleafRequestContext) pack[0]);
+         UltraRequestContext.setUltraRequestContext((UltraRequestContext) pack[0]);
          SkuPricingConsiderationContext.setSkuPricingConsiderationContext((HashMap) pack[1]);
          SkuPricingConsiderationContext.setSkuPricingService((DynamicSkuPricingService) pack[2]);
          SkuActiveDateConsiderationContext.setSkuActiveDatesService((DynamicSkuActiveDatesService) pack[3]);

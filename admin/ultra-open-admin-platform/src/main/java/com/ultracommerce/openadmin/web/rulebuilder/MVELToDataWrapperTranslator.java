@@ -1,39 +1,39 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.openadmin.web.rulebuilder;
+package com.ultracommerce.openadmin.web.rulebuilder;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.presentation.client.SupportedFieldType;
-import org.broadleafcommerce.common.util.StringUtil;
-import org.broadleafcommerce.openadmin.dto.Entity;
-import org.broadleafcommerce.openadmin.dto.Property;
-import org.broadleafcommerce.openadmin.web.rulebuilder.dto.DataDTO;
-import org.broadleafcommerce.openadmin.web.rulebuilder.dto.DataWrapper;
-import org.broadleafcommerce.openadmin.web.rulebuilder.dto.ExpressionDTO;
-import org.broadleafcommerce.openadmin.web.rulebuilder.dto.FieldDTO;
-import org.broadleafcommerce.openadmin.web.rulebuilder.grouping.Group;
-import org.broadleafcommerce.openadmin.web.rulebuilder.grouping.GroupingTranslator;
-import org.broadleafcommerce.openadmin.web.rulebuilder.service.RuleBuilderFieldService;
-import org.broadleafcommerce.openadmin.web.rulebuilder.statement.Expression;
-import org.broadleafcommerce.openadmin.web.rulebuilder.statement.PhraseTranslator;
+import com.ultracommerce.common.presentation.client.SupportedFieldType;
+import com.ultracommerce.common.util.StringUtil;
+import com.ultracommerce.openadmin.dto.Entity;
+import com.ultracommerce.openadmin.dto.Property;
+import com.ultracommerce.openadmin.web.rulebuilder.dto.DataDTO;
+import com.ultracommerce.openadmin.web.rulebuilder.dto.DataWrapper;
+import com.ultracommerce.openadmin.web.rulebuilder.dto.ExpressionDTO;
+import com.ultracommerce.openadmin.web.rulebuilder.dto.FieldDTO;
+import com.ultracommerce.openadmin.web.rulebuilder.grouping.Group;
+import com.ultracommerce.openadmin.web.rulebuilder.grouping.GroupingTranslator;
+import com.ultracommerce.openadmin.web.rulebuilder.service.RuleBuilderFieldService;
+import com.ultracommerce.openadmin.web.rulebuilder.statement.Expression;
+import com.ultracommerce.openadmin.web.rulebuilder.statement.PhraseTranslator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -129,14 +129,14 @@ public class MVELToDataWrapperTranslator {
                 ExpressionDTO expression1 = (ExpressionDTO) subRules.get(0);
                 ExpressionDTO expression2 = (ExpressionDTO) subRules.get(1);
 
-                boolean isBetween = StringUtils.equals(expression1.getOperator(), BLCOperator.GREATER_THAN.name()) && StringUtils.equals(expression2.getOperator(), BLCOperator.LESS_THAN.name());
-                boolean isBetweenInclusive = StringUtils.equals(expression1.getOperator(), BLCOperator.GREATER_OR_EQUAL.name()) && StringUtils.equals(expression2.getOperator(), BLCOperator.LESS_OR_EQUAL.name());
+                boolean isBetween = StringUtils.equals(expression1.getOperator(), UCOperator.GREATER_THAN.name()) && StringUtils.equals(expression2.getOperator(), UCOperator.LESS_THAN.name());
+                boolean isBetweenInclusive = StringUtils.equals(expression1.getOperator(), UCOperator.GREATER_OR_EQUAL.name()) && StringUtils.equals(expression2.getOperator(), UCOperator.LESS_OR_EQUAL.name());
 
                 return !(isBetween || isBetweenInclusive);
             } else if (isExpressionDTO(rules)) {
                 ExpressionDTO expression = (ExpressionDTO) rules;
 
-                if (!StringUtils.equals(expression.getOperator(), BLCOperator.BETWEEN.name()) && !StringUtils.equals(expression.getOperator(), BLCOperator.BETWEEN_INCLUSIVE.name())) {
+                if (!StringUtils.equals(expression.getOperator(), UCOperator.BETWEEN.name()) && !StringUtils.equals(expression.getOperator(), UCOperator.BETWEEN_INCLUSIVE.name())) {
                     return true;
                 }
             } else {
@@ -154,17 +154,17 @@ public class MVELToDataWrapperTranslator {
         throws MVELTranslationException {
         DataDTO data = new DataDTO();
         if (group.getOperatorType() == null) {
-            group.setOperatorType(BLCOperator.AND);
+            group.setOperatorType(UCOperator.AND);
         }
         if(parentDTO == null){
             data.setCreatedFromSubGroup(false);
         }else{
             data.setCreatedFromSubGroup(true);
         }
-        BLCOperator operator = group.getOperatorType();
+        UCOperator operator = group.getOperatorType();
         data.setCondition(operator.name());
         List<ExpressionDTO> myCriteriaList = new ArrayList<ExpressionDTO>();
-        if (BLCOperator.NOT.equals(group.getOperatorType()) && group.getIsTopGroup()) {
+        if (UCOperator.NOT.equals(group.getOperatorType()) && group.getIsTopGroup()) {
             group = group.getSubGroups().get(0);
             data.setCreatedFromSubGroup(true);
             group.setOperatorType(operator);
@@ -230,7 +230,7 @@ public class MVELToDataWrapperTranslator {
         boolean sameExpressionId = prevExpression != null && temp.getId().equals(prevExpression.getId());
         
         if (sameExpressionId && isBetweenOperator(prevExpression, temp)) {
-            prevExpression.setOperator(BLCOperator.BETWEEN.name());
+            prevExpression.setOperator(UCOperator.BETWEEN.name());
             boolean hasTempSmallerVal = Long.parseLong(temp.getValue()) < Long.parseLong(prevExpression.getValue());
             String start = hasTempSmallerVal ? temp.getValue() : prevExpression.getValue();
             String end = hasTempSmallerVal ? prevExpression.getValue() : temp.getValue();
@@ -243,7 +243,7 @@ public class MVELToDataWrapperTranslator {
                 parentDTO.getRules().add(myCriteriaList.remove(lstIdx));
             }
         } else if (sameExpressionId && isBetweenInclusiveOperator(prevExpression, temp)) {
-            prevExpression.setOperator(BLCOperator.BETWEEN_INCLUSIVE.name());
+            prevExpression.setOperator(UCOperator.BETWEEN_INCLUSIVE.name());
             boolean hasTempSmallerVal = Long.parseLong(temp.getValue()) < Long.parseLong(prevExpression.getValue());
             String start = hasTempSmallerVal ? temp.getValue() : prevExpression.getValue();
             String end = hasTempSmallerVal ? prevExpression.getValue() : temp.getValue();
@@ -275,10 +275,10 @@ public class MVELToDataWrapperTranslator {
             final long prevVal = Long.parseLong(prev.getValue());
             final long tempVal = Long.parseLong(temp.getValue());
 
-            isBetweenOperator = (tempVal > prevVal && prevOperator.equals(BLCOperator.GREATER_THAN.name()) 
-                                 && tempOperator.equals(BLCOperator.LESS_THAN.name())) 
-                                || (prevVal > tempVal && prevOperator.equals(BLCOperator.LESS_THAN.name()) 
-                                    && tempOperator.equals(BLCOperator.GREATER_THAN.name()) && tempVal < prevVal);
+            isBetweenOperator = (tempVal > prevVal && prevOperator.equals(UCOperator.GREATER_THAN.name()) 
+                                 && tempOperator.equals(UCOperator.LESS_THAN.name())) 
+                                || (prevVal > tempVal && prevOperator.equals(UCOperator.LESS_THAN.name()) 
+                                    && tempOperator.equals(UCOperator.GREATER_THAN.name()) && tempVal < prevVal);
         } catch (final NumberFormatException e) {
             if (LOG.isDebugEnabled()) {
                 LOG.debug(String.format("Trying to parse a non-long value to a long: %s, %s", 
@@ -299,10 +299,10 @@ public class MVELToDataWrapperTranslator {
         try {
             final long prevVal = Long.parseLong(prev.getValue());
             final long tempVal = Long.parseLong(temp.getValue());
-            isBetweenOperator = (tempVal >= prevVal && prevOperator.equals(BLCOperator.GREATER_OR_EQUAL.name()) 
-                                 && tempOperator.equals(BLCOperator.LESS_OR_EQUAL.name())) 
-                                || (prevVal >= tempVal && prevOperator.equals(BLCOperator.LESS_OR_EQUAL.name()) 
-                                    && tempOperator.equals(BLCOperator.GREATER_OR_EQUAL.name()) && tempVal <= prevVal);
+            isBetweenOperator = (tempVal >= prevVal && prevOperator.equals(UCOperator.GREATER_OR_EQUAL.name()) 
+                                 && tempOperator.equals(UCOperator.LESS_OR_EQUAL.name())) 
+                                || (prevVal >= tempVal && prevOperator.equals(UCOperator.LESS_OR_EQUAL.name()) 
+                                    && tempOperator.equals(UCOperator.GREATER_OR_EQUAL.name()) && tempVal <= prevVal);
         } catch (final NumberFormatException e) {
             if (LOG.isDebugEnabled()) {
                 LOG.debug(String.format("Trying to parse a non-long value to a long: %s, %s",

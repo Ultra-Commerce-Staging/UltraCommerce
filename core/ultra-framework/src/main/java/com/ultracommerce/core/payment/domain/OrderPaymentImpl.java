@@ -1,54 +1,54 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.payment.domain;
+package com.ultracommerce.core.payment.domain;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.broadleafcommerce.common.copy.CreateResponse;
-import org.broadleafcommerce.common.copy.MultiTenantCopyContext;
-import org.broadleafcommerce.common.currency.domain.BroadleafCurrency;
-import org.broadleafcommerce.common.currency.util.BroadleafCurrencyUtils;
-import org.broadleafcommerce.common.currency.util.CurrencyCodeIdentifiable;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransform;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformMember;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformTypes;
-import org.broadleafcommerce.common.money.Money;
-import org.broadleafcommerce.common.payment.PaymentGatewayType;
-import org.broadleafcommerce.common.payment.PaymentTransactionType;
-import org.broadleafcommerce.common.payment.PaymentType;
-import org.broadleafcommerce.common.persistence.ArchiveStatus;
-import org.broadleafcommerce.common.presentation.AdminPresentation;
-import org.broadleafcommerce.common.presentation.AdminPresentationClass;
-import org.broadleafcommerce.common.presentation.AdminPresentationCollection;
-import org.broadleafcommerce.common.presentation.PopulateToOneFieldsEnum;
-import org.broadleafcommerce.common.presentation.client.SupportedFieldType;
-import org.broadleafcommerce.common.presentation.override.AdminPresentationMergeEntry;
-import org.broadleafcommerce.common.presentation.override.AdminPresentationMergeOverride;
-import org.broadleafcommerce.common.presentation.override.AdminPresentationMergeOverrides;
-import org.broadleafcommerce.common.presentation.override.PropertyType;
-import org.broadleafcommerce.common.util.ApplicationContextHolder;
-import org.broadleafcommerce.core.order.domain.FulfillmentGroupImpl;
-import org.broadleafcommerce.core.order.domain.Order;
-import org.broadleafcommerce.core.order.domain.OrderImpl;
-import org.broadleafcommerce.core.payment.service.OrderPaymentStatusService;
-import org.broadleafcommerce.core.payment.service.type.OrderPaymentStatus;
-import org.broadleafcommerce.profile.core.domain.Address;
-import org.broadleafcommerce.profile.core.domain.AddressImpl;
+import com.ultracommerce.common.copy.CreateResponse;
+import com.ultracommerce.common.copy.MultiTenantCopyContext;
+import com.ultracommerce.common.currency.domain.UltraCurrency;
+import com.ultracommerce.common.currency.util.UltraCurrencyUtils;
+import com.ultracommerce.common.currency.util.CurrencyCodeIdentifiable;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransform;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransformMember;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransformTypes;
+import com.ultracommerce.common.money.Money;
+import com.ultracommerce.common.payment.PaymentGatewayType;
+import com.ultracommerce.common.payment.PaymentTransactionType;
+import com.ultracommerce.common.payment.PaymentType;
+import com.ultracommerce.common.persistence.ArchiveStatus;
+import com.ultracommerce.common.presentation.AdminPresentation;
+import com.ultracommerce.common.presentation.AdminPresentationClass;
+import com.ultracommerce.common.presentation.AdminPresentationCollection;
+import com.ultracommerce.common.presentation.PopulateToOneFieldsEnum;
+import com.ultracommerce.common.presentation.client.SupportedFieldType;
+import com.ultracommerce.common.presentation.override.AdminPresentationMergeEntry;
+import com.ultracommerce.common.presentation.override.AdminPresentationMergeOverride;
+import com.ultracommerce.common.presentation.override.AdminPresentationMergeOverrides;
+import com.ultracommerce.common.presentation.override.PropertyType;
+import com.ultracommerce.common.util.ApplicationContextHolder;
+import com.ultracommerce.core.order.domain.FulfillmentGroupImpl;
+import com.ultracommerce.core.order.domain.Order;
+import com.ultracommerce.core.order.domain.OrderImpl;
+import com.ultracommerce.core.payment.service.OrderPaymentStatusService;
+import com.ultracommerce.core.payment.service.type.OrderPaymentStatus;
+import com.ultracommerce.profile.core.domain.Address;
+import com.ultracommerce.profile.core.domain.AddressImpl;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Index;
 import org.hibernate.annotations.Parameter;
@@ -75,7 +75,7 @@ import javax.persistence.Table;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "BLC_ORDER_PAYMENT")
+@Table(name = "UC_ORDER_PAYMENT")
 @AdminPresentationMergeOverrides(
     {
         @AdminPresentationMergeOverride(name = "", mergeEntries =
@@ -102,7 +102,7 @@ import javax.persistence.Table;
     }
 )
 @AdminPresentationClass(populateToOneFields = PopulateToOneFieldsEnum.TRUE, friendlyName = "OrderPaymentImpl_baseOrderPayment")
-@SQLDelete(sql="UPDATE BLC_ORDER_PAYMENT SET ARCHIVED = 'Y' WHERE ORDER_PAYMENT_ID = ?")
+@SQLDelete(sql="UPDATE UC_ORDER_PAYMENT SET ARCHIVED = 'Y' WHERE ORDER_PAYMENT_ID = ?")
 @DirectCopyTransform({
         @DirectCopyTransformMember(templateTokens = DirectCopyTransformTypes.MULTITENANT_SITE)
 })
@@ -114,10 +114,10 @@ public class OrderPaymentImpl implements OrderPayment, CurrencyCodeIdentifiable 
     @GeneratedValue(generator = "OrderPaymentId")
     @GenericGenerator(
         name="OrderPaymentId",
-        strategy="org.broadleafcommerce.common.persistence.IdOverrideTableGenerator",
+        strategy="com.ultracommerce.common.persistence.IdOverrideTableGenerator",
         parameters = {
             @Parameter(name="segment_value", value="OrderPaymentImpl"),
-            @Parameter(name="entity_name", value="org.broadleafcommerce.core.payment.domain.OrderPaymentImpl")
+            @Parameter(name="entity_name", value="com.ultracommerce.core.payment.domain.OrderPaymentImpl")
         }
     )
     @Column(name = "ORDER_PAYMENT_ID")
@@ -147,14 +147,14 @@ public class OrderPaymentImpl implements OrderPayment, CurrencyCodeIdentifiable 
     @Column(name = "PAYMENT_TYPE", nullable = false)
     @Index(name="ORDERPAYMENT_TYPE_INDEX", columnNames={"PAYMENT_TYPE"})
     @AdminPresentation(friendlyName = "OrderPaymentImpl_Payment_Type", order=3000, gridOrder = 3000, prominent=true,
-            fieldType= SupportedFieldType.BROADLEAF_ENUMERATION,
-            broadleafEnumeration="org.broadleafcommerce.common.payment.PaymentType")
+            fieldType= SupportedFieldType.ULTRA_ENUMERATION,
+            ultraEnumeration="com.ultracommerce.common.payment.PaymentType")
     protected String type;
     
     @Column(name = "GATEWAY_TYPE")
     @AdminPresentation(friendlyName = "OrderPaymentImpl_Gateway_Type", order=1000, gridOrder = 1000, prominent=true,
-            fieldType = SupportedFieldType.BROADLEAF_ENUMERATION,
-            broadleafEnumeration="org.broadleafcommerce.common.payment.PaymentGatewayType")
+            fieldType = SupportedFieldType.ULTRA_ENUMERATION,
+            ultraEnumeration="com.ultracommerce.common.payment.PaymentGatewayType")
     protected String gatewayType;
 
     @OneToMany(mappedBy = "orderPayment", targetEntity = PaymentTransactionImpl.class, cascade = { CascadeType.ALL }, orphanRemoval = true)
@@ -168,7 +168,7 @@ public class OrderPaymentImpl implements OrderPayment, CurrencyCodeIdentifiable 
     
     @Override
     public Money getAmount() {
-        return amount == null ? null : BroadleafCurrencyUtils.getMoney(amount, getOrder().getCurrency());
+        return amount == null ? null : UltraCurrencyUtils.getMoney(amount, getOrder().getCurrency());
     }
 
     @Override
@@ -285,7 +285,7 @@ public class OrderPaymentImpl implements OrderPayment, CurrencyCodeIdentifiable 
 
     @Override
     public Money getTransactionAmountForType(PaymentTransactionType type) {
-        Money amount = BroadleafCurrencyUtils.getMoney(BigDecimal.ZERO, getOrder().getCurrency());
+        Money amount = UltraCurrencyUtils.getMoney(BigDecimal.ZERO, getOrder().getCurrency());
         for (PaymentTransaction tx : getTransactions()){
             if (type.equals(tx.getType())) {
                 amount = amount.add(tx.getAmount());
@@ -296,7 +296,7 @@ public class OrderPaymentImpl implements OrderPayment, CurrencyCodeIdentifiable 
     
     @Override
     public Money getSuccessfulTransactionAmountForType(PaymentTransactionType type) {
-        Money amount = BroadleafCurrencyUtils.getMoney(BigDecimal.ZERO, getOrder().getCurrency());
+        Money amount = UltraCurrencyUtils.getMoney(BigDecimal.ZERO, getOrder().getCurrency());
         for (PaymentTransaction tx : getTransactions()){
             if (type.equals(tx.getType()) && tx.getSuccess()){
                 amount = amount.add(tx.getAmount());
@@ -312,7 +312,7 @@ public class OrderPaymentImpl implements OrderPayment, CurrencyCodeIdentifiable 
             return null;
         }
 
-        OrderPaymentStatusService svc = ctx.getBean("blOrderPaymentStatusService", OrderPaymentStatusService.class);
+        OrderPaymentStatusService svc = ctx.getBean("ucOrderPaymentStatusService", OrderPaymentStatusService.class);
         return svc.determineOrderPaymentStatus(this);
     }
 
@@ -334,7 +334,7 @@ public class OrderPaymentImpl implements OrderPayment, CurrencyCodeIdentifiable 
     }
 
     @Override
-    public BroadleafCurrency getCurrency() {
+    public UltraCurrency getCurrency() {
         if (order != null) {
             return order.getCurrency();
         }

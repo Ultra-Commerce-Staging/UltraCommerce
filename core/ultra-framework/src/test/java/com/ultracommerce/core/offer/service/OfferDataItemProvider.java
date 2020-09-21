@@ -1,88 +1,88 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.offer.service;
+package com.ultracommerce.core.offer.service;
 
-import org.broadleafcommerce.common.i18n.domain.ISOCountry;
-import org.broadleafcommerce.common.i18n.domain.ISOCountryImpl;
-import org.broadleafcommerce.common.money.Money;
-import org.broadleafcommerce.core.catalog.domain.Category;
-import org.broadleafcommerce.core.catalog.domain.CategoryImpl;
-import org.broadleafcommerce.core.catalog.domain.CategoryProductXref;
-import org.broadleafcommerce.core.catalog.domain.CategoryProductXrefImpl;
-import org.broadleafcommerce.core.catalog.domain.Product;
-import org.broadleafcommerce.core.catalog.domain.ProductBundle;
-import org.broadleafcommerce.core.catalog.domain.ProductBundleImpl;
-import org.broadleafcommerce.core.catalog.domain.ProductImpl;
-import org.broadleafcommerce.core.catalog.domain.Sku;
-import org.broadleafcommerce.core.catalog.domain.SkuImpl;
-import org.broadleafcommerce.core.catalog.service.type.ProductBundlePricingModelType;
-import org.broadleafcommerce.core.offer.domain.FulfillmentGroupAdjustment;
-import org.broadleafcommerce.core.offer.domain.FulfillmentGroupAdjustmentImpl;
-import org.broadleafcommerce.core.offer.domain.Offer;
-import org.broadleafcommerce.core.offer.domain.OfferImpl;
-import org.broadleafcommerce.core.offer.domain.OfferItemCriteria;
-import org.broadleafcommerce.core.offer.domain.OfferItemCriteriaImpl;
-import org.broadleafcommerce.core.offer.domain.OfferOfferRuleXref;
-import org.broadleafcommerce.core.offer.domain.OfferOfferRuleXrefImpl;
-import org.broadleafcommerce.core.offer.domain.OfferQualifyingCriteriaXref;
-import org.broadleafcommerce.core.offer.domain.OfferQualifyingCriteriaXrefImpl;
-import org.broadleafcommerce.core.offer.domain.OfferRule;
-import org.broadleafcommerce.core.offer.domain.OfferRuleImpl;
-import org.broadleafcommerce.core.offer.domain.OfferTargetCriteriaXref;
-import org.broadleafcommerce.core.offer.domain.OfferTargetCriteriaXrefImpl;
-import org.broadleafcommerce.core.offer.domain.OrderItemPriceDetailAdjustment;
-import org.broadleafcommerce.core.offer.domain.OrderItemPriceDetailAdjustmentImpl;
-import org.broadleafcommerce.core.offer.service.discount.domain.PromotableItemFactoryImpl;
-import org.broadleafcommerce.core.offer.service.discount.domain.PromotableOfferUtility;
-import org.broadleafcommerce.core.offer.service.discount.domain.PromotableOrder;
-import org.broadleafcommerce.core.offer.service.discount.domain.PromotableOrderImpl;
-import org.broadleafcommerce.core.offer.service.type.OfferDiscountType;
-import org.broadleafcommerce.core.offer.service.type.OfferItemRestrictionRuleType;
-import org.broadleafcommerce.core.offer.service.type.OfferRuleType;
-import org.broadleafcommerce.core.offer.service.type.OfferType;
-import org.broadleafcommerce.core.order.domain.BundleOrderItem;
-import org.broadleafcommerce.core.order.domain.BundleOrderItemImpl;
-import org.broadleafcommerce.core.order.domain.DiscreteOrderItem;
-import org.broadleafcommerce.core.order.domain.DiscreteOrderItemImpl;
-import org.broadleafcommerce.core.order.domain.FulfillmentGroup;
-import org.broadleafcommerce.core.order.domain.FulfillmentGroupImpl;
-import org.broadleafcommerce.core.order.domain.FulfillmentGroupItem;
-import org.broadleafcommerce.core.order.domain.FulfillmentGroupItemImpl;
-import org.broadleafcommerce.core.order.domain.Order;
-import org.broadleafcommerce.core.order.domain.OrderImpl;
-import org.broadleafcommerce.core.order.domain.OrderItem;
-import org.broadleafcommerce.core.order.domain.OrderItemPriceDetail;
-import org.broadleafcommerce.core.order.domain.OrderItemPriceDetailImpl;
-import org.broadleafcommerce.core.order.domain.OrderItemQualifier;
-import org.broadleafcommerce.core.order.domain.OrderItemQualifierImpl;
-import org.broadleafcommerce.core.order.service.call.FulfillmentGroupItemRequest;
-import org.broadleafcommerce.core.order.service.type.FulfillmentType;
-import org.broadleafcommerce.core.order.service.type.OrderItemType;
-import org.broadleafcommerce.profile.core.domain.Address;
-import org.broadleafcommerce.profile.core.domain.AddressImpl;
-import org.broadleafcommerce.profile.core.domain.Country;
-import org.broadleafcommerce.profile.core.domain.CountryImpl;
-import org.broadleafcommerce.profile.core.domain.Customer;
-import org.broadleafcommerce.profile.core.domain.CustomerImpl;
-import org.broadleafcommerce.profile.core.domain.Phone;
-import org.broadleafcommerce.profile.core.domain.PhoneImpl;
-import org.broadleafcommerce.profile.core.domain.State;
-import org.broadleafcommerce.profile.core.domain.StateImpl;
+import com.ultracommerce.common.i18n.domain.ISOCountry;
+import com.ultracommerce.common.i18n.domain.ISOCountryImpl;
+import com.ultracommerce.common.money.Money;
+import com.ultracommerce.core.catalog.domain.Category;
+import com.ultracommerce.core.catalog.domain.CategoryImpl;
+import com.ultracommerce.core.catalog.domain.CategoryProductXref;
+import com.ultracommerce.core.catalog.domain.CategoryProductXrefImpl;
+import com.ultracommerce.core.catalog.domain.Product;
+import com.ultracommerce.core.catalog.domain.ProductBundle;
+import com.ultracommerce.core.catalog.domain.ProductBundleImpl;
+import com.ultracommerce.core.catalog.domain.ProductImpl;
+import com.ultracommerce.core.catalog.domain.Sku;
+import com.ultracommerce.core.catalog.domain.SkuImpl;
+import com.ultracommerce.core.catalog.service.type.ProductBundlePricingModelType;
+import com.ultracommerce.core.offer.domain.FulfillmentGroupAdjustment;
+import com.ultracommerce.core.offer.domain.FulfillmentGroupAdjustmentImpl;
+import com.ultracommerce.core.offer.domain.Offer;
+import com.ultracommerce.core.offer.domain.OfferImpl;
+import com.ultracommerce.core.offer.domain.OfferItemCriteria;
+import com.ultracommerce.core.offer.domain.OfferItemCriteriaImpl;
+import com.ultracommerce.core.offer.domain.OfferOfferRuleXref;
+import com.ultracommerce.core.offer.domain.OfferOfferRuleXrefImpl;
+import com.ultracommerce.core.offer.domain.OfferQualifyingCriteriaXref;
+import com.ultracommerce.core.offer.domain.OfferQualifyingCriteriaXrefImpl;
+import com.ultracommerce.core.offer.domain.OfferRule;
+import com.ultracommerce.core.offer.domain.OfferRuleImpl;
+import com.ultracommerce.core.offer.domain.OfferTargetCriteriaXref;
+import com.ultracommerce.core.offer.domain.OfferTargetCriteriaXrefImpl;
+import com.ultracommerce.core.offer.domain.OrderItemPriceDetailAdjustment;
+import com.ultracommerce.core.offer.domain.OrderItemPriceDetailAdjustmentImpl;
+import com.ultracommerce.core.offer.service.discount.domain.PromotableItemFactoryImpl;
+import com.ultracommerce.core.offer.service.discount.domain.PromotableOfferUtility;
+import com.ultracommerce.core.offer.service.discount.domain.PromotableOrder;
+import com.ultracommerce.core.offer.service.discount.domain.PromotableOrderImpl;
+import com.ultracommerce.core.offer.service.type.OfferDiscountType;
+import com.ultracommerce.core.offer.service.type.OfferItemRestrictionRuleType;
+import com.ultracommerce.core.offer.service.type.OfferRuleType;
+import com.ultracommerce.core.offer.service.type.OfferType;
+import com.ultracommerce.core.order.domain.BundleOrderItem;
+import com.ultracommerce.core.order.domain.BundleOrderItemImpl;
+import com.ultracommerce.core.order.domain.DiscreteOrderItem;
+import com.ultracommerce.core.order.domain.DiscreteOrderItemImpl;
+import com.ultracommerce.core.order.domain.FulfillmentGroup;
+import com.ultracommerce.core.order.domain.FulfillmentGroupImpl;
+import com.ultracommerce.core.order.domain.FulfillmentGroupItem;
+import com.ultracommerce.core.order.domain.FulfillmentGroupItemImpl;
+import com.ultracommerce.core.order.domain.Order;
+import com.ultracommerce.core.order.domain.OrderImpl;
+import com.ultracommerce.core.order.domain.OrderItem;
+import com.ultracommerce.core.order.domain.OrderItemPriceDetail;
+import com.ultracommerce.core.order.domain.OrderItemPriceDetailImpl;
+import com.ultracommerce.core.order.domain.OrderItemQualifier;
+import com.ultracommerce.core.order.domain.OrderItemQualifierImpl;
+import com.ultracommerce.core.order.service.call.FulfillmentGroupItemRequest;
+import com.ultracommerce.core.order.service.type.FulfillmentType;
+import com.ultracommerce.core.order.service.type.OrderItemType;
+import com.ultracommerce.profile.core.domain.Address;
+import com.ultracommerce.profile.core.domain.AddressImpl;
+import com.ultracommerce.profile.core.domain.Country;
+import com.ultracommerce.profile.core.domain.CountryImpl;
+import com.ultracommerce.profile.core.domain.Customer;
+import com.ultracommerce.profile.core.domain.CustomerImpl;
+import com.ultracommerce.profile.core.domain.Phone;
+import com.ultracommerce.profile.core.domain.PhoneImpl;
+import com.ultracommerce.profile.core.domain.State;
+import com.ultracommerce.profile.core.domain.StateImpl;
 import org.easymock.IAnswer;
 import org.easymock.classextension.EasyMock;
 

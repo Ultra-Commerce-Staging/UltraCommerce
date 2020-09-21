@@ -1,21 +1,21 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.logging;
+package com.ultracommerce.common.logging;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
@@ -38,7 +38,7 @@ import java.util.Collection;
  * <configuration>
  *  <include resource="org/springframework/boot/logging/logback/defaults.xml" />
  *  <property name="LOG_FILE" value="${LOG_FILE:-${LOG_PATH:-${LOG_TEMP:-${java.io.tmpdir:-/tmp}}/}spring.log}"/>
- *  <property name="WORKFLOW_LOG_FILE" value="${WORKFLOW_LOG_FILE:-${java.io.tmpdir:-/tmp}/blc-logs/workflow.log}"/>
+ *  <property name="WORKFLOW_LOG_FILE" value="${WORKFLOW_LOG_FILE:-${java.io.tmpdir:-/tmp}/uc-logs/workflow.log}"/>
  *  <include resource="org/springframework/boot/logging/logback/console-appender.xml" />
  *  <include resource="org/springframework/boot/logging/logback/file-appender.xml" />
  *  <root level="INFO">
@@ -55,13 +55,13 @@ import java.util.Collection;
  *          <pattern>[%-5level] %d{MM-dd-yyyy HH:mm:ss} %logger{35} - %message%n</pattern>
  *      </encoder>
  *  </appender>
- *  <logger name="com.broadleafcommerce.enterprise.workflow.process.detail" level="DEBUG">
+ *  <logger name="com.ultracommerce.enterprise.workflow.process.detail" level="DEBUG">
  *      <appender-ref ref="rollingDailyEnterpriseWorkflow"/>
  *  </logger>
  * </configuration>
  * }
  *
- * If you duplicated the sample configuration exactly, you would provide the logger name "com.broadleafcommerce.enterprise.workflow.process.detail"
+ * If you duplicated the sample configuration exactly, you would provide the logger name "com.ultracommerce.enterprise.workflow.process.detail"
  * to the {@link #ProcessDetailLogger(String)} constructor.
  *
  * @author Jeff Fischer
@@ -125,7 +125,7 @@ public class ProcessDetailLogger {
                         "%m%n\" />\n" +
                         "</layout>\n" +
                         "</appender>\n" +
-                        "<logger name=\"com.broadleafcommerce.enterprise.workflow.process.detail\" " +
+                        "<logger name=\"com.ultracommerce.enterprise.workflow.process.detail\" " +
                         "additivity=\"false\">\n" +
                         "<level value=\"debug\"/>\n" +
                         "<appender-ref ref=\"rollingDailyEnterpriseWorkflow\"/>\n" +
@@ -156,7 +156,7 @@ public class ProcessDetailLogger {
                         "<pattern>[%-5level] %d{MM-dd-yyyy HH:mm:ss} %logger{35} - %message%n</pattern>\n" +
                         "</encoder>\n" +
                         "</appender>\n" +
-                        "<logger name=\"com.broadleafcommerce.enterprise.workflow.process.detail\" level=\"DEBUG\">\n" +
+                        "<logger name=\"com.ultracommerce.enterprise.workflow.process.detail\" level=\"DEBUG\">\n" +
                         "<appender-ref ref=\"rollingDailyEnterpriseWorkflow\"/>\n" +
                         "</logger>\n" +
                         "</configuration>\n\n");

@@ -1,31 +1,31 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.web.expression;
+package com.ultracommerce.common.web.expression;
 
 import org.apache.commons.beanutils.PropertyUtils;
-import org.broadleafcommerce.common.crossapp.service.CrossAppAuthService;
-import org.broadleafcommerce.common.sandbox.domain.SandBox;
-import org.broadleafcommerce.common.site.domain.Catalog;
-import org.broadleafcommerce.common.site.domain.Site;
-import org.broadleafcommerce.common.time.SystemTime;
-import org.broadleafcommerce.common.util.BLCRequestUtils;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
-import org.broadleafcommerce.presentation.condition.ConditionalOnTemplating;
+import com.ultracommerce.common.crossapp.service.CrossAppAuthService;
+import com.ultracommerce.common.sandbox.domain.SandBox;
+import com.ultracommerce.common.site.domain.Catalog;
+import com.ultracommerce.common.site.domain.Site;
+import com.ultracommerce.common.time.SystemTime;
+import com.ultracommerce.common.util.UCRequestUtils;
+import com.ultracommerce.common.web.UltraRequestContext;
+import com.ultracommerce.presentation.condition.ConditionalOnTemplating;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -37,20 +37,20 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
-import static org.broadleafcommerce.common.web.BroadleafSandBoxResolverImpl.CLIENT_TIMEZONE;
+import static com.ultracommerce.common.web.UltraSandBoxResolverImpl.CLIENT_TIMEZONE;
 
 
 /**
- * Exposes the {@link BroadleafRequestContext} to the Thymeleaf expression context
+ * Exposes the {@link UltraRequestContext} to the Thymeleaf expression context
  * 
  * @author Andre Azzolini (apazzolini)
  */
-@Component("blBRCVariableExpression")
+@Component("ucBRCVariableExpression")
 @ConditionalOnTemplating
-public class BRCVariableExpression implements BroadleafVariableExpression {
+public class BRCVariableExpression implements UltraVariableExpression {
     
     @Autowired(required = false)
-    @Qualifier("blCrossAppAuthService")
+    @Qualifier("ucCrossAppAuthService")
     protected CrossAppAuthService crossAppAuthService;
 
     @Override
@@ -59,7 +59,7 @@ public class BRCVariableExpression implements BroadleafVariableExpression {
     }
     
     public SandBox getSandbox() {
-        BroadleafRequestContext brc = BroadleafRequestContext.getBroadleafRequestContext();
+        UltraRequestContext brc = UltraRequestContext.getUltraRequestContext();
         if (brc != null) {
             return brc.getSandBox();
         }
@@ -67,7 +67,7 @@ public class BRCVariableExpression implements BroadleafVariableExpression {
     }
 
     public Site getSite() {
-        BroadleafRequestContext brc = BroadleafRequestContext.getBroadleafRequestContext();
+        UltraRequestContext brc = UltraRequestContext.getUltraRequestContext();
         if (brc != null) {
             return brc.getNonPersistentSite();
         }
@@ -75,7 +75,7 @@ public class BRCVariableExpression implements BroadleafVariableExpression {
     }
 
     public Site getCurrentProfile() {
-        BroadleafRequestContext brc = BroadleafRequestContext.getBroadleafRequestContext();
+        UltraRequestContext brc = UltraRequestContext.getUltraRequestContext();
         if (brc != null) {
             return brc.getCurrentProfile();
         }
@@ -83,7 +83,7 @@ public class BRCVariableExpression implements BroadleafVariableExpression {
     }
 
     public Catalog getCurrentCatalog() {
-        BroadleafRequestContext brc = BroadleafRequestContext.getBroadleafRequestContext();
+        UltraRequestContext brc = UltraRequestContext.getUltraRequestContext();
         if (brc != null) {
             return brc.getCurrentCatalog();
         }
@@ -96,11 +96,11 @@ public class BRCVariableExpression implements BroadleafVariableExpression {
 
     public Calendar getCurrentTimeCalendar() {
 
-        BroadleafRequestContext brc = BroadleafRequestContext.getBroadleafRequestContext();
+        UltraRequestContext brc = UltraRequestContext.getUltraRequestContext();
 
         WebRequest webRequest = brc.getWebRequest();
 
-        if(BLCRequestUtils.isOKtoUseSession(webRequest)) {
+        if(UCRequestUtils.isOKtoUseSession(webRequest)) {
             HttpSession session = brc.getRequest().getSession();
             TimeZone timeZone = (TimeZone) session.getAttribute(CLIENT_TIMEZONE);
 
@@ -116,7 +116,7 @@ public class BRCVariableExpression implements BroadleafVariableExpression {
     }
     
     public Object get(String propertyName) {
-        BroadleafRequestContext brc = BroadleafRequestContext.getBroadleafRequestContext();
+        UltraRequestContext brc = UltraRequestContext.getUltraRequestContext();
         if (brc != null) {
             try {
                 return PropertyUtils.getProperty(brc, propertyName);
@@ -136,12 +136,12 @@ public class BRCVariableExpression implements BroadleafVariableExpression {
     }
 
     public boolean isSandboxMode() {
-        BroadleafRequestContext brc = BroadleafRequestContext.getBroadleafRequestContext();
+        UltraRequestContext brc = UltraRequestContext.getUltraRequestContext();
         return (brc == null) ? false : (brc.getSandBox() != null);
     }
     
     public Object getAdditionalProperty(String propertyName) {
-        BroadleafRequestContext brc = BroadleafRequestContext.getBroadleafRequestContext();
+        UltraRequestContext brc = UltraRequestContext.getUltraRequestContext();
         if (brc != null) {
             return brc.getAdditionalProperties().get(propertyName);
         }

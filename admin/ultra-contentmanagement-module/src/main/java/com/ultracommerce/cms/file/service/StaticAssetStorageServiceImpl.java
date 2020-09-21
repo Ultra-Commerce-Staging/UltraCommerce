@@ -1,21 +1,21 @@
 /*
  * #%L
- * BroadleafCommerce CMS Module
+ * UltraCommerce CMS Module
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.cms.file.service;
+package com.ultracommerce.cms.file.service;
 
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.io.FilenameUtils;
@@ -24,23 +24,23 @@ import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.cms.common.AssetNotFoundException;
-import org.broadleafcommerce.cms.field.type.StorageType;
-import org.broadleafcommerce.cms.file.dao.StaticAssetStorageDao;
-import org.broadleafcommerce.cms.file.domain.StaticAsset;
-import org.broadleafcommerce.cms.file.domain.StaticAssetStorage;
-import org.broadleafcommerce.cms.file.service.operation.NamedOperationManager;
-import org.broadleafcommerce.common.audit.Auditable;
-import org.broadleafcommerce.common.extension.ExtensionResultHolder;
-import org.broadleafcommerce.common.extension.ExtensionResultStatusType;
-import org.broadleafcommerce.common.file.domain.FileWorkArea;
-import org.broadleafcommerce.common.file.service.BroadleafFileService;
-import org.broadleafcommerce.common.file.service.GloballySharedInputStream;
-import org.broadleafcommerce.common.io.ConcurrentFileOutputStream;
-import org.broadleafcommerce.common.util.StreamCapableTransactionalOperationAdapter;
-import org.broadleafcommerce.common.util.StreamingTransactionCapableUtil;
-import org.broadleafcommerce.openadmin.server.service.artifact.ArtifactService;
-import org.broadleafcommerce.openadmin.server.service.artifact.image.Operation;
+import com.ultracommerce.cms.common.AssetNotFoundException;
+import com.ultracommerce.cms.field.type.StorageType;
+import com.ultracommerce.cms.file.dao.StaticAssetStorageDao;
+import com.ultracommerce.cms.file.domain.StaticAsset;
+import com.ultracommerce.cms.file.domain.StaticAssetStorage;
+import com.ultracommerce.cms.file.service.operation.NamedOperationManager;
+import com.ultracommerce.common.audit.Auditable;
+import com.ultracommerce.common.extension.ExtensionResultHolder;
+import com.ultracommerce.common.extension.ExtensionResultStatusType;
+import com.ultracommerce.common.file.domain.FileWorkArea;
+import com.ultracommerce.common.file.service.UltraFileService;
+import com.ultracommerce.common.file.service.GloballySharedInputStream;
+import com.ultracommerce.common.io.ConcurrentFileOutputStream;
+import com.ultracommerce.common.util.StreamCapableTransactionalOperationAdapter;
+import com.ultracommerce.common.util.StreamingTransactionCapableUtil;
+import com.ultracommerce.openadmin.server.service.artifact.ArtifactService;
+import com.ultracommerce.openadmin.server.service.artifact.image.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.web.servlet.MultipartProperties;
@@ -72,7 +72,7 @@ import javax.annotation.Resource;
 /**
  * @author Jeff Fischer, Brian Polster
  */
-@Service("blStaticAssetStorageService")
+@Service("ucStaticAssetStorageService")
 public class StaticAssetStorageServiceImpl implements StaticAssetStorageService {
 
     private static final Log LOG = LogFactory.getLog(StaticAssetStorageServiceImpl.class);
@@ -89,25 +89,25 @@ public class StaticAssetStorageServiceImpl implements StaticAssetStorageService 
     @Autowired
     protected Environment env;
 
-    @Resource(name="blStaticAssetService")
+    @Resource(name="ucStaticAssetService")
     protected StaticAssetService staticAssetService;
 
-    @Resource(name = "blFileService")
-    protected BroadleafFileService broadleafFileService;
+    @Resource(name = "ucFileService")
+    protected UltraFileService ultraFileService;
 
-    @Resource(name="blArtifactService")
+    @Resource(name="ucArtifactService")
     protected ArtifactService artifactService;
 
-    @Resource(name="blStaticAssetStorageDao")
+    @Resource(name="ucStaticAssetStorageDao")
     protected StaticAssetStorageDao staticAssetStorageDao;
 
-    @Resource(name="blNamedOperationManager")
+    @Resource(name="ucNamedOperationManager")
     protected NamedOperationManager namedOperationManager;
 
-    @Resource(name = "blStaticAssetServiceExtensionManager")
+    @Resource(name = "ucStaticAssetServiceExtensionManager")
     protected StaticAssetServiceExtensionManager extensionManager;
 
-    @Resource(name="blStreamingTransactionCapableUtil")
+    @Resource(name="ucStreamingTransactionCapableUtil")
     protected StreamingTransactionCapableUtil transUtil;
 
     @Value("${image.artifact.recompress.formats:png}")
@@ -116,7 +116,7 @@ public class StaticAssetStorageServiceImpl implements StaticAssetStorageService 
     @Autowired(required = false)
     protected MultipartProperties defaultMultipartSettings;
 
-    @Resource(name = "blConcurrentFileOutputStream")
+    @Resource(name = "ucConcurrentFileOutputStream")
     protected ConcurrentFileOutputStream concurrentFileOutputStream;
 
 
@@ -141,23 +141,23 @@ public class StaticAssetStorageServiceImpl implements StaticAssetStorageService 
             }
         }
         if (cacheFile == null) {
-            cacheFile = broadleafFileService.getSharedLocalResource(cachedFileName);
+            cacheFile = ultraFileService.getSharedLocalResource(cachedFileName);
         }
         if (cacheFile.exists()) {
             return cacheFile;
         } else {
-            return broadleafFileService.getLocalResource(cachedFileName);
+            return ultraFileService.getLocalResource(cachedFileName);
         }
     }
 
     protected File lookupAssetAndCreateLocalFile(StaticAsset staticAsset, File baseLocalFile)
             throws IOException, SQLException {
         if (StorageType.FILESYSTEM.equals(staticAsset.getStorageType())) {
-            File returnFile = broadleafFileService.getResource(staticAsset.getFullUrl());
+            File returnFile = ultraFileService.getResource(staticAsset.getFullUrl());
             if (!returnFile.getAbsolutePath().equals(baseLocalFile.getAbsolutePath())) {
                 createLocalFileFromInputStream(new FileInputStream(returnFile), baseLocalFile);
             }
-            return broadleafFileService.getResource(staticAsset.getFullUrl());
+            return ultraFileService.getResource(staticAsset.getFullUrl());
         } else {
             StaticAssetStorage storage = readStaticAssetStorageByStaticAssetId(staticAsset.getId());
             if (storage != null) {
@@ -169,7 +169,7 @@ public class StaticAssetStorageServiceImpl implements StaticAssetStorageService 
     }
 
     protected void createLocalFileFromClassPathResource(StaticAsset staticAsset, File baseLocalFile) throws IOException {
-        InputStream is = broadleafFileService.getClasspathResource(staticAsset.getFullUrl());
+        InputStream is = ultraFileService.getClasspathResource(staticAsset.getFullUrl());
         createLocalFileFromInputStream(is, baseLocalFile);
     }
 
@@ -228,9 +228,9 @@ public class StaticAssetStorageServiceImpl implements StaticAssetStorageService 
         File baseLocalFile = getFileFromLocalRepository(baseCachedFileName);
 
         if (! baseLocalFile.exists()) {
-            if (broadleafFileService.checkForResourceOnClassPath(staticAsset.getFullUrl())) {
-                cacheFile = broadleafFileService.getSharedLocalResource(cachedFileName);
-                baseLocalFile = broadleafFileService.getSharedLocalResource(baseCachedFileName);
+            if (ultraFileService.checkForResourceOnClassPath(staticAsset.getFullUrl())) {
+                cacheFile = ultraFileService.getSharedLocalResource(cachedFileName);
+                baseLocalFile = ultraFileService.getSharedLocalResource(baseCachedFileName);
                 createLocalFileFromClassPathResource(staticAsset, baseLocalFile);
             } else {
                 baseLocalFile = lookupAssetAndCreateLocalFile(staticAsset, baseLocalFile);
@@ -420,13 +420,13 @@ public class StaticAssetStorageServiceImpl implements StaticAssetStorageService 
         return buffer.toString();
     }
 
-    @Transactional("blTransactionManagerAssetStorageInfo")
+    @Transactional("ucTransactionManagerAssetStorageInfo")
     @Override
     public void createStaticAssetStorageFromFile(MultipartFile file, StaticAsset staticAsset) throws IOException {
         createStaticAssetStorage(file.getInputStream(), staticAsset);
     }
 
-    @Transactional("blTransactionManagerAssetStorageInfo")
+    @Transactional("ucTransactionManagerAssetStorageInfo")
     @Override
     public void createStaticAssetStorage(InputStream fileInputStream, StaticAsset staticAsset) throws IOException {
         if (StorageType.DATABASE.equals(staticAsset.getStorageType())) {
@@ -436,7 +436,7 @@ public class StaticAssetStorageServiceImpl implements StaticAssetStorageService 
             storage.setFileData(uploadBlob);
             save(storage);
         } else if (StorageType.FILESYSTEM.equals(staticAsset.getStorageType())) {
-            FileWorkArea tempWorkArea = broadleafFileService.initializeWorkArea();
+            FileWorkArea tempWorkArea = ultraFileService.initializeWorkArea();
             // Convert the given URL from the asset to a system-specific suitable file path
             String destFileName = FilenameUtils.normalize(tempWorkArea.getFilePathLocation() + File.separator + FilenameUtils.separatorsToSystem(staticAsset.getFullUrl()));
 
@@ -467,10 +467,10 @@ public class StaticAssetStorageServiceImpl implements StaticAssetStorageService 
 
                 // close the output file stream prior to moving files around
                 output.close();
-                broadleafFileService.addOrUpdateResource(tempWorkArea, destFile, false);
+                ultraFileService.addOrUpdateResource(tempWorkArea, destFile, false);
             } finally {
                 IOUtils.closeQuietly(output);
-                broadleafFileService.closeWorkArea(tempWorkArea);
+                ultraFileService.closeWorkArea(tempWorkArea);
             }
         }
     }
@@ -501,9 +501,9 @@ public class StaticAssetStorageServiceImpl implements StaticAssetStorageService 
     }
 
     protected long getMaxUploadableFileSize() {
-        Long blcUploadSize = env.getProperty("asset.server.max.uploadable.file.size", Long.class);
-        if (blcUploadSize != null) {
-            return blcUploadSize;
+        Long ucUploadSize = env.getProperty("asset.server.max.uploadable.file.size", Long.class);
+        if (ucUploadSize != null) {
+            return ucUploadSize;
         }
 
         if (defaultMultipartSettings != null) {

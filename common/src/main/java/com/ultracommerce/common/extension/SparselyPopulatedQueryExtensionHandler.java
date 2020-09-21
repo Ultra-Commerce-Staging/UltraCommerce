@@ -1,21 +1,21 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.extension;
+package com.ultracommerce.common.extension;
 
 import java.util.List;
 
@@ -35,12 +35,12 @@ import javax.persistence.criteria.Root;
  * with that site's overrides only.
  * </p>
  * This functionality is achieved by running several versions of a query based on the desired
- * {@link org.broadleafcommerce.common.extension.ResultType}. Requesting results for a ResultType of STANDARD drives results filtered
+ * {@link com.ultracommerce.common.extension.ResultType}. Requesting results for a ResultType of STANDARD drives results filtered
  * specifically to a standard site, which is multitenant module concept. A ResultType of TEMPLATE drives results specifically
  * for template site catalog or profile (also a multitenant concept). In the absence of the multitenant module, ExtensionManager
  * instance of this type should have no effect.
  *
- * @see org.broadleafcommerce.common.extension.ResultType
+ * @see com.ultracommerce.common.extension.ResultType
  * @author Jeff Fischer
  */
 public interface SparselyPopulatedQueryExtensionHandler extends ExtensionHandler {
@@ -85,7 +85,7 @@ public interface SparselyPopulatedQueryExtensionHandler extends ExtensionHandler
     ExtensionResultStatusType refineQuery(Class<?> type, ResultType resultType, TypedQuery query);
 
     /**
-     * Perform any setup operations. This is usually done before executing the query and can serve to prepare the BroadleafRequestContext (if applicable).
+     * Perform any setup operations. This is usually done before executing the query and can serve to prepare the UltraRequestContext (if applicable).
      *
      * @param type the class type for the query
      * @param resultType pass a ResultType of IGNORE to explicitly ignore setup, even if the multitenant module is loaded
@@ -94,7 +94,7 @@ public interface SparselyPopulatedQueryExtensionHandler extends ExtensionHandler
     ExtensionResultStatusType setup(Class<?> type, ResultType resultType);
 
     /**
-     * Perform any breakdown operations. This is usually done after executing the query and can serve to reset the BroadleafRequestContext (if applicable)
+     * Perform any breakdown operations. This is usually done after executing the query and can serve to reset the UltraRequestContext (if applicable)
      *
      * @param type the class type for the query
      * @param resultType pass a ResultType of IGNORE to explicitly ignore breakdown, even if the multitenant module is loaded

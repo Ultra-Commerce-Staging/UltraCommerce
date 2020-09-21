@@ -1,43 +1,43 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.openadmin.server.security.domain;
+package com.ultracommerce.openadmin.server.security.domain;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.admin.domain.AdminMainEntity;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransform;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformMember;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformTypes;
-import org.broadleafcommerce.common.presentation.AdminPresentation;
-import org.broadleafcommerce.common.presentation.AdminPresentationCollection;
-import org.broadleafcommerce.common.presentation.AdminPresentationMap;
-import org.broadleafcommerce.common.presentation.AdminPresentationOperationTypes;
-import org.broadleafcommerce.common.presentation.ConfigurationItem;
-import org.broadleafcommerce.common.presentation.RequiredOverride;
-import org.broadleafcommerce.common.presentation.ValidationConfiguration;
-import org.broadleafcommerce.common.presentation.client.AddMethodType;
-import org.broadleafcommerce.common.presentation.client.OperationType;
-import org.broadleafcommerce.common.presentation.client.SupportedFieldType;
-import org.broadleafcommerce.common.presentation.client.VisibilityEnum;
-import org.broadleafcommerce.common.sandbox.domain.SandBox;
-import org.broadleafcommerce.common.sandbox.domain.SandBoxImpl;
-import org.broadleafcommerce.openadmin.server.service.type.ContextType;
+import com.ultracommerce.common.admin.domain.AdminMainEntity;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransform;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransformMember;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransformTypes;
+import com.ultracommerce.common.presentation.AdminPresentation;
+import com.ultracommerce.common.presentation.AdminPresentationCollection;
+import com.ultracommerce.common.presentation.AdminPresentationMap;
+import com.ultracommerce.common.presentation.AdminPresentationOperationTypes;
+import com.ultracommerce.common.presentation.ConfigurationItem;
+import com.ultracommerce.common.presentation.RequiredOverride;
+import com.ultracommerce.common.presentation.ValidationConfiguration;
+import com.ultracommerce.common.presentation.client.AddMethodType;
+import com.ultracommerce.common.presentation.client.OperationType;
+import com.ultracommerce.common.presentation.client.SupportedFieldType;
+import com.ultracommerce.common.presentation.client.VisibilityEnum;
+import com.ultracommerce.common.sandbox.domain.SandBox;
+import com.ultracommerce.common.sandbox.domain.SandBoxImpl;
+import com.ultracommerce.openadmin.server.service.type.ContextType;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -75,8 +75,8 @@ import javax.persistence.Transient;
  */
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "BLC_ADMIN_USER")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region="blAdminSecurityVolatile")
+@Table(name = "UC_ADMIN_USER")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region="ucAdminSecurityVolatile")
 @DirectCopyTransform({
         @DirectCopyTransformMember(templateTokens = DirectCopyTransformTypes.MULTITENANT_ADMINUSER),
         @DirectCopyTransformMember(templateTokens = DirectCopyTransformTypes.AUDITABLE_ONLY),
@@ -93,10 +93,10 @@ public class AdminUserImpl implements AdminUser, AdminMainEntity, AdminUserAdmin
     @GeneratedValue(generator = "AdminUserId")
     @GenericGenerator(
         name="AdminUserId",
-        strategy="org.broadleafcommerce.common.persistence.IdOverrideTableGenerator",
+        strategy="com.ultracommerce.common.persistence.IdOverrideTableGenerator",
         parameters = {
             @Parameter(name="segment_value", value="AdminUserImpl"),
-            @Parameter(name="entity_name", value="org.broadleafcommerce.openadmin.server.security.domain.AdminUserImpl")
+            @Parameter(name="entity_name", value="com.ultracommerce.openadmin.server.security.domain.AdminUserImpl")
         }
     )
     @Column(name = "ADMIN_USER_ID")
@@ -122,7 +122,7 @@ public class AdminUserImpl implements AdminUser, AdminMainEntity, AdminUserAdmin
             group = GroupName.User, order = FieldOrder.PASSWORD,
             fieldType = SupportedFieldType.PASSWORD,
             validationConfigurations = { @ValidationConfiguration(
-                    validationImplementation = "org.broadleafcommerce.openadmin.server.service.persistence.validation.MatchesFieldValidator",
+                    validationImplementation = "com.ultracommerce.openadmin.server.service.persistence.validation.MatchesFieldValidator",
                     configurationItems = {
                             @ConfigurationItem(itemName = ConfigurationItem.ERROR_MESSAGE, itemValue = "passwordNotMatchError"),
                             @ConfigurationItem(itemName = "otherField", itemValue = "passwordConfirm")
@@ -151,8 +151,8 @@ public class AdminUserImpl implements AdminUser, AdminMainEntity, AdminUserAdmin
 
     /** All roles that this user has */
     @ManyToMany(fetch = FetchType.LAZY, targetEntity = AdminRoleImpl.class)
-    @JoinTable(name = "BLC_ADMIN_USER_ROLE_XREF", joinColumns = @JoinColumn(name = "ADMIN_USER_ID", referencedColumnName = "ADMIN_USER_ID"), inverseJoinColumns = @JoinColumn(name = "ADMIN_ROLE_ID", referencedColumnName = "ADMIN_ROLE_ID"))
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region="blAdminSecurityVolatile")
+    @JoinTable(name = "UC_ADMIN_USER_ROLE_XREF", joinColumns = @JoinColumn(name = "ADMIN_USER_ID", referencedColumnName = "ADMIN_USER_ID"), inverseJoinColumns = @JoinColumn(name = "ADMIN_ROLE_ID", referencedColumnName = "ADMIN_ROLE_ID"))
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region="ucAdminSecurityVolatile")
     @BatchSize(size = 50)
     @AdminPresentationCollection(friendlyName = "roleListTitle",
         group = GroupName.RolesAndPermissions, order = FieldOrder.ROLES,
@@ -162,8 +162,8 @@ public class AdminUserImpl implements AdminUser, AdminMainEntity, AdminUserAdmin
     protected Set<AdminRole> allRoles = new HashSet<AdminRole>();
 
     @ManyToMany(fetch = FetchType.LAZY, targetEntity = AdminPermissionImpl.class)
-    @JoinTable(name = "BLC_ADMIN_USER_PERMISSION_XREF", joinColumns = @JoinColumn(name = "ADMIN_USER_ID", referencedColumnName = "ADMIN_USER_ID"), inverseJoinColumns = @JoinColumn(name = "ADMIN_PERMISSION_ID", referencedColumnName = "ADMIN_PERMISSION_ID"))
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region="blAdminSecurityVolatile")
+    @JoinTable(name = "UC_ADMIN_USER_PERMISSION_XREF", joinColumns = @JoinColumn(name = "ADMIN_USER_ID", referencedColumnName = "ADMIN_USER_ID"), inverseJoinColumns = @JoinColumn(name = "ADMIN_PERMISSION_ID", referencedColumnName = "ADMIN_PERMISSION_ID"))
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region="ucAdminSecurityVolatile")
     @BatchSize(size = 50)
     @AdminPresentationCollection(friendlyName = "permissionListTitle",
         group = GroupName.RolesAndPermissions, order = FieldOrder.PERMISSIONS,
@@ -182,12 +182,12 @@ public class AdminUserImpl implements AdminUser, AdminMainEntity, AdminUserAdmin
     }
 
     @ManyToOne(targetEntity = SandBoxImpl.class, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JoinTable(name = "BLC_ADMIN_USER_SANDBOX", joinColumns = @JoinColumn(name = "ADMIN_USER_ID", referencedColumnName = "ADMIN_USER_ID"), inverseJoinColumns = @JoinColumn(name = "SANDBOX_ID", referencedColumnName = "SANDBOX_ID"))
+    @JoinTable(name = "UC_ADMIN_USER_SANDBOX", joinColumns = @JoinColumn(name = "ADMIN_USER_ID", referencedColumnName = "ADMIN_USER_ID"), inverseJoinColumns = @JoinColumn(name = "SANDBOX_ID", referencedColumnName = "SANDBOX_ID"))
     @AdminPresentation(excluded = true)
     protected SandBox overrideSandBox;
 
     @OneToMany(mappedBy = "adminUser", targetEntity = AdminUserAttributeImpl.class, cascade = { CascadeType.ALL }, orphanRemoval = true)
-    @Cache(usage=CacheConcurrencyStrategy.READ_WRITE, region="blAdminSecurityVolatile")
+    @Cache(usage=CacheConcurrencyStrategy.READ_WRITE, region="ucAdminSecurityVolatile")
     @MapKey(name = "name")
     @BatchSize(size = 50)
     @AdminPresentationMap(friendlyName = "AdminUserImpl_additional_fields",

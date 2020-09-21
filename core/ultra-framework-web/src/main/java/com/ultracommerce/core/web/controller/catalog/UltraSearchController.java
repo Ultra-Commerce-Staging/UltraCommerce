@@ -1,35 +1,35 @@
 /*
  * #%L
- * BroadleafCommerce Framework Web
+ * UltraCommerce Framework Web
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.web.controller.catalog;
+package com.ultracommerce.core.web.controller.catalog;
 
 import org.apache.commons.lang.StringUtils;
-import org.broadleafcommerce.common.exception.ServiceException;
-import org.broadleafcommerce.common.security.service.ExploitProtectionService;
-import org.broadleafcommerce.common.util.UrlUtil;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
-import org.broadleafcommerce.core.catalog.domain.Product;
-import org.broadleafcommerce.core.search.domain.SearchCriteria;
-import org.broadleafcommerce.core.search.domain.SearchResult;
-import org.broadleafcommerce.core.search.redirect.domain.SearchRedirect;
-import org.broadleafcommerce.core.search.redirect.service.SearchRedirectService;
-import org.broadleafcommerce.core.search.service.SearchService;
-import org.broadleafcommerce.core.web.service.SearchFacetDTOService;
-import org.broadleafcommerce.core.web.util.ProcessorUtils;
+import com.ultracommerce.common.exception.ServiceException;
+import com.ultracommerce.common.security.service.ExploitProtectionService;
+import com.ultracommerce.common.util.UrlUtil;
+import com.ultracommerce.common.web.UltraRequestContext;
+import com.ultracommerce.core.catalog.domain.Product;
+import com.ultracommerce.core.search.domain.SearchCriteria;
+import com.ultracommerce.core.search.domain.SearchResult;
+import com.ultracommerce.core.search.redirect.domain.SearchRedirect;
+import com.ultracommerce.core.search.redirect.service.SearchRedirectService;
+import com.ultracommerce.core.search.service.SearchService;
+import com.ultracommerce.core.web.service.SearchFacetDTOService;
+import com.ultracommerce.core.web.util.ProcessorUtils;
 import org.springframework.ui.Model;
 
 import java.io.IOException;
@@ -52,17 +52,17 @@ import javax.servlet.http.HttpServletResponse;
  * 
  * @author Andre Azzolini (apazzolini)
  */
-public class BroadleafSearchController extends AbstractCatalogController {
+public class UltraSearchController extends AbstractCatalogController {
 
-    @Resource(name = "blSearchService")
+    @Resource(name = "ucSearchService")
     protected SearchService searchService;
 
-    @Resource(name = "blExploitProtectionService")
+    @Resource(name = "ucExploitProtectionService")
     protected ExploitProtectionService exploitProtectionService;
     
-    @Resource(name = "blSearchFacetDTOService")
+    @Resource(name = "ucSearchFacetDTOService")
     protected SearchFacetDTOService facetService;
-    @Resource(name = "blSearchRedirectService")
+    @Resource(name = "ucSearchRedirectService")
     protected SearchRedirectService searchRedirectService;
     protected static String searchView = "catalog/search";
     
@@ -71,8 +71,8 @@ public class BroadleafSearchController extends AbstractCatalogController {
     protected static String PRODUCT_SEARCH_RESULT_ATTRIBUTE_NAME = "result";  
     protected static String ACTIVE_FACETS_ATTRIBUTE_NAME = "activeFacets";  
     protected static String ORIGINAL_QUERY_ATTRIBUTE_NAME = "originalQuery";  
-    protected static String ALL_PRODUCTS_ATTRIBUTE_NAME = "blcAllDisplayedProducts";
-    protected static String ALL_SKUS_ATTRIBUTE_NAME = "blcAllDisplayedSkus";
+    protected static String ALL_PRODUCTS_ATTRIBUTE_NAME = "ucAllDisplayedProducts";
+    protected static String ALL_SKUS_ATTRIBUTE_NAME = "ucAllDisplayedSkus";
 
     public String search(Model model, HttpServletRequest request, HttpServletResponse response,String query) throws ServletException, IOException, ServiceException {
 
@@ -147,9 +147,9 @@ public class BroadleafSearchController extends AbstractCatalogController {
 
     protected void updateQueryRequestAttribute(String query) {
         if (StringUtils.isNotEmpty(query)) {
-            BroadleafRequestContext brc = BroadleafRequestContext.getBroadleafRequestContext();
+            UltraRequestContext brc = UltraRequestContext.getUltraRequestContext();
             if (brc != null && brc.getAdditionalProperties() != null) {
-                brc.getAdditionalProperties().put("blcSearchKeyword", query);
+                brc.getAdditionalProperties().put("ucSearchKeyword", query);
             }
         }
     }

@@ -1,24 +1,24 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.workflow;
+package com.ultracommerce.core.workflow;
 
-import org.broadleafcommerce.core.order.domain.Order;
-import org.broadleafcommerce.core.workflow.state.RollbackHandler;
+import com.ultracommerce.core.order.domain.Order;
+import com.ultracommerce.core.workflow.state.RollbackHandler;
 import org.springframework.beans.factory.BeanNameAware;
 import org.springframework.core.Ordered;
 
@@ -26,10 +26,10 @@ import java.util.Map;
 
 /**
  * <p>
- * Interface to be used for workflows in Broadleaf. Usually implementations will subclass {@link BaseActivity}.
+ * Interface to be used for workflows in Ultra. Usually implementations will subclass {@link BaseActivity}.
  * </p>
  * 
- * Important note: if you are writing a 3rd-party integration module or adding a module outside of the Broadleaf core, your
+ * Important note: if you are writing a 3rd-party integration module or adding a module outside of the Ultra core, your
  * activity should implement the {@link ModuleActivity} interface as well. This ensures that there is proper logging
  * for users that are using your module so that they know exactly what their final workflow configuration looks like.
  *

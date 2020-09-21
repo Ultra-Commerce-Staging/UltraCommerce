@@ -1,21 +1,21 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.email.domain;
+package com.ultracommerce.common.email.domain;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Index;
@@ -36,7 +36,7 @@ import javax.persistence.Table;
  *
  */
 @Entity
-@Table(name = "BLC_EMAIL_TRACKING_CLICKS")
+@Table(name = "UC_EMAIL_TRACKING_CLICKS")
 public class EmailTrackingClicksImpl implements EmailTrackingClicks {
 
     /** The Constant serialVersionUID. */
@@ -46,10 +46,10 @@ public class EmailTrackingClicksImpl implements EmailTrackingClicks {
     @GeneratedValue(generator = "ClickId")
     @GenericGenerator(
         name="ClickId",
-        strategy="org.broadleafcommerce.common.persistence.IdOverrideTableGenerator",
+        strategy="com.ultracommerce.common.persistence.IdOverrideTableGenerator",
         parameters = {
             @Parameter(name="segment_value", value="EmailTrackingClicksImpl"),
-            @Parameter(name="entity_name", value="org.broadleafcommerce.common.email.domain.EmailTrackingClicksImpl")
+            @Parameter(name="entity_name", value="com.ultracommerce.common.email.domain.EmailTrackingClicksImpl")
         }
     )
     @Column(name = "CLICK_ID")
@@ -74,7 +74,7 @@ public class EmailTrackingClicksImpl implements EmailTrackingClicks {
     protected String queryString;
 
     /* (non-Javadoc)
-     * @see org.broadleafcommerce.common.email.domain.EmailTrackingClicks#getId()
+     * @see com.ultracommerce.common.email.domain.EmailTrackingClicks#getId()
      */
     @Override
     public Long getId() {
@@ -82,7 +82,7 @@ public class EmailTrackingClicksImpl implements EmailTrackingClicks {
     }
 
     /* (non-Javadoc)
-     * @see org.broadleafcommerce.common.email.domain.EmailTrackingClicks#setId(java.lang.Long)
+     * @see com.ultracommerce.common.email.domain.EmailTrackingClicks#setId(java.lang.Long)
      */
     @Override
     public void setId(Long id) {
@@ -90,7 +90,7 @@ public class EmailTrackingClicksImpl implements EmailTrackingClicks {
     }
 
     /* (non-Javadoc)
-     * @see org.broadleafcommerce.common.email.domain.EmailTrackingClicks#getDateClicked()
+     * @see com.ultracommerce.common.email.domain.EmailTrackingClicks#getDateClicked()
      */
     @Override
     public Date getDateClicked() {
@@ -98,7 +98,7 @@ public class EmailTrackingClicksImpl implements EmailTrackingClicks {
     }
 
     /* (non-Javadoc)
-     * @see org.broadleafcommerce.common.email.domain.EmailTrackingClicks#setDateClicked(java.util.Date)
+     * @see com.ultracommerce.common.email.domain.EmailTrackingClicks#setDateClicked(java.util.Date)
      */
     @Override
     public void setDateClicked(Date dateClicked) {
@@ -106,7 +106,7 @@ public class EmailTrackingClicksImpl implements EmailTrackingClicks {
     }
 
     /* (non-Javadoc)
-     * @see org.broadleafcommerce.common.email.domain.EmailTrackingClicks#getDestinationUri()
+     * @see com.ultracommerce.common.email.domain.EmailTrackingClicks#getDestinationUri()
      */
     @Override
     public String getDestinationUri() {
@@ -114,7 +114,7 @@ public class EmailTrackingClicksImpl implements EmailTrackingClicks {
     }
 
     /* (non-Javadoc)
-     * @see org.broadleafcommerce.common.email.domain.EmailTrackingClicks#setDestinationUri(java.lang.String)
+     * @see com.ultracommerce.common.email.domain.EmailTrackingClicks#setDestinationUri(java.lang.String)
      */
     @Override
     public void setDestinationUri(String destinationUri) {
@@ -122,7 +122,7 @@ public class EmailTrackingClicksImpl implements EmailTrackingClicks {
     }
 
     /* (non-Javadoc)
-     * @see org.broadleafcommerce.common.email.domain.EmailTrackingClicks#getQueryString()
+     * @see com.ultracommerce.common.email.domain.EmailTrackingClicks#getQueryString()
      */
     @Override
     public String getQueryString() {
@@ -130,7 +130,7 @@ public class EmailTrackingClicksImpl implements EmailTrackingClicks {
     }
 
     /* (non-Javadoc)
-     * @see org.broadleafcommerce.common.email.domain.EmailTrackingClicks#setQueryString(java.lang.String)
+     * @see com.ultracommerce.common.email.domain.EmailTrackingClicks#setQueryString(java.lang.String)
      */
     @Override
     public void setQueryString(String queryString) {
@@ -138,7 +138,7 @@ public class EmailTrackingClicksImpl implements EmailTrackingClicks {
     }
 
     /* (non-Javadoc)
-     * @see org.broadleafcommerce.common.email.domain.EmailTrackingClicks#getEmailTracking()
+     * @see com.ultracommerce.common.email.domain.EmailTrackingClicks#getEmailTracking()
      */
     @Override
     public EmailTracking getEmailTracking() {
@@ -146,7 +146,7 @@ public class EmailTrackingClicksImpl implements EmailTrackingClicks {
     }
 
     /* (non-Javadoc)
-     * @see org.broadleafcommerce.common.email.domain.EmailTrackingClicks#setEmailTracking(org.broadleafcommerce.common.email.domain.EmailTrackingImpl)
+     * @see com.ultracommerce.common.email.domain.EmailTrackingClicks#setEmailTracking(com.ultracommerce.common.email.domain.EmailTrackingImpl)
      */
     @Override
     public void setEmailTracking(EmailTracking emailTracking) {

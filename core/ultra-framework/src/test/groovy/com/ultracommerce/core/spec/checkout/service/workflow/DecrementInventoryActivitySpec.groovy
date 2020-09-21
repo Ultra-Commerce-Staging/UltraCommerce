@@ -1,37 +1,37 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.spec.checkout.service.workflow
+package com.ultracommerce.core.spec.checkout.service.workflow
 
-import org.broadleafcommerce.common.money.Money
-import org.broadleafcommerce.core.catalog.domain.Sku
-import org.broadleafcommerce.core.catalog.domain.SkuImpl
-import org.broadleafcommerce.core.checkout.service.workflow.DecrementInventoryActivity
-import org.broadleafcommerce.core.inventory.service.ContextualInventoryService
-import org.broadleafcommerce.core.inventory.service.type.InventoryType
-import org.broadleafcommerce.core.order.domain.BundleOrderItem
-import org.broadleafcommerce.core.order.domain.BundleOrderItemImpl
-import org.broadleafcommerce.core.order.domain.DiscreteOrderItem
-import org.broadleafcommerce.core.order.domain.DiscreteOrderItemImpl
-import org.broadleafcommerce.core.order.domain.OrderItem
-import org.broadleafcommerce.core.workflow.state.ActivityStateManagerImpl
-import org.broadleafcommerce.core.workflow.state.NullCheckoutRollbackHandler
-import org.broadleafcommerce.core.workflow.state.RollbackHandler
-import org.broadleafcommerce.core.workflow.state.RollbackStateLocal
+import com.ultracommerce.common.money.Money
+import com.ultracommerce.core.catalog.domain.Sku
+import com.ultracommerce.core.catalog.domain.SkuImpl
+import com.ultracommerce.core.checkout.service.workflow.DecrementInventoryActivity
+import com.ultracommerce.core.inventory.service.ContextualInventoryService
+import com.ultracommerce.core.inventory.service.type.InventoryType
+import com.ultracommerce.core.order.domain.BundleOrderItem
+import com.ultracommerce.core.order.domain.BundleOrderItemImpl
+import com.ultracommerce.core.order.domain.DiscreteOrderItem
+import com.ultracommerce.core.order.domain.DiscreteOrderItemImpl
+import com.ultracommerce.core.order.domain.OrderItem
+import com.ultracommerce.core.workflow.state.ActivityStateManagerImpl
+import com.ultracommerce.core.workflow.state.NullCheckoutRollbackHandler
+import com.ultracommerce.core.workflow.state.RollbackHandler
+import com.ultracommerce.core.workflow.state.RollbackStateLocal
 
 class DecrementInventoryActivitySpec extends BaseCheckoutActivitySpec{
 

@@ -1,25 +1,25 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2019 Broadleaf Commerce
+ * Copyright (C) 2009 - 2019 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.util;
+package com.ultracommerce.common.util;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
+import com.ultracommerce.common.web.UltraRequestContext;
 import org.hibernate.LazyInitializationException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.task.TaskExecutor;
@@ -44,7 +44,7 @@ import javax.persistence.EntityManagerFactory;
  */
 public abstract class EntityManagerAwareRunnable implements Runnable {
 	
-	public static final String DEFAULT_ENTITY_MANAGER_NAME = "blPU";
+	public static final String DEFAULT_ENTITY_MANAGER_NAME = "ucPU";
 	private static final Log LOG = LogFactory.getLog(EntityManagerAwareRunnable.class);
 	
 	private final Semaphore semaphore;
@@ -71,16 +71,16 @@ public abstract class EntityManagerAwareRunnable implements Runnable {
 	}
 	
 	/**
-	 * This method attempts to create / bind an {@link EntityManager} prior to execution.  This will also create and bind a {@link BroadleafRequestContext}, which should 
-	 * not already be bound to the background thread.  If the run method is executed in a foreground thread, any existing {@link BroadleafRequestContext} bound to the thread 
+	 * This method attempts to create / bind an {@link EntityManager} prior to execution.  This will also create and bind a {@link UltraRequestContext}, which should 
+	 * not already be bound to the background thread.  If the run method is executed in a foreground thread, any existing {@link UltraRequestContext} bound to the thread 
 	 * will be returned to its previous state.
 	 */
 	@Override
 	public final void run() {
 	    //This will typically be null, especially if executing in a background thread.
-	    final BroadleafRequestContext originalCtx = BroadleafRequestContext.getBroadleafRequestContext(false);
+	    final UltraRequestContext originalCtx = UltraRequestContext.getUltraRequestContext(false);
 	    try {
-	        BroadleafRequestContext.setBroadleafRequestContext(new BroadleafRequestContext());
+	        UltraRequestContext.setUltraRequestContext(new UltraRequestContext());
     		final EntityManagerFactory emf = getEntityManagerFactory();
     		boolean participate = false;
     		
@@ -114,7 +114,7 @@ public abstract class EntityManagerAwareRunnable implements Runnable {
     		}
 	    } finally {
 	        em = null;
-	        BroadleafRequestContext.setBroadleafRequestContext(originalCtx);
+	        UltraRequestContext.setUltraRequestContext(originalCtx);
 	        if (semaphore != null) {
                 semaphore.release();
             }
@@ -132,7 +132,7 @@ public abstract class EntityManagerAwareRunnable implements Runnable {
 	/**
 	 * The name of the persistence unit.
 	 * 
-	 * Defaults to "blPU", the main persistence unit in Broadleaf.
+	 * Defaults to "ucPU", the main persistence unit in Ultra.
 	 * 
 	 * @return
 	 */

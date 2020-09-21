@@ -1,35 +1,35 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.pricing.service.module;
+package com.ultracommerce.core.pricing.service.module;
 
 import org.apache.commons.lang.NotImplementedException;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.currency.util.BroadleafCurrencyUtils;
-import org.broadleafcommerce.core.order.domain.FulfillmentGroup;
-import org.broadleafcommerce.core.order.domain.FulfillmentGroupItem;
-import org.broadleafcommerce.core.order.fulfillment.domain.BandedPriceFulfillmentOption;
-import org.broadleafcommerce.core.pricing.domain.ShippingRate;
-import org.broadleafcommerce.core.pricing.service.ShippingRateService;
-import org.broadleafcommerce.core.pricing.service.fulfillment.provider.BandedFulfillmentPricingProvider;
-import org.broadleafcommerce.core.pricing.service.workflow.type.ShippingServiceType;
-import org.broadleafcommerce.profile.core.domain.Address;
+import com.ultracommerce.common.currency.util.UltraCurrencyUtils;
+import com.ultracommerce.core.order.domain.FulfillmentGroup;
+import com.ultracommerce.core.order.domain.FulfillmentGroupItem;
+import com.ultracommerce.core.order.fulfillment.domain.BandedPriceFulfillmentOption;
+import com.ultracommerce.core.pricing.domain.ShippingRate;
+import com.ultracommerce.core.pricing.service.ShippingRateService;
+import com.ultracommerce.core.pricing.service.fulfillment.provider.BandedFulfillmentPricingProvider;
+import com.ultracommerce.core.pricing.service.workflow.type.ShippingServiceType;
+import com.ultracommerce.profile.core.domain.Address;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
@@ -49,7 +49,7 @@ public class BandedShippingModule implements ShippingModule {
     protected String name = MODULENAME;
     protected Boolean isDefaultModule = false;
 
-    @Resource(name = "blShippingRateService")
+    @Resource(name = "ucShippingRateService")
     private ShippingRateService shippingRateService;
 
     private Map<String, String> feeTypeMapping;
@@ -69,9 +69,9 @@ public class BandedShippingModule implements ShippingModule {
         }
         if (fulfillmentGroup.getFulfillmentGroupItems().size() == 0) {
             LOG.warn("fulfillment group (" + fulfillmentGroup.getId() + ") does not contain any fulfillment group items. Unable to price banded shipping");
-            fulfillmentGroup.setShippingPrice(BroadleafCurrencyUtils.getMoney(BigDecimal.ZERO, fulfillmentGroup.getOrder().getCurrency()));
-            fulfillmentGroup.setSaleShippingPrice(BroadleafCurrencyUtils.getMoney(BigDecimal.ZERO, fulfillmentGroup.getOrder().getCurrency()));
-            fulfillmentGroup.setRetailShippingPrice(BroadleafCurrencyUtils.getMoney(BigDecimal.ZERO, fulfillmentGroup.getOrder().getCurrency()));
+            fulfillmentGroup.setShippingPrice(UltraCurrencyUtils.getMoney(BigDecimal.ZERO, fulfillmentGroup.getOrder().getCurrency()));
+            fulfillmentGroup.setSaleShippingPrice(UltraCurrencyUtils.getMoney(BigDecimal.ZERO, fulfillmentGroup.getOrder().getCurrency()));
+            fulfillmentGroup.setRetailShippingPrice(UltraCurrencyUtils.getMoney(BigDecimal.ZERO, fulfillmentGroup.getOrder().getCurrency()));
             return;
         }
         Address address = fulfillmentGroup.getAddress();
@@ -105,7 +105,7 @@ public class BandedShippingModule implements ShippingModule {
         } else {
             shippingPrice = sr.getBandResultQuantity();
         }
-        fulfillmentGroup.setShippingPrice(BroadleafCurrencyUtils.getMoney(shippingPrice, fulfillmentGroup.getOrder().getCurrency()));
+        fulfillmentGroup.setShippingPrice(UltraCurrencyUtils.getMoney(shippingPrice, fulfillmentGroup.getOrder().getCurrency()));
         fulfillmentGroup.setSaleShippingPrice(fulfillmentGroup.getShippingPrice());
         fulfillmentGroup.setRetailShippingPrice(fulfillmentGroup.getSaleShippingPrice());
     }

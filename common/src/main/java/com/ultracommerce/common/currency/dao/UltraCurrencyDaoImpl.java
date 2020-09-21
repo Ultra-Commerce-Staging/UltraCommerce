@@ -1,24 +1,24 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.currency.dao;
+package com.ultracommerce.common.currency.dao;
 
-import org.broadleafcommerce.common.currency.domain.BroadleafCurrency;
-import org.broadleafcommerce.common.persistence.EntityConfiguration;
+import com.ultracommerce.common.currency.domain.UltraCurrency;
+import com.ultracommerce.common.persistence.EntityConfiguration;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -33,20 +33,20 @@ import javax.persistence.Query;
  * Date: 9/6/12
  */
 
-@Repository("blCurrencyDao")
-public class BroadleafCurrencyDaoImpl implements BroadleafCurrencyDao {
+@Repository("ucCurrencyDao")
+public class UltraCurrencyDaoImpl implements UltraCurrencyDao {
 
-    @PersistenceContext(unitName = "blPU")
+    @PersistenceContext(unitName = "ucPU")
     protected EntityManager em;
 
-    @Resource(name="blEntityConfiguration")
+    @Resource(name="ucEntityConfiguration")
     protected EntityConfiguration entityConfiguration;
 
     @Override
-    public BroadleafCurrency findDefaultBroadleafCurrency() {
-        Query query = em.createNamedQuery("BC_READ_DEFAULT_CURRENCY");
+    public UltraCurrency findDefaultUltraCurrency() {
+        Query query = em.createNamedQuery("UC_READ_DEFAULT_CURRENCY");
         query.setHint(org.hibernate.jpa.QueryHints.HINT_CACHEABLE, true);
-        List<BroadleafCurrency> currencyList = query.getResultList();
+        List<UltraCurrency> currencyList = query.getResultList();
         if (currencyList.size() >= 1) {
             return currencyList.get(0);
         }
@@ -57,11 +57,11 @@ public class BroadleafCurrencyDaoImpl implements BroadleafCurrencyDao {
      * @return The locale for the passed in code
      */
     @Override
-    public BroadleafCurrency findCurrencyByCode(String currencyCode) {
-        Query query = em.createNamedQuery("BC_READ_CURRENCY_BY_CODE");
+    public UltraCurrency findCurrencyByCode(String currencyCode) {
+        Query query = em.createNamedQuery("UC_READ_CURRENCY_BY_CODE");
         query.setParameter("currencyCode", currencyCode);
         query.setHint(org.hibernate.jpa.QueryHints.HINT_CACHEABLE, true);
-        List<BroadleafCurrency> currencyList = query.getResultList();
+        List<UltraCurrency> currencyList = query.getResultList();
         if (currencyList.size() >= 1) {
             return currencyList.get(0);
         }
@@ -69,19 +69,19 @@ public class BroadleafCurrencyDaoImpl implements BroadleafCurrencyDao {
     }
 
     @Override
-    public List<BroadleafCurrency> getAllCurrencies() {
-        Query query = em.createNamedQuery("BC_READ_ALL_CURRENCIES");
+    public List<UltraCurrency> getAllCurrencies() {
+        Query query = em.createNamedQuery("UC_READ_ALL_CURRENCIES");
         query.setHint(org.hibernate.jpa.QueryHints.HINT_CACHEABLE, true);
         return query.getResultList();
     }
 
     @Override
-    public BroadleafCurrency save(BroadleafCurrency currency) {
+    public UltraCurrency save(UltraCurrency currency) {
         return em.merge(currency);
     }
     
     @Override
-    public BroadleafCurrency create() {
-        return entityConfiguration.createEntityInstance(BroadleafCurrency.class.getName(), BroadleafCurrency.class);
+    public UltraCurrency create() {
+        return entityConfiguration.createEntityInstance(UltraCurrency.class.getName(), UltraCurrency.class);
     }    
 }

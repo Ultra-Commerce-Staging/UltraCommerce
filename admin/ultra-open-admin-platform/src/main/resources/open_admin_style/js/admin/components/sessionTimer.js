@@ -1,25 +1,25 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
 /**
  * @author Nick Crum
  */
 
-(function($, BLCAdmin) {
+(function($, UCAdmin) {
 
     var pingInterval = 1000;
     var sessionTimeoutInterval = Number.MAX_VALUE; // the actual value for sessionTimeoutInterval get set by way of an ajax request
@@ -32,7 +32,7 @@
     /*
      * Here we define the path for the `sessionResetTime` cookie to be `/` if this is the root servlet context
      */
-    var resetTimeCookiePath = (BLC.servletContext) ? BLC.servletContext : '/';
+    var resetTimeCookiePath = (UC.servletContext) ? UC.servletContext : '/';
     
     /*
      * Here we define that key presses to indicate activity by incrementing the activityCount variable.
@@ -42,7 +42,7 @@
     });
 
 
-    BLCAdmin.sessionTimer = {
+    UCAdmin.sessionTimer = {
 
         /*
          * This function is used to reset the session timer on the server and update the page's session time.
@@ -53,11 +53,11 @@
              * amount of time from causing the session to expire prematurely.
              */
             
-            BLC.get({
-                url : BLC.servletContext + "/sessionTimerReset",
+            UC.get({
+                url : UC.servletContext + "/sessionTimerReset",
                 trackAnalytics : false,
                 error: function(err) {
-                    BLCAdmin.sessionTimer.invalidateSession();
+                    UCAdmin.sessionTimer.invalidateSession();
                 }
             }, function(data) {
                 /*
@@ -68,7 +68,7 @@
                var resetTime = (new Date()).getTime();
                 $.cookie("sessionResetTime", resetTime - (resetTime % pingInterval) , { path : resetTimeCookiePath });
                 
-                BLCAdmin.sessionTimer.updateTimeLeft();
+                UCAdmin.sessionTimer.updateTimeLeft();
             });
         },
 
@@ -105,7 +105,7 @@
         },
 
         updateTimeLeft : function() {
-            var exactTimeLeft = (BLCAdmin.sessionTimer.getSessionTimeoutInterval() - BLCAdmin.sessionTimer.timeSinceLastReset());
+            var exactTimeLeft = (UCAdmin.sessionTimer.getSessionTimeoutInterval() - UCAdmin.sessionTimer.timeSinceLastReset());
             exactTimeLeft = exactTimeLeft - (exactTimeLeft % pingInterval);
 
             sessionTimeLeft = exactTimeLeft;
@@ -116,39 +116,39 @@
             $.removeCookie('sessionResetTime', { path: resetTimeCookiePath });
 
             // Disable the entity form status check
-            if (BLCAdmin.entityForm.status) {
-                BLCAdmin.entityForm.status.setDidConfirmLeave(true);
+            if (UCAdmin.entityForm.status) {
+                UCAdmin.entityForm.status.setDidConfirmLeave(true);
             }
 
-            BLC.get({
-                url : BLC.servletContext + "/adminLogout.htm",
+            UC.get({
+                url : UC.servletContext + "/adminLogout.htm",
                 error: function(err) {
-                    window.location.replace(BLC.servletContext + "/login?sessionTimeout=true");
+                    window.location.replace(UC.servletContext + "/login?sessionTimeout=true");
                 }
             }, function(data) {
                 /*
                  * After the logout occurs, we redirect to the login page with the sessionTimeout parameter being true.
                  * This yield a red banner on the login screen that indicates the session expired to the user.
                  */
-                window.location.replace(BLC.servletContext + "/login?sessionTimeout=true");
+                window.location.replace(UC.servletContext + "/login?sessionTimeout=true");
             });
             return false;
         },
         
         updateTimer : function() {
             
-            BLCAdmin.sessionTimer.updateTimeLeft();
+            UCAdmin.sessionTimer.updateTimeLeft();
             /*
              * If the time left is less than the expire message time, then we know to display the expire message.
              */
-            if (BLCAdmin.sessionTimer.getTimeLeft() < BLCAdmin.sessionTimer.getExpireMessageTime()) {
+            if (UCAdmin.sessionTimer.getTimeLeft() < UCAdmin.sessionTimer.getExpireMessageTime()) {
 
                 /*
                  * If the session is expired: invalidate the session, and end the timeout loop by returning false.
                  */
-                if (BLCAdmin.sessionTimer.isExpired()) {
+                if (UCAdmin.sessionTimer.isExpired()) {
                     $("#lightbox").hide();
-                    BLCAdmin.sessionTimer.invalidateSession();
+                    UCAdmin.sessionTimer.invalidateSession();
                     return false;
                 }
 
@@ -156,9 +156,9 @@
                  * If the session is not expired: update the session expiring text with the current time left, and
                  * display the session expiration message lightbox.
                  */
-                $("#expire-text").html(BLCAdmin.messages.sessionCountdown
-                                        + BLCAdmin.sessionTimer.getTimeLeftSeconds()
-                                        + BLCAdmin.messages.sessionCountdownEnd);
+                $("#expire-text").html(UCAdmin.messages.sessionCountdown
+                                        + UCAdmin.sessionTimer.getTimeLeftSeconds()
+                                        + UCAdmin.messages.sessionCountdownEnd);
 
                 /*
                  * Here we make sure that the session expiring lightbox is displayed.
@@ -167,14 +167,14 @@
                 activityCount = 0;
 
                 return true;
-            } else if (BLCAdmin.sessionTimer.getTimeLeft() % BLCAdmin.sessionTimer.getActivityPingInterval() == 0) {
+            } else if (UCAdmin.sessionTimer.getTimeLeft() % UCAdmin.sessionTimer.getActivityPingInterval() == 0) {
                 
                 /*
                  * If activityCount is greater than 0, we know that at least one key has been pressed. This means there has
                  * been activity and we should reset the timer.
                  */
                 if (activityCount > 0) {
-                    BLCAdmin.sessionTimer.resetTimer();
+                    UCAdmin.sessionTimer.resetTimer();
                     activityCount = 0;
                     return true;
                 }
@@ -189,14 +189,14 @@
         }
 
     };
-})(jQuery, BLCAdmin);
+})(jQuery, UCAdmin);
 
 $(document).ready(function() {
     
     /*
      * We must reset the timer when the page is loaded so we can update the last reset time and session timeout interval.
      */
-    BLCAdmin.sessionTimer.resetTimer();
+    UCAdmin.sessionTimer.resetTimer();
 
     /*
      * This function provides the proper functionality for the "Stay Logged In" button on the expire message.
@@ -213,12 +213,12 @@ $(document).ready(function() {
         /*
          * We must reset the timer so we can stay logged in.
          */
-        BLCAdmin.sessionTimer.resetTimer();
+        UCAdmin.sessionTimer.resetTimer();
         
         /*
          * This is used to create a new timeout thread
          */
-        $.doTimeout('update-admin-session', BLCAdmin.sessionTimer.getPingInterval(), BLCAdmin.sessionTimer.updateTimer);
+        $.doTimeout('update-admin-session', UCAdmin.sessionTimer.getPingInterval(), UCAdmin.sessionTimer.updateTimer);
     };
 
     $("#stay-logged-in").click(function() {
@@ -239,6 +239,6 @@ $(document).ready(function() {
     /*
      * This is used to initiate the timeout thread that tracks the session time and listens for activity.
      */
-    $.doTimeout('update-admin-session', BLCAdmin.sessionTimer.getPingInterval(), BLCAdmin.sessionTimer.updateTimer);
+    $.doTimeout('update-admin-session', UCAdmin.sessionTimer.getPingInterval(), UCAdmin.sessionTimer.updateTimer);
 
 });

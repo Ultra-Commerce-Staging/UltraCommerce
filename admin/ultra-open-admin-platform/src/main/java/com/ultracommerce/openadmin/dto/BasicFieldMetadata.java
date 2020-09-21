@@ -1,29 +1,29 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.openadmin.dto;
+package com.ultracommerce.openadmin.dto;
 
 import org.apache.commons.lang3.StringUtils;
-import org.broadleafcommerce.common.presentation.client.LookupType;
-import org.broadleafcommerce.common.presentation.client.RuleBuilderDisplayType;
-import org.broadleafcommerce.common.presentation.client.SupportedFieldType;
-import org.broadleafcommerce.common.presentation.client.VisibilityEnum;
-import org.broadleafcommerce.openadmin.dto.visitor.MetadataVisitor;
-import org.broadleafcommerce.openadmin.server.service.persistence.validation.PropertyValidator;
+import com.ultracommerce.common.presentation.client.LookupType;
+import com.ultracommerce.common.presentation.client.RuleBuilderDisplayType;
+import com.ultracommerce.common.presentation.client.SupportedFieldType;
+import com.ultracommerce.common.presentation.client.VisibilityEnum;
+import com.ultracommerce.openadmin.dto.visitor.MetadataVisitor;
+import com.ultracommerce.openadmin.server.service.persistence.validation.PropertyValidator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -65,7 +65,7 @@ public class BasicFieldMetadata extends FieldMetadata {
     protected Boolean prominent;
     protected Integer gridOrder;
     protected String columnWidth;
-    protected String broadleafEnumeration;
+    protected String ultraEnumeration;
     protected Boolean hideEnumerationIfEmpty;
     protected SupportedFieldType fieldComponentRenderer;
     protected String fieldComponentRendererTemplate;
@@ -284,12 +284,12 @@ public class BasicFieldMetadata extends FieldMetadata {
         this.columnWidth = columnWidth;
     }
 
-    public String getBroadleafEnumeration() {
-        return broadleafEnumeration;
+    public String getUltraEnumeration() {
+        return ultraEnumeration;
     }
 
-    public void setBroadleafEnumeration(String broadleafEnumeration) {
-        this.broadleafEnumeration = broadleafEnumeration;
+    public void setUltraEnumeration(String ultraEnumeration) {
+        this.ultraEnumeration = ultraEnumeration;
     }
 
     public Boolean getHideEnumerationIfEmpty() {
@@ -648,7 +648,7 @@ public class BasicFieldMetadata extends FieldMetadata {
         metadata.prominent = prominent;
         metadata.gridOrder = gridOrder;        
         metadata.columnWidth = columnWidth;
-        metadata.broadleafEnumeration = broadleafEnumeration;
+        metadata.ultraEnumeration = ultraEnumeration;
         metadata.hideEnumerationIfEmpty = hideEnumerationIfEmpty;
         metadata.fieldComponentRenderer = fieldComponentRenderer;
         metadata.fieldComponentRendererTemplate = fieldComponentRendererTemplate;
@@ -730,7 +730,7 @@ public class BasicFieldMetadata extends FieldMetadata {
 
         BasicFieldMetadata metadata = (BasicFieldMetadata) o;
 
-        if (broadleafEnumeration != null ? !broadleafEnumeration.equals(metadata.broadleafEnumeration) : metadata.broadleafEnumeration != null) {
+        if (ultraEnumeration != null ? !ultraEnumeration.equals(metadata.ultraEnumeration) : metadata.ultraEnumeration != null) {
             return false;
         }
         if (hideEnumerationIfEmpty != null ? !hideEnumerationIfEmpty.equals(metadata.hideEnumerationIfEmpty) : metadata.hideEnumerationIfEmpty != null) {
@@ -919,7 +919,7 @@ public class BasicFieldMetadata extends FieldMetadata {
         result = 31 * result + (prominent != null ? prominent.hashCode() : 0);
         result = 31 * result + (gridOrder != null ? gridOrder.hashCode() : 0);
         result = 31 * result + (columnWidth != null ? columnWidth.hashCode() : 0);
-        result = 31 * result + (broadleafEnumeration != null ? broadleafEnumeration.hashCode() : 0);
+        result = 31 * result + (ultraEnumeration != null ? ultraEnumeration.hashCode() : 0);
         result = 31 * result + (hideEnumerationIfEmpty != null ? hideEnumerationIfEmpty.hashCode() : 0);
         result = 31 * result + (fieldComponentRenderer != null ? fieldComponentRenderer.hashCode() : 0);
         result = 31 * result + (fieldComponentRendererTemplate != null ? fieldComponentRendererTemplate.hashCode() : 0);

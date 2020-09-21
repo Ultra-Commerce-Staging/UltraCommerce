@@ -1,34 +1,34 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-(function($, BLC) {
+(function($, UC) {
     
     var defaultFormats = {
-        blcDateFormat : "yy.mm.dd",
-        blcTimeFormat : "HH:mm:ss",
+        ucDateFormat : "yy.mm.dd",
+        ucTimeFormat : "HH:mm:ss",
         displayDateFormat : 'mm/dd/yy',
         displayTimeFormat : 'HH:mm'
     }
         
-    // Add utility functions for dates to the BLCAdmin object
-    BLC.dates = {
+    // Add utility functions for dates to the UCAdmin object
+    UC.dates = {
         
         /**
-         * serverDate should be in the Broadleaf datetime format, "yyyy.MM.dd HH:mm:ss" (Java spec)
+         * serverDate should be in the Ultra datetime format, "yyyy.MM.dd HH:mm:ss" (Java spec)
          * returns the display format, "mm/dd/yy HH:mm:ss" (JavaScript spec)
          */
         getDisplayDate : function(serverDate, formats) {
@@ -36,9 +36,9 @@
                 if (serverDate) {
                     formats = $.extend({}, defaultFormats, formats);
                     
-                    // We have to send the blcTimeFormat twice in this method due to how the library works
-                    var result = $.datepicker.parseDateTime(formats.blcDateFormat, formats.blcTimeFormat, serverDate, {}, {
-                        timeFormat : formats.blcTimeFormat
+                    // We have to send the ucTimeFormat twice in this method due to how the library works
+                    var result = $.datepicker.parseDateTime(formats.ucDateFormat, formats.ucTimeFormat, serverDate, {}, {
+                        timeFormat : formats.ucTimeFormat
                     });
                     
                     // Pull the appropriate parts from the result and format them
@@ -80,9 +80,9 @@
                     });
                     
                     // Now, let's convert it to the server format
-                    var serverDate = $.datepicker.formatDate(formats.blcDateFormat, result);
+                    var serverDate = $.datepicker.formatDate(formats.ucDateFormat, result);
                     
-                    var serverTime = $.datepicker.formatTime(formats.blcTimeFormat, {
+                    var serverTime = $.datepicker.formatTime(formats.ucTimeFormat, {
                         hour : result.getHours(),
                         minute : result.getMinutes(),
                         second : result.getSeconds()
@@ -104,4 +104,4 @@
         }
     };
             
-})(jQuery, BLC);
+})(jQuery, UC);

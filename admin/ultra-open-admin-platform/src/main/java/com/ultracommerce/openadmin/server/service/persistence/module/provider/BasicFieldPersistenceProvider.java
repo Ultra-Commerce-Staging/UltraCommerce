@@ -1,54 +1,54 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
 
-package org.broadleafcommerce.openadmin.server.service.persistence.module.provider;
+package com.ultracommerce.openadmin.server.service.persistence.module.provider;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.admin.domain.AdminMainEntity;
-import org.broadleafcommerce.common.extension.ExtensionResultHolder;
-import org.broadleafcommerce.common.extension.ExtensionResultStatusType;
-import org.broadleafcommerce.common.money.Money;
-import org.broadleafcommerce.common.presentation.client.ForeignKeyRestrictionType;
-import org.broadleafcommerce.common.presentation.client.PersistencePerspectiveItemType;
-import org.broadleafcommerce.common.presentation.client.SupportedFieldType;
-import org.broadleafcommerce.openadmin.dto.BasicFieldMetadata;
-import org.broadleafcommerce.openadmin.dto.FieldMetadata;
-import org.broadleafcommerce.openadmin.dto.FilterAndSortCriteria;
-import org.broadleafcommerce.openadmin.dto.ForeignKey;
-import org.broadleafcommerce.openadmin.dto.Property;
-import org.broadleafcommerce.openadmin.server.service.persistence.PersistenceException;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.EmptyFilterValues;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.FieldManager;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.FieldNotAvailableException;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.criteria.FieldPath;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.criteria.FilterMapping;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.criteria.Restriction;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.criteria.RestrictionType;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.criteria.predicate.IsNotNullPredicateProvider;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.criteria.predicate.IsNullPredicateProvider;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.provider.extension.BasicFieldPersistenceProviderExtensionManager;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.provider.request.AddSearchMappingRequest;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.provider.request.ExtractValueRequest;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.provider.request.PopulateValueRequest;
-import org.broadleafcommerce.openadmin.server.service.type.MetadataProviderResponse;
+import com.ultracommerce.common.admin.domain.AdminMainEntity;
+import com.ultracommerce.common.extension.ExtensionResultHolder;
+import com.ultracommerce.common.extension.ExtensionResultStatusType;
+import com.ultracommerce.common.money.Money;
+import com.ultracommerce.common.presentation.client.ForeignKeyRestrictionType;
+import com.ultracommerce.common.presentation.client.PersistencePerspectiveItemType;
+import com.ultracommerce.common.presentation.client.SupportedFieldType;
+import com.ultracommerce.openadmin.dto.BasicFieldMetadata;
+import com.ultracommerce.openadmin.dto.FieldMetadata;
+import com.ultracommerce.openadmin.dto.FilterAndSortCriteria;
+import com.ultracommerce.openadmin.dto.ForeignKey;
+import com.ultracommerce.openadmin.dto.Property;
+import com.ultracommerce.openadmin.server.service.persistence.PersistenceException;
+import com.ultracommerce.openadmin.server.service.persistence.module.EmptyFilterValues;
+import com.ultracommerce.openadmin.server.service.persistence.module.FieldManager;
+import com.ultracommerce.openadmin.server.service.persistence.module.FieldNotAvailableException;
+import com.ultracommerce.openadmin.server.service.persistence.module.criteria.FieldPath;
+import com.ultracommerce.openadmin.server.service.persistence.module.criteria.FilterMapping;
+import com.ultracommerce.openadmin.server.service.persistence.module.criteria.Restriction;
+import com.ultracommerce.openadmin.server.service.persistence.module.criteria.RestrictionType;
+import com.ultracommerce.openadmin.server.service.persistence.module.criteria.predicate.IsNotNullPredicateProvider;
+import com.ultracommerce.openadmin.server.service.persistence.module.criteria.predicate.IsNullPredicateProvider;
+import com.ultracommerce.openadmin.server.service.persistence.module.provider.extension.BasicFieldPersistenceProviderExtensionManager;
+import com.ultracommerce.openadmin.server.service.persistence.module.provider.request.AddSearchMappingRequest;
+import com.ultracommerce.openadmin.server.service.persistence.module.provider.request.ExtractValueRequest;
+import com.ultracommerce.openadmin.server.service.persistence.module.provider.request.PopulateValueRequest;
+import com.ultracommerce.openadmin.server.service.type.MetadataProviderResponse;
 import org.hibernate.Session;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -73,11 +73,11 @@ import javax.annotation.Resource;
 /**
  * @author Jeff Fischer
  */
-@Component("blBasicFieldPersistenceProvider")
+@Component("ucBasicFieldPersistenceProvider")
 @Scope("prototype")
 public class BasicFieldPersistenceProvider extends FieldPersistenceProviderAdapter {
 
-    @Resource(name = "blBasicFieldPersistenceProviderExtensionManager")
+    @Resource(name = "ucBasicFieldPersistenceProviderExtensionManager")
     protected BasicFieldPersistenceProviderExtensionManager extensionManager;
 
     protected static final Log LOG = LogFactory.getLog(BasicFieldPersistenceProvider.class);
@@ -122,7 +122,7 @@ public class BasicFieldPersistenceProvider extends FieldPersistenceProviderAdapt
             return false;
         }
         BasicFieldMetadata metadata = (BasicFieldMetadata) md;
-        return (metadata.getFieldType() == SupportedFieldType.BROADLEAF_ENUMERATION ||
+        return (metadata.getFieldType() == SupportedFieldType.ULTRA_ENUMERATION ||
                 metadata.getFieldType() == SupportedFieldType.EXPLICIT_ENUMERATION ||
                 metadata.getFieldType() == SupportedFieldType.DATA_DRIVEN_ENUMERATION) &&
                 (property == null || !property.getName().contains(FieldManager.MAPFIELDSEPARATOR));
@@ -229,7 +229,7 @@ public class BasicFieldPersistenceProvider extends FieldPersistenceProviderAdapt
                         Double val = populateValueRequest.getDataFormatProvider().getDecimalFormatter().parse(populateValueRequest.getRequestedValue()).doubleValue();
                         dirty = checkDirtyState(populateValueRequest, instance, val);
                         LOG.warn("The requested Money field is of type double and could result in a loss of precision." +
-                                " Broadleaf recommends that the type of all Money fields be 'BigDecimal' in order to avoid" +
+                                " Ultra recommends that the type of all Money fields be 'BigDecimal' in order to avoid" +
                                 " this loss of precision that could occur.");
                         populateValueRequest.getFieldManager().setFieldValue(instance, populateValueRequest.getProperty().getName(), val);
                     } else {
@@ -600,7 +600,7 @@ public class BasicFieldPersistenceProvider extends FieldPersistenceProviderAdapt
                         filterMapping.setRestriction(addSearchMappingRequest.getRestrictionFactory().getRestriction
                                 (RestrictionType.LONG.getType(), addSearchMappingRequest.getPropertyName()));
                         break;
-                    case BROADLEAF_ENUMERATION:
+                    case ULTRA_ENUMERATION:
                         filterMapping.setRestriction(addSearchMappingRequest.getRestrictionFactory().getRestriction(RestrictionType.STRING_EQUAL.getType(), addSearchMappingRequest.getPropertyName()));
                         break;
                     default:

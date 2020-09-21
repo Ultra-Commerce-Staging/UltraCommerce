@@ -1,21 +1,21 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.openadmin.server.service.persistence;
+package com.ultracommerce.openadmin.server.service.persistence;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
@@ -24,37 +24,37 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.admin.domain.AdminMainEntity;
-import org.broadleafcommerce.common.exception.ExceptionHelper;
-import org.broadleafcommerce.common.exception.NoPossibleResultsException;
-import org.broadleafcommerce.common.exception.ServiceException;
-import org.broadleafcommerce.common.money.Money;
-import org.broadleafcommerce.common.persistence.TargetModeType;
-import org.broadleafcommerce.common.presentation.client.OperationType;
-import org.broadleafcommerce.common.service.PersistenceService;
-import org.broadleafcommerce.common.util.ValidationUtil;
-import org.broadleafcommerce.openadmin.dto.BasicFieldMetadata;
-import org.broadleafcommerce.openadmin.dto.ClassMetadata;
-import org.broadleafcommerce.openadmin.dto.CriteriaTransferObject;
-import org.broadleafcommerce.openadmin.dto.DynamicResultSet;
-import org.broadleafcommerce.openadmin.dto.Entity;
-import org.broadleafcommerce.openadmin.dto.FieldMetadata;
-import org.broadleafcommerce.openadmin.dto.MergedPropertyType;
-import org.broadleafcommerce.openadmin.dto.PersistencePackage;
-import org.broadleafcommerce.openadmin.dto.PersistencePerspective;
-import org.broadleafcommerce.openadmin.dto.Property;
-import org.broadleafcommerce.openadmin.server.dao.DynamicEntityDao;
-import org.broadleafcommerce.openadmin.server.security.remote.AdminSecurityServiceRemote;
-import org.broadleafcommerce.openadmin.server.security.remote.EntityOperationType;
-import org.broadleafcommerce.openadmin.server.security.remote.SecurityVerifier;
-import org.broadleafcommerce.openadmin.server.service.ValidationException;
-import org.broadleafcommerce.openadmin.server.service.handler.CustomPersistenceHandler;
-import org.broadleafcommerce.openadmin.server.service.handler.CustomPersistenceHandlerFilter;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.InspectHelper;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.PersistenceModule;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.RecordHelper;
-import org.broadleafcommerce.openadmin.server.service.type.ChangeType;
-import org.broadleafcommerce.openadmin.web.form.entity.DynamicEntityFormInfo;
+import com.ultracommerce.common.admin.domain.AdminMainEntity;
+import com.ultracommerce.common.exception.ExceptionHelper;
+import com.ultracommerce.common.exception.NoPossibleResultsException;
+import com.ultracommerce.common.exception.ServiceException;
+import com.ultracommerce.common.money.Money;
+import com.ultracommerce.common.persistence.TargetModeType;
+import com.ultracommerce.common.presentation.client.OperationType;
+import com.ultracommerce.common.service.PersistenceService;
+import com.ultracommerce.common.util.ValidationUtil;
+import com.ultracommerce.openadmin.dto.BasicFieldMetadata;
+import com.ultracommerce.openadmin.dto.ClassMetadata;
+import com.ultracommerce.openadmin.dto.CriteriaTransferObject;
+import com.ultracommerce.openadmin.dto.DynamicResultSet;
+import com.ultracommerce.openadmin.dto.Entity;
+import com.ultracommerce.openadmin.dto.FieldMetadata;
+import com.ultracommerce.openadmin.dto.MergedPropertyType;
+import com.ultracommerce.openadmin.dto.PersistencePackage;
+import com.ultracommerce.openadmin.dto.PersistencePerspective;
+import com.ultracommerce.openadmin.dto.Property;
+import com.ultracommerce.openadmin.server.dao.DynamicEntityDao;
+import com.ultracommerce.openadmin.server.security.remote.AdminSecurityServiceRemote;
+import com.ultracommerce.openadmin.server.security.remote.EntityOperationType;
+import com.ultracommerce.openadmin.server.security.remote.SecurityVerifier;
+import com.ultracommerce.openadmin.server.service.ValidationException;
+import com.ultracommerce.openadmin.server.service.handler.CustomPersistenceHandler;
+import com.ultracommerce.openadmin.server.service.handler.CustomPersistenceHandlerFilter;
+import com.ultracommerce.openadmin.server.service.persistence.module.InspectHelper;
+import com.ultracommerce.openadmin.server.service.persistence.module.PersistenceModule;
+import com.ultracommerce.openadmin.server.service.persistence.module.RecordHelper;
+import com.ultracommerce.openadmin.server.service.type.ChangeType;
+import com.ultracommerce.openadmin.web.form.entity.DynamicEntityFormInfo;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -75,31 +75,31 @@ import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 
-@Component("blPersistenceManager")
+@Component("ucPersistenceManager")
 @Scope("prototype")
 public class PersistenceManagerImpl implements InspectHelper, PersistenceManager, ApplicationContextAware {
 
     private static final Log LOG = LogFactory.getLog(PersistenceManagerImpl.class);
 
-    @Resource(name="blDynamicEntityDao")
+    @Resource(name="ucDynamicEntityDao")
     protected DynamicEntityDao dynamicEntityDao;
 
-    @Resource(name="blPersistenceService")
+    @Resource(name="ucPersistenceService")
     protected PersistenceService persistenceService;
 
-    @Resource(name="blCustomPersistenceHandlers")
+    @Resource(name="ucCustomPersistenceHandlers")
     protected List<CustomPersistenceHandler> customPersistenceHandlers = new ArrayList<>();
 
-    @Resource(name="blCustomPersistenceHandlerFilters")
+    @Resource(name="ucCustomPersistenceHandlerFilters")
     protected List<CustomPersistenceHandlerFilter> customPersistenceHandlerFilters = new ArrayList<>();
 
-    @Resource(name="blAdminSecurityRemoteService")
+    @Resource(name="ucAdminSecurityRemoteService")
     protected SecurityVerifier adminRemoteSecurityService;
 
-    @Resource(name="blPersistenceModules")
+    @Resource(name="ucPersistenceModules")
     protected PersistenceModule[] modules;
 
-    @Resource(name="blPersistenceManagerEventHandlers")
+    @Resource(name="ucPersistenceManagerEventHandlers")
     protected List<PersistenceManagerEventHandler> persistenceManagerEventHandlers;
 
     @Autowired(required = false)

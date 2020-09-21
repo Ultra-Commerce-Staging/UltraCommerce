@@ -1,35 +1,35 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.web;
+package com.ultracommerce.common.web;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.time.FastDateFormat;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.crossapp.service.CrossAppAuthService;
-import org.broadleafcommerce.common.sandbox.dao.SandBoxDao;
-import org.broadleafcommerce.common.sandbox.domain.SandBox;
-import org.broadleafcommerce.common.sandbox.domain.SandBoxType;
-import org.broadleafcommerce.common.site.domain.Site;
-import org.broadleafcommerce.common.time.FixedTimeSource;
-import org.broadleafcommerce.common.time.SystemTime;
-import org.broadleafcommerce.common.util.BLCRequestUtils;
-import org.broadleafcommerce.common.util.StringUtil;
+import com.ultracommerce.common.crossapp.service.CrossAppAuthService;
+import com.ultracommerce.common.sandbox.dao.SandBoxDao;
+import com.ultracommerce.common.sandbox.domain.SandBox;
+import com.ultracommerce.common.sandbox.domain.SandBoxType;
+import com.ultracommerce.common.site.domain.Site;
+import com.ultracommerce.common.time.FixedTimeSource;
+import com.ultracommerce.common.time.SystemTime;
+import com.ultracommerce.common.util.UCRequestUtils;
+import com.ultracommerce.common.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -55,9 +55,9 @@ import javax.servlet.http.HttpSession;
  *
  * @author bpolster
  */
-@Component("blSandBoxResolver")
-public class BroadleafSandBoxResolverImpl implements BroadleafSandBoxResolver  {
-    private final Log LOG = LogFactory.getLog(BroadleafSandBoxResolverImpl.class);
+@Component("ucSandBoxResolver")
+public class UltraSandBoxResolverImpl implements UltraSandBoxResolver  {
+    private final Log LOG = LogFactory.getLog(UltraSandBoxResolverImpl.class);
     
     /**
      * Property used to disable sandbox mode.   Some implementations will want to
@@ -66,35 +66,35 @@ public class BroadleafSandBoxResolverImpl implements BroadleafSandBoxResolver  {
     protected Boolean sandBoxPreviewEnabled = true;
     
     // Request Parameters and Attributes for Sandbox Mode properties - mostly values to manage dates.
-    private static String SANDBOX_DATE_TIME_VAR = "blSandboxDateTime";
+    private static String SANDBOX_DATE_TIME_VAR = "ucSandboxDateTime";
     private static final FastDateFormat CONTENT_DATE_FORMATTER = FastDateFormat.getInstance("yyyyMMddHHmm");
     private static final FastDateFormat CONTENT_DATE_DISPLAY_FORMATTER = FastDateFormat.getInstance("MM/dd/yyyy");
     private static final FastDateFormat CONTENT_DATE_DISPLAY_HOURS_FORMATTER = FastDateFormat.getInstance("h");
     private static final FastDateFormat CONTENT_DATE_DISPLAY_MINUTES_FORMATTER = FastDateFormat.getInstance("mm");
     private static final FastDateFormat CONTENT_DATE_PARSE_FORMAT = FastDateFormat.getInstance("MM/dd/yyyy hh:mm aa");
-    private static String SANDBOX_DATE_TIME_RIBBON_OVERRIDE_PARAM = "blSandboxDateTimeRibbonOverride";
-    private static final String SANDBOX_DISPLAY_DATE_TIME_DATE_PARAM = "blSandboxDisplayDateTimeDate";
-    private static final String SANDBOX_DISPLAY_DATE_TIME_HOURS_PARAM = "blSandboxDisplayDateTimeHours";
-    private static final String SANDBOX_DISPLAY_DATE_TIME_MINUTES_PARAM = "blSandboxDisplayDateTimeMinutes";
-    private static final String SANDBOX_DISPLAY_DATE_TIME_AMPM_PARAM = "blSandboxDisplayDateTimeAMPM";
+    private static String SANDBOX_DATE_TIME_RIBBON_OVERRIDE_PARAM = "ucSandboxDateTimeRibbonOverride";
+    private static final String SANDBOX_DISPLAY_DATE_TIME_DATE_PARAM = "ucSandboxDisplayDateTimeDate";
+    private static final String SANDBOX_DISPLAY_DATE_TIME_HOURS_PARAM = "ucSandboxDisplayDateTimeHours";
+    private static final String SANDBOX_DISPLAY_DATE_TIME_MINUTES_PARAM = "ucSandboxDisplayDateTimeMinutes";
+    private static final String SANDBOX_DISPLAY_DATE_TIME_AMPM_PARAM = "ucSandboxDisplayDateTimeAMPM";
 
 
     /**
      * Request attribute to store the current sandbox
      */
-    public static String SANDBOX_VAR = "blSandbox";
+    public static String SANDBOX_VAR = "ucSandbox";
     public static final String CLIENT_TIMEZONE = "clientTimezone";
 
-    @Resource(name = "blSandBoxDao")
+    @Resource(name = "ucSandBoxDao")
     private SandBoxDao sandBoxDao;
 
     @Autowired(required = false)
-    @Qualifier("blCrossAppAuthService")
+    @Qualifier("ucCrossAppAuthService")
     protected CrossAppAuthService crossAppAuthService;
     
     /**
      * Determines the current sandbox based on other parameters on the request such as
-     * the blSandBoxId parameters.    
+     * the ucSandBoxId parameters.    
      * 
      * If the {@link #getSandBoxPreviewEnabled()}, then this method will not return a user
      * SandBox. 
@@ -108,7 +108,7 @@ public class BroadleafSandBoxResolverImpl implements BroadleafSandBoxResolver  {
     @Override
     public SandBox resolveSandBox(WebRequest request, Site site) {
         Long previousSandBoxId = null;
-        if (BLCRequestUtils.isOKtoUseSession(request)) {
+        if (UCRequestUtils.isOKtoUseSession(request)) {
             previousSandBoxId = (Long) request.getAttribute(SANDBOX_ID_VAR, WebRequest.SCOPE_SESSION);
         }
         SandBox currentSandbox = null;
@@ -130,13 +130,13 @@ public class BroadleafSandBoxResolverImpl implements BroadleafSandBoxResolver  {
         } else {
             Long sandboxId = null;
             // Clear the sandBox - second parameter is to support legacy implementations.
-            if ((request.getParameter("blClearSandBox") == null) && (request.getParameter("blSandboxDateTimeRibbonProduction") == null)) {
+            if ((request.getParameter("ucClearSandBox") == null) && (request.getParameter("ucSandboxDateTimeRibbonProduction") == null)) {
                 sandboxId = lookupSandboxId(request);
             } else {
                 if (LOG.isTraceEnabled()) {
                     LOG.trace("Removing sandbox from session.");
                 }
-                if (BLCRequestUtils.isOKtoUseSession(request)) {
+                if (UCRequestUtils.isOKtoUseSession(request)) {
                     request.removeAttribute(SANDBOX_DATE_TIME_VAR, WebRequest.SCOPE_SESSION);
                     request.removeAttribute(SANDBOX_ID_VAR, WebRequest.SCOPE_SESSION);
                 }
@@ -144,7 +144,7 @@ public class BroadleafSandBoxResolverImpl implements BroadleafSandBoxResolver  {
             }
             if (sandboxId != null) {
                 if (previousSandBoxId != null && !previousSandBoxId.equals(sandboxId)) {
-                    request.setAttribute(BroadleafRequestProcessor.REPROCESS_PARAM_NAME, true, WebRequest.SCOPE_REQUEST);
+                    request.setAttribute(UltraRequestProcessor.REPROCESS_PARAM_NAME, true, WebRequest.SCOPE_REQUEST);
                 }
 
                 currentSandbox = sandBoxDao.retrieve(sandboxId);
@@ -195,11 +195,11 @@ public class BroadleafSandBoxResolverImpl implements BroadleafSandBoxResolver  {
                     LOG.trace("SandboxId found on request " + sandboxId);
                 }
             } catch (NumberFormatException nfe) {
-                LOG.warn("blcSandboxId parameter could not be converted into a Long", nfe);
+                LOG.warn("ucSandboxId parameter could not be converted into a Long", nfe);
             }
         }
 
-        if (BLCRequestUtils.isOKtoUseSession(request)) {
+        if (UCRequestUtils.isOKtoUseSession(request)) {
             if (sandboxId == null) {
                 // check the session            
                 sandboxId = (Long) request.getAttribute(SANDBOX_ID_VAR, WebRequest.SCOPE_SESSION);
@@ -241,9 +241,9 @@ public class BroadleafSandBoxResolverImpl implements BroadleafSandBoxResolver  {
 
                 overrideTime = parser.parse(sandboxDateTimeParam);
 
-                BroadleafRequestContext brc = BroadleafRequestContext.getBroadleafRequestContext();
+                UltraRequestContext brc = UltraRequestContext.getUltraRequestContext();
 
-                if(BLCRequestUtils.isOKtoUseSession(brc.getWebRequest())) {
+                if(UCRequestUtils.isOKtoUseSession(brc.getWebRequest())) {
                     HttpSession session = brc.getRequest().getSession();
 
                     session.setAttribute(CLIENT_TIMEZONE, clientTimeZone);
@@ -253,7 +253,7 @@ public class BroadleafSandBoxResolverImpl implements BroadleafSandBoxResolver  {
             LOG.debug(e);
         }
 
-        if (BLCRequestUtils.isOKtoUseSession(request)) {
+        if (UCRequestUtils.isOKtoUseSession(request)) {
             if (overrideTime == null) {
                 overrideTime = (Date) request.getAttribute(SANDBOX_DATE_TIME_VAR, WebRequest.SCOPE_SESSION);
             } else {

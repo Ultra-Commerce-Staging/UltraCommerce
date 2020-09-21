@@ -1,43 +1,43 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2019 Broadleaf Commerce
+ * Copyright (C) 2009 - 2019 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.search.service.solr.indexer;
+package com.ultracommerce.core.search.service.solr.indexer;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.solr.common.SolrInputDocument;
-import org.broadleafcommerce.common.exception.ExceptionHelper;
-import org.broadleafcommerce.common.extension.ExtensionResultStatusType;
-import org.broadleafcommerce.common.locale.domain.Locale;
-import org.broadleafcommerce.common.sandbox.SandBoxHelper;
-import org.broadleafcommerce.common.util.GenericOperation;
-import org.broadleafcommerce.common.util.HibernateUtils;
-import org.broadleafcommerce.core.catalog.domain.Indexable;
-import org.broadleafcommerce.core.catalog.domain.Product;
-import org.broadleafcommerce.core.search.dao.CatalogStructure;
-import org.broadleafcommerce.core.search.domain.Field;
-import org.broadleafcommerce.core.search.domain.IndexField;
-import org.broadleafcommerce.core.search.domain.IndexFieldType;
-import org.broadleafcommerce.core.search.domain.solr.FieldType;
-import org.broadleafcommerce.core.search.service.solr.SolrConfiguration;
-import org.broadleafcommerce.core.search.service.solr.SolrHelperService;
-import org.broadleafcommerce.core.search.service.solr.index.SolrIndexCachedOperation;
-import org.broadleafcommerce.core.search.service.solr.index.SolrIndexServiceExtensionManager;
+import com.ultracommerce.common.exception.ExceptionHelper;
+import com.ultracommerce.common.extension.ExtensionResultStatusType;
+import com.ultracommerce.common.locale.domain.Locale;
+import com.ultracommerce.common.sandbox.SandBoxHelper;
+import com.ultracommerce.common.util.GenericOperation;
+import com.ultracommerce.common.util.HibernateUtils;
+import com.ultracommerce.core.catalog.domain.Indexable;
+import com.ultracommerce.core.catalog.domain.Product;
+import com.ultracommerce.core.search.dao.CatalogStructure;
+import com.ultracommerce.core.search.domain.Field;
+import com.ultracommerce.core.search.domain.IndexField;
+import com.ultracommerce.core.search.domain.IndexFieldType;
+import com.ultracommerce.core.search.domain.solr.FieldType;
+import com.ultracommerce.core.search.service.solr.SolrConfiguration;
+import com.ultracommerce.core.search.service.solr.SolrHelperService;
+import com.ultracommerce.core.search.service.solr.index.SolrIndexCachedOperation;
+import com.ultracommerce.core.search.service.solr.index.SolrIndexServiceExtensionManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -60,22 +60,22 @@ import javax.annotation.Resource;
  * @author Kelly Tisdell
  *
  */
-@Component("blCatalogDocumentBuilder")
+@Component("ucCatalogDocumentBuilder")
 public class CatalogDocumentBuilderImpl implements CatalogDocumentBuilder {
     
     private static final Log LOG = LogFactory.getLog(CatalogDocumentBuilderImpl.class);
     
-    @Resource(name = "blSolrHelperService")
+    @Resource(name = "ucSolrHelperService")
     protected SolrHelperService shs;
     
-    @Resource(name = "blSolrIndexServiceExtensionManager")
+    @Resource(name = "ucSolrIndexServiceExtensionManager")
     protected SolrIndexServiceExtensionManager extensionManager;
     
-    @Qualifier("blCatalogSolrConfiguration")
+    @Qualifier("ucCatalogSolrConfiguration")
     @Autowired(required = false)
     protected SolrConfiguration solrConfiguration;
     
-    @Resource(name = "blSandBoxHelper")
+    @Resource(name = "ucSandBoxHelper")
     protected SandBoxHelper sandBoxHelper;
 
     @Override

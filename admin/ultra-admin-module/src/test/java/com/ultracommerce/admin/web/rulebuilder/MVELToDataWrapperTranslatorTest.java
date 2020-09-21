@@ -1,38 +1,38 @@
 /*
  * #%L
- * BroadleafCommerce Admin Module
+ * UltraCommerce Admin Module
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.admin.web.rulebuilder;
+package com.ultracommerce.admin.web.rulebuilder;
 
-import org.broadleafcommerce.admin.web.rulebuilder.service.CustomerFieldServiceImpl;
-import org.broadleafcommerce.admin.web.rulebuilder.service.FulfillmentGroupFieldServiceImpl;
-import org.broadleafcommerce.admin.web.rulebuilder.service.OrderFieldServiceImpl;
-import org.broadleafcommerce.admin.web.rulebuilder.service.OrderItemFieldServiceImpl;
-import org.broadleafcommerce.common.presentation.RuleOperatorType;
-import org.broadleafcommerce.common.presentation.RuleOptionType;
-import org.broadleafcommerce.common.presentation.client.SupportedFieldType;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
-import org.broadleafcommerce.openadmin.dto.Entity;
-import org.broadleafcommerce.openadmin.dto.Property;
-import org.broadleafcommerce.openadmin.web.rulebuilder.BLCOperator;
-import org.broadleafcommerce.openadmin.web.rulebuilder.MVELToDataWrapperTranslator;
-import org.broadleafcommerce.openadmin.web.rulebuilder.MVELTranslationException;
-import org.broadleafcommerce.openadmin.web.rulebuilder.dto.DataWrapper;
-import org.broadleafcommerce.openadmin.web.rulebuilder.dto.ExpressionDTO;
-import org.broadleafcommerce.openadmin.web.rulebuilder.dto.FieldData;
+import com.ultracommerce.admin.web.rulebuilder.service.CustomerFieldServiceImpl;
+import com.ultracommerce.admin.web.rulebuilder.service.FulfillmentGroupFieldServiceImpl;
+import com.ultracommerce.admin.web.rulebuilder.service.OrderFieldServiceImpl;
+import com.ultracommerce.admin.web.rulebuilder.service.OrderItemFieldServiceImpl;
+import com.ultracommerce.common.presentation.RuleOperatorType;
+import com.ultracommerce.common.presentation.RuleOptionType;
+import com.ultracommerce.common.presentation.client.SupportedFieldType;
+import com.ultracommerce.common.web.UltraRequestContext;
+import com.ultracommerce.openadmin.dto.Entity;
+import com.ultracommerce.openadmin.dto.Property;
+import com.ultracommerce.openadmin.web.rulebuilder.UCOperator;
+import com.ultracommerce.openadmin.web.rulebuilder.MVELToDataWrapperTranslator;
+import com.ultracommerce.openadmin.web.rulebuilder.MVELTranslationException;
+import com.ultracommerce.openadmin.web.rulebuilder.dto.DataWrapper;
+import com.ultracommerce.openadmin.web.rulebuilder.dto.ExpressionDTO;
+import com.ultracommerce.openadmin.web.rulebuilder.dto.FieldData;
 
 import java.util.TimeZone;
 
@@ -59,7 +59,7 @@ public class MVELToDataWrapperTranslatorTest extends TestCase {
         orderFieldService.init();
         fulfillmentGroupFieldService = new FulfillmentGroupFieldServiceImpl();
         fulfillmentGroupFieldService.init();
-        BroadleafRequestContext.getBroadleafRequestContext().setTimeZone(TimeZone.getDefault());
+        UltraRequestContext.getUltraRequestContext().setTimeZone(TimeZone.getDefault());
     }
 
     /**
@@ -94,7 +94,7 @@ public class MVELToDataWrapperTranslatorTest extends TestCase {
         assert(dataWrapper.getData().get(0).getRules().get(0) instanceof ExpressionDTO);
         ExpressionDTO exp = (ExpressionDTO) dataWrapper.getData().get(0).getRules().get(0);
         assert(exp.getId().equals("category.name"));
-        assert(exp.getOperator().equals(BLCOperator.IEQUALS.name()));
+        assert(exp.getOperator().equals(UCOperator.IEQUALS.name()));
         assert(exp.getValue().equals("merchandise"));
     }
 
@@ -114,12 +114,12 @@ public class MVELToDataWrapperTranslatorTest extends TestCase {
         DataWrapper dataWrapper = translator.createRuleData(entities, "matchRule", null, null, customerFieldService);
         assert(dataWrapper.getData().size() == 1);
         assert(dataWrapper.getData().get(0).getQuantity() == null);
-        assert(dataWrapper.getData().get(0).getCondition().equals(BLCOperator.AND.name()));
+        assert(dataWrapper.getData().get(0).getCondition().equals(UCOperator.AND.name()));
 
         assert(dataWrapper.getData().get(0).getRules().get(0) instanceof ExpressionDTO);
         ExpressionDTO e1 = (ExpressionDTO) dataWrapper.getData().get(0).getRules().get(0);
         assert(e1.getId().equals("emailAddress"));
-        assert(e1.getOperator().equals(BLCOperator.NOT_EQUAL_FIELD.name()));
+        assert(e1.getOperator().equals(UCOperator.NOT_EQUAL_FIELD.name()));
         assert(e1.getValue().equals("username"));
 
     }
@@ -144,7 +144,7 @@ public class MVELToDataWrapperTranslatorTest extends TestCase {
         assert(dataWrapper.getData().get(0).getRules().get(0) instanceof ExpressionDTO);
         ExpressionDTO e1 = (ExpressionDTO) dataWrapper.getData().get(0).getRules().get(0);
         assert(e1.getId().equals("subTotal"));
-        assert(e1.getOperator().equals(BLCOperator.GREATER_OR_EQUAL.name()));
+        assert(e1.getOperator().equals(UCOperator.GREATER_OR_EQUAL.name()));
         assert(e1.getValue().equals("100"));
 
     }
@@ -193,19 +193,19 @@ public class MVELToDataWrapperTranslatorTest extends TestCase {
         assert(dataWrapper.getData().size() == 2);
 
         assert(dataWrapper.getData().get(0).getQuantity() == 1);
-        assert(dataWrapper.getData().get(0).getCondition().equals(BLCOperator.AND.name()));
+        assert(dataWrapper.getData().get(0).getCondition().equals(UCOperator.AND.name()));
         assert(dataWrapper.getData().get(0).getRules().size()==1);
         assert(dataWrapper.getData().get(0).getRules().get(0) instanceof ExpressionDTO);
         ExpressionDTO exp1 = (ExpressionDTO) dataWrapper.getData().get(0).getRules().get(0);
         assert(exp1.getId().equals("category.name"));
-        assert(exp1.getOperator().equals(BLCOperator.EQUALS.name()));
+        assert(exp1.getOperator().equals(UCOperator.EQUALS.name()));
         assert(exp1.getValue().equals("test category"));
 
         assert(dataWrapper.getData().get(1).getQuantity() == 2);
         assert(dataWrapper.getData().get(1).getRules().get(0) instanceof ExpressionDTO);
         ExpressionDTO expd1e1 = (ExpressionDTO) dataWrapper.getData().get(1).getRules().get(0);
         assert(expd1e1.getId().equals("product.manufacturer"));
-        assert(expd1e1.getOperator().equals(BLCOperator.COLLECTION_NOT_IN.name()));
+        assert(expd1e1.getOperator().equals(UCOperator.COLLECTION_NOT_IN.name()));
         assert(expd1e1.getValue().equals("[\"test manufacturer\"]"));
 
     }
@@ -271,19 +271,19 @@ public class MVELToDataWrapperTranslatorTest extends TestCase {
 
         assert(dataWrapper.getData().size() == 1);
         assert(dataWrapper.getData().get(0).getQuantity() == null);
-        assert(dataWrapper.getData().get(0).getCondition().equals(BLCOperator.AND.name()));
+        assert(dataWrapper.getData().get(0).getCondition().equals(UCOperator.AND.name()));
         assert(dataWrapper.getData().get(0).getRules().size()==2);
 
         assert(dataWrapper.getData().get(0).getRules().get(0) instanceof ExpressionDTO);
         ExpressionDTO e1 = (ExpressionDTO) dataWrapper.getData().get(0).getRules().get(0);
         assert(e1.getId().equals("address.state.name"));
-        assert(e1.getOperator().equals(BLCOperator.EQUALS.name()));
+        assert(e1.getOperator().equals(UCOperator.EQUALS.name()));
         assert(e1.getValue().equals("Texas"));
 
         assert(dataWrapper.getData().get(0).getRules().get(1) instanceof ExpressionDTO);
         ExpressionDTO e2 = (ExpressionDTO) dataWrapper.getData().get(0).getRules().get(1);
         assert(e2.getId().equals("retailFulfillmentPrice"));
-        assert(e2.getOperator().equals(BLCOperator.BETWEEN_INCLUSIVE.name()));
+        assert(e2.getOperator().equals(UCOperator.BETWEEN_INCLUSIVE.name()));
         assert(e2.getValue().equals("[99,199]"));
     }
 
@@ -303,19 +303,19 @@ public class MVELToDataWrapperTranslatorTest extends TestCase {
         DataWrapper dataWrapper = translator.createRuleData(entities, "matchRule", null, null, fulfillmentGroupFieldService);
         assert(dataWrapper.getData().size() == 1);
         assert(dataWrapper.getData().get(0).getQuantity() == null);
-        assert(dataWrapper.getData().get(0).getCondition().equals(BLCOperator.AND.name()));
+        assert(dataWrapper.getData().get(0).getCondition().equals(UCOperator.AND.name()));
         assert(dataWrapper.getData().get(0).getRules().size()==2);
 
         assert(dataWrapper.getData().get(0).getRules().get(0) instanceof ExpressionDTO);
         ExpressionDTO e1 = (ExpressionDTO) dataWrapper.getData().get(0).getRules().get(0);
         assert(e1.getId().equals("address.state.name"));
-        assert(e1.getOperator().equals(BLCOperator.EQUALS.name()));
+        assert(e1.getOperator().equals(UCOperator.EQUALS.name()));
         assert(e1.getValue().equals("Texas"));
 
         assert(dataWrapper.getData().get(0).getRules().get(1) instanceof ExpressionDTO);
         ExpressionDTO e2 = (ExpressionDTO) dataWrapper.getData().get(0).getRules().get(1);
         assert(e2.getId().equals("retailFulfillmentPrice"));
-        assert(e2.getOperator().equals(BLCOperator.BETWEEN_INCLUSIVE.name()));
+        assert(e2.getOperator().equals(UCOperator.BETWEEN_INCLUSIVE.name()));
         assert(e2.getValue().equals("[99,199]"));
     }
 
@@ -363,18 +363,18 @@ public class MVELToDataWrapperTranslatorTest extends TestCase {
         assert(dataWrapper.getData().size() == 2);
 
         assert(dataWrapper.getData().get(0).getQuantity() == 1);
-        assert(dataWrapper.getData().get(0).getCondition().equals(BLCOperator.AND.name()));
+        assert(dataWrapper.getData().get(0).getCondition().equals(UCOperator.AND.name()));
         assert(dataWrapper.getData().get(0).getRules().size()==2);
         assert(dataWrapper.getData().get(0).getRules().get(0) instanceof ExpressionDTO);
         ExpressionDTO exp1 = (ExpressionDTO) dataWrapper.getData().get(0).getRules().get(0);
         assert(exp1.getId().equals("category.name"));
-        assert(exp1.getOperator().equals(BLCOperator.COLLECTION_IN.name()));
+        assert(exp1.getOperator().equals(UCOperator.COLLECTION_IN.name()));
         assert(exp1.getValue().equals("[\"test category\", \"test category 2\"]"));
 
         assert(dataWrapper.getData().get(0).getRules().get(1) instanceof ExpressionDTO);
         ExpressionDTO exp2 = (ExpressionDTO) dataWrapper.getData().get(0).getRules().get(1);
         assert(exp2.getId().equals("quantity"));
-        assert(exp2.getOperator().equals(BLCOperator.GREATER_THAN.name()));
+        assert(exp2.getOperator().equals(UCOperator.GREATER_THAN.name()));
         assert(exp2.getValue().equals("5"));
 
         assert(dataWrapper.getData().get(1).getQuantity() == 2);
@@ -382,7 +382,7 @@ public class MVELToDataWrapperTranslatorTest extends TestCase {
         assert(dataWrapper.getData().get(1).getRules().get(0) instanceof ExpressionDTO);
         ExpressionDTO expd1e1 = (ExpressionDTO) dataWrapper.getData().get(1).getRules().get(0);
         assert(expd1e1.getId().equals("product.manufacturer"));
-        assert(expd1e1.getOperator().equals(BLCOperator.COLLECTION_NOT_IN.name()));
+        assert(expd1e1.getOperator().equals(UCOperator.COLLECTION_NOT_IN.name()));
         assert(expd1e1.getValue().equals("[\"test manufacturer\"]"));
 
     }
@@ -585,7 +585,7 @@ public class MVELToDataWrapperTranslatorTest extends TestCase {
         assert(dataWrapper.getData().get(0).getRules().get(0) instanceof ExpressionDTO);
         ExpressionDTO exp = (ExpressionDTO) dataWrapper.getData().get(0).getRules().get(0);
         assert(exp.getId().equals("subTotal"));
-        assert(exp.getOperator().equals(BLCOperator.BETWEEN.name()));
+        assert(exp.getOperator().equals(UCOperator.BETWEEN.name()));
         assert(exp.getValue().equals("[45,75]"));
     }
 
@@ -617,7 +617,7 @@ public class MVELToDataWrapperTranslatorTest extends TestCase {
         assert(dataWrapper.getData().get(0).getRules().get(0) instanceof ExpressionDTO);
         ExpressionDTO exp = (ExpressionDTO) dataWrapper.getData().get(0).getRules().get(0);
         assert(exp.getId().equals("subTotal"));
-        assert(exp.getOperator().equals(BLCOperator.BETWEEN.name()));
+        assert(exp.getOperator().equals(UCOperator.BETWEEN.name()));
         assert(exp.getValue().equals("[45,75]"));
     }
 
@@ -649,7 +649,7 @@ public class MVELToDataWrapperTranslatorTest extends TestCase {
         assert (dataWrapper.getData().get(0).getRules().get(0) instanceof ExpressionDTO);
         ExpressionDTO exp = (ExpressionDTO) dataWrapper.getData().get(0).getRules().get(0);
         assert (exp.getId().equals("price"));
-        assert (exp.getOperator().equals(BLCOperator.BETWEEN.name()));
+        assert (exp.getOperator().equals(UCOperator.BETWEEN.name()));
         assert (exp.getValue().equals("[2,4]"));
     }
 
@@ -681,7 +681,7 @@ public class MVELToDataWrapperTranslatorTest extends TestCase {
         assert (dataWrapper.getData().get(0).getRules().get(0) instanceof ExpressionDTO);
         ExpressionDTO exp = (ExpressionDTO) dataWrapper.getData().get(0).getRules().get(0);
         assert (exp.getId().equals("price"));
-        assert (exp.getOperator().equals(BLCOperator.BETWEEN_INCLUSIVE.name()));
+        assert (exp.getOperator().equals(UCOperator.BETWEEN_INCLUSIVE.name()));
         assert (exp.getValue().equals("[2,4]"));
     }
 

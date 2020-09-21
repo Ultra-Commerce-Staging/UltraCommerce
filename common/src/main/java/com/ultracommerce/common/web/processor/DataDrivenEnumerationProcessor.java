@@ -1,29 +1,29 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.web.processor;
+package com.ultracommerce.common.web.processor;
 
-import org.broadleafcommerce.common.enumeration.domain.DataDrivenEnumeration;
-import org.broadleafcommerce.common.enumeration.domain.DataDrivenEnumerationValue;
-import org.broadleafcommerce.common.enumeration.service.DataDrivenEnumerationService;
-import org.broadleafcommerce.common.web.expression.DataDrivenEnumVariableExpression;
-import org.broadleafcommerce.presentation.condition.ConditionalOnTemplating;
-import org.broadleafcommerce.presentation.dialect.AbstractBroadleafVariableModifierProcessor;
-import org.broadleafcommerce.presentation.model.BroadleafTemplateContext;
+import com.ultracommerce.common.enumeration.domain.DataDrivenEnumeration;
+import com.ultracommerce.common.enumeration.domain.DataDrivenEnumerationValue;
+import com.ultracommerce.common.enumeration.service.DataDrivenEnumerationService;
+import com.ultracommerce.common.web.expression.DataDrivenEnumVariableExpression;
+import com.ultracommerce.presentation.condition.ConditionalOnTemplating;
+import com.ultracommerce.presentation.dialect.AbstractUltraVariableModifierProcessor;
+import com.ultracommerce.presentation.model.UltraTemplateContext;
 import org.springframework.stereotype.Component;
 
 import com.google.common.collect.ImmutableMap;
@@ -48,11 +48,11 @@ import javax.annotation.Resource;
  * @deprecated use {@link DataDrivenEnumVariableExpression} instead
  */
 @Deprecated
-@Component("blDataDrivenEnumerationProcessor")
+@Component("ucDataDrivenEnumerationProcessor")
 @ConditionalOnTemplating
-public class DataDrivenEnumerationProcessor extends AbstractBroadleafVariableModifierProcessor {
+public class DataDrivenEnumerationProcessor extends AbstractUltraVariableModifierProcessor {
 
-    @Resource(name = "blDataDrivenEnumerationService")
+    @Resource(name = "ucDataDrivenEnumerationService")
     protected DataDrivenEnumerationService enumService;
     
     @Resource
@@ -69,7 +69,7 @@ public class DataDrivenEnumerationProcessor extends AbstractBroadleafVariableMod
     }
 
     @Override
-    public Map<String, Object> populateModelVariables(String tagName, Map<String, String> tagAttributes, BroadleafTemplateContext context) {
+    public Map<String, Object> populateModelVariables(String tagName, Map<String, String> tagAttributes, UltraTemplateContext context) {
         List<DataDrivenEnumerationValue> enumValues = ddeVariableExpression.getEnumValues(tagAttributes.get("key"), tagAttributes.get("sort"));
         return ImmutableMap.of("enumValues", (Object) enumValues);
     }

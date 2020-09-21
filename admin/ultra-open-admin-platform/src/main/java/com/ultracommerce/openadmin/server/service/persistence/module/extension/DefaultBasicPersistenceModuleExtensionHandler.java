@@ -1,39 +1,39 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.openadmin.server.service.persistence.module.extension;
+package com.ultracommerce.openadmin.server.service.persistence.module.extension;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.broadleafcommerce.common.exception.ExceptionHelper;
-import org.broadleafcommerce.common.extension.ExtensionResultHolder;
-import org.broadleafcommerce.common.extension.ExtensionResultStatusType;
-import org.broadleafcommerce.common.presentation.client.PersistencePerspectiveItemType;
-import org.broadleafcommerce.common.util.TypedPredicate;
-import org.broadleafcommerce.openadmin.dto.CriteriaTransferObject;
-import org.broadleafcommerce.openadmin.dto.Entity;
-import org.broadleafcommerce.openadmin.dto.FieldMetadata;
-import org.broadleafcommerce.openadmin.dto.FilterAndSortCriteria;
-import org.broadleafcommerce.openadmin.dto.ForeignKey;
-import org.broadleafcommerce.openadmin.dto.PersistencePackage;
-import org.broadleafcommerce.openadmin.dto.PersistencePerspective;
-import org.broadleafcommerce.openadmin.server.service.ValidationException;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.BasicPersistenceModule;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.FieldNotAvailableException;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.criteria.FilterMapping;
+import com.ultracommerce.common.exception.ExceptionHelper;
+import com.ultracommerce.common.extension.ExtensionResultHolder;
+import com.ultracommerce.common.extension.ExtensionResultStatusType;
+import com.ultracommerce.common.presentation.client.PersistencePerspectiveItemType;
+import com.ultracommerce.common.util.TypedPredicate;
+import com.ultracommerce.openadmin.dto.CriteriaTransferObject;
+import com.ultracommerce.openadmin.dto.Entity;
+import com.ultracommerce.openadmin.dto.FieldMetadata;
+import com.ultracommerce.openadmin.dto.FilterAndSortCriteria;
+import com.ultracommerce.openadmin.dto.ForeignKey;
+import com.ultracommerce.openadmin.dto.PersistencePackage;
+import com.ultracommerce.openadmin.dto.PersistencePerspective;
+import com.ultracommerce.openadmin.server.service.ValidationException;
+import com.ultracommerce.openadmin.server.service.persistence.module.BasicPersistenceModule;
+import com.ultracommerce.openadmin.server.service.persistence.module.FieldNotAvailableException;
+import com.ultracommerce.openadmin.server.service.persistence.module.criteria.FilterMapping;
 import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
@@ -47,13 +47,13 @@ import javax.annotation.Resource;
 /**
  * Default implementation for the core framework.
  *
- * @see org.broadleafcommerce.openadmin.server.service.persistence.module.extension.BasicPersistenceModuleExtensionHandler
+ * @see com.ultracommerce.openadmin.server.service.persistence.module.extension.BasicPersistenceModuleExtensionHandler
  * @author Jeff Fischer
  */
-@Service("blDefaultBasicPersistenceModuleExtensionHandler")
+@Service("ucDefaultBasicPersistenceModuleExtensionHandler")
 public class DefaultBasicPersistenceModuleExtensionHandler extends AbstractBasicPersistenceModuleExtensionHandler {
 
-    @Resource(name = "blBasicPersistenceModuleExtensionManager")
+    @Resource(name = "ucBasicPersistenceModuleExtensionManager")
     protected BasicPersistenceModuleExtensionManager extensionManager;
 
     @PostConstruct

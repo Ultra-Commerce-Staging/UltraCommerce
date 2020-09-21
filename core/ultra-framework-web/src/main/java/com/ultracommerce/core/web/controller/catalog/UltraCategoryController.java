@@ -1,39 +1,39 @@
 /*
  * #%L
- * BroadleafCommerce Framework Web
+ * UltraCommerce Framework Web
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.web.controller.catalog;
+package com.ultracommerce.core.web.controller.catalog;
 
 import org.apache.commons.lang.StringUtils;
-import org.broadleafcommerce.common.extension.ExtensionResultHolder;
-import org.broadleafcommerce.common.extension.ExtensionResultStatusType;
-import org.broadleafcommerce.common.template.TemplateOverrideExtensionManager;
-import org.broadleafcommerce.common.template.TemplateType;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
-import org.broadleafcommerce.common.web.TemplateTypeAware;
-import org.broadleafcommerce.common.web.controller.BroadleafAbstractController;
-import org.broadleafcommerce.common.web.deeplink.DeepLinkService;
-import org.broadleafcommerce.core.catalog.domain.Category;
-import org.broadleafcommerce.core.catalog.domain.Product;
-import org.broadleafcommerce.core.search.domain.SearchCriteria;
-import org.broadleafcommerce.core.search.domain.SearchResult;
-import org.broadleafcommerce.core.search.service.SearchService;
-import org.broadleafcommerce.core.web.catalog.CategoryHandlerMapping;
-import org.broadleafcommerce.core.web.service.SearchFacetDTOService;
-import org.broadleafcommerce.core.web.util.ProcessorUtils;
+import com.ultracommerce.common.extension.ExtensionResultHolder;
+import com.ultracommerce.common.extension.ExtensionResultStatusType;
+import com.ultracommerce.common.template.TemplateOverrideExtensionManager;
+import com.ultracommerce.common.template.TemplateType;
+import com.ultracommerce.common.web.UltraRequestContext;
+import com.ultracommerce.common.web.TemplateTypeAware;
+import com.ultracommerce.common.web.controller.UltraAbstractController;
+import com.ultracommerce.common.web.deeplink.DeepLinkService;
+import com.ultracommerce.core.catalog.domain.Category;
+import com.ultracommerce.core.catalog.domain.Product;
+import com.ultracommerce.core.search.domain.SearchCriteria;
+import com.ultracommerce.core.search.domain.SearchResult;
+import com.ultracommerce.core.search.service.SearchService;
+import com.ultracommerce.core.web.catalog.CategoryHandlerMapping;
+import com.ultracommerce.core.web.service.SearchFacetDTOService;
+import com.ultracommerce.core.web.util.ProcessorUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.servlet.ModelAndView;
@@ -57,7 +57,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author bpolster
  */
-public class BroadleafCategoryController extends BroadleafAbstractController implements Controller, TemplateTypeAware {
+public class UltraCategoryController extends UltraAbstractController implements Controller, TemplateTypeAware {
     
     protected static String defaultCategoryView = "catalog/category";
     protected static String CATEGORY_ATTRIBUTE_NAME = "category";  
@@ -65,21 +65,21 @@ public class BroadleafCategoryController extends BroadleafAbstractController imp
     protected static String FACETS_ATTRIBUTE_NAME = "facets";  
     protected static String PRODUCT_SEARCH_RESULT_ATTRIBUTE_NAME = "result";  
     protected static String ACTIVE_FACETS_ATTRIBUTE_NAME = "activeFacets";  
-    protected static String ALL_PRODUCTS_ATTRIBUTE_NAME = "blcAllDisplayedProducts";
-    protected static String ALL_SKUS_ATTRIBUTE_NAME = "blcAllDisplayedSkus";
+    protected static String ALL_PRODUCTS_ATTRIBUTE_NAME = "ucAllDisplayedProducts";
+    protected static String ALL_SKUS_ATTRIBUTE_NAME = "ucAllDisplayedSkus";
     protected static String ORIGINAL_QUERY_ATTRIBUTE_NAME = "originalQuery";
 
-    @Resource(name = "blSearchService")
+    @Resource(name = "ucSearchService")
     protected SearchService searchService;
     
-    @Resource(name = "blSearchFacetDTOService")
+    @Resource(name = "ucSearchFacetDTOService")
     protected SearchFacetDTOService facetService;
     
     @Autowired(required = false)
-    @Qualifier("blCategoryDeepLinkService")
+    @Qualifier("ucCategoryDeepLinkService")
     protected DeepLinkService<Category> deepLinkService;
 
-    @Resource(name = "blTemplateOverrideExtensionManager")
+    @Resource(name = "ucTemplateOverrideExtensionManager")
     protected TemplateOverrideExtensionManager templateOverrideManager;
 
     @Override
@@ -95,7 +95,7 @@ public class BroadleafCategoryController extends BroadleafAbstractController imp
             String fieldName = request.getParameter("facetField");
             List<String> activeFieldFilters = new ArrayList<String>();
             Map<String, String[]> parameters = new HashMap<String, String[]>(request.getParameterMap());
-            parameters.remove("blLocaleCode");
+            parameters.remove("ucLocaleCode");
             
             for (Iterator<Entry<String,String[]>> iter = parameters.entrySet().iterator(); iter.hasNext();){
                 Map.Entry<String, String[]> entry = iter.next();
@@ -131,7 +131,7 @@ public class BroadleafCategoryController extends BroadleafAbstractController imp
             if (request.getParameterMap().containsKey("q")) {
                 model.addObject(ORIGINAL_QUERY_ATTRIBUTE_NAME, request.getParameter("q"));
             }
-            model.addObject("BLC_PAGE_TYPE", "category");
+            model.addObject("UC_PAGE_TYPE", "category");
             if (result.getProducts() != null) {
                 model.addObject(ALL_PRODUCTS_ATTRIBUTE_NAME, new HashSet<Product>(result.getProducts()));
             }
@@ -170,7 +170,7 @@ public class BroadleafCategoryController extends BroadleafAbstractController imp
 
     @Override
     public String getExpectedTemplateName(HttpServletRequest request) {
-        BroadleafRequestContext context = BroadleafRequestContext.getBroadleafRequestContext();
+        UltraRequestContext context = UltraRequestContext.getUltraRequestContext();
         if (context != null) {
             Category category = (Category) context.getRequest().getAttribute(CATEGORY_ATTRIBUTE_NAME);
             if (category != null && category.getDisplayTemplate() != null) {

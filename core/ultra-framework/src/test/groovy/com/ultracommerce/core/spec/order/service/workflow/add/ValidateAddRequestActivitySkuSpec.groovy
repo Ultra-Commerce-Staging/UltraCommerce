@@ -1,41 +1,41 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.spec.order.service.workflow.add
+package com.ultracommerce.core.spec.order.service.workflow.add
 
-import org.broadleafcommerce.core.catalog.domain.ProductImpl
-import org.broadleafcommerce.core.catalog.domain.ProductOption
-import org.broadleafcommerce.core.catalog.domain.ProductOptionImpl
-import org.broadleafcommerce.core.catalog.domain.ProductOptionValueImpl
-import org.broadleafcommerce.core.catalog.domain.ProductOptionXrefImpl
-import org.broadleafcommerce.core.catalog.domain.Sku
-import org.broadleafcommerce.core.catalog.domain.SkuImpl
-import org.broadleafcommerce.core.catalog.domain.SkuProductOptionValueXref
-import org.broadleafcommerce.core.catalog.domain.SkuProductOptionValueXrefImpl
-import org.broadleafcommerce.core.catalog.service.CatalogService
-import org.broadleafcommerce.core.catalog.service.type.ProductOptionValidationStrategyType
-import org.broadleafcommerce.core.catalog.service.type.ProductOptionValidationType
-import org.broadleafcommerce.core.order.service.OrderItemService
-import org.broadleafcommerce.core.order.service.OrderService
-import org.broadleafcommerce.core.order.service.ProductOptionValidationService
-import org.broadleafcommerce.core.order.service.ProductOptionValidationServiceImpl
-import org.broadleafcommerce.core.order.service.exception.RequiredAttributeNotProvidedException
-import org.broadleafcommerce.core.order.service.workflow.add.ValidateAddRequestActivity
-import org.broadleafcommerce.core.workflow.ActivityMessages
+import com.ultracommerce.core.catalog.domain.ProductImpl
+import com.ultracommerce.core.catalog.domain.ProductOption
+import com.ultracommerce.core.catalog.domain.ProductOptionImpl
+import com.ultracommerce.core.catalog.domain.ProductOptionValueImpl
+import com.ultracommerce.core.catalog.domain.ProductOptionXrefImpl
+import com.ultracommerce.core.catalog.domain.Sku
+import com.ultracommerce.core.catalog.domain.SkuImpl
+import com.ultracommerce.core.catalog.domain.SkuProductOptionValueXref
+import com.ultracommerce.core.catalog.domain.SkuProductOptionValueXrefImpl
+import com.ultracommerce.core.catalog.service.CatalogService
+import com.ultracommerce.core.catalog.service.type.ProductOptionValidationStrategyType
+import com.ultracommerce.core.catalog.service.type.ProductOptionValidationType
+import com.ultracommerce.core.order.service.OrderItemService
+import com.ultracommerce.core.order.service.OrderService
+import com.ultracommerce.core.order.service.ProductOptionValidationService
+import com.ultracommerce.core.order.service.ProductOptionValidationServiceImpl
+import com.ultracommerce.core.order.service.exception.RequiredAttributeNotProvidedException
+import com.ultracommerce.core.order.service.workflow.add.ValidateAddRequestActivity
+import com.ultracommerce.core.workflow.ActivityMessages
 import org.springframework.core.env.Environment
 
 /**

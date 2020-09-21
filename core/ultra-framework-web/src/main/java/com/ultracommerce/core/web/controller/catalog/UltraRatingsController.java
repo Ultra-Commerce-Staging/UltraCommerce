@@ -1,38 +1,38 @@
 /*
  * #%L
- * BroadleafCommerce Framework Web
+ * UltraCommerce Framework Web
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.web.controller.catalog;
+package com.ultracommerce.core.web.controller.catalog;
 
-import org.broadleafcommerce.core.catalog.domain.Product;
-import org.broadleafcommerce.core.catalog.service.CatalogService;
-import org.broadleafcommerce.core.rating.domain.ReviewDetail;
-import org.broadleafcommerce.core.rating.service.RatingService;
-import org.broadleafcommerce.core.rating.service.type.RatingType;
-import org.broadleafcommerce.profile.web.core.CustomerState;
+import com.ultracommerce.core.catalog.domain.Product;
+import com.ultracommerce.core.catalog.service.CatalogService;
+import com.ultracommerce.core.rating.domain.ReviewDetail;
+import com.ultracommerce.core.rating.service.RatingService;
+import com.ultracommerce.core.rating.service.type.RatingType;
+import com.ultracommerce.profile.web.core.CustomerState;
 import org.springframework.ui.Model;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
-public class BroadleafRatingsController {
+public class UltraRatingsController {
 
-    @Resource(name = "blRatingService")
+    @Resource(name = "ucRatingService")
     protected RatingService ratingService;
-    @Resource(name = "blCatalogService")
+    @Resource(name = "ucCatalogService")
     protected CatalogService catalogService;
     
     protected String formView = "catalog/partials/review";

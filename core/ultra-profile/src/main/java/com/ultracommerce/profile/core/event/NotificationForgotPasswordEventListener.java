@@ -1,33 +1,33 @@
 /*
  * #%L
- * BroadleafCommerce Profile
+ * UltraCommerce Profile
  * %%
- * Copyright (C) 2009 - 2017 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.profile.core.event;
+package com.ultracommerce.profile.core.event;
 
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.event.AbstractBroadleafApplicationEventListener;
-import org.broadleafcommerce.common.exception.ServiceException;
-import org.broadleafcommerce.common.notification.service.NotificationDispatcher;
-import org.broadleafcommerce.common.notification.service.type.EmailNotification;
-import org.broadleafcommerce.common.notification.service.type.NotificationEventType;
-import org.broadleafcommerce.common.notification.service.type.SMSNotification;
-import org.broadleafcommerce.profile.core.domain.Customer;
-import org.broadleafcommerce.profile.core.service.CustomerService;
+import com.ultracommerce.common.event.AbstractUltraApplicationEventListener;
+import com.ultracommerce.common.exception.ServiceException;
+import com.ultracommerce.common.notification.service.NotificationDispatcher;
+import com.ultracommerce.common.notification.service.type.EmailNotification;
+import com.ultracommerce.common.notification.service.type.NotificationEventType;
+import com.ultracommerce.common.notification.service.type.SMSNotification;
+import com.ultracommerce.profile.core.domain.Customer;
+import com.ultracommerce.profile.core.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -37,8 +37,8 @@ import java.util.Map;
 /**
  * @author Nick Crum ncrum
  */
-@Component("blNotificationForgotPasswordEventListener")
-public class NotificationForgotPasswordEventListener extends AbstractBroadleafApplicationEventListener<ForgotPasswordEvent> {
+@Component("ucNotificationForgotPasswordEventListener")
+public class NotificationForgotPasswordEventListener extends AbstractUltraApplicationEventListener<ForgotPasswordEvent> {
 
     protected static final String TOKEN_CONTEXT_KEY = "token";
     protected static final String RESET_PASSWORD_URL_CONTEXT_KEY = "resetPasswordUrl";
@@ -46,11 +46,11 @@ public class NotificationForgotPasswordEventListener extends AbstractBroadleafAp
     protected final Log LOG = LogFactory.getLog(NotificationForgotPasswordEventListener.class);
 
     @Autowired
-    @Qualifier("blCustomerService")
+    @Qualifier("ucCustomerService")
     protected CustomerService customerService;
 
     @Autowired
-    @Qualifier("blNotificationDispatcher")
+    @Qualifier("ucNotificationDispatcher")
     protected NotificationDispatcher notificationDispatcher;
 
     @Override

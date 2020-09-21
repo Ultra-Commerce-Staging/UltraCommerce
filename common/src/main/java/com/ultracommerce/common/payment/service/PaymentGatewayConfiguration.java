@@ -1,24 +1,24 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
 
-package org.broadleafcommerce.common.payment.service;
+package com.ultracommerce.common.payment.service;
 
-import org.broadleafcommerce.common.payment.PaymentGatewayType;
+import com.ultracommerce.common.payment.PaymentGatewayType;
 
 /**
  * <p>This API is intended to define the specific configuration parameters
@@ -35,7 +35,7 @@ public interface PaymentGatewayConfiguration {
      *
      * <p>This property is intended to be configurable</p>
      *
-     * @see {@link org.broadleafcommerce.common.payment.PaymentTransactionType}
+     * @see {@link com.ultracommerce.common.payment.PaymentTransactionType}
      */
     public boolean isPerformAuthorizeAndCapture();
 
@@ -46,7 +46,7 @@ public interface PaymentGatewayConfiguration {
      *
      * <p>This property is intended to be configurable</p>
      *
-     * @see {@link org.broadleafcommerce.common.payment.PaymentTransactionType}
+     * @see {@link com.ultracommerce.common.payment.PaymentTransactionType}
      */
     public void setPerformAuthorizeAndCapture(boolean performAuthorizeAndCapture);
 
@@ -112,7 +112,7 @@ public interface PaymentGatewayConfiguration {
      * 
      * <pre>
      * {@code
-     * <bean class="com.broadleafcommerce.payment.service.gateway.BraintreeGatewayType" />
+     * <bean class="com.ultracommerce.payment.service.gateway.BraintreeGatewayType" />
      * }
      * </pre>
      * </p>

@@ -1,38 +1,38 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.openadmin.server.factory;
+package com.ultracommerce.openadmin.server.factory;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.broadleafcommerce.common.exception.ExceptionHelper;
-import org.broadleafcommerce.common.presentation.client.OperationType;
-import org.broadleafcommerce.common.presentation.client.PersistencePerspectiveItemType;
-import org.broadleafcommerce.common.util.dao.DynamicDaoHelper;
-import org.broadleafcommerce.common.util.dao.DynamicDaoHelperImpl;
-import org.broadleafcommerce.openadmin.dto.OperationTypes;
-import org.broadleafcommerce.openadmin.dto.PersistencePackage;
-import org.broadleafcommerce.openadmin.dto.PersistencePerspective;
-import org.broadleafcommerce.openadmin.dto.SectionCrumb;
-import org.broadleafcommerce.openadmin.server.domain.PersistencePackageRequest;
-import org.broadleafcommerce.openadmin.server.security.domain.AdminSection;
-import org.broadleafcommerce.openadmin.server.security.service.navigation.AdminNavigationService;
-import org.broadleafcommerce.openadmin.server.service.persistence.PersistenceManager;
-import org.broadleafcommerce.openadmin.server.service.persistence.PersistenceManagerFactory;
+import com.ultracommerce.common.exception.ExceptionHelper;
+import com.ultracommerce.common.presentation.client.OperationType;
+import com.ultracommerce.common.presentation.client.PersistencePerspectiveItemType;
+import com.ultracommerce.common.util.dao.DynamicDaoHelper;
+import com.ultracommerce.common.util.dao.DynamicDaoHelperImpl;
+import com.ultracommerce.openadmin.dto.OperationTypes;
+import com.ultracommerce.openadmin.dto.PersistencePackage;
+import com.ultracommerce.openadmin.dto.PersistencePerspective;
+import com.ultracommerce.openadmin.dto.SectionCrumb;
+import com.ultracommerce.openadmin.server.domain.PersistencePackageRequest;
+import com.ultracommerce.openadmin.server.security.domain.AdminSection;
+import com.ultracommerce.openadmin.server.security.service.navigation.AdminNavigationService;
+import com.ultracommerce.openadmin.server.service.persistence.PersistenceManager;
+import com.ultracommerce.openadmin.server.service.persistence.PersistenceManagerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -43,10 +43,10 @@ import javax.persistence.EntityManager;
 /**
  * @author Andre Azzolini (apazzolini)
  */
-@Service("blPersistencePackageFactory")
+@Service("ucPersistencePackageFactory")
 public class PersistencePackageFactoryImpl implements PersistencePackageFactory {
 
-    @Resource(name = "blAdminNavigationService")
+    @Resource(name = "ucAdminNavigationService")
     protected AdminNavigationService adminNavigationService;
 
     protected DynamicDaoHelper dynamicDaoHelper = new DynamicDaoHelperImpl();

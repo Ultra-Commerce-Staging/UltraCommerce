@@ -1,26 +1,26 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-(function($, BLCAdmin) {
+(function($, UCAdmin) {
     
     var dropdownAsToggle = true;
     var activeClass = 'active';
 
-    BLCAdmin.listGrid.filter = {
+    UCAdmin.listGrid.filter = {
         // close all dropdowns except for the dropdown passed
         closeDropdowns : function (dropdown) {
             $('.listgrid-headerBtn.dropdown').find('ul').not(dropdown).removeClass('show-dropdown');
@@ -48,8 +48,8 @@
             $context.closest('thead').find('input.sort-direction').removeClass('active').val('');
             $context.closest('thead').find('input.sort-property').removeClass('active');
             //remove the URL parameters that deal with sorts
-            BLCAdmin.history.replaceUrlParameter('sortProperty', null);
-            BLCAdmin.history.replaceUrlParameter('sortDirection', null);
+            UCAdmin.history.replaceUrlParameter('sortProperty', null);
+            UCAdmin.history.replaceUrlParameter('sortDirection', null);
         },
         
         initialize : function(context) {
@@ -64,7 +64,7 @@
                 return;
             }
 
-            var params = BLCAdmin.history.getUrlParameters();
+            var params = UCAdmin.history.getUrlParameters();
             if (!params) {
                 params = context.find('.listgrid-header-wrapper table').data('currentparams');
                 for (key in params) {
@@ -117,7 +117,7 @@
         }
     };
     
-})(jQuery, BLCAdmin);
+})(jQuery, UCAdmin);
 
 $(document).ready(function() {
     /**
@@ -129,7 +129,7 @@ $(document).ready(function() {
         var ascending = $(this).hasClass('listgrid-icon-up');
 
         //reset any of the currently active sorts on all the fields in the grid
-        BLCAdmin.listGrid.filter.clearActiveSorts($(this));
+        UCAdmin.listGrid.filter.clearActiveSorts($(this));
         
         if ((!descending && !ascending) || ascending) {
             // If we're ascending, we now want to descend
@@ -207,7 +207,7 @@ $(document).ready(function() {
 
         // Dates need their value parsed to the appropriate server value
         $(this).closest('thead').find('div.filter-fields input.datepicker').each(function(i, e) {
-            var serverVal = BLCAdmin.dates.getServerDate($(e).val());
+            var serverVal = UCAdmin.dates.getServerDate($(e).val());
             $(e).data('overrideval', serverVal);
         });
         
@@ -297,12 +297,12 @@ $(document).ready(function() {
 
         $(this).closest('.listgrid-container').find('.mCSB_container').css('top', '0px');
         $(this).closest('.listgrid-container').find('.listgrid-body-wrapper').mCustomScrollbar('update');
-        var oldParams = BLCAdmin.history.getUrlParameters();
+        var oldParams = UCAdmin.history.getUrlParameters();
         if (oldParams == null) {
             oldParams = {};
         }
         oldParams['isLookup'] = $(this).closest('.modal').length > 0;
-        var url = BLC.buildUrlWithParams($(this).closest('.filter-fields').data('action'), oldParams);
+        var url = UC.buildUrlWithParams($(this).closest('.filter-fields').data('action'), oldParams);
 
         url = getFilteredParams($(this), url);
 
@@ -310,25 +310,25 @@ $(document).ready(function() {
         $('body').trigger(urlEvent, [url, $tbody]);
         url = urlEvent.resultUrl || url;
 
-        BLCAdmin.listGrid.showLoadingSpinner($tbody, $tbody.closest('.mCustomScrollBox').position().top + 3);
-        BLC.ajax({
+        UCAdmin.listGrid.showLoadingSpinner($tbody, $tbody.closest('.mCustomScrollBox').position().top + 3);
+        UC.ajax({
             url: url,
             type: "GET",
             data: $(nonBlankInputs).serialize()
         }, function(data) {
             if ($tbody.data('listgridtype') == 'main') {
                 $(nonBlankInputs).each(function(index, input) {
-                    BLCAdmin.history.replaceUrlParameter(input.name, input.value);
+                    UCAdmin.history.replaceUrlParameter(input.name, input.value);
                 });
             }
-            BLCAdmin.listGrid.hideLoadingSpinner($tbody);
+            UCAdmin.listGrid.hideLoadingSpinner($tbody);
 
             if ($tbody.data('listgridtype') == 'asset_grid') {
-                BLCAdmin.listGrid.replaceRelatedCollection($(data).find('div.asset-listgrid div.listgrid-header-wrapper'), null, {isRefresh: false});
+                UCAdmin.listGrid.replaceRelatedCollection($(data).find('div.asset-listgrid div.listgrid-header-wrapper'), null, {isRefresh: false});
             } else if ($tbody.data('listgridtype') == 'tree') {
-                BLCAdmin.listGrid.replaceRelatedCollection($(data).find('div.tree-search-wrapper div.listgrid-header-wrapper'), null, {isRefresh: false});
+                UCAdmin.listGrid.replaceRelatedCollection($(data).find('div.tree-search-wrapper div.listgrid-header-wrapper'), null, {isRefresh: false});
             } else {
-                BLCAdmin.listGrid.replaceRelatedCollection($(data).find('div.listgrid-header-wrapper'), null, {isRefresh: false});
+                UCAdmin.listGrid.replaceRelatedCollection($(data).find('div.listgrid-header-wrapper'), null, {isRefresh: false});
             }
             $inputs.each(function(index, input) {
                 $(input).removeAttr('name');
@@ -387,7 +387,7 @@ $(document).ready(function() {
 
         $firstInput.val(search);
 
-        var oldParams = BLCAdmin.history.getUrlParameters();
+        var oldParams = UCAdmin.history.getUrlParameters();
         if (oldParams == null) {
             oldParams = {};
         }
@@ -401,14 +401,14 @@ $(document).ready(function() {
             delete oldParams[$firstInput.data('name')];
         }
 
-        BLC.ajax({
-            url: BLC.buildUrlWithParams($this.closest('form').attr('action'), oldParams),
+        UC.ajax({
+            url: UC.buildUrlWithParams($this.closest('form').attr('action'), oldParams),
             type: "GET"
         }, function(data) {
-            if ($(data).find('table').length === 1 && (BLCAdmin.currentModal() === undefined || BLCAdmin.currentModal().length === 0)) {
-                BLCAdmin.history.replaceUrlParameter('startIndex');
+            if ($(data).find('table').length === 1 && (UCAdmin.currentModal() === undefined || UCAdmin.currentModal().length === 0)) {
+                UCAdmin.history.replaceUrlParameter('startIndex');
                 for (key in oldParams) {
-                    BLCAdmin.history.replaceUrlParameter(key, oldParams[key]);
+                    UCAdmin.history.replaceUrlParameter(key, oldParams[key]);
                 }
             }
             var $relatedListGrid;
@@ -423,16 +423,16 @@ $(document).ready(function() {
             }
 
             if (search === "") {
-                BLCAdmin.history.replaceUrlParameter($firstInput.data('name'), null);
+                UCAdmin.history.replaceUrlParameter($firstInput.data('name'), null);
             }
 
-            BLCAdmin.listGrid.replaceRelatedCollection($relatedListGrid, null, { isRefresh : false});
+            UCAdmin.listGrid.replaceRelatedCollection($relatedListGrid, null, { isRefresh : false});
             $firstInput.trigger('input');
 
             // update the filter builder
             var hiddenId = $('.filter-button').data('hiddenid');
-            var filterBuilder = BLCAdmin.filterBuilders.getFilterBuilderByHiddenId(hiddenId);
-            BLCAdmin.filterBuilders.addExistingFilters(filterBuilder);
+            var filterBuilder = UCAdmin.filterBuilders.getFilterBuilderByHiddenId(hiddenId);
+            UCAdmin.filterBuilders.addExistingFilters(filterBuilder);
 
             $this.html($contents);
             $this.addClass('search-button').removeClass('disabled');
@@ -445,7 +445,7 @@ $(document).ready(function() {
         var $filterButton = $container.find('.filter-button');
         var hiddenId = $filterButton.data('hiddenid');
         if (hiddenId) {
-            var filteredValues = BLCAdmin.filterBuilders.getFiltersAsURLParams(hiddenId);
+            var filteredValues = UCAdmin.filterBuilders.getFiltersAsURLParams(hiddenId);
             filteredValues = $.param(filteredValues);
             if (filteredValues.length > 0) {
                 if (url.indexOf('?') >= 0) {

@@ -1,37 +1,37 @@
 /*
  * #%L
- * BroadleafCommerce Integration
+ * UltraCommerce Integration
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.offer.service;
+package com.ultracommerce.core.offer.service;
 
-import org.broadleafcommerce.common.time.SystemTime;
-import org.broadleafcommerce.core.offer.dao.OfferCodeDao;
-import org.broadleafcommerce.core.offer.dao.OfferDao;
-import org.broadleafcommerce.core.offer.domain.Offer;
-import org.broadleafcommerce.core.offer.domain.OfferCode;
-import org.broadleafcommerce.core.offer.domain.OfferItemCriteria;
-import org.broadleafcommerce.core.offer.domain.OfferItemCriteriaImpl;
-import org.broadleafcommerce.core.offer.domain.OfferQualifyingCriteriaXref;
-import org.broadleafcommerce.core.offer.domain.OfferQualifyingCriteriaXrefImpl;
-import org.broadleafcommerce.core.offer.domain.OfferTargetCriteriaXref;
-import org.broadleafcommerce.core.offer.domain.OfferTargetCriteriaXrefImpl;
-import org.broadleafcommerce.core.offer.service.type.OfferAdjustmentType;
-import org.broadleafcommerce.core.offer.service.type.OfferDiscountType;
-import org.broadleafcommerce.core.offer.service.type.OfferItemRestrictionRuleType;
-import org.broadleafcommerce.core.offer.service.type.OfferType;
+import com.ultracommerce.common.time.SystemTime;
+import com.ultracommerce.core.offer.dao.OfferCodeDao;
+import com.ultracommerce.core.offer.dao.OfferDao;
+import com.ultracommerce.core.offer.domain.Offer;
+import com.ultracommerce.core.offer.domain.OfferCode;
+import com.ultracommerce.core.offer.domain.OfferItemCriteria;
+import com.ultracommerce.core.offer.domain.OfferItemCriteriaImpl;
+import com.ultracommerce.core.offer.domain.OfferQualifyingCriteriaXref;
+import com.ultracommerce.core.offer.domain.OfferQualifyingCriteriaXrefImpl;
+import com.ultracommerce.core.offer.domain.OfferTargetCriteriaXref;
+import com.ultracommerce.core.offer.domain.OfferTargetCriteriaXrefImpl;
+import com.ultracommerce.core.offer.service.type.OfferAdjustmentType;
+import com.ultracommerce.core.offer.service.type.OfferDiscountType;
+import com.ultracommerce.core.offer.service.type.OfferItemRestrictionRuleType;
+import com.ultracommerce.core.offer.service.type.OfferType;
 
 import java.math.BigDecimal;
 import java.util.Calendar;

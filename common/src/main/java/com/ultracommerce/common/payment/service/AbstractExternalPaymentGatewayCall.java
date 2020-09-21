@@ -1,26 +1,26 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
 
-package org.broadleafcommerce.common.payment.service;
+package com.ultracommerce.common.payment.service;
 
-import org.broadleafcommerce.common.vendor.service.exception.PaymentException;
-import org.broadleafcommerce.common.vendor.service.monitor.ServiceStatusDetectable;
-import org.broadleafcommerce.common.vendor.service.type.ServiceStatusType;
+import com.ultracommerce.common.vendor.service.exception.PaymentException;
+import com.ultracommerce.common.vendor.service.monitor.ServiceStatusDetectable;
+import com.ultracommerce.common.vendor.service.type.ServiceStatusType;
 
 /**
  * <p>All payment gateway classes that intend to make an external call, either manually
@@ -34,8 +34,8 @@ import org.broadleafcommerce.common.vendor.service.type.ServiceStatusType;
  * <p>This allows anyone using the framework to configure the ServiceMonitor AOP hooks
  * and detect any outages to provide (email/logging) feedback when necessary.</p>
  *
- * @see org.broadleafcommerce.common.vendor.service.monitor.ServiceMonitor
- * @see org.broadleafcommerce.common.vendor.service.monitor.StatusHandler
+ * @see com.ultracommerce.common.vendor.service.monitor.ServiceMonitor
+ * @see com.ultracommerce.common.vendor.service.monitor.StatusHandler
  * @see ServiceStatusDetectable
  *
  * @author Elbert Bautista (elbertbautista)

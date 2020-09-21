@@ -1,25 +1,25 @@
 /*
  * #%L
- * BroadleafCommerce Profile
+ * UltraCommerce Profile
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.profile.core.dao;
+package com.ultracommerce.profile.core.dao;
 
-import org.broadleafcommerce.common.persistence.EntityConfiguration;
-import org.broadleafcommerce.profile.core.domain.CustomerAddress;
-import org.broadleafcommerce.profile.core.domain.CustomerAddressImpl;
+import com.ultracommerce.common.persistence.EntityConfiguration;
+import com.ultracommerce.profile.core.domain.CustomerAddress;
+import com.ultracommerce.profile.core.domain.CustomerAddressImpl;
 import org.hibernate.jpa.QueryHints;
 import org.springframework.stereotype.Repository;
 
@@ -36,19 +36,19 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-@Repository("blCustomerAddressDao")
+@Repository("ucCustomerAddressDao")
 public class CustomerAddressDaoImpl implements CustomerAddressDao {
 
-    @PersistenceContext(unitName = "blPU")
+    @PersistenceContext(unitName = "ucPU")
     protected EntityManager em;
 
-    @Resource(name = "blEntityConfiguration")
+    @Resource(name = "ucEntityConfiguration")
     protected EntityConfiguration entityConfiguration;
 
     @Override
     @SuppressWarnings("unchecked")
     public List<CustomerAddress> readActiveCustomerAddressesByCustomerId(Long customerId) {
-        Query query = em.createNamedQuery("BC_READ_ACTIVE_CUSTOMER_ADDRESSES_BY_CUSTOMER_ID");
+        Query query = em.createNamedQuery("UC_READ_ACTIVE_CUSTOMER_ADDRESSES_BY_CUSTOMER_ID");
         query.setParameter("customerId", customerId);
         query.setParameter("archived", 'N');
         return query.getResultList();
@@ -132,10 +132,10 @@ public class CustomerAddressDaoImpl implements CustomerAddressDao {
     @SuppressWarnings("unchecked")
     protected void clearDefaultAddressForCustomer(Long customerId) {
         // This has to be done in two queries because MySQL doesn't support updates on a table with a subquery on the same table
-        Query query = em.createNamedQuery("BC_READ_DEFAULT_ADDRESS_IDS_BY_CUSTOMER_ID");
+        Query query = em.createNamedQuery("UC_READ_DEFAULT_ADDRESS_IDS_BY_CUSTOMER_ID");
         query.setParameter("customerId", customerId);
         List<Long> addressIds = query.getResultList();
-        Query update = em.createNamedQuery("BC_CLEAR_DEFAULT_ADDRESS_BY_IDS");
+        Query update = em.createNamedQuery("UC_CLEAR_DEFAULT_ADDRESS_BY_IDS");
         update.setParameter("addressIds", addressIds);
         update.executeUpdate();
     }
@@ -151,7 +151,7 @@ public class CustomerAddressDaoImpl implements CustomerAddressDao {
     @Override
     @SuppressWarnings("unchecked")
     public CustomerAddress findDefaultCustomerAddress(Long customerId) {
-        Query query = em.createNamedQuery("BC_FIND_DEFAULT_ADDRESS_BY_CUSTOMER_ID");
+        Query query = em.createNamedQuery("UC_FIND_DEFAULT_ADDRESS_BY_CUSTOMER_ID");
         query.setParameter("customerId", customerId);
         List<CustomerAddress> customerAddresses = query.getResultList();
         return customerAddresses.isEmpty() ? null : customerAddresses.get(0);

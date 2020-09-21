@@ -1,31 +1,31 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.web.config;
+package com.ultracommerce.core.web.config;
 
-import org.broadleafcommerce.common.admin.condition.ConditionalOnNotAdmin;
-import org.broadleafcommerce.common.security.util.CookieUtils;
-import org.broadleafcommerce.common.web.filter.FilterOrdered;
-import org.broadleafcommerce.core.rule.RuleDTOConfig;
-import org.broadleafcommerce.core.web.cookie.CookieRuleFilter;
-import org.broadleafcommerce.core.web.cookie.CookieRuleRequestProcessor;
-import org.broadleafcommerce.core.web.seo.BasicSeoPropertyGeneratorImpl;
-import org.broadleafcommerce.core.web.seo.SeoPropertyGenerator;
-import org.broadleafcommerce.presentation.condition.ConditionalOnTemplating;
+import com.ultracommerce.common.admin.condition.ConditionalOnNotAdmin;
+import com.ultracommerce.common.security.util.CookieUtils;
+import com.ultracommerce.common.web.filter.FilterOrdered;
+import com.ultracommerce.core.rule.RuleDTOConfig;
+import com.ultracommerce.core.web.cookie.CookieRuleFilter;
+import com.ultracommerce.core.web.cookie.CookieRuleRequestProcessor;
+import com.ultracommerce.core.web.seo.BasicSeoPropertyGeneratorImpl;
+import com.ultracommerce.core.web.seo.SeoPropertyGenerator;
+import com.ultracommerce.presentation.condition.ConditionalOnTemplating;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -53,27 +53,27 @@ public class FrameworkWebConfig {
      * @return the RequestFilter bean
      */
     @Bean
-    public RequestContextFilter blRequestContextFilter() {
+    public RequestContextFilter ucRequestContextFilter() {
         OrderedRequestContextFilter filter = new OrderedRequestContextFilter();
         filter.setOrder(FilterOrdered.PRE_SECURITY_HIGH - 1000);
         return filter;
     }
     
     @Bean
-    public DeviceResolver blDeviceResolver() {
+    public DeviceResolver ucDeviceResolver() {
         return new LiteDeviceResolver();
     }
 
     @Bean
     @ConditionalOnTemplating
-    public List<SeoPropertyGenerator> blSeoPropertyGenerators(@Qualifier("blBasicSeoPropertyGenerator") BasicSeoPropertyGeneratorImpl basicSeo) {
+    public List<SeoPropertyGenerator> ucSeoPropertyGenerators(@Qualifier("ucBasicSeoPropertyGenerator") BasicSeoPropertyGeneratorImpl basicSeo) {
         List<SeoPropertyGenerator> generators = new ArrayList<>();
         generators.add(basicSeo);
         return generators;
     }
 
     @Bean
-    public ListFactoryBean blCookieRuleConfigs() {
+    public ListFactoryBean ucCookieRuleConfigs() {
         ListFactoryBean listFactoryBean = new ListFactoryBean();
         listFactoryBean.setSourceList(new ArrayList<RuleDTOConfig>());
         return listFactoryBean;
@@ -83,7 +83,7 @@ public class FrameworkWebConfig {
     @Autowired
     @ConditionalOnProperty("cookie.content.targeting.enabled")
     @ConditionalOnNotAdmin
-    public CookieRuleRequestProcessor blCookieRuleRequestProcessor(@Qualifier("blCookieRuleConfigs") List configs, CookieUtils cookieUtils) {
+    public CookieRuleRequestProcessor ucCookieRuleRequestProcessor(@Qualifier("ucCookieRuleConfigs") List configs, CookieUtils cookieUtils) {
         CookieRuleRequestProcessor processor = new CookieRuleRequestProcessor(configs, cookieUtils);
         return processor;
     }
@@ -92,7 +92,7 @@ public class FrameworkWebConfig {
     @Autowired
     @ConditionalOnProperty("cookie.content.targeting.enabled")
     @ConditionalOnNotAdmin
-    public CookieRuleFilter blCookieRuleFilter(@Qualifier("blCookieRuleRequestProcessor") CookieRuleRequestProcessor processor) {
+    public CookieRuleFilter ucCookieRuleFilter(@Qualifier("ucCookieRuleRequestProcessor") CookieRuleRequestProcessor processor) {
         CookieRuleFilter filter = new CookieRuleFilter(processor);
         return filter;
     }

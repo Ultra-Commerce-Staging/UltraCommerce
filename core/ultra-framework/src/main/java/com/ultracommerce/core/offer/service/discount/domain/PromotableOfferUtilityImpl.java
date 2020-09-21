@@ -1,35 +1,35 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.offer.service.discount.domain;
+package com.ultracommerce.core.offer.service.discount.domain;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.BooleanUtils;
-import org.broadleafcommerce.common.currency.domain.BroadleafCurrency;
-import org.broadleafcommerce.common.money.Money;
-import org.broadleafcommerce.common.util.Tuple;
-import org.broadleafcommerce.core.offer.domain.AdvancedOffer;
-import org.broadleafcommerce.core.offer.domain.Offer;
-import org.broadleafcommerce.core.offer.domain.OfferPriceData;
-import org.broadleafcommerce.core.offer.domain.OfferTier;
-import org.broadleafcommerce.core.offer.service.type.OfferDiscountType;
-import org.broadleafcommerce.core.offer.service.type.OfferPriceDataIdentifierType;
-import org.broadleafcommerce.core.order.domain.DiscreteOrderItem;
+import com.ultracommerce.common.currency.domain.UltraCurrency;
+import com.ultracommerce.common.money.Money;
+import com.ultracommerce.common.util.Tuple;
+import com.ultracommerce.core.offer.domain.AdvancedOffer;
+import com.ultracommerce.core.offer.domain.Offer;
+import com.ultracommerce.core.offer.domain.OfferPriceData;
+import com.ultracommerce.core.offer.domain.OfferTier;
+import com.ultracommerce.core.offer.service.type.OfferDiscountType;
+import com.ultracommerce.core.offer.service.type.OfferPriceDataIdentifierType;
+import com.ultracommerce.core.order.domain.DiscreteOrderItem;
 import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -40,7 +40,7 @@ import java.util.Objects;
 /**
  * @author Nick Crum (ncrum)
  */
-@Service("blPromotableOfferUtility")
+@Service("ucPromotableOfferUtility")
 public class PromotableOfferUtilityImpl implements PromotableOfferUtility {
 
     @Override
@@ -76,7 +76,7 @@ public class PromotableOfferUtilityImpl implements PromotableOfferUtility {
     public Money computeAdjustmentValue(PromotableCandidateFulfillmentGroupOffer promotableCandidateFulfillmentGroupOffer, PromotableFulfillmentGroup promotableFulfillmentGroup, boolean allowSalePrice) {
         Money currentPriceDetailValue = promotableFulfillmentGroup.calculatePriceWithAdjustments(allowSalePrice);
         Offer offer = promotableCandidateFulfillmentGroupOffer.getOffer();
-        BroadleafCurrency currency = promotableFulfillmentGroup.getFulfillmentGroup().getOrder().getCurrency();
+        UltraCurrency currency = promotableFulfillmentGroup.getFulfillmentGroup().getOrder().getCurrency();
         BigDecimal offerUnitValue = determineOfferUnitValue(offer, null);
         OfferDiscountType discountType = offer.getDiscountType();
         return computeAdjustmentValue(currentPriceDetailValue, offerUnitValue, currency, discountType, promotableCandidateFulfillmentGroupOffer);
@@ -96,7 +96,7 @@ public class PromotableOfferUtilityImpl implements PromotableOfferUtility {
     public Money computeAdjustmentValue(PromotableCandidateItemOffer promotableCandidateItemOffer, PromotableOrderItemPriceDetail orderItemPriceDetail, boolean allowSalePrice) {
         Money currentPriceDetailValue = orderItemPriceDetail.calculateItemUnitPriceWithAdjustments(allowSalePrice);
         PromotableOrderItem promotableOrderItem = orderItemPriceDetail.getPromotableOrderItem();
-        BroadleafCurrency currency = promotableOrderItem.getCurrency();
+        UltraCurrency currency = promotableOrderItem.getCurrency();
         Tuple<OfferDiscountType, BigDecimal> discountVariables = computeDiscountVariables(promotableCandidateItemOffer, promotableOrderItem, promotableCandidateItemOffer.calculateTargetQuantityForTieredOffer());
         return computeAdjustmentValue(currentPriceDetailValue, discountVariables.getSecond(), currency, discountVariables.getFirst(), promotableCandidateItemOffer);
     }
@@ -105,7 +105,7 @@ public class PromotableOfferUtilityImpl implements PromotableOfferUtility {
     public Money calculateSavingsForOrderItem(PromotableCandidateItemOffer promotableCandidateItemOffer, PromotableOrderItem promotableOrderItem, int qtyToReceiveSavings) {
         Offer offer = promotableCandidateItemOffer.getOffer();
         Money originalPrice = promotableOrderItem.getPriceBeforeAdjustments(offer.getApplyDiscountToSalePrice());
-        BroadleafCurrency currency = promotableOrderItem.getCurrency();
+        UltraCurrency currency = promotableOrderItem.getCurrency();
         Tuple<OfferDiscountType, BigDecimal> discountVariables = computeDiscountVariables(promotableCandidateItemOffer, promotableOrderItem, qtyToReceiveSavings);
         Money savings = computeAdjustmentValue(originalPrice, discountVariables.getSecond(), currency, discountVariables.getFirst(), promotableCandidateItemOffer);
         return savings.multiply(qtyToReceiveSavings);
@@ -142,7 +142,7 @@ public class PromotableOfferUtilityImpl implements PromotableOfferUtility {
         return null;
     }
 
-    protected Money computeAdjustmentValue(Money currentPriceDetailValue, BigDecimal offerUnitValue, BroadleafCurrency currency, OfferDiscountType discountType, PromotionRounding rounding) {
+    protected Money computeAdjustmentValue(Money currentPriceDetailValue, BigDecimal offerUnitValue, UltraCurrency currency, OfferDiscountType discountType, PromotionRounding rounding) {
         Money adjustmentValue;
         if (currency != null) {
             adjustmentValue = new Money(currency);

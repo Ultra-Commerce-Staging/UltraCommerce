@@ -1,34 +1,34 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.payment.service.type;
+package com.ultracommerce.core.payment.service.type;
 
-import org.broadleafcommerce.common.BroadleafEnumerationType;
+import com.ultracommerce.common.UltraEnumerationType;
 import java.io.Serializable;
 import java.util.LinkedHashMap;
 
 /**
- * Used to determine the status of an {@link org.broadleafcommerce.core.payment.domain.OrderPayment}
+ * Used to determine the status of an {@link com.ultracommerce.core.payment.domain.OrderPayment}
  * which is calculated based on the state of its containing
- * {@link org.broadleafcommerce.core.payment.domain.PaymentTransaction}s
+ * {@link com.ultracommerce.core.payment.domain.PaymentTransaction}s
  *
  * @author Elbert Bautista (elbertbautista)
  */
-public class OrderPaymentStatus implements Serializable, BroadleafEnumerationType {
+public class OrderPaymentStatus implements Serializable, UltraEnumerationType {
 
     private static final long serialVersionUID = 1L;
 
@@ -41,43 +41,43 @@ public class OrderPaymentStatus implements Serializable, BroadleafEnumerationTyp
     public static final OrderPaymentStatus UNDETERMINED = new OrderPaymentStatus("UNDETERMINED", "Undetermined");
 
     /**
-     * This represents the state where there is only a {@link org.broadleafcommerce.common.payment.PaymentTransactionType#UNCONFIRMED}
+     * This represents the state where there is only a {@link com.ultracommerce.common.payment.PaymentTransactionType#UNCONFIRMED}
      * transaction on the payment.
      */
     public static final OrderPaymentStatus UNCONFIRMED = new OrderPaymentStatus("UNCONFIRMED", "Unconfirmed Transaction");
 
     /**
-     * This represents the state where there is a {@link org.broadleafcommerce.common.payment.PaymentTransactionType#PENDING}
-     * transaction on the payment, but there is not yet a completed {@link org.broadleafcommerce.common.payment.PaymentTransactionType#AUTHORIZE}
-     * or {@link org.broadleafcommerce.common.payment.PaymentTransactionType#AUTHORIZE_AND_CAPTURE} transaction.
+     * This represents the state where there is a {@link com.ultracommerce.common.payment.PaymentTransactionType#PENDING}
+     * transaction on the payment, but there is not yet a completed {@link com.ultracommerce.common.payment.PaymentTransactionType#AUTHORIZE}
+     * or {@link com.ultracommerce.common.payment.PaymentTransactionType#AUTHORIZE_AND_CAPTURE} transaction.
      */
     public static final OrderPaymentStatus PENDING = new OrderPaymentStatus("PENDING", "Pending Charge");
 
     /**
-     * This is equivalent to having a successful {@link org.broadleafcommerce.common.payment.PaymentTransactionType#AUTHORIZE}
+     * This is equivalent to having a successful {@link com.ultracommerce.common.payment.PaymentTransactionType#AUTHORIZE}
      * transaction on the payment, but there are no transactions indicating that payment has been captured.
      */
     public static final OrderPaymentStatus AUTHORIZED = new OrderPaymentStatus("AUTHORIZED", "Authorized");
 
     /**
-     * This is equivalent to having a successful {@link org.broadleafcommerce.common.payment.PaymentTransactionType#AUTHORIZE_AND_CAPTURE}
-     * transaction on the payment OR all the partial {@link org.broadleafcommerce.common.payment.PaymentTransactionType#CAPTURE}
+     * This is equivalent to having a successful {@link com.ultracommerce.common.payment.PaymentTransactionType#AUTHORIZE_AND_CAPTURE}
+     * transaction on the payment OR all the partial {@link com.ultracommerce.common.payment.PaymentTransactionType#CAPTURE}
      * transaction amounts equal the original order payment transaction,
      * but there are no transactions indicating that payment has had any refunds issued against it.
      */
     public static final OrderPaymentStatus FULLY_CAPTURED = new OrderPaymentStatus("FULLY_CAPTURED", "Fully Captured");
 
     /**
-     * This is equivalent to having a successful {@link org.broadleafcommerce.common.payment.PaymentTransactionType#AUTHORIZE_AND_CAPTURE}
-     * OR one or more {@link org.broadleafcommerce.common.payment.PaymentTransactionType#CAPTURE} transactions which
+     * This is equivalent to having a successful {@link com.ultracommerce.common.payment.PaymentTransactionType#AUTHORIZE_AND_CAPTURE}
+     * OR one or more {@link com.ultracommerce.common.payment.PaymentTransactionType#CAPTURE} transactions which
      * may have zero or more refund transactions issued against it.
      */
     public static final OrderPaymentStatus PARTIALLY_COMPLETE = new OrderPaymentStatus("PARTIALLY_COMPLETE", "Partially Complete");
 
     /**
      * This represents a completed state for this order payment wherein no more action can be performed on the original transaction.
-     * Specifically, if the transaction log contains a successful {@link org.broadleafcommerce.common.payment.PaymentTransactionType#REVERSE_AUTH},
-     * {@link org.broadleafcommerce.common.payment.PaymentTransactionType#VOID}, {@link org.broadleafcommerce.common.payment.PaymentTransactionType#DETACHED_CREDIT}
+     * Specifically, if the transaction log contains a successful {@link com.ultracommerce.common.payment.PaymentTransactionType#REVERSE_AUTH},
+     * {@link com.ultracommerce.common.payment.PaymentTransactionType#VOID}, {@link com.ultracommerce.common.payment.PaymentTransactionType#DETACHED_CREDIT}
      * or the total transaction amount is equal to all the refund transactions.
      */
     public static final OrderPaymentStatus COMPLETE = new OrderPaymentStatus("Complete", "Complete");

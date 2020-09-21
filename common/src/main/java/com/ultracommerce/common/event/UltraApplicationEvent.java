@@ -1,23 +1,23 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.event;
+package com.ultracommerce.common.event;
 
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
+import com.ultracommerce.common.web.UltraRequestContext;
 import org.springframework.context.ApplicationEvent;
 
 import java.util.Collections;
@@ -25,16 +25,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Base abstract ApplicationEvent that provides a marker for Broadleaf events and provides a default 
+ * Base abstract ApplicationEvent that provides a marker for Ultra events and provides a default 
  * context map. 
  * 
- * @see <code>org.broadleafcommerce.common.event.BroadleafApplicationEventMultiCaster</code>
- * @see <code>org.broadleafcommerce.common.event.BroadleafApplicationListener</code>
+ * @see <code>com.ultracommerce.common.event.UltraApplicationEventMultiCaster</code>
+ * @see <code>com.ultracommerce.common.event.UltraApplicationListener</code>
  * 
  * @author Kelly Tisdell
  *
  */
-public abstract class BroadleafApplicationEvent extends ApplicationEvent {
+public abstract class UltraApplicationEvent extends ApplicationEvent {
 
 	private static final long serialVersionUID = 1L;
 
@@ -49,33 +49,33 @@ public abstract class BroadleafApplicationEvent extends ApplicationEvent {
 	
 	protected transient final Map<String, Object> context = Collections.synchronizedMap(new HashMap<String, Object>());
 
-	public BroadleafApplicationEvent(Object source) {
+	public UltraApplicationEvent(Object source) {
 		super(source);
 
-		BroadleafRequestContext ctx = BroadleafRequestContext.getBroadleafRequestContext();
+		UltraRequestContext ctx = UltraRequestContext.getUltraRequestContext();
 		if (ctx != null) {
 			if (ctx.getNonPersistentSite() != null) {
-				context.put(BroadleafApplicationEvent.ContextVars.SITE_ID, ctx.getNonPersistentSite().getId());
+				context.put(UltraApplicationEvent.ContextVars.SITE_ID, ctx.getNonPersistentSite().getId());
 			}
 
 			if (ctx.getCurrentCatalog() != null) {
-				context.put(BroadleafApplicationEvent.ContextVars.CATALOG_ID, ctx.getCurrentCatalog().getId());
+				context.put(UltraApplicationEvent.ContextVars.CATALOG_ID, ctx.getCurrentCatalog().getId());
 			}
 
 			if (ctx.getCurrentProfile() != null) {
-				context.put(BroadleafApplicationEvent.ContextVars.PROFILE_ID, ctx.getCurrentProfile().getId());
+				context.put(UltraApplicationEvent.ContextVars.PROFILE_ID, ctx.getCurrentProfile().getId());
 			}
 
 			if (ctx.getLocale() != null) {
-				context.put(BroadleafApplicationEvent.ContextVars.LOCALE_CODE, ctx.getLocale().getLocaleCode());
+				context.put(UltraApplicationEvent.ContextVars.LOCALE_CODE, ctx.getLocale().getLocaleCode());
 			}
 
-			if (ctx.getBroadleafCurrency() != null) {
-				context.put(BroadleafApplicationEvent.ContextVars.CURRENCY_CODE, ctx.getBroadleafCurrency().getCurrencyCode());
+			if (ctx.getUltraCurrency() != null) {
+				context.put(UltraApplicationEvent.ContextVars.CURRENCY_CODE, ctx.getUltraCurrency().getCurrencyCode());
 			}
 
 			if (ctx.getTimeZone() != null) {
-				context.put(BroadleafApplicationEvent.ContextVars.TIMEZONE_ID, ctx.getTimeZone().getID());
+				context.put(UltraApplicationEvent.ContextVars.TIMEZONE_ID, ctx.getTimeZone().getID());
 			}
 		}
 	}

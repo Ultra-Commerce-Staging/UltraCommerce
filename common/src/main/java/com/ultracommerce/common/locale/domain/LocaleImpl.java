@@ -1,30 +1,30 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.locale.domain;
+package com.ultracommerce.common.locale.domain;
 
-import org.broadleafcommerce.common.admin.domain.AdminMainEntity;
-import org.broadleafcommerce.common.currency.domain.BroadleafCurrency;
-import org.broadleafcommerce.common.currency.domain.BroadleafCurrencyImpl;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransform;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformMember;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformTypes;
-import org.broadleafcommerce.common.presentation.AdminPresentation;
-import org.broadleafcommerce.common.presentation.AdminPresentationClass;
+import com.ultracommerce.common.admin.domain.AdminMainEntity;
+import com.ultracommerce.common.currency.domain.UltraCurrency;
+import com.ultracommerce.common.currency.domain.UltraCurrencyImpl;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransform;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransformMember;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransformTypes;
+import com.ultracommerce.common.presentation.AdminPresentation;
+import com.ultracommerce.common.presentation.AdminPresentationClass;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -43,8 +43,8 @@ import javax.persistence.Transient;
  */
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "BLC_LOCALE")
-@Cache(usage= CacheConcurrencyStrategy.NONSTRICT_READ_WRITE, region="blCMSElements")
+@Table(name = "UC_LOCALE")
+@Cache(usage= CacheConcurrencyStrategy.NONSTRICT_READ_WRITE, region="ucCMSElements")
 @AdminPresentationClass(friendlyName = "LocaleImpl_baseLocale")
 @DirectCopyTransform({
         @DirectCopyTransformMember(templateTokens = DirectCopyTransformTypes.MULTITENANT_SITE),
@@ -73,12 +73,12 @@ public class LocaleImpl implements Locale, AdminMainEntity {
         prominent = false, gridOrder = 3)
     protected Boolean defaultFlag = false;
 
-    @ManyToOne(targetEntity = BroadleafCurrencyImpl.class)
+    @ManyToOne(targetEntity = UltraCurrencyImpl.class)
     @JoinColumn(name = "CURRENCY_CODE")
     @AdminPresentation(friendlyName = "LocaleImpl_Currency", order = 4, 
         group = "LocaleImpl_Details", 
         prominent = false)
-    protected BroadleafCurrency defaultCurrency;
+    protected UltraCurrency defaultCurrency;
 
     @Column (name = "USE_IN_SEARCH_INDEX")
     @AdminPresentation(friendlyName = "LocaleImpl_Use_In_Search_Index", order = 5, 
@@ -124,12 +124,12 @@ public class LocaleImpl implements Locale, AdminMainEntity {
     }
 
     @Override
-    public BroadleafCurrency getDefaultCurrency() {
+    public UltraCurrency getDefaultCurrency() {
         return defaultCurrency;
     }
 
     @Override
-    public void setDefaultCurrency(BroadleafCurrency defaultCurrency) {
+    public void setDefaultCurrency(UltraCurrency defaultCurrency) {
         this.defaultCurrency = defaultCurrency;
     }
     

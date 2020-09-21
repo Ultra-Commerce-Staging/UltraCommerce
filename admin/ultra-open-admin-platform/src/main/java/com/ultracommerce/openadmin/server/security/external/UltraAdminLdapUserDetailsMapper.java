@@ -1,26 +1,26 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.openadmin.server.security.external;
+package com.ultracommerce.openadmin.server.security.external;
 
-import org.broadleafcommerce.common.security.BroadleafExternalAuthenticationUserDetails;
-import org.broadleafcommerce.common.site.domain.Site;
-import org.broadleafcommerce.openadmin.server.security.service.AdminSecurityService;
-import org.broadleafcommerce.openadmin.server.security.service.user.AdminUserProvisioningService;
+import com.ultracommerce.common.security.UltraExternalAuthenticationUserDetails;
+import com.ultracommerce.common.site.domain.Site;
+import com.ultracommerce.openadmin.server.security.service.AdminSecurityService;
+import com.ultracommerce.openadmin.server.security.service.user.AdminUserProvisioningService;
 import org.springframework.ldap.core.DirContextOperations;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -31,17 +31,17 @@ import java.util.Collection;
 import javax.annotation.Resource;
 
 /**
- * This is used to map LDAP principal and authorities into BLC security model.
+ * This is used to map LDAP principal and authorities into UC security model.
  * 
  * @author Kelly Tisdell
  *
  */
-public class BroadleafAdminLdapUserDetailsMapper extends LdapUserDetailsMapper {
+public class UltraAdminLdapUserDetailsMapper extends LdapUserDetailsMapper {
 
-    @Resource(name = "blAdminSecurityService")
+    @Resource(name = "ucAdminSecurityService")
     protected AdminSecurityService securityService;
 
-    @Resource(name = "blAdminUserProvisioningService")
+    @Resource(name = "ucAdminUserProvisioningService")
     protected AdminUserProvisioningService provisioningService;
     
     @Override
@@ -50,7 +50,7 @@ public class BroadleafAdminLdapUserDetailsMapper extends LdapUserDetailsMapper {
         String firstName = (String) ctx.getObjectAttribute("givenName");
         String lastName = (String) ctx.getObjectAttribute("sn");
         
-        BroadleafExternalAuthenticationUserDetails details = new BroadleafExternalAuthenticationUserDetails(username, "", authorities);
+        UltraExternalAuthenticationUserDetails details = new UltraExternalAuthenticationUserDetails(username, "", authorities);
         details.setEmail(email);
         details.setFirstName(firstName);
         details.setLastName(lastName);

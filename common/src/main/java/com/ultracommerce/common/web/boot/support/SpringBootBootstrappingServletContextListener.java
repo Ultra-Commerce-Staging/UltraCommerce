@@ -1,24 +1,24 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2017 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
 /**
  * 
  */
-package org.broadleafcommerce.common.web.boot.support;
+package com.ultracommerce.common.web.boot.support;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -43,7 +43,7 @@ import javax.servlet.ServletException;
  * The use case here is when you absolutely have to use a web.xml and cannot rely on classpath scanning for a ServletContextInitializer
  * 
  * <p>
- * This is designed to work in conjunction with the {@link BroadleafBootServletContextInitializer} (although not requried) which serves
+ * This is designed to work in conjunction with the {@link UltraBootServletContextInitializer} (although not requried) which serves
  * as a drop-in replacement for {@link SpringBootServletInitializer}.
  * 
  * <p>
@@ -53,7 +53,7 @@ import javax.servlet.ServletException;
  * package com.mycompany
  * 
  * {@literal @}SpringBootApplication
- * public class MyApplication extends BroadleafBootServletContextInitializer {
+ * public class MyApplication extends UltraBootServletContextInitializer {
  * 
  * }
  * </pre>
@@ -68,13 +68,13 @@ import javax.servlet.ServletException;
  *  <param-value>com.mycompany.MyApplication</param-value>
  * </context-param>
  * <listener>
- *   <listener-class>org.broadleafcommerce.common.web.boot.support.SpringBootBootstrappingServletContextListener</listener-class>
+ *   <listener-class>com.ultracommerce.common.web.boot.support.SpringBootBootstrappingServletContextListener</listener-class>
  * </listener>
  * }
  * </pre>
  * 
  * @author Phillip Verheyden (phillipuniverse)
- * @see BroadleafBootServletContextInitializer
+ * @see UltraBootServletContextInitializer
  */
 public class SpringBootBootstrappingServletContextListener implements ServletContextListener {
 
@@ -119,7 +119,7 @@ public class SpringBootBootstrappingServletContextListener implements ServletCon
         }
         Class<?> initializerClass = ClassUtils.forName(clazz, this.getClass().getClassLoader());
         if (!WebApplicationInitializer.class.isAssignableFrom(initializerClass)) {
-            throw new IllegalStateException(String.format("The %s context-param must be an instance of ServletContextInitializer. Consider extending from %s", APPLICATION_CLASS, BroadleafBootServletContextInitializer.class.getName()));
+            throw new IllegalStateException(String.format("The %s context-param must be an instance of ServletContextInitializer. Consider extending from %s", APPLICATION_CLASS, UltraBootServletContextInitializer.class.getName()));
         }
         
         return (Class<WebApplicationInitializer>) initializerClass;

@@ -1,29 +1,29 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.extensibility.jpa.copy;
+package com.ultracommerce.common.extensibility.jpa.copy;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.extensibility.jpa.convert.BroadleafClassTransformer;
-import org.broadleafcommerce.common.logging.LifeCycleEvent;
-import org.broadleafcommerce.common.weave.ConditionalDirectCopyTransformMemberDto;
-import org.broadleafcommerce.common.weave.ConditionalDirectCopyTransformersManager;
+import com.ultracommerce.common.extensibility.jpa.convert.UltraClassTransformer;
+import com.ultracommerce.common.logging.LifeCycleEvent;
+import com.ultracommerce.common.weave.ConditionalDirectCopyTransformMemberDto;
+import com.ultracommerce.common.weave.ConditionalDirectCopyTransformersManager;
 
 import java.io.ByteArrayInputStream;
 import java.lang.instrument.IllegalClassFormatException;
@@ -69,7 +69,7 @@ import javassist.bytecode.annotation.StringMemberValue;
  * @author Andre Azzolini (apazzolini)
  * @author Jeff Fischer
  */
-public class DirectCopyClassTransformer extends AbstractClassTransformer implements BroadleafClassTransformer {
+public class DirectCopyClassTransformer extends AbstractClassTransformer implements UltraClassTransformer {
 
     protected static List<String> transformedMethods = new ArrayList<>();
     protected static List<String> annotationTransformedClasses = new ArrayList<>();
@@ -83,10 +83,10 @@ public class DirectCopyClassTransformer extends AbstractClassTransformer impleme
     protected Boolean skipOverlaps = true;
     protected Map<String, String> templateTokens = new HashMap<>();
 
-    @Resource(name="blDirectCopyIgnorePatterns")
+    @Resource(name="ucDirectCopyIgnorePatterns")
     protected List<DirectCopyIgnorePattern> ignorePatterns = new ArrayList<>();
 
-    @Resource(name="blConditionalDirectCopyTransformersManager")
+    @Resource(name="ucConditionalDirectCopyTransformersManager")
     protected ConditionalDirectCopyTransformersManager conditionalDirectCopyTransformersManager;
 
     public DirectCopyClassTransformer(String moduleName) {
@@ -129,8 +129,8 @@ public class DirectCopyClassTransformer extends AbstractClassTransformer impleme
                 if (annotationTransformedClasses.contains(convertedClassName)) {
                     logger.warn(convertedClassName + " has already been transformed by a previous instance of DirectCopyTransfomer. " +
                             "Skipping this annotation based transformation. Generally, annotation-based transformation is handled " +
-                            "by bean id blAnnotationDirectCopyClassTransformer with template tokens being added to " +
-                            "blDirectCopyTransformTokenMap via EarlyStageMergeBeanPostProcessor.");
+                            "by bean id ucAnnotationDirectCopyClassTransformer with template tokens being added to " +
+                            "ucDirectCopyTransformTokenMap via EarlyStageMergeBeanPostProcessor.");
                 }
                 boolean isValidPattern = true;
                 List<DirectCopyIgnorePattern> matchedPatterns = new ArrayList<>();
@@ -330,7 +330,7 @@ public class DirectCopyClassTransformer extends AbstractClassTransformer impleme
 
 
     /**
-     * Combines two {@link org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyClassTransformer.XFormParams} together with
+     * Combines two {@link com.ultracommerce.common.extensibility.jpa.copy.DirectCopyClassTransformer.XFormParams} together with
      * first passed in xformParama supercedes the second passed in parameter.
      *
      * @param defaultParams
@@ -445,7 +445,7 @@ public class DirectCopyClassTransformer extends AbstractClassTransformer impleme
 
     /**
      * Retrieves {@link DirectCopyTransformTypes} that are conditionally/optionally included via properties file.
-     * @see org.broadleafcommerce.common.weave.ConditionalDirectCopyTransformersManager
+     * @see com.ultracommerce.common.weave.ConditionalDirectCopyTransformersManager
      *
      * @param convertedClassName
      * @param matchedPatterns

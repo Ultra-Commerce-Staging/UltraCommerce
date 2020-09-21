@@ -1,30 +1,30 @@
 /*
  * #%L
- * BroadleafCommerce CMS Module
+ * UltraCommerce CMS Module
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.cms.structure.dao;
+package com.ultracommerce.cms.structure.dao;
 
-import org.broadleafcommerce.cms.structure.domain.StructuredContent;
-import org.broadleafcommerce.cms.structure.domain.StructuredContentImpl;
-import org.broadleafcommerce.cms.structure.domain.StructuredContentType;
-import org.broadleafcommerce.cms.structure.domain.StructuredContentTypeImpl;
-import org.broadleafcommerce.common.locale.domain.Locale;
-import org.broadleafcommerce.common.persistence.EntityConfiguration;
-import org.broadleafcommerce.common.sandbox.domain.SandBox;
-import org.broadleafcommerce.common.sandbox.domain.SandBoxImpl;
+import com.ultracommerce.cms.structure.domain.StructuredContent;
+import com.ultracommerce.cms.structure.domain.StructuredContentImpl;
+import com.ultracommerce.cms.structure.domain.StructuredContentType;
+import com.ultracommerce.cms.structure.domain.StructuredContentTypeImpl;
+import com.ultracommerce.common.locale.domain.Locale;
+import com.ultracommerce.common.persistence.EntityConfiguration;
+import com.ultracommerce.common.sandbox.domain.SandBox;
+import com.ultracommerce.common.sandbox.domain.SandBoxImpl;
 import org.hibernate.jpa.QueryHints;
 import org.springframework.stereotype.Repository;
 
@@ -44,7 +44,7 @@ import javax.persistence.criteria.Root;
 /**
  * Created by bpolster.
  */
-@Repository("blStructuredContentDao")
+@Repository("ucStructuredContentDao")
 public class StructuredContentDaoImpl implements StructuredContentDao {
 
     private static SandBox DUMMY_SANDBOX = new SandBoxImpl();
@@ -52,10 +52,10 @@ public class StructuredContentDaoImpl implements StructuredContentDao {
         DUMMY_SANDBOX.setId(-1l);
     }
 
-    @PersistenceContext(unitName = "blPU")
+    @PersistenceContext(unitName = "ucPU")
     protected EntityManager em;
 
-    @Resource(name="blEntityConfiguration")
+    @Resource(name="ucEntityConfiguration")
     protected EntityConfiguration entityConfiguration;
 
     @Override
@@ -70,7 +70,7 @@ public class StructuredContentDaoImpl implements StructuredContentDao {
 
     @Override
     public List<StructuredContentType> retrieveAllStructuredContentTypes() {
-        Query query = em.createNamedQuery("BC_READ_ALL_STRUCTURED_CONTENT_TYPES");
+        Query query = em.createNamedQuery("UC_READ_ALL_STRUCTURED_CONTENT_TYPES");
         query.setHint(QueryHints.HINT_CACHEABLE, true);
         return query.getResultList();
     }
@@ -117,7 +117,7 @@ public class StructuredContentDaoImpl implements StructuredContentDao {
 
     @Override
     public List<StructuredContent> findActiveStructuredContentByType(StructuredContentType type, Locale fullLocale, Locale languageOnlyLocale) {
-        String queryName = "BC_ACTIVE_STRUCTURED_CONTENT_BY_TYPE";
+        String queryName = "UC_ACTIVE_STRUCTURED_CONTENT_BY_TYPE";
         if (languageOnlyLocale == null)  {
             languageOnlyLocale = fullLocale;
         }
@@ -141,7 +141,7 @@ public class StructuredContentDaoImpl implements StructuredContentDao {
         if (languageOnlyLocale == null)  {
             languageOnlyLocale = fullLocale;
         }
-        final Query query = em.createNamedQuery("BC_ACTIVE_STRUCTURED_CONTENT_BY_TYPE_AND_NAME");
+        final Query query = em.createNamedQuery("UC_ACTIVE_STRUCTURED_CONTENT_BY_TYPE_AND_NAME");
         query.setParameter("contentType", type);
         query.setParameter("contentName", name);
         query.setParameter("fullLocale", fullLocale);
@@ -158,7 +158,7 @@ public class StructuredContentDaoImpl implements StructuredContentDao {
 
     @Override
     public List<StructuredContent> findActiveStructuredContentByName(String name, Locale fullLocale, Locale languageOnlyLocale) {
-        String queryName = "BC_ACTIVE_STRUCTURED_CONTENT_BY_NAME";
+        String queryName = "UC_ACTIVE_STRUCTURED_CONTENT_BY_NAME";
         if (languageOnlyLocale == null)  {
             languageOnlyLocale = fullLocale;
         }
@@ -174,7 +174,7 @@ public class StructuredContentDaoImpl implements StructuredContentDao {
 
     @Override
     public StructuredContentType findStructuredContentTypeByName(String name) {
-        Query query = em.createNamedQuery("BC_READ_STRUCTURED_CONTENT_TYPE_BY_NAME");
+        Query query = em.createNamedQuery("UC_READ_STRUCTURED_CONTENT_TYPE_BY_NAME");
         query.setParameter("name",name);
         query.setHint(QueryHints.HINT_CACHEABLE, true);
 

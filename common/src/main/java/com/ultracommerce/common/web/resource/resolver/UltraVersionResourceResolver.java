@@ -1,25 +1,25 @@
 /*
  * #%L
- * broadleaf-theme
+ * ultra-theme
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.web.resource.resolver;
+package com.ultracommerce.common.web.resource.resolver;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.resource.service.ResourceBundlingService;
+import com.ultracommerce.common.resource.service.ResourceBundlingService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.Ordered;
 import org.springframework.core.io.Resource;
@@ -39,27 +39,27 @@ import javax.servlet.http.HttpServletRequest;
  * environment properties.
  * 
  * Before delegating to {@link VersionResourceResolver}, first checks to see if the request is for 
- * a Broadleaf bundle.   If so, skips versioning since bundles are already versioned.
+ * a Ultra bundle.   If so, skips versioning since bundles are already versioned.
  * 
  *  {@code }
  * 
  * @author Brian Polster
- * @since Broadleaf 4.0
+ * @since Ultra 4.0
  */
-@Component("blVersionResourceResolver")
-public class BroadleafVersionResourceResolver extends VersionResourceResolver implements Ordered {
+@Component("ucVersionResourceResolver")
+public class UltraVersionResourceResolver extends VersionResourceResolver implements Ordered {
 
-    protected static final Log LOG = LogFactory.getLog(BroadleafVersionResourceResolver.class);
+    protected static final Log LOG = LogFactory.getLog(UltraVersionResourceResolver.class);
 
-    private int order = BroadleafResourceResolverOrder.BLC_VERSION_RESOURCE_RESOLVER;
+    private int order = UltraResourceResolverOrder.UC_VERSION_RESOURCE_RESOLVER;
 
     @Value("${resource.versioning.enabled:true}")
     protected boolean resourceVersioningEnabled;
 
-    @javax.annotation.Resource(name = "blResourceBundlingService")
+    @javax.annotation.Resource(name = "ucResourceBundlingService")
     protected ResourceBundlingService bundlingService;
 
-    @javax.annotation.Resource(name = "blVersionResourceResolverStrategyMap")
+    @javax.annotation.Resource(name = "ucVersionResourceResolverStrategyMap")
     protected Map<String, VersionStrategy> versionStrategyMap;
 
     @Override

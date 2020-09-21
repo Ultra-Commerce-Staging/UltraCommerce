@@ -1,32 +1,32 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2018 Broadleaf Commerce
+ * Copyright (C) 2009 - 2018 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.web.processor;
+package com.ultracommerce.common.web.processor;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.broadleafcommerce.common.resource.service.ResourceBundlingService;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
-import org.broadleafcommerce.common.web.processor.attributes.ResourceTagAttributes;
-import org.broadleafcommerce.common.web.request.ResourcesRequest;
-import org.broadleafcommerce.common.web.request.ResourcesRequestBundle;
-import org.broadleafcommerce.presentation.dialect.AbstractBroadleafTagReplacementProcessor;
-import org.broadleafcommerce.presentation.model.BroadleafTemplateContext;
-import org.broadleafcommerce.presentation.model.BroadleafTemplateModel;
+import com.ultracommerce.common.resource.service.ResourceBundlingService;
+import com.ultracommerce.common.web.UltraRequestContext;
+import com.ultracommerce.common.web.processor.attributes.ResourceTagAttributes;
+import com.ultracommerce.common.web.request.ResourcesRequest;
+import com.ultracommerce.common.web.request.ResourcesRequestBundle;
+import com.ultracommerce.presentation.dialect.AbstractUltraTagReplacementProcessor;
+import com.ultracommerce.presentation.model.UltraTemplateContext;
+import com.ultracommerce.presentation.model.UltraTemplateModel;
 import org.springframework.core.env.Environment;
 
 import java.util.ArrayList;
@@ -41,7 +41,7 @@ import javax.servlet.http.HttpServletRequest;
  *
  * @author Jacob Mitash (jmitash)
  */
-public abstract class AbstractResourceProcessor extends AbstractBroadleafTagReplacementProcessor {
+public abstract class AbstractResourceProcessor extends AbstractUltraTagReplacementProcessor {
 
     @Resource
     protected Environment environment;
@@ -61,13 +61,13 @@ public abstract class AbstractResourceProcessor extends AbstractBroadleafTagRepl
     }
 
     @Override
-    public BroadleafTemplateModel getReplacementModel(String tagName, Map<String, String> tagAttributes, BroadleafTemplateContext context) {
+    public UltraTemplateModel getReplacementModel(String tagName, Map<String, String> tagAttributes, UltraTemplateContext context) {
         ResourceTagAttributes resourceTagAttributes = buildResourceTagAttributes(tagAttributes);
         validateTagAttributes(resourceTagAttributes);
 
         final List<String> files = buildBundledFilesList(resourceTagAttributes);
 
-        final BroadleafTemplateModel model;
+        final UltraTemplateModel model;
         if (getBundleEnabled()) {
             model = buildModelBundled(files, resourceTagAttributes, context);
         } else {
@@ -84,7 +84,7 @@ public abstract class AbstractResourceProcessor extends AbstractBroadleafTagRepl
      * @param context the context of the original tag
      * @return model containing resources the tag should be replaced with
      */
-    protected abstract BroadleafTemplateModel buildModelUnbundled(List<String> attributeFiles, ResourceTagAttributes attributes, BroadleafTemplateContext context);
+    protected abstract UltraTemplateModel buildModelUnbundled(List<String> attributeFiles, ResourceTagAttributes attributes, UltraTemplateContext context);
 
     /**
      * Builds the model that contains the bundled resources the tag should be replaced with
@@ -93,7 +93,7 @@ public abstract class AbstractResourceProcessor extends AbstractBroadleafTagRepl
      * @param context the context of the original tag
      * @return model containing resources the tag should be replaced with
      */
-    protected abstract BroadleafTemplateModel buildModelBundled(List<String> attributeFiles, ResourceTagAttributes attributes, BroadleafTemplateContext context);
+    protected abstract UltraTemplateModel buildModelBundled(List<String> attributeFiles, ResourceTagAttributes attributes, UltraTemplateContext context);
 
     /**
      * Gets a list of the requested files for bundling
@@ -138,7 +138,7 @@ public abstract class AbstractResourceProcessor extends AbstractBroadleafTagRepl
      * @param context the template context
      * @return the full path of the unbundled file
      */
-    protected String getFullUnbundledFileName(String fileName, ResourceTagAttributes resourceTagAttributes, BroadleafTemplateContext context) {
+    protected String getFullUnbundledFileName(String fileName, ResourceTagAttributes resourceTagAttributes, UltraTemplateContext context) {
         return context.parseExpression("@{'" + resourceTagAttributes.mappingPrefix() + fileName.trim() + "'}");
     }
 
@@ -153,7 +153,7 @@ public abstract class AbstractResourceProcessor extends AbstractBroadleafTagRepl
      * @param context the context of the original bundle tag
      * @return the full bundle URL
      */
-    protected String getBundleUrl(String bundleName, BroadleafTemplateContext context) {
+    protected String getBundleUrl(String bundleName, UltraTemplateContext context) {
         String bundleUrl = bundleName;
 
         if (!StringUtils.startsWith(bundleUrl, "/")) {
@@ -168,7 +168,7 @@ public abstract class AbstractResourceProcessor extends AbstractBroadleafTagRepl
         if (StringUtils.isNotEmpty(contextPath)) {
             bundleUrl = contextPath + bundleUrl;
         }
-        BroadleafRequestContext brc = BroadleafRequestContext.getBroadleafRequestContext();
+        UltraRequestContext brc = UltraRequestContext.getUltraRequestContext();
         if (brc != null && brc.getTheme() != null) {
             Long themeId = brc.getTheme().getId();
             return bundleUrl + "?themeConfigId=" + themeId;
@@ -200,7 +200,7 @@ public abstract class AbstractResourceProcessor extends AbstractBroadleafTagRepl
     }
 
     /**
-     * Gets the bundle path. The path should still be put through {@link #getBundleUrl(String, BroadleafTemplateContext)}
+     * Gets the bundle path. The path should still be put through {@link #getBundleUrl(String, UltraTemplateContext)}
      * to get the href/src appropriate for the HTML.
      * @param attributes the attributes on the original resource tag
      * @param files the files requested with the bundle or null if not included
@@ -237,7 +237,7 @@ public abstract class AbstractResourceProcessor extends AbstractBroadleafTagRepl
      * @param context the context of the original resource tag
      * @return list of files to use as resources
      */
-    protected List<String> postProcessUnbundledFileList(List<String> attributeFiles, ResourceTagAttributes tagAttributes, BroadleafTemplateContext context) {
+    protected List<String> postProcessUnbundledFileList(List<String> attributeFiles, ResourceTagAttributes tagAttributes, UltraTemplateContext context) {
 
         final ResourcesRequestBundle resourcesRequestBundle = resourcesRequest.getBundle(tagAttributes.name(), tagAttributes.mappingPrefix(), attributeFiles);
         final List<String> filesOnSavedBundle = resourcesRequestBundle == null ? null : resourcesRequestBundle.getBundleFilePaths();

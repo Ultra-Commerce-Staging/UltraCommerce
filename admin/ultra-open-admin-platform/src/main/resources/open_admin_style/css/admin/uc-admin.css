@@ -1,18 +1,18 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
 /****************************************
@@ -5281,7 +5281,7 @@ circle {
     transform: translateX(0) !important;
 }
 
-.app-content .side-nav ul li .blc-icon-blc-leaf,
+.app-content .side-nav ul li .uc-icon-uc-leaf,
 .app-content .side-nav ul li a {
     background-image: none;
     width: 50px;
@@ -5305,7 +5305,7 @@ circle {
     left: 14px;
 }
 
-.app-content .side-nav ul li .blc-icon-blc-leaf {
+.app-content .side-nav ul li .uc-icon-uc-leaf {
     float: left;
     position: relative;
 }
@@ -5322,8 +5322,8 @@ circle {
     text-shadow: none;
 }
 
-.app-content .side-nav ul li a.blc-icon-blc-leaf:before,
-.app-content .side-nav ul li a.blc-icon-blc-leaf:hover:before {
+.app-content .side-nav ul li a.uc-icon-uc-leaf:before,
+.app-content .side-nav ul li a.uc-icon-uc-leaf:hover:before {
     font-size: 3.2em;
     color: #809831;
     top: 3px;
@@ -5494,7 +5494,7 @@ input.result-page-size-input {
     height: 200px;
 }
 
-.blc-error-toast{
+.uc-error-toast{
     text-align: center;
     display:inline-block;
     z-index:9999;

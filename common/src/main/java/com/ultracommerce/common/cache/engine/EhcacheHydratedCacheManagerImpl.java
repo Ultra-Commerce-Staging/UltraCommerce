@@ -1,26 +1,26 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.cache.engine;
+package com.ultracommerce.common.cache.engine;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.extensibility.cache.JCacheUtil;
-import org.broadleafcommerce.common.util.ApplicationContextHolder;
+import com.ultracommerce.common.extensibility.cache.JCacheUtil;
+import com.ultracommerce.common.util.ApplicationContextHolder;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -49,7 +49,7 @@ public abstract class EhcacheHydratedCacheManagerImpl extends AbstractHydratedCa
 
     private synchronized Cache<String, Object> getHeap() {
         if (heap == null) {
-            JCacheUtil cacheUtil = ApplicationContextHolder.getApplicationContext().getBean("blJCacheUtil", JCacheUtil.class);
+            JCacheUtil cacheUtil = ApplicationContextHolder.getApplicationContext().getBean("ucJCacheUtil", JCacheUtil.class);
             Cache<String, Object> cache = cacheUtil.getCache(getHydratedCacheName());
             if (cache != null) {
                 heap = cache;

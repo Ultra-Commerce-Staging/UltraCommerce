@@ -1,36 +1,36 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
 
-package org.broadleafcommerce.core.web.breadcrumbs;
+package com.ultracommerce.core.web.breadcrumbs;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.breadcrumbs.dto.BreadcrumbDTO;
-import org.broadleafcommerce.common.breadcrumbs.dto.BreadcrumbDTOType;
-import org.broadleafcommerce.common.breadcrumbs.service.BreadcrumbHandlerDefaultPriorities;
-import org.broadleafcommerce.common.breadcrumbs.service.BreadcrumbServiceExtensionManager;
-import org.broadleafcommerce.common.extension.ExtensionResultHolder;
-import org.broadleafcommerce.common.extension.ExtensionResultStatusType;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
-import org.broadleafcommerce.core.catalog.domain.Category;
-import org.broadleafcommerce.core.catalog.domain.Product;
-import org.broadleafcommerce.core.catalog.service.CatalogService;
+import com.ultracommerce.common.breadcrumbs.dto.BreadcrumbDTO;
+import com.ultracommerce.common.breadcrumbs.dto.BreadcrumbDTOType;
+import com.ultracommerce.common.breadcrumbs.service.BreadcrumbHandlerDefaultPriorities;
+import com.ultracommerce.common.breadcrumbs.service.BreadcrumbServiceExtensionManager;
+import com.ultracommerce.common.extension.ExtensionResultHolder;
+import com.ultracommerce.common.extension.ExtensionResultStatusType;
+import com.ultracommerce.common.web.UltraRequestContext;
+import com.ultracommerce.core.catalog.domain.Category;
+import com.ultracommerce.core.catalog.domain.Product;
+import com.ultracommerce.core.catalog.service.CatalogService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -40,15 +40,15 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
-@Service("blCategoryBreadcrumbServiceExtensionHandler")
+@Service("ucCategoryBreadcrumbServiceExtensionHandler")
 public class CategoryBreadcrumbServiceExtensionHandler extends AbstractBreadcrumbServiceExtensionHandler {
 
     private static final Log LOG = LogFactory.getLog(CategoryBreadcrumbServiceExtensionHandler.class);
 
-    @Resource(name = "blCatalogService")
+    @Resource(name = "ucCatalogService")
     protected CatalogService catalogService;
 
-    @Resource(name = "blBreadcrumbServiceExtensionManager")
+    @Resource(name = "ucBreadcrumbServiceExtensionManager")
     protected BreadcrumbServiceExtensionManager extensionManager;
 
     @PostConstruct
@@ -143,7 +143,7 @@ public class CategoryBreadcrumbServiceExtensionHandler extends AbstractBreadcrum
 
     protected Category determineFirstCategory(String testUrl, Map<String, String[]> params,
             ExtensionResultHolder<List<BreadcrumbDTO>> holder) {
-        BroadleafRequestContext brc = BroadleafRequestContext.getBroadleafRequestContext();
+        UltraRequestContext brc = UltraRequestContext.getUltraRequestContext();
         Category returnCategory = null;
 
         if (brc != null && brc.getRequest() != null) {
@@ -171,7 +171,7 @@ public class CategoryBreadcrumbServiceExtensionHandler extends AbstractBreadcrum
      * @param params
      * @return
      */
-    protected Category getMatchingCategoryFromProduct(BroadleafRequestContext brc, String testUrl,
+    protected Category getMatchingCategoryFromProduct(UltraRequestContext brc, String testUrl,
             Map<String, String[]> params) {
         if (brc != null) {
             Product product = (Product) brc.getRequestAttribute("currentProduct"); // see ProductHandlerMapping
@@ -194,12 +194,12 @@ public class CategoryBreadcrumbServiceExtensionHandler extends AbstractBreadcrum
      * @param params
      * @return
      */
-    protected Category getCategoryFromCategoryAttribute(BroadleafRequestContext brc, String testUrl,
+    protected Category getCategoryFromCategoryAttribute(UltraRequestContext brc, String testUrl,
             Map<String, String[]> params) {
         return (Category) brc.getRequestAttribute("category");
     }
 
-    protected Category getCategoryFromUrl(BroadleafRequestContext brc, String requestUrl,
+    protected Category getCategoryFromUrl(UltraRequestContext brc, String requestUrl,
             Map<String, String[]> params) {
 
         return catalogService.findCategoryByURI(requestUrl);

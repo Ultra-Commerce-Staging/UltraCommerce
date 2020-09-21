@@ -1,31 +1,31 @@
 /*
  * #%L
- * BroadleafCommerce CMS Module
+ * UltraCommerce CMS Module
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
 
-package org.broadleafcommerce.cms.web.processor;
+package com.ultracommerce.cms.web.processor;
 
-import org.broadleafcommerce.cms.file.service.StaticAssetService;
-import org.broadleafcommerce.common.file.service.StaticAssetPathService;
-import org.broadleafcommerce.common.util.BLCSystemProperty;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
-import org.broadleafcommerce.presentation.condition.ConditionalOnTemplating;
-import org.broadleafcommerce.presentation.dialect.AbstractBroadleafAttributeModifierProcessor;
-import org.broadleafcommerce.presentation.model.BroadleafAttributeModifier;
-import org.broadleafcommerce.presentation.model.BroadleafTemplateContext;
+import com.ultracommerce.cms.file.service.StaticAssetService;
+import com.ultracommerce.common.file.service.StaticAssetPathService;
+import com.ultracommerce.common.util.UCSystemProperty;
+import com.ultracommerce.common.web.UltraRequestContext;
+import com.ultracommerce.presentation.condition.ConditionalOnTemplating;
+import com.ultracommerce.presentation.dialect.AbstractUltraAttributeModifierProcessor;
+import com.ultracommerce.presentation.model.UltraAttributeModifier;
+import com.ultracommerce.presentation.model.UltraTemplateContext;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -41,11 +41,11 @@ import javax.servlet.http.HttpServletRequest;
  *
  * @author apazzolini
  */
-@Component("blUrlRewriteProcessor")
+@Component("ucUrlRewriteProcessor")
 @ConditionalOnTemplating
-public class UrlRewriteProcessor extends AbstractBroadleafAttributeModifierProcessor {
+public class UrlRewriteProcessor extends AbstractUltraAttributeModifierProcessor {
 
-    @Resource(name = "blStaticAssetPathService")
+    @Resource(name = "ucStaticAssetPathService")
     protected StaticAssetPathService staticAssetPathService;
 
     @Override
@@ -59,15 +59,15 @@ public class UrlRewriteProcessor extends AbstractBroadleafAttributeModifierProce
     }
 
     @Override
-    public BroadleafAttributeModifier getModifiedAttributes(String tagName, Map<String, String> tagAttributes, String attributeName,
-            String attributeValue, BroadleafTemplateContext context) {
+    public UltraAttributeModifier getModifiedAttributes(String tagName, Map<String, String> tagAttributes, String attributeName,
+            String attributeValue, UltraTemplateContext context) {
         Map<String, String> newAttributes = new HashMap<>();
         newAttributes.put("src", getFullAssetPath(tagName, attributeValue, context));
-        return new BroadleafAttributeModifier(newAttributes);
+        return new UltraAttributeModifier(newAttributes);
     }
 
-    protected String getFullAssetPath(String tagName, String attributeValue, BroadleafTemplateContext context) {
-        HttpServletRequest request = BroadleafRequestContext.getBroadleafRequestContext().getRequest();
+    protected String getFullAssetPath(String tagName, String attributeValue, UltraTemplateContext context) {
+        HttpServletRequest request = UltraRequestContext.getUltraRequestContext().getRequest();
         boolean secureRequest = true;
         if (request != null) {
             secureRequest = isRequestSecure(request);
@@ -100,16 +100,16 @@ public class UrlRewriteProcessor extends AbstractBroadleafAttributeModifierProce
     }
 
     protected boolean isAdminRequest() {
-        return BroadleafRequestContext.getBroadleafRequestContext().getAdmin();
+        return UltraRequestContext.getUltraRequestContext().getAdmin();
     }
 
     protected Boolean isImageExtension(String extension) {
-        String imageExtensions = BLCSystemProperty.resolveSystemProperty("admin.image.file.extensions");
+        String imageExtensions = UCSystemProperty.resolveSystemProperty("admin.image.file.extensions");
 
         return imageExtensions.contains(extension);
     }
 
-    protected String parsePath(String attributeValue, BroadleafTemplateContext context) {
+    protected String parsePath(String attributeValue, UltraTemplateContext context) {
         String newAttributeValue = attributeValue;
         if (newAttributeValue.startsWith("/")) {
             newAttributeValue = "@{ " + newAttributeValue + " }";

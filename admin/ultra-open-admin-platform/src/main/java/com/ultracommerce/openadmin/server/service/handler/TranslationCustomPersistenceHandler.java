@@ -1,36 +1,36 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
 
-package org.broadleafcommerce.openadmin.server.service.handler;
+package com.ultracommerce.openadmin.server.service.handler;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.config.service.SystemPropertiesService;
-import org.broadleafcommerce.common.exception.ServiceException;
-import org.broadleafcommerce.common.i18n.domain.Translation;
-import org.broadleafcommerce.common.i18n.service.TranslationService;
-import org.broadleafcommerce.common.sandbox.SandBoxHelper;
-import org.broadleafcommerce.openadmin.dto.Entity;
-import org.broadleafcommerce.openadmin.dto.FieldMetadata;
-import org.broadleafcommerce.openadmin.dto.PersistencePackage;
-import org.broadleafcommerce.openadmin.dto.PersistencePerspective;
-import org.broadleafcommerce.openadmin.server.dao.DynamicEntityDao;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.RecordHelper;
+import com.ultracommerce.common.config.service.SystemPropertiesService;
+import com.ultracommerce.common.exception.ServiceException;
+import com.ultracommerce.common.i18n.domain.Translation;
+import com.ultracommerce.common.i18n.service.TranslationService;
+import com.ultracommerce.common.sandbox.SandBoxHelper;
+import com.ultracommerce.openadmin.dto.Entity;
+import com.ultracommerce.openadmin.dto.FieldMetadata;
+import com.ultracommerce.openadmin.dto.PersistencePackage;
+import com.ultracommerce.openadmin.dto.PersistencePerspective;
+import com.ultracommerce.openadmin.server.dao.DynamicEntityDao;
+import com.ultracommerce.openadmin.server.service.persistence.module.RecordHelper;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
@@ -43,18 +43,18 @@ import javax.annotation.Resource;
  * 
  * @author gdiaz
  */
-@Component("blTranslationCustomPersistenceHandler")
+@Component("ucTranslationCustomPersistenceHandler")
 public class TranslationCustomPersistenceHandler extends CustomPersistenceHandlerAdapter {
 
     private final Log LOG = LogFactory.getLog(TranslationCustomPersistenceHandler.class);
 
-    @Resource(name = "blSystemPropertiesService")
+    @Resource(name = "ucSystemPropertiesService")
     protected SystemPropertiesService spService;
 
-    @Resource(name = "blTranslationService")
+    @Resource(name = "ucTranslationService")
     protected TranslationService translationService;
 
-    @Resource(name="blSandBoxHelper")
+    @Resource(name="ucSandBoxHelper")
     protected SandBoxHelper sandBoxHelper;
 
     protected Boolean classMatches(PersistencePackage persistencePackage) {

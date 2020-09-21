@@ -1,24 +1,24 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2017 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.web.controller.annotation;
+package com.ultracommerce.common.web.controller.annotation;
 
-import org.broadleafcommerce.common.config.BroadleafBeanNameGenerator;
-import org.broadleafcommerce.common.web.controller.FrameworkControllerHandlerMapping;
+import com.ultracommerce.common.config.UltraBeanNameGenerator;
+import com.ultracommerce.common.web.controller.FrameworkControllerHandlerMapping;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ComponentScan.Filter;
 
@@ -31,7 +31,7 @@ import java.lang.annotation.Target;
 /**
  * Enables {@link FrameworkController} and {@link FrameworkRestController} annotations.
  * <p>
- * Scan all Broadleaf modules for {@link FrameworkController} and {@link FrameworkRestController} so that their {@link
+ * Scan all Ultra modules for {@link FrameworkController} and {@link FrameworkRestController} so that their {@link
  * FrameworkMapping}s will get included in {@link
  * FrameworkControllerHandlerMapping} to provide default implementations of web endpoints.
  * <p>
@@ -48,7 +48,7 @@ import java.lang.annotation.Target;
  * public class MyApplication {
  *
  *     @literal @EnableAllFrameworkControllers
- *     public static class EnableAllBroadleafControllers {}
+ *     public static class EnableAllUltraControllers {}
  *
  *     public static void main(String[] args) {
  *         SpringApplication.run(MyApplication.class, args);
@@ -69,8 +69,8 @@ import java.lang.annotation.Target;
 @Documented
 @ComponentScan(
         useDefaultFilters = false,
-        basePackages = {"org.broadleafcommerce", "com.broadleafcommerce"},
+        basePackages = {"com.ultracommerce", "com.ultracommerce"},
         includeFilters = @Filter({FrameworkController.class, FrameworkRestController.class}),
-        nameGenerator = BroadleafBeanNameGenerator.class)
+        nameGenerator = UltraBeanNameGenerator.class)
 public @interface EnableAllFrameworkControllers {
 }

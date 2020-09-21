@@ -1,27 +1,27 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.openadmin.server.service.persistence.validation;
+package com.ultracommerce.openadmin.server.service.persistence.validation;
 
-import org.broadleafcommerce.common.presentation.AdminPresentation;
-import org.broadleafcommerce.common.presentation.ValidationConfiguration;
-import org.broadleafcommerce.openadmin.dto.Entity;
-import org.broadleafcommerce.openadmin.dto.FieldMetadata;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.RecordHelper;
+import com.ultracommerce.common.presentation.AdminPresentation;
+import com.ultracommerce.common.presentation.ValidationConfiguration;
+import com.ultracommerce.openadmin.dto.Entity;
+import com.ultracommerce.openadmin.dto.FieldMetadata;
+import com.ultracommerce.openadmin.server.service.persistence.module.RecordHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.Serializable;
@@ -33,7 +33,7 @@ import javax.validation.Validator;
 
 /**
  * <p>Implementation of the {@link EntityValidatorService} that runs entities through JSR-303 validations. The default
- * behavior of this implementation is to use the out-of-the-box Broadleaf validations (through {@link ValidationConfiguration}
+ * behavior of this implementation is to use the out-of-the-box Ultra validations (through {@link ValidationConfiguration}
  * <i>in addition to</i> any JSR-303 annotations that you have configured on your entity.</p>
  * 
  * <p>In order to use this validator rather than the default, you will need to include an implementation of {@link Validator}
@@ -44,11 +44,11 @@ import javax.validation.Validator;
  * &lt;bean class=&quotorg.springframework.validation.beanvalidation.LocalValidatorFactoryBean&quot/&gt;
  * </pre>
  * </code>
- * Then override the the blEntityValidatorService bean to use this class instead:
+ * Then override the the ucEntityValidatorService bean to use this class instead:
  * <code>
  * <pre>
- * &lt;bean id=&quotblEntityValidatorService&quot 
- *        class=&quotorg.broadleafcommerce.openadmin.server.service.persistence.validation.BeanValidationEntityValidatorServiceImpl&quot/&gt;
+ * &lt;bean id=&quotucEntityValidatorService&quot 
+ *        class=&quotcom.ultracommerce.openadmin.server.service.persistence.validation.BeanValidationEntityValidatorServiceImpl&quot/&gt;
  * </pre>
  * </code>
  * 

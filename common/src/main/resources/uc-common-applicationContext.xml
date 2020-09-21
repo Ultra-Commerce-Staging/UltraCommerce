@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
   #%L
-  BroadleafCommerce Common Libraries
+  UltraCommerce Common Libraries
   %%
-  Copyright (C) 2009 - 2016 Broadleaf Commerce
+  Copyright (C) 2009 - 2016 Ultra Commerce
   %%
-  Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
-  (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
-  unless the restrictions on use therein are violated and require payment to Broadleaf in which case
-  the Broadleaf End User License Agreement (EULA), Version 1.1
-  (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+  Licensed under the Ultra Fair Use License Agreement, Version 1.0
+  (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+  unless the restrictions on use therein are violated and require payment to Ultra in which case
+  the Ultra End User License Agreement (EULA), Version 1.1
+  (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
   shall apply.
   
   Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
-  between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+  between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
   #L%
   -->
 
@@ -27,38 +27,38 @@
            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
            http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
-    <import resource="bl-common-applicationContext-persistence.xml"/>
-    <import resource="bl-common-applicationContext-wrapper.xml"/>
-    <context:component-scan base-package="org.broadleafcommerce.common">
-        <context:exclude-filter type="regex" expression="org.broadleafcommerce.common.web.controller.*"/>
-        <context:exclude-filter type="regex" expression="org.broadleafcommerce.common.web.site.*"/>
-        <context:exclude-filter type="regex" expression="org.broadleafcommerce.common.web.api.*"/>
-        <context:exclude-filter type="regex" expression="org.broadleafcommerce.common.web.config.*"/>
+    <import resource="uc-common-applicationContext-persistence.xml"/>
+    <import resource="uc-common-applicationContext-wrapper.xml"/>
+    <context:component-scan base-package="com.ultracommerce.common">
+        <context:exclude-filter type="regex" expression="com.ultracommerce.common.web.controller.*"/>
+        <context:exclude-filter type="regex" expression="com.ultracommerce.common.web.site.*"/>
+        <context:exclude-filter type="regex" expression="com.ultracommerce.common.web.api.*"/>
+        <context:exclude-filter type="regex" expression="com.ultracommerce.common.web.config.*"/>
     </context:component-scan>
     
     <!-- Ensures the @Value annotations are resolved -->
-    <bean id="blPropertyPlaceholderConfigurer" class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
+    <bean id="ucPropertyPlaceholderConfigurer" class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
         <property name="ignoreUnresolvablePlaceholders" value="true" />
     </bean>
     
     <!-- Override Spring's default ApplicationEventMultiCaster with one that is a little smarter about asynchronous -->
-    <bean id="applicationEventMulticaster" class="org.broadleafcommerce.common.event.BroadleafApplicationEventMulticaster"/>
+    <bean id="applicationEventMulticaster" class="com.ultracommerce.common.event.UltraApplicationEventMulticaster"/>
 
-    <bean id="blMessageCreator" class="org.broadleafcommerce.common.email.service.message.NullMessageCreator">
-        <constructor-arg ref="blMailSender"/>
+    <bean id="ucMessageCreator" class="com.ultracommerce.common.email.service.message.NullMessageCreator">
+        <constructor-arg ref="ucMailSender"/>
     </bean>
 
-    <bean id="blDirectCopyIgnorePatterns" class="org.springframework.beans.factory.config.ListFactoryBean">
+    <bean id="ucDirectCopyIgnorePatterns" class="org.springframework.beans.factory.config.ListFactoryBean">
         <property name="sourceList">
             <list>
-                <bean class="org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyIgnorePattern">
+                <bean class="com.ultracommerce.common.extensibility.jpa.copy.DirectCopyIgnorePattern">
                     <property name="patterns">
                         <array>
                             <value>org\.apache.*</value>
                             <value>org\.springframework.*</value>
                             <value>javassist.*</value>
                             <value>javax.*</value>
-                            <value>org.broadleafcommerce.openadmin.web.compatibility.JSCompatibilityRequestWrapper</value>
+                            <value>com.ultracommerce.openadmin.web.compatibility.JSCompatibilityRequestWrapper</value>
                             <value>org\.hibernate.*</value>
                             <value>org\.quartz.*</value>
                         </array>
@@ -68,21 +68,21 @@
         </property>
     </bean>
     
-    <bean id="blBaseUrlResolver" class="org.broadleafcommerce.common.web.BaseUrlResolverImpl" />
+    <bean id="ucBaseUrlResolver" class="com.ultracommerce.common.web.BaseUrlResolverImpl" />
 
-    <bean id="blDirectCopyTransformTokenMap" class="org.springframework.beans.factory.config.MapFactoryBean">
+    <bean id="ucDirectCopyTransformTokenMap" class="org.springframework.beans.factory.config.MapFactoryBean">
         <property name="sourceMap">
             <map>
-                <entry key="archiveOnly" value="org.broadleafcommerce.common.weave.WeaveArchiveStatus"/>
+                <entry key="archiveOnly" value="com.ultracommerce.common.weave.WeaveArchiveStatus"/>
             </map>
         </property>
     </bean>
     
     <!-- With WebLogic 12c and JRockit 1.6, there seems to be a problem with the instrumentation of domain clases related 
          to the fact that certain support classes are either not loaded or not initialized when they are referenced from DirectCopyClassTransformer, 
-         EntityMarkerClassTransformer, and others.  These include javassist classes and certain Broadleaf enums and Annotations.
+         EntityMarkerClassTransformer, and others.  These include javassist classes and certain Ultra enums and Annotations.
          The solution is to pre-load those classes before trying to use them.  This factory provides a list to support this mechanism. -->
-    <bean id="blDirectCopyClassPreLoadPatterns" class="org.springframework.beans.factory.config.ListFactoryBean">
+    <bean id="ucDirectCopyClassPreLoadPatterns" class="org.springframework.beans.factory.config.ListFactoryBean">
         <property name="sourceList">
             <list>
             	<value>javassist.ClassPool</value>
@@ -107,47 +107,47 @@
             	<value>javax.persistence.Entity</value>
             	<value>javax.persistence.MappedSuperclass</value>
             	<value>org.apache.commons.lang3.StringUtils</value>
-            	<value>org.broadleafcommerce.common.logging.LifeCycleEvent</value>
-            	<value>org.broadleafcommerce.common.logging.SupportLogManager</value>
-            	<value>org.broadleafcommerce.common.logging.SupportLogger</value>
-            	<value>org.broadleafcommerce.common.extensibility.jpa.copy.NonCopied</value>
+            	<value>com.ultracommerce.common.logging.LifeCycleEvent</value>
+            	<value>com.ultracommerce.common.logging.SupportLogManager</value>
+            	<value>com.ultracommerce.common.logging.SupportLogger</value>
+            	<value>com.ultracommerce.common.extensibility.jpa.copy.NonCopied</value>
             </list>
         </property>
     </bean> 
 
     <!--This class transformer is responsible for picking up @DirectCopyTransform annotations on entities -->
-    <bean id="blAnnotationDirectCopyClassTransformer" class="org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyClassTransformer">
+    <bean id="ucAnnotationDirectCopyClassTransformer" class="com.ultracommerce.common.extensibility.jpa.copy.DirectCopyClassTransformer">
         <constructor-arg name="moduleName" value="Annotated Transformation" />
-        <property name="templateTokens" ref="blDirectCopyTransformTokenMap"/>
-        <property name="preLoadClassNamePatterns" ref="blDirectCopyClassPreLoadPatterns"/>
+        <property name="templateTokens" ref="ucDirectCopyTransformTokenMap"/>
+        <property name="preLoadClassNamePatterns" ref="ucDirectCopyClassPreLoadPatterns"/>
     </bean>
 
-    <bean id="blEntityMarkerClassTransformer" class="org.broadleafcommerce.common.extensibility.jpa.convert.EntityMarkerClassTransformer" >
-    	<property name="preLoadClassNamePatterns" ref="blDirectCopyClassPreLoadPatterns"/>
+    <bean id="ucEntityMarkerClassTransformer" class="com.ultracommerce.common.extensibility.jpa.convert.EntityMarkerClassTransformer" >
+    	<property name="preLoadClassNamePatterns" ref="ucDirectCopyClassPreLoadPatterns"/>
     </bean>
     
-    <bean id="blConditionalFieldAnnotationClassTransformer" class="org.broadleafcommerce.common.extensibility.jpa.copy.ConditionalFieldAnnotationsClassTransformer">
+    <bean id="ucConditionalFieldAnnotationClassTransformer" class="com.ultracommerce.common.extensibility.jpa.copy.ConditionalFieldAnnotationsClassTransformer">
         <constructor-arg name="moduleName" value="Conditional Field Annotation Transformation" />
     </bean>
 
     <!-- to be overriden by 3rd party modules -->
-    <bean id="blMergedClassTransformers" class="org.springframework.beans.factory.config.ListFactoryBean">
+    <bean id="ucMergedClassTransformers" class="org.springframework.beans.factory.config.ListFactoryBean">
         <property name="sourceList">
             <list>
-                <ref bean="blAnnotationDirectCopyClassTransformer"/>
-                <ref bean="blEntityMarkerClassTransformer"/>
-                <ref bean="blConditionalFieldAnnotationClassTransformer"/>
-                <ref bean="blMaterializedClobTypeClassTransformer"/>
+                <ref bean="ucAnnotationDirectCopyClassTransformer"/>
+                <ref bean="ucEntityMarkerClassTransformer"/>
+                <ref bean="ucConditionalFieldAnnotationClassTransformer"/>
+                <ref bean="ucMaterializedClobTypeClassTransformer"/>
             </list>
         </property>
     </bean>
 
-    <bean id="blServerInfo" class="org.broadleafcommerce.common.email.service.info.ServerInfo">
+    <bean id="ucServerInfo" class="com.ultracommerce.common.email.service.info.ServerInfo">
         <property name="serverName" value="localhost"/>
         <property name="serverPort" value="8080"/>
     </bean>
 
-    <bean id="blMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+    <bean id="ucMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
         <property name="host"><value>localhost</value></property>
         <property name="port"><value>25</value></property>
         <property name="protocol"><value>smtp</value></property>
@@ -159,16 +159,16 @@
         </property>
     </bean>
     
-    <bean id="blSpringCacheManager" class="org.springframework.cache.jcache.JCacheCacheManager">
-        <property name="cacheManager" ref="blCacheManager"/>
+    <bean id="ucSpringCacheManager" class="org.springframework.cache.jcache.JCacheCacheManager">
+        <property name="cacheManager" ref="ucCacheManager"/>
     </bean>    
     
-    <bean id="messageSource" class="org.broadleafcommerce.common.util.BroadleafMergeResourceBundleMessageSource">
+    <bean id="messageSource" class="com.ultracommerce.common.util.UltraMergeResourceBundleMessageSource">
         <property name="useCodeAsDefaultMessage" value="${messages.useCodeAsDefaultMessage}" />
         <property name="cacheSeconds" value="${messages.cacheSeconds}" />
     </bean>
     
-    <bean id="blMessageSourceBaseNames" class="org.springframework.beans.factory.config.ListFactoryBean" scope="prototype">
+    <bean id="ucMessageSourceBaseNames" class="org.springframework.beans.factory.config.ListFactoryBean" scope="prototype">
         <property name="sourceList">
             <list>
             </list>
@@ -176,31 +176,31 @@
     </bean>
     <!-- This mail sender will log the html content generated for the email to the console  -->
     <!-- To enable logging set log level in Log4j to INFO  -->
-    <bean id="blLoggingMailSender" class="org.broadleafcommerce.common.email.service.LoggingMailSender" />
+    <bean id="ucLoggingMailSender" class="com.ultracommerce.common.email.service.LoggingMailSender" />
     
-    <bean id="blEmailInfo" class="org.broadleafcommerce.common.email.service.info.EmailInfo" />
-    <bean id="blNullEmailInfo" class="org.broadleafcommerce.common.email.service.info.NullEmailInfo" />
+    <bean id="ucEmailInfo" class="com.ultracommerce.common.email.service.info.EmailInfo" />
+    <bean id="ucNullEmailInfo" class="com.ultracommerce.common.email.service.info.NullEmailInfo" />
     
-    <bean id="blSiteResolver" class="org.broadleafcommerce.common.web.NullBroadleafSiteResolver" />
-    <bean id="blThemeResolver" class="org.broadleafcommerce.common.web.NullBroadleafThemeResolver" />
+    <bean id="ucSiteResolver" class="com.ultracommerce.common.web.NullUltraSiteResolver" />
+    <bean id="ucThemeResolver" class="com.ultracommerce.common.web.NullUltraThemeResolver" />
     
     <!-- Resource Resolver Chains  -->
-    <bean id="blSiteResourceResolvers" class="org.springframework.beans.factory.config.ListFactoryBean" >
+    <bean id="ucSiteResourceResolvers" class="org.springframework.beans.factory.config.ListFactoryBean" >
         <property name="sourceList">
             <list>
-                <ref bean="blBLCJSUrlPathResolver" />                         
-                <ref bean="blCacheResourceResolver" />                
-                <ref bean="blVersionResourceResolver" />
-                <ref bean="blBundleResourceResolver" />
-                <ref bean="blBLCJSResolver" />
-                <ref bean="blSystemPropertyJSResolver" />              
-                <ref bean="blPathResourceResolver" />
+                <ref bean="ucUCJSUrlPathResolver" />                         
+                <ref bean="ucCacheResourceResolver" />                
+                <ref bean="ucVersionResourceResolver" />
+                <ref bean="ucBundleResourceResolver" />
+                <ref bean="ucUCJSResolver" />
+                <ref bean="ucSystemPropertyJSResolver" />              
+                <ref bean="ucPathResourceResolver" />
             </list>
         </property>
     </bean>     
     
     <!--  Spring 4.1 Resource Handling -->
-    <bean id="blJsLocations" class="org.springframework.beans.factory.config.ListFactoryBean" >
+    <bean id="ucJsLocations" class="org.springframework.beans.factory.config.ListFactoryBean" >
         <property name="sourceList">
             <list>
                 <value>classpath:/common_style/js/</value>
@@ -209,7 +209,7 @@
         </property>
     </bean>
     
-    <bean id="blCssLocations" class="org.springframework.beans.factory.config.ListFactoryBean" >
+    <bean id="ucCssLocations" class="org.springframework.beans.factory.config.ListFactoryBean" >
         <property name="sourceList">
             <list>
                 <value>classpath:/common_style/css/</value>
@@ -217,7 +217,7 @@
         </property>
     </bean>
 
-    <bean id="blFontLocations" class="org.springframework.beans.factory.config.ListFactoryBean" >
+    <bean id="ucFontLocations" class="org.springframework.beans.factory.config.ListFactoryBean" >
         <property name="sourceList">
             <list>
                 <value>classpath:/common_style/fonts/</value>
@@ -225,7 +225,7 @@
         </property>
     </bean>
 
-    <bean id="blImageLocations" class="org.springframework.beans.factory.config.ListFactoryBean" >
+    <bean id="ucImageLocations" class="org.springframework.beans.factory.config.ListFactoryBean" >
         <property name="sourceList">
             <list>
                 <value>classpath:/common_style/img/</value>
@@ -233,28 +233,28 @@
         </property>
     </bean>
     
-    <bean id="blJsFileList" class="org.springframework.beans.factory.config.ListFactoryBean" >
+    <bean id="ucJsFileList" class="org.springframework.beans.factory.config.ListFactoryBean" >
         <property name="sourceList">
             <list>
             </list>
         </property>
     </bean>
 
-    <bean id="blAdminJsLibFileList" class="org.springframework.beans.factory.config.ListFactoryBean" >
+    <bean id="ucAdminJsLibFileList" class="org.springframework.beans.factory.config.ListFactoryBean" >
         <property name="sourceList">
             <list>
             </list>
         </property>
     </bean>
     
-    <bean id="blCssFileList" class="org.springframework.beans.factory.config.ListFactoryBean" >
+    <bean id="ucCssFileList" class="org.springframework.beans.factory.config.ListFactoryBean" >
         <property name="sourceList">
             <list>
             </list>
         </property>
     </bean>
     
-    <bean id="blAdditionalBundleFiles" class="org.springframework.beans.factory.config.MapFactoryBean">
+    <bean id="ucAdditionalBundleFiles" class="org.springframework.beans.factory.config.MapFactoryBean">
         <property name="sourceMap">
             <map value-type="java.util.List">
             </map>
@@ -262,14 +262,14 @@
     </bean>
 
     <!--  Spring 4.1 Resource Resolvers -->
-    <bean id="blJsResourceResolvers" class="org.springframework.beans.factory.config.ListFactoryBean" >
+    <bean id="ucJsResourceResolvers" class="org.springframework.beans.factory.config.ListFactoryBean" >
         <property name="sourceList">
             <list>             
             </list>
         </property>
     </bean>
     
-    <bean id="blCssResourceResolvers" class="org.springframework.beans.factory.config.ListFactoryBean" >
+    <bean id="ucCssResourceResolvers" class="org.springframework.beans.factory.config.ListFactoryBean" >
         <property name="sourceList">
             <list>         
             </list>
@@ -277,25 +277,25 @@
     </bean>
 
     <!--  Spring 4.1 Resource Transformers -->
-    <bean id="blJsResourceTransformers" class="org.springframework.beans.factory.config.ListFactoryBean" >
+    <bean id="ucJsResourceTransformers" class="org.springframework.beans.factory.config.ListFactoryBean" >
         <property name="sourceList">
             <list>
-                <ref bean="blCachingResourceTransformer" />
-                <ref bean="blMinifyResourceTransformer" />                
+                <ref bean="ucCachingResourceTransformer" />
+                <ref bean="ucMinifyResourceTransformer" />                
             </list>
         </property>
     </bean>
     
-    <bean id="blCssResourceTransformers" class="org.springframework.beans.factory.config.ListFactoryBean" >
+    <bean id="ucCssResourceTransformers" class="org.springframework.beans.factory.config.ListFactoryBean" >
         <property name="sourceList">
             <list>
-                <ref bean="blCachingResourceTransformer" />
-                <ref bean="blMinifyResourceTransformer" />
+                <ref bean="ucCachingResourceTransformer" />
+                <ref bean="ucMinifyResourceTransformer" />
             </list>
         </property>
     </bean>
 
-    <bean id="blFileServiceProviders" class="org.springframework.beans.factory.config.ListFactoryBean" >
+    <bean id="ucFileServiceProviders" class="org.springframework.beans.factory.config.ListFactoryBean" >
         <property name="sourceList">
             <list>
             </list>
@@ -303,38 +303,38 @@
     </bean>   
      
     
-    <bean id="blPaymentGatewayConfigurationServices" class="org.springframework.beans.factory.config.ListFactoryBean" >
+    <bean id="ucPaymentGatewayConfigurationServices" class="org.springframework.beans.factory.config.ListFactoryBean" >
         <property name="sourceList">
             <list>
             </list>
         </property>
     </bean>
     
-    <bean id="blSiteMapGenerators" class="org.springframework.beans.factory.config.ListFactoryBean">
+    <bean id="ucSiteMapGenerators" class="org.springframework.beans.factory.config.ListFactoryBean">
         <property name="sourceList">
             <list>
-                <ref bean="blCustomSiteMapGenerator" />
+                <ref bean="ucCustomSiteMapGenerator" />
             </list>
         </property>
     </bean>
 
-    <bean id="blLinkedDataGenerators" class="org.springframework.beans.factory.config.ListFactoryBean">
+    <bean id="ucLinkedDataGenerators" class="org.springframework.beans.factory.config.ListFactoryBean">
         <property name="sourceList">
             <list>
             </list>
         </property>
     </bean>
 
-    <bean id="blStatisticsServiceLogAdapter" class="org.broadleafcommerce.common.cache.NoOpStatisticsServiceLogAdapter"/>
+    <bean id="ucStatisticsServiceLogAdapter" class="com.ultracommerce.common.cache.NoOpStatisticsServiceLogAdapter"/>
 
-    <bean id="blEntityExtensionManagers" class="org.springframework.beans.factory.config.MapFactoryBean">
+    <bean id="ucEntityExtensionManagers" class="org.springframework.beans.factory.config.MapFactoryBean">
         <property name="sourceMap">
             <map>
             </map>
         </property>
     </bean>
     
-    <bean id="blTranslationExceptionProperties" class="org.springframework.beans.factory.config.ListFactoryBean" >
+    <bean id="ucTranslationExceptionProperties" class="org.springframework.beans.factory.config.ListFactoryBean" >
         <property name="sourceList">
             <list>
                 <value>pageTemplate.*</value>
@@ -342,35 +342,35 @@
         </property>
     </bean>
 
-    <bean id="blConditionalDirectCopyTransformers" class="org.springframework.beans.factory.config.MapFactoryBean">
+    <bean id="ucConditionalDirectCopyTransformers" class="org.springframework.beans.factory.config.MapFactoryBean">
         <property name="sourceMap">
             <map>
             </map>
         </property>
     </bean>
 
-    <bean id="blConditionalEntities" class="org.springframework.beans.factory.config.MapFactoryBean">
+    <bean id="ucConditionalEntities" class="org.springframework.beans.factory.config.MapFactoryBean">
         <property name="sourceMap">
             <map>
             </map>
         </property>
     </bean>
 
-    <bean id="blConditionalOrmFiles" class="org.springframework.beans.factory.config.MapFactoryBean">
+    <bean id="ucConditionalOrmFiles" class="org.springframework.beans.factory.config.MapFactoryBean">
         <property name="sourceMap">
             <map>
             </map>
         </property>
     </bean>
     
-    <bean id="blConditionalFieldAnnotationCopyTransformers" class="org.springframework.beans.factory.config.MapFactoryBean">
+    <bean id="ucConditionalFieldAnnotationCopyTransformers" class="org.springframework.beans.factory.config.MapFactoryBean">
         <property name="sourceMap">
             <map>
             </map>
         </property>
     </bean>
 
-    <bean id="blPrecompressedArtifactFileExtensionWhitelist" class="org.springframework.beans.factory.config.ListFactoryBean" scope="prototype">
+    <bean id="ucPrecompressedArtifactFileExtensionWhitelist" class="org.springframework.beans.factory.config.ListFactoryBean" scope="prototype">
         <property name="sourceList">
             <list>
                 <value>.html</value>

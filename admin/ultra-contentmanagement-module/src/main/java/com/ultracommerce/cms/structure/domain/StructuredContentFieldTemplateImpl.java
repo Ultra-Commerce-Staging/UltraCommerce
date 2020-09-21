@@ -1,30 +1,30 @@
 /*
  * #%L
- * BroadleafCommerce CMS Module
+ * UltraCommerce CMS Module
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.cms.structure.domain;
+package com.ultracommerce.cms.structure.domain;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.Transformer;
-import org.broadleafcommerce.cms.field.domain.FieldGroup;
-import org.broadleafcommerce.common.copy.CreateResponse;
-import org.broadleafcommerce.common.copy.MultiTenantCopyContext;
-import org.broadleafcommerce.common.presentation.AdminPresentation;
-import org.broadleafcommerce.common.presentation.AdminPresentationClass;
-import org.broadleafcommerce.common.presentation.PopulateToOneFieldsEnum;
+import com.ultracommerce.cms.field.domain.FieldGroup;
+import com.ultracommerce.common.copy.CreateResponse;
+import com.ultracommerce.common.copy.MultiTenantCopyContext;
+import com.ultracommerce.common.presentation.AdminPresentation;
+import com.ultracommerce.common.presentation.AdminPresentationClass;
+import com.ultracommerce.common.presentation.PopulateToOneFieldsEnum;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -52,8 +52,8 @@ import javax.persistence.Table;
  */
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "BLC_SC_FLD_TMPLT")
-@Cache(usage= CacheConcurrencyStrategy.NONSTRICT_READ_WRITE, region="blCMSElements")
+@Table(name = "UC_SC_FLD_TMPLT")
+@Cache(usage= CacheConcurrencyStrategy.NONSTRICT_READ_WRITE, region="ucCMSElements")
 @AdminPresentationClass(populateToOneFields = PopulateToOneFieldsEnum.TRUE, friendlyName = "StructuredContentFieldTemplateImpl_baseStructuredContentFieldTemplate")
 public class StructuredContentFieldTemplateImpl implements StructuredContentFieldTemplate {
 
@@ -63,10 +63,10 @@ public class StructuredContentFieldTemplateImpl implements StructuredContentFiel
     @GeneratedValue(generator = "StructuredContentFieldTemplateId")
     @GenericGenerator(
         name="StructuredContentFieldTemplateId",
-        strategy="org.broadleafcommerce.common.persistence.IdOverrideTableGenerator",
+        strategy="com.ultracommerce.common.persistence.IdOverrideTableGenerator",
         parameters = {
             @Parameter(name="segment_value", value="StructuredContentFieldTemplateImpl"),
-            @Parameter(name="entity_name", value="org.broadleafcommerce.cms.structure.domain.StructuredContentFieldTemplateImpl")
+            @Parameter(name="entity_name", value="com.ultracommerce.cms.structure.domain.StructuredContentFieldTemplateImpl")
         }
     )
     @Column(name = "SC_FLD_TMPLT_ID")
@@ -77,7 +77,7 @@ public class StructuredContentFieldTemplateImpl implements StructuredContentFiel
     protected String name;
 
     @OneToMany(targetEntity = StructuredContentFieldGroupXrefImpl.class, mappedBy = "template", cascade = {CascadeType.ALL}, orphanRemoval = true)
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region="blCMSElements")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region="ucCMSElements")
     @OrderBy("groupOrder")
     @BatchSize(size = 20)
     protected List<StructuredContentFieldGroupXref> fieldGroupXrefs = new ArrayList<StructuredContentFieldGroupXref>();

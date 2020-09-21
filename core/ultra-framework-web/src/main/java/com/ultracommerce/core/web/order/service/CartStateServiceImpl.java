@@ -1,35 +1,35 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.web.order.service;
+package com.ultracommerce.core.web.order.service;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
-import org.broadleafcommerce.common.payment.PaymentAdditionalFieldType;
-import org.broadleafcommerce.common.payment.PaymentGatewayType;
-import org.broadleafcommerce.common.payment.PaymentType;
-import org.broadleafcommerce.core.order.domain.FulfillmentGroup;
-import org.broadleafcommerce.core.order.domain.Order;
-import org.broadleafcommerce.core.order.service.FulfillmentGroupService;
-import org.broadleafcommerce.core.payment.domain.OrderPayment;
-import org.broadleafcommerce.core.payment.domain.PaymentTransaction;
-import org.broadleafcommerce.core.payment.service.OrderPaymentService;
-import org.broadleafcommerce.core.web.order.CartState;
+import com.ultracommerce.common.payment.PaymentAdditionalFieldType;
+import com.ultracommerce.common.payment.PaymentGatewayType;
+import com.ultracommerce.common.payment.PaymentType;
+import com.ultracommerce.core.order.domain.FulfillmentGroup;
+import com.ultracommerce.core.order.domain.Order;
+import com.ultracommerce.core.order.service.FulfillmentGroupService;
+import com.ultracommerce.core.payment.domain.OrderPayment;
+import com.ultracommerce.core.payment.domain.PaymentTransaction;
+import com.ultracommerce.core.payment.service.OrderPaymentService;
+import com.ultracommerce.core.web.order.CartState;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -39,13 +39,13 @@ import javax.annotation.Resource;
 /**
  * @author Chris Kittrell (ckittrell)
  */
-@Service("blCartStateService")
+@Service("ucCartStateService")
 public class CartStateServiceImpl implements CartStateService {
 
-    @Resource(name = "blFulfillmentGroupService")
+    @Resource(name = "ucFulfillmentGroupService")
     protected FulfillmentGroupService fulfillmentGroupService;
 
-    @Resource(name = "blOrderPaymentService")
+    @Resource(name = "ucOrderPaymentService")
     protected OrderPaymentService orderPaymentService;
 
     @Override

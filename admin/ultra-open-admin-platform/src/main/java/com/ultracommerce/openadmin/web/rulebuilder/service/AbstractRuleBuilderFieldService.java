@@ -1,33 +1,33 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
 
-package org.broadleafcommerce.openadmin.web.rulebuilder.service;
+package com.ultracommerce.openadmin.web.rulebuilder.service;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
-import org.broadleafcommerce.common.presentation.client.SupportedFieldType;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
-import org.broadleafcommerce.openadmin.server.dao.DynamicEntityDao;
-import org.broadleafcommerce.openadmin.server.service.persistence.PersistenceManager;
-import org.broadleafcommerce.openadmin.server.service.persistence.PersistenceManagerFactory;
-import org.broadleafcommerce.openadmin.web.rulebuilder.dto.FieldDTO;
-import org.broadleafcommerce.openadmin.web.rulebuilder.dto.FieldData;
-import org.broadleafcommerce.openadmin.web.rulebuilder.dto.FieldWrapper;
+import com.ultracommerce.common.presentation.client.SupportedFieldType;
+import com.ultracommerce.common.web.UltraRequestContext;
+import com.ultracommerce.openadmin.server.dao.DynamicEntityDao;
+import com.ultracommerce.openadmin.server.service.persistence.PersistenceManager;
+import com.ultracommerce.openadmin.server.service.persistence.PersistenceManagerFactory;
+import com.ultracommerce.openadmin.web.rulebuilder.dto.FieldDTO;
+import com.ultracommerce.openadmin.web.rulebuilder.dto.FieldData;
+import com.ultracommerce.openadmin.web.rulebuilder.dto.FieldWrapper;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -55,7 +55,7 @@ public abstract class AbstractRuleBuilderFieldService implements RuleBuilderFiel
     protected ApplicationContext applicationContext;
     protected List<FieldData> fields = new ArrayList<FieldData>();
 
-    @Resource(name = "blRuleBuilderFieldServiceExtensionManager")
+    @Resource(name = "ucRuleBuilderFieldServiceExtensionManager")
     protected RuleBuilderFieldServiceExtensionManager extensionManager;
 
     @Override
@@ -83,7 +83,7 @@ public abstract class AbstractRuleBuilderFieldService implements RuleBuilderFiel
         FieldDTO fieldDTO = new FieldDTO();
         //translate the label to display
         String label = field.getFieldLabel();
-        BroadleafRequestContext context = BroadleafRequestContext.getBroadleafRequestContext();
+        UltraRequestContext context = UltraRequestContext.getUltraRequestContext();
         MessageSource messages = context.getMessageSource();
         if (messages != null) {
             label = messages.getMessage(label, null, label, context.getJavaLocale());
@@ -95,7 +95,7 @@ public abstract class AbstractRuleBuilderFieldService implements RuleBuilderFiel
         fieldDTO.setSelectizeSectionKey(field.getSelectizeSectionKey());
         fieldDTO.setValues(field.getOptions());
 
-        if (SupportedFieldType.BROADLEAF_ENUMERATION.equals(field.getFieldType())){
+        if (SupportedFieldType.ULTRA_ENUMERATION.equals(field.getFieldType())){
             fieldDTO.setInput("select");
         } else {
             fieldDTO.setInput("text");
@@ -224,9 +224,9 @@ public abstract class AbstractRuleBuilderFieldService implements RuleBuilderFiel
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
         // This bean only is valid when the following bean is active. (admin)
-        if (applicationContext.containsBean(PersistenceManagerFactory.getPersistenceManagerRef()) && applicationContext.containsBean("blPersistenceManagerFactory")) {
+        if (applicationContext.containsBean(PersistenceManagerFactory.getPersistenceManagerRef()) && applicationContext.containsBean("ucPersistenceManagerFactory")) {
             //initialize the factory bean
-            applicationContext.getBean("blPersistenceManagerFactory");
+            applicationContext.getBean("ucPersistenceManagerFactory");
 
             PersistenceManager persistenceManager = PersistenceManagerFactory.getDefaultPersistenceManager();
             dynamicEntityDao = persistenceManager.getDynamicEntityDao();
@@ -234,10 +234,10 @@ public abstract class AbstractRuleBuilderFieldService implements RuleBuilderFiel
 
             // This cannot be null during startup as we do not want to remove the null safety checks in a multi-tenant env.
             boolean contextWasNull = false;
-            if (BroadleafRequestContext.getBroadleafRequestContext() == null) {
-                BroadleafRequestContext brc = new BroadleafRequestContext();
+            if (UltraRequestContext.getUltraRequestContext() == null) {
+                UltraRequestContext brc = new UltraRequestContext();
                 brc.setIgnoreSite(true);
-                BroadleafRequestContext.setBroadleafRequestContext(brc);
+                UltraRequestContext.setUltraRequestContext(brc);
                 contextWasNull = true;
             }
 
@@ -250,7 +250,7 @@ public abstract class AbstractRuleBuilderFieldService implements RuleBuilderFiel
                 validateRuleBuilderState(this);
             } finally {
                 if (contextWasNull) {
-                    BroadleafRequestContext.setBroadleafRequestContext(null);
+                    UltraRequestContext.setUltraRequestContext(null);
                 }
             }
         }
@@ -266,7 +266,7 @@ public abstract class AbstractRuleBuilderFieldService implements RuleBuilderFiel
                         fieldService.getName(), fieldData.getFieldName()));
             }
 
-            if ("blcOperators_Selectize".equals(fieldData.getOperators()) &&
+            if ("ucOperators_Selectize".equals(fieldData.getOperators()) &&
                     StringUtils.isBlank(fieldData.getSelectizeSectionKey())) {
 
                 throw new IllegalStateException(String.format("Unable to initialize RuleBuilderFieldService[%s] : FieldData[%s]- " +

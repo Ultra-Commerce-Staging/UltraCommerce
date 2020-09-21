@@ -1,36 +1,36 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
 /**
  * @author Austin Rooke (austinrooke)
  */
-package org.broadleafcommerce.core.spec.pricing.service.workflow
+package com.ultracommerce.core.spec.pricing.service.workflow
 
-import org.broadleafcommerce.common.money.Money
-import org.broadleafcommerce.core.catalog.domain.SkuFeeImpl
-import org.broadleafcommerce.core.catalog.domain.SkuImpl
-import org.broadleafcommerce.core.catalog.service.type.SkuFeeType
-import org.broadleafcommerce.core.order.domain.BundleOrderItemImpl
-import org.broadleafcommerce.core.order.domain.FulfillmentGroupFeeImpl
-import org.broadleafcommerce.core.order.domain.FulfillmentGroupImpl
-import org.broadleafcommerce.core.order.domain.FulfillmentGroupItemImpl
-import org.broadleafcommerce.core.order.domain.Order
-import org.broadleafcommerce.core.order.service.FulfillmentGroupService
-import org.broadleafcommerce.core.pricing.service.workflow.ConsolidateFulfillmentFeesActivity
+import com.ultracommerce.common.money.Money
+import com.ultracommerce.core.catalog.domain.SkuFeeImpl
+import com.ultracommerce.core.catalog.domain.SkuImpl
+import com.ultracommerce.core.catalog.service.type.SkuFeeType
+import com.ultracommerce.core.order.domain.BundleOrderItemImpl
+import com.ultracommerce.core.order.domain.FulfillmentGroupFeeImpl
+import com.ultracommerce.core.order.domain.FulfillmentGroupImpl
+import com.ultracommerce.core.order.domain.FulfillmentGroupItemImpl
+import com.ultracommerce.core.order.domain.Order
+import com.ultracommerce.core.order.service.FulfillmentGroupService
+import com.ultracommerce.core.pricing.service.workflow.ConsolidateFulfillmentFeesActivity
 
 class ConsolidateFulfillmentFeesActivitySpec extends BasePricingActivitySpec {
 

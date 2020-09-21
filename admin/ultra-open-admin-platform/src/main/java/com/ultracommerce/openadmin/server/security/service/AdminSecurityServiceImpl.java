@@ -1,51 +1,51 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.openadmin.server.security.service;
+package com.ultracommerce.openadmin.server.security.service;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.email.service.EmailService;
-import org.broadleafcommerce.common.email.service.info.EmailInfo;
-import org.broadleafcommerce.common.event.BroadleafApplicationEventPublisher;
-import org.broadleafcommerce.common.extension.ExtensionResultHolder;
-import org.broadleafcommerce.common.extension.ExtensionResultStatusType;
-import org.broadleafcommerce.common.security.util.PasswordChange;
-import org.broadleafcommerce.common.security.util.PasswordUtils;
-import org.broadleafcommerce.common.service.GenericResponse;
-import org.broadleafcommerce.common.time.SystemTime;
-import org.broadleafcommerce.common.util.BLCSystemProperty;
-import org.broadleafcommerce.common.util.StringUtil;
-import org.broadleafcommerce.openadmin.server.security.dao.AdminPermissionDao;
-import org.broadleafcommerce.openadmin.server.security.dao.AdminRoleDao;
-import org.broadleafcommerce.openadmin.server.security.dao.AdminUserDao;
-import org.broadleafcommerce.openadmin.server.security.dao.ForgotPasswordSecurityTokenDao;
-import org.broadleafcommerce.openadmin.server.security.domain.AdminPermission;
-import org.broadleafcommerce.openadmin.server.security.domain.AdminRole;
-import org.broadleafcommerce.openadmin.server.security.domain.AdminUser;
-import org.broadleafcommerce.openadmin.server.security.domain.ForgotPasswordSecurityToken;
-import org.broadleafcommerce.openadmin.server.security.domain.ForgotPasswordSecurityTokenImpl;
-import org.broadleafcommerce.openadmin.server.security.event.AdminForgotPasswordEvent;
-import org.broadleafcommerce.openadmin.server.security.event.AdminForgotUsernameEvent;
-import org.broadleafcommerce.openadmin.server.security.extension.AdminSecurityServiceExtensionManager;
-import org.broadleafcommerce.openadmin.server.security.service.type.PermissionType;
+import com.ultracommerce.common.email.service.EmailService;
+import com.ultracommerce.common.email.service.info.EmailInfo;
+import com.ultracommerce.common.event.UltraApplicationEventPublisher;
+import com.ultracommerce.common.extension.ExtensionResultHolder;
+import com.ultracommerce.common.extension.ExtensionResultStatusType;
+import com.ultracommerce.common.security.util.PasswordChange;
+import com.ultracommerce.common.security.util.PasswordUtils;
+import com.ultracommerce.common.service.GenericResponse;
+import com.ultracommerce.common.time.SystemTime;
+import com.ultracommerce.common.util.UCSystemProperty;
+import com.ultracommerce.common.util.StringUtil;
+import com.ultracommerce.openadmin.server.security.dao.AdminPermissionDao;
+import com.ultracommerce.openadmin.server.security.dao.AdminRoleDao;
+import com.ultracommerce.openadmin.server.security.dao.AdminUserDao;
+import com.ultracommerce.openadmin.server.security.dao.ForgotPasswordSecurityTokenDao;
+import com.ultracommerce.openadmin.server.security.domain.AdminPermission;
+import com.ultracommerce.openadmin.server.security.domain.AdminRole;
+import com.ultracommerce.openadmin.server.security.domain.AdminUser;
+import com.ultracommerce.openadmin.server.security.domain.ForgotPasswordSecurityToken;
+import com.ultracommerce.openadmin.server.security.domain.ForgotPasswordSecurityTokenImpl;
+import com.ultracommerce.openadmin.server.security.event.AdminForgotPasswordEvent;
+import com.ultracommerce.openadmin.server.security.event.AdminForgotUsernameEvent;
+import com.ultracommerce.openadmin.server.security.extension.AdminSecurityServiceExtensionManager;
+import com.ultracommerce.openadmin.server.security.service.type.PermissionType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -69,7 +69,7 @@ import javax.cache.CacheManager;
  * @author jfischer
  *
  */
-@Service("blAdminSecurityService")
+@Service("ucAdminSecurityService")
 public class AdminSecurityServiceImpl implements AdminSecurityService {
 
     private static final Log LOG = LogFactory.getLog(AdminSecurityServiceImpl.class);
@@ -78,25 +78,25 @@ public class AdminSecurityServiceImpl implements AdminSecurityService {
     private static final int FULL_PASSWORD_LENGTH = 16;
 
     @Autowired
-    @Qualifier("blApplicationEventPublisher")
-    protected BroadleafApplicationEventPublisher eventPublisher;
+    @Qualifier("ucApplicationEventPublisher")
+    protected UltraApplicationEventPublisher eventPublisher;
 
-    @Resource(name = "blAdminRoleDao")
+    @Resource(name = "ucAdminRoleDao")
     protected AdminRoleDao adminRoleDao;
 
-    @Resource(name = "blAdminUserDao")
+    @Resource(name = "ucAdminUserDao")
     protected AdminUserDao adminUserDao;
 
-    @Resource(name = "blForgotPasswordSecurityTokenDao")
+    @Resource(name = "ucForgotPasswordSecurityTokenDao")
     protected ForgotPasswordSecurityTokenDao forgotPasswordSecurityTokenDao;
 
-    @Resource(name = "blAdminPermissionDao")
+    @Resource(name = "ucAdminPermissionDao")
     protected AdminPermissionDao adminPermissionDao;
     
-    @Resource(name = "blCacheManager")
+    @Resource(name = "ucCacheManager")
     protected CacheManager cacheManager;
 
-    protected static String CACHE_NAME = "blSecurityElements";
+    protected static String CACHE_NAME = "ucSecurityElements";
     protected static String CACHE_KEY_PREFIX = "security:";
 
     protected Cache<String, Boolean> cache;;
@@ -105,31 +105,31 @@ public class AdminSecurityServiceImpl implements AdminSecurityService {
      * <p>This is simply a placeholder to be used by {@link #setupPasswordEncoder()} to determine if we're using the
      * new {@link PasswordEncoder} or the deprecated {@link org.springframework.security.authentication.encoding.PasswordEncoder PasswordEncoder}
      */
-    @Resource(name="blAdminPasswordEncoder")
+    @Resource(name="ucAdminPasswordEncoder")
     protected PasswordEncoder passwordEncoderBean;
 
-    @Resource(name="blEmailService")
+    @Resource(name="ucEmailService")
     protected EmailService emailService;
 
-    @Resource(name="blSendAdminResetPasswordEmail")
+    @Resource(name="ucSendAdminResetPasswordEmail")
     protected EmailInfo resetPasswordEmailInfo;
 
-    @Resource(name="blSendAdminUsernameEmailInfo")
+    @Resource(name="ucSendAdminUsernameEmailInfo")
     protected EmailInfo sendUsernameEmailInfo;
 
-    @Resource(name = "blAdminSecurityServiceExtensionManager")
+    @Resource(name = "ucAdminSecurityServiceExtensionManager")
     protected AdminSecurityServiceExtensionManager extensionManager;
 
     protected int getTokenExpiredMinutes() {
-        return BLCSystemProperty.resolveIntSystemProperty("tokenExpiredMinutes");
+        return UCSystemProperty.resolveIntSystemProperty("tokenExpiredMinutes");
     }
 
     protected String getResetPasswordURL() {
-        return BLCSystemProperty.resolveSystemProperty("resetPasswordURL");
+        return UCSystemProperty.resolveSystemProperty("resetPasswordURL");
     }
 
     @Override
-    @Transactional("blTransactionManager")
+    @Transactional("ucTransactionManager")
     public void deleteAdminPermission(AdminPermission permission) {
 
         adminPermissionDao.deleteAdminPermission(permission);
@@ -137,14 +137,14 @@ public class AdminSecurityServiceImpl implements AdminSecurityService {
     }
 
     @Override
-    @Transactional("blTransactionManager")
+    @Transactional("ucTransactionManager")
     public void deleteAdminRole(AdminRole role) {
         adminRoleDao.deleteAdminRole(role);
         clearAdminSecurityCache();
     }
 
     @Override
-    @Transactional("blTransactionManager")
+    @Transactional("ucTransactionManager")
     public void deleteAdminUser(AdminUser user) {
         adminUserDao.deleteAdminUser(user);
         clearAdminSecurityCache();
@@ -166,7 +166,7 @@ public class AdminSecurityServiceImpl implements AdminSecurityService {
     }
 
     @Override
-    @Transactional("blTransactionManager")
+    @Transactional("ucTransactionManager")
     public AdminPermission saveAdminPermission(AdminPermission permission) {
         permission = adminPermissionDao.saveAdminPermission(permission);
         clearAdminSecurityCache();
@@ -174,7 +174,7 @@ public class AdminSecurityServiceImpl implements AdminSecurityService {
     }
 
     @Override
-    @Transactional("blTransactionManager")
+    @Transactional("ucTransactionManager")
     public AdminRole saveAdminRole(AdminRole role) {
         role = adminRoleDao.saveAdminRole(role);
         clearAdminSecurityCache();
@@ -182,7 +182,7 @@ public class AdminSecurityServiceImpl implements AdminSecurityService {
     }
 
     @Override
-    @Transactional("blTransactionManager")
+    @Transactional("ucTransactionManager")
     public AdminUser saveAdminUser(AdminUser user) {
         boolean encodePasswordNeeded = false;
         String unencodedPassword = user.getUnencodedPassword();
@@ -221,7 +221,7 @@ public class AdminSecurityServiceImpl implements AdminSecurityService {
     }
 
     @Override
-    @Transactional("blTransactionManager")
+    @Transactional("ucTransactionManager")
     public AdminUser changePassword(PasswordChange passwordChange) {
         AdminUser user = readAdminUserByUserName(passwordChange.getUsername());
         user.setUnencodedPassword(passwordChange.getNewPassword());
@@ -312,7 +312,7 @@ public class AdminSecurityServiceImpl implements AdminSecurityService {
     }
 
     @Override
-    @Transactional("blTransactionManager")
+    @Transactional("ucTransactionManager")
     public GenericResponse sendForgotUsernameNotification(String emailAddress) {
         GenericResponse response = new GenericResponse();
         List<AdminUser> users = null;
@@ -340,7 +340,7 @@ public class AdminSecurityServiceImpl implements AdminSecurityService {
     }
 
     @Override
-    @Transactional("blTransactionManager")
+    @Transactional("ucTransactionManager")
     public GenericResponse sendResetPasswordNotification(String username) {
         GenericResponse response = new GenericResponse();
         AdminUser user = null;
@@ -376,7 +376,7 @@ public class AdminSecurityServiceImpl implements AdminSecurityService {
     }
 
     @Override
-    @Transactional("blTransactionManager")
+    @Transactional("ucTransactionManager")
     public GenericResponse resetPasswordUsingToken(String username, String token, String password, String confirmPassword) {
         GenericResponse response = new GenericResponse();
         AdminUser user = null;
@@ -491,7 +491,7 @@ public class AdminSecurityServiceImpl implements AdminSecurityService {
     }
 
     @Override
-    @Transactional("blTransactionManager")
+    @Transactional("ucTransactionManager")
     public GenericResponse changePassword(String username, String oldPassword, String password, String confirmPassword) {
         GenericResponse response = new GenericResponse();
         AdminUser user = null;

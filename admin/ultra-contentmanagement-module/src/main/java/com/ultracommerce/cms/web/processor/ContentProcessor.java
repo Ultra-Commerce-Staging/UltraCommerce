@@ -1,44 +1,44 @@
 /*
  * #%L
- * BroadleafCommerce CMS Module
+ * UltraCommerce CMS Module
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
 
-package org.broadleafcommerce.cms.web.processor;
+package com.ultracommerce.cms.web.processor;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.cms.file.service.StaticAssetService;
-import org.broadleafcommerce.cms.structure.domain.StructuredContentType;
-import org.broadleafcommerce.cms.structure.service.StructuredContentService;
-import org.broadleafcommerce.cms.web.deeplink.ContentDeepLinkServiceImpl;
-import org.broadleafcommerce.common.RequestDTO;
-import org.broadleafcommerce.common.TimeDTO;
-import org.broadleafcommerce.common.locale.domain.Locale;
-import org.broadleafcommerce.common.sandbox.domain.SandBox;
-import org.broadleafcommerce.common.structure.dto.StructuredContentDTO;
-import org.broadleafcommerce.common.time.SystemTime;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
-import org.broadleafcommerce.common.web.deeplink.DeepLink;
-import org.broadleafcommerce.presentation.condition.ConditionalOnTemplating;
-import org.broadleafcommerce.presentation.dialect.AbstractBroadleafVariableModifierProcessor;
-import org.broadleafcommerce.presentation.model.BroadleafAssignation;
-import org.broadleafcommerce.presentation.model.BroadleafTemplateContext;
+import com.ultracommerce.cms.file.service.StaticAssetService;
+import com.ultracommerce.cms.structure.domain.StructuredContentType;
+import com.ultracommerce.cms.structure.service.StructuredContentService;
+import com.ultracommerce.cms.web.deeplink.ContentDeepLinkServiceImpl;
+import com.ultracommerce.common.RequestDTO;
+import com.ultracommerce.common.TimeDTO;
+import com.ultracommerce.common.locale.domain.Locale;
+import com.ultracommerce.common.sandbox.domain.SandBox;
+import com.ultracommerce.common.structure.dto.StructuredContentDTO;
+import com.ultracommerce.common.time.SystemTime;
+import com.ultracommerce.common.web.UltraRequestContext;
+import com.ultracommerce.common.web.deeplink.DeepLink;
+import com.ultracommerce.presentation.condition.ConditionalOnTemplating;
+import com.ultracommerce.presentation.dialect.AbstractUltraVariableModifierProcessor;
+import com.ultracommerce.presentation.model.UltraAssignation;
+import com.ultracommerce.presentation.model.UltraTemplateContext;
 import org.springframework.stereotype.Component;
 
 import com.google.common.primitives.Ints;
@@ -55,7 +55,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Processor used to display structured content that is maintained with the Broadleaf CMS.
+ * Processor used to display structured content that is maintained with the Ultra CMS.
  *
  * Usage based on the following attributes:<br>
  * <ul>
@@ -92,24 +92,24 @@ import javax.servlet.http.HttpServletRequest;
  *                          The list will be sorted first by dynamicFieldA descending and then dynamicFieldB ascending
  * </ul>
  */
-@Component("blContentProcessor")
+@Component("ucContentProcessor")
 @ConditionalOnTemplating
-public class ContentProcessor extends AbstractBroadleafVariableModifierProcessor {
+public class ContentProcessor extends AbstractUltraVariableModifierProcessor {
 
     protected final Log LOG = LogFactory.getLog(getClass());
-    public static final String REQUEST_DTO = "blRequestDTO";
-    public static final String BLC_RULE_MAP_PARAM = "blRuleMap";
+    public static final String REQUEST_DTO = "ucRequestDTO";
+    public static final String UC_RULE_MAP_PARAM = "ucRuleMap";
 
-    @Resource(name = "blStructuredContentService")
+    @Resource(name = "ucStructuredContentService")
     protected StructuredContentService structuredContentService;
 
-    @Resource(name = "blStaticAssetService")
+    @Resource(name = "ucStaticAssetService")
     protected StaticAssetService staticAssetService;
 
-    @Resource(name = "blContentProcessorExtensionManager")
+    @Resource(name = "ucContentProcessorExtensionManager")
     protected ContentProcessorExtensionManager extensionManager;
 
-    @Resource(name = "blContentDeepLinkService")
+    @Resource(name = "ucContentDeepLinkService")
     protected ContentDeepLinkServiceImpl contentDeepLinkService;
 
     @Override
@@ -137,7 +137,7 @@ public class ContentProcessor extends AbstractBroadleafVariableModifierProcessor
     }
 
     @Override
-    public Map<String, Object> populateModelVariables(String tagName, Map<String, String> tagAttributes, BroadleafTemplateContext context) {
+    public Map<String, Object> populateModelVariables(String tagName, Map<String, String> tagAttributes, UltraTemplateContext context) {
         String contentType = tagAttributes.get("contentType");
         String contentName = tagAttributes.get("contentName");
         String maxResultsStr = tagAttributes.get("maxResults");
@@ -161,10 +161,10 @@ public class ContentProcessor extends AbstractBroadleafVariableModifierProcessor
         String fieldFilters = tagAttributes.get("fieldFilters");
         final String sorts = tagAttributes.get("sorts");
 
-        BroadleafRequestContext blcContext = BroadleafRequestContext.getBroadleafRequestContext();
-        HttpServletRequest request = blcContext.getRequest();
-        Map<String, Object> mvelParameters = buildMvelParameters(blcContext.getRequest(), tagAttributes, context);
-        SandBox currentSandbox = blcContext.getSandBox();
+        UltraRequestContext ucContext = UltraRequestContext.getUltraRequestContext();
+        HttpServletRequest request = ucContext.getRequest();
+        Map<String, Object> mvelParameters = buildMvelParameters(ucContext.getRequest(), tagAttributes, context);
+        SandBox currentSandbox = ucContext.getSandBox();
 
         List<StructuredContentDTO> contentItems;
         StructuredContentType structuredContentType = null;
@@ -172,7 +172,7 @@ public class ContentProcessor extends AbstractBroadleafVariableModifierProcessor
             structuredContentType = structuredContentService.findStructuredContentTypeByName(contentType);
         }
 
-        Locale locale = blcContext.getLocale();
+        Locale locale = ucContext.getLocale();
 
         Map<String, Object> newModelVars = new HashMap<>();
         contentItems = getContentItems(contentName, maxResults, request, mvelParameters, currentSandbox, structuredContentType, locale, tagName, tagAttributes, newModelVars, context);
@@ -181,15 +181,15 @@ public class ContentProcessor extends AbstractBroadleafVariableModifierProcessor
 
             // sort the resulting list by the configured property sorts on the tag
             if (StringUtils.isNotEmpty(sorts)) {
-                final BroadleafTemplateContext finalContext = context;
+                final UltraTemplateContext finalContext = context;
                 // In order to use the context in a comparator it needs to be final
                 Collections.sort(contentItems, new Comparator<StructuredContentDTO>() {
 
                     @Override
                     public int compare(StructuredContentDTO o1, StructuredContentDTO o2) {
-                        List<BroadleafAssignation> sortAssignments = finalContext.getAssignationSequence(sorts, false);
+                        List<UltraAssignation> sortAssignments = finalContext.getAssignationSequence(sorts, false);
                         CompareToBuilder compareBuilder = new CompareToBuilder();
-                        for (BroadleafAssignation sortAssignment : sortAssignments) {
+                        for (UltraAssignation sortAssignment : sortAssignments) {
                             String property = sortAssignment.getLeftStringRepresentation(finalContext);
 
                             Object val1 = o1.getPropertyValue(property);
@@ -210,9 +210,9 @@ public class ContentProcessor extends AbstractBroadleafVariableModifierProcessor
 
             for (StructuredContentDTO item : contentItems) {
                 if (StringUtils.isNotEmpty(fieldFilters)) {
-                    List<BroadleafAssignation> assignments = context.getAssignationSequence(fieldFilters, false);
+                    List<UltraAssignation> assignments = context.getAssignationSequence(fieldFilters, false);
                     boolean valid = true;
-                    for (BroadleafAssignation assignment : assignments) {
+                    for (UltraAssignation assignment : assignments) {
 
                         if (ObjectUtils.notEqual(assignment.parseRight(context),
                             item.getValues().get(assignment.getLeftStringRepresentation(context)))) {
@@ -273,7 +273,7 @@ public class ContentProcessor extends AbstractBroadleafVariableModifierProcessor
                                                          SandBox currentSandbox,
                                                          StructuredContentType structuredContentType,
                                                          Locale locale, String tagName, Map<String, String> tagAttributes,
-                                                         Map<String, Object> newModelVars, BroadleafTemplateContext context) {
+                                                         Map<String, Object> newModelVars, UltraTemplateContext context) {
         List<StructuredContentDTO> contentItems;
         if (structuredContentType == null) {
             contentItems = structuredContentService.lookupStructuredContentItemsByName(contentName, locale, maxResults, mvelParameters, isSecure(request));
@@ -297,8 +297,8 @@ public class ContentProcessor extends AbstractBroadleafVariableModifierProcessor
      * @param request
      * @return
      */
-    protected Map<String, Object> buildMvelParameters(HttpServletRequest request, Map<String, String> tagAttributes, BroadleafTemplateContext context) {
-        TimeZone timeZone = BroadleafRequestContext.getBroadleafRequestContext().getTimeZone();
+    protected Map<String, Object> buildMvelParameters(HttpServletRequest request, Map<String, String> tagAttributes, UltraTemplateContext context) {
+        TimeZone timeZone = UltraRequestContext.getUltraRequestContext().getTimeZone();
 
         final TimeDTO timeDto;
         if (timeZone != null) {
@@ -332,10 +332,10 @@ public class ContentProcessor extends AbstractBroadleafVariableModifierProcessor
         }
 
         @SuppressWarnings("unchecked")
-        Map<String, Object> blcRuleMap = (Map<String, Object>) request.getAttribute(BLC_RULE_MAP_PARAM);
-        if (blcRuleMap != null) {
-            for (String mapKey : blcRuleMap.keySet()) {
-                mvelParameters.put(mapKey, blcRuleMap.get(mapKey));
+        Map<String, Object> ucRuleMap = (Map<String, Object>) request.getAttribute(UC_RULE_MAP_PARAM);
+        if (ucRuleMap != null) {
+            for (String mapKey : ucRuleMap.keySet()) {
+                mvelParameters.put(mapKey, ucRuleMap.get(mapKey));
             }
         }
 

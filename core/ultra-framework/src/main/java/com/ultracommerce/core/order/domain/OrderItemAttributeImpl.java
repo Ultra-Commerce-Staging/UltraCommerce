@@ -1,29 +1,29 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.order.domain;
+package com.ultracommerce.core.order.domain;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.copy.CreateResponse;
-import org.broadleafcommerce.common.copy.MultiTenantCopyContext;
-import org.broadleafcommerce.common.presentation.AdminPresentation;
-import org.broadleafcommerce.common.presentation.AdminPresentationClass;
-import org.broadleafcommerce.common.presentation.client.VisibilityEnum;
+import com.ultracommerce.common.copy.CreateResponse;
+import com.ultracommerce.common.copy.MultiTenantCopyContext;
+import com.ultracommerce.common.presentation.AdminPresentation;
+import com.ultracommerce.common.presentation.AdminPresentationClass;
+import com.ultracommerce.common.presentation.client.VisibilityEnum;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
@@ -35,13 +35,13 @@ import java.lang.reflect.Method;
 /**
  * Arbitrary attributes to add to an order-item.
  *
- * @see org.broadleafcommerce.core.order.domain.OrderItemAttribute
+ * @see com.ultracommerce.core.order.domain.OrderItemAttribute
  */
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name="BLC_ORDER_ITEM_ATTRIBUTE",
+@Table(name="UC_ORDER_ITEM_ATTRIBUTE",
         uniqueConstraints = @UniqueConstraint(name = "ATTR_NAME_ORDER_ITEM_ID", columnNames = {"NAME", "ORDER_ITEM_ID"}))
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region="blOrderElements")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region="ucOrderElements")
 @AdminPresentationClass(friendlyName = "OrderItemAttributeImpl_baseProductAttribute")
 public class OrderItemAttributeImpl implements OrderItemAttribute {
 
@@ -52,10 +52,10 @@ public class OrderItemAttributeImpl implements OrderItemAttribute {
     @GeneratedValue(generator= "OrderItemAttributeId")
     @GenericGenerator(
         name="OrderItemAttributeId",
-        strategy="org.broadleafcommerce.common.persistence.IdOverrideTableGenerator",
+        strategy="com.ultracommerce.common.persistence.IdOverrideTableGenerator",
         parameters = {
             @Parameter(name="segment_value", value="OrderItemAttributeImpl"),
-            @Parameter(name="entity_name", value="org.broadleafcommerce.core.catalog.domain.OrderItemAttributeImpl")
+            @Parameter(name="entity_name", value="com.ultracommerce.core.catalog.domain.OrderItemAttributeImpl")
         }
     )
     @Column(name = "ORDER_ITEM_ATTRIBUTE_ID")
@@ -120,7 +120,7 @@ public class OrderItemAttributeImpl implements OrderItemAttribute {
 
     public void checkCloneable(OrderItemAttribute itemAttribute) throws CloneNotSupportedException, SecurityException, NoSuchMethodException {
         Method cloneMethod = itemAttribute.getClass().getMethod("clone", new Class[]{});
-        if (cloneMethod.getDeclaringClass().getName().startsWith("org.broadleafcommerce") && !itemAttribute.getClass().getName().startsWith("org.broadleafcommerce")) {
+        if (cloneMethod.getDeclaringClass().getName().startsWith("com.ultracommerce") && !itemAttribute.getClass().getName().startsWith("com.ultracommerce")) {
             //subclass is not implementing the clone method
             throw new CloneNotSupportedException("Custom extensions and implementations should implement clone in order to guarantee split and merge operations are performed accurately");
         }
@@ -135,7 +135,7 @@ public class OrderItemAttributeImpl implements OrderItemAttribute {
             try {
                 checkCloneable(itemAttribute);
             } catch (CloneNotSupportedException e) {
-                LOG.warn("Clone implementation missing in inheritance hierarchy outside of Broadleaf: " + itemAttribute.getClass().getName(), e);
+                LOG.warn("Clone implementation missing in inheritance hierarchy outside of Ultra: " + itemAttribute.getClass().getName(), e);
             }            
             itemAttribute.setName(name);
             itemAttribute.setOrderItem(orderItem);

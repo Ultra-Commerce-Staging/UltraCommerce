@@ -1,39 +1,39 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.web;
+package com.ultracommerce.common.web;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.RequestDTO;
-import org.broadleafcommerce.common.RequestDTOImpl;
-import org.broadleafcommerce.common.classloader.release.ThreadLocalManager;
-import org.broadleafcommerce.common.currency.domain.BroadleafRequestedCurrencyDto;
-import org.broadleafcommerce.common.extension.ExtensionManager;
-import org.broadleafcommerce.common.locale.domain.Locale;
-import org.broadleafcommerce.common.sandbox.domain.SandBox;
-import org.broadleafcommerce.common.sandbox.service.SandBoxService;
-import org.broadleafcommerce.common.site.domain.Site;
-import org.broadleafcommerce.common.site.domain.Theme;
-import org.broadleafcommerce.common.util.BLCRequestUtils;
-import org.broadleafcommerce.common.util.DeployBehaviorUtil;
-import org.broadleafcommerce.common.util.StringUtil;
-import org.broadleafcommerce.common.web.exception.HaltFilterChainException;
+import com.ultracommerce.common.RequestDTO;
+import com.ultracommerce.common.RequestDTOImpl;
+import com.ultracommerce.common.classloader.release.ThreadLocalManager;
+import com.ultracommerce.common.currency.domain.UltraRequestedCurrencyDto;
+import com.ultracommerce.common.extension.ExtensionManager;
+import com.ultracommerce.common.locale.domain.Locale;
+import com.ultracommerce.common.sandbox.domain.SandBox;
+import com.ultracommerce.common.sandbox.service.SandBoxService;
+import com.ultracommerce.common.site.domain.Site;
+import com.ultracommerce.common.site.domain.Theme;
+import com.ultracommerce.common.util.UCRequestUtils;
+import com.ultracommerce.common.util.DeployBehaviorUtil;
+import com.ultracommerce.common.util.StringUtil;
+import com.ultracommerce.common.web.exception.HaltFilterChainException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
@@ -53,46 +53,46 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * 
  * @author Phillip Verheyden
- * @see {@link BroadleafRequestFilter}
+ * @see {@link UltraRequestFilter}
  */
-@Component("blRequestProcessor")
-public class BroadleafRequestProcessor extends AbstractBroadleafWebRequestProcessor {
+@Component("ucRequestProcessor")
+public class UltraRequestProcessor extends AbstractUltraWebRequestProcessor {
 
     protected final Log LOG = LogFactory.getLog(getClass());
 
-    private static String REQUEST_DTO_PARAM_NAME = BroadleafRequestFilter.REQUEST_DTO_PARAM_NAME;
-    public static String REPROCESS_PARAM_NAME = "REPROCESS_BLC_REQUEST";
+    private static String REQUEST_DTO_PARAM_NAME = UltraRequestFilter.REQUEST_DTO_PARAM_NAME;
+    public static String REPROCESS_PARAM_NAME = "REPROCESS_UC_REQUEST";
     
     private static final String SITE_STRICT_VALIDATE_PRODUCTION_CHANGES_KEY = "site.strict.validate.production.changes";
     public static final String SITE_DISABLE_SANDBOX_PREVIEW = "site.disable.sandbox.preview";
 
-    private static final String SANDBOX_ID_PARAM = "blSandboxId";
+    private static final String SANDBOX_ID_PARAM = "ucSandboxId";
 
-    @Resource(name = "blSiteResolver")
-    protected BroadleafSiteResolver siteResolver;
+    @Resource(name = "ucSiteResolver")
+    protected UltraSiteResolver siteResolver;
 
-    @Resource(name = "blLocaleResolver")
-    protected BroadleafLocaleResolver localeResolver;
+    @Resource(name = "ucLocaleResolver")
+    protected UltraLocaleResolver localeResolver;
 
-    @Resource(name = "blCurrencyResolver")
-    protected BroadleafCurrencyResolver currencyResolver;
+    @Resource(name = "ucCurrencyResolver")
+    protected UltraCurrencyResolver currencyResolver;
 
-    @Resource(name = "blSandBoxResolver")
-    protected BroadleafSandBoxResolver sandboxResolver;
+    @Resource(name = "ucSandBoxResolver")
+    protected UltraSandBoxResolver sandboxResolver;
 
-    @Resource(name = "blThemeResolver")
-    protected BroadleafThemeResolver themeResolver;
+    @Resource(name = "ucThemeResolver")
+    protected UltraThemeResolver themeResolver;
 
     @Resource(name = "messageSource")
     protected MessageSource messageSource;
 
-    @Resource(name = "blTimeZoneResolver")
-    protected BroadleafTimeZoneResolver broadleafTimeZoneResolver;
+    @Resource(name = "ucTimeZoneResolver")
+    protected UltraTimeZoneResolver ultraTimeZoneResolver;
 
-    @Resource(name = "blBaseUrlResolver")
+    @Resource(name = "ucBaseUrlResolver")
     protected BaseUrlResolver baseUrlResolver;
 
-    @Resource(name = "blSandBoxService")
+    @Resource(name = "ucSandBoxService")
     protected SandBoxService sandBoxService;
     
     @Value("${thymeleaf.threadLocalCleanup.enabled}")
@@ -104,15 +104,15 @@ public class BroadleafRequestProcessor extends AbstractBroadleafWebRequestProces
     @Value("${" + SITE_DISABLE_SANDBOX_PREVIEW + ":false}")
     protected boolean siteDisableSandboxPreview = false;
 
-    @Resource(name = "blDeployBehaviorUtil")
+    @Resource(name = "ucDeployBehaviorUtil")
     protected DeployBehaviorUtil deployBehaviorUtil;
     
-    @Resource(name="blEntityExtensionManagers")
+    @Resource(name="ucEntityExtensionManagers")
     protected Map<String, ExtensionManager> entityExtensionManagers;
     
     @Override
     public void process(WebRequest request) {
-        BroadleafRequestContext brc = new BroadleafRequestContext();
+        UltraRequestContext brc = new UltraRequestContext();
         brc.getAdditionalProperties().putAll(entityExtensionManagers);
         
         Site site = siteResolver.resolveSite(request);
@@ -130,13 +130,13 @@ public class BroadleafRequestProcessor extends AbstractBroadleafWebRequestProces
             brc.setValidateProductionChangesState(ValidateProductionChangesState.UNDEFINED);
         }
 
-        BroadleafRequestContext.setBroadleafRequestContext(brc);
+        UltraRequestContext.setUltraRequestContext(brc);
 
         Locale locale = localeResolver.resolveLocale(request);
         brc.setLocale(locale);
-        TimeZone timeZone = broadleafTimeZoneResolver.resolveTimeZone(request);
-        BroadleafRequestedCurrencyDto currencyDto = currencyResolver.resolveCurrency(request);
-        // Assumes BroadleafProcess
+        TimeZone timeZone = ultraTimeZoneResolver.resolveTimeZone(request);
+        UltraRequestedCurrencyDto currencyDto = currencyResolver.resolveCurrency(request);
+        // Assumes UltraProcess
         RequestDTO requestDTO = (RequestDTO) request.getAttribute(REQUEST_DTO_PARAM_NAME, WebRequest.SCOPE_REQUEST);
         if (requestDTO == null) {
             requestDTO = new RequestDTOImpl(request);
@@ -146,13 +146,13 @@ public class BroadleafRequestProcessor extends AbstractBroadleafWebRequestProces
         
         // When a user elects to switch his sandbox, we want to invalidate the current session. We'll then redirect the 
         // user to the current URL so that the configured filters trigger again appropriately.
-        Boolean reprocessRequest = (Boolean) request.getAttribute(BroadleafRequestProcessor.REPROCESS_PARAM_NAME, WebRequest.SCOPE_REQUEST);
+        Boolean reprocessRequest = (Boolean) request.getAttribute(UltraRequestProcessor.REPROCESS_PARAM_NAME, WebRequest.SCOPE_REQUEST);
         if (reprocessRequest != null && reprocessRequest) {
             LOG.debug("Reprocessing request");
             if (request instanceof ServletWebRequest) {
                 HttpServletRequest hsr = ((ServletWebRequest) request).getRequest();
                 
-                clearBroadleafSessionAttrs(request);
+                clearUltraSessionAttrs(request);
                 
                 StringBuffer url = hsr.getRequestURL();
                 HttpServletResponse response = ((ServletWebRequest) request).getResponse();
@@ -187,8 +187,8 @@ public class BroadleafRequestProcessor extends AbstractBroadleafWebRequestProces
             SandBoxContext.setSandBoxContext(previewSandBoxContext);
         }
         if (currencyDto != null) {
-            brc.setBroadleafCurrency(currencyDto.getCurrencyToUse());
-            brc.setRequestedBroadleafCurrency(currencyDto.getRequestedCurrency());
+            brc.setUltraCurrency(currencyDto.getCurrencyToUse());
+            brc.setRequestedUltraCurrency(currencyDto.getRequestedCurrency());
         }
         //We do this to prevent lazy init exceptions when this context/sandbox combination
         // is used in a different session that it was initiated in. see QA#2576
@@ -206,17 +206,17 @@ public class BroadleafRequestProcessor extends AbstractBroadleafWebRequestProces
 
         brc.setMessageSource(messageSource);
         brc.setTimeZone(timeZone);
-        Map<String, Object> ruleMap = (Map<String, Object>) request.getAttribute("blRuleMap", WebRequest.SCOPE_REQUEST);
+        Map<String, Object> ruleMap = (Map<String, Object>) request.getAttribute("ucRuleMap", WebRequest.SCOPE_REQUEST);
         if (ruleMap == null) {
             LOG.trace("Creating ruleMap and adding in Locale.");
             ruleMap = new HashMap<String, Object>();
-            request.setAttribute("blRuleMap", ruleMap, WebRequest.SCOPE_REQUEST);
+            request.setAttribute("ucRuleMap", ruleMap, WebRequest.SCOPE_REQUEST);
         } else {
-            LOG.trace("Using pre-existing ruleMap - added by non standard BLC process.");
+            LOG.trace("Using pre-existing ruleMap - added by non standard UC process.");
         }
         ruleMap.put("locale", locale);
 
-        String adminUserId = request.getParameter(BroadleafRequestFilter.ADMIN_USER_ID_PARAM_NAME);
+        String adminUserId = request.getParameter(UltraRequestFilter.ADMIN_USER_ID_PARAM_NAME);
         if (StringUtils.isNotBlank(adminUserId)) {
             //TODO: Add token logic to secure the admin user id
             brc.setAdminUserId(Long.parseLong(adminUserId));
@@ -256,16 +256,16 @@ public class BroadleafRequestProcessor extends AbstractBroadleafWebRequestProces
         ThreadLocalManager.remove();
     }
     
-    protected void clearBroadleafSessionAttrs(WebRequest request) {
-        if (BLCRequestUtils.isOKtoUseSession(request)) {
-            request.removeAttribute(BroadleafLocaleResolverImpl.LOCALE_VAR, WebRequest.SCOPE_SESSION);
-            request.removeAttribute(BroadleafCurrencyResolverImpl.CURRENCY_VAR, WebRequest.SCOPE_SESSION);
-            request.removeAttribute(BroadleafTimeZoneResolverImpl.TIMEZONE_VAR, WebRequest.SCOPE_SESSION);
-            request.removeAttribute(BroadleafSandBoxResolver.SANDBOX_ID_VAR, WebRequest.SCOPE_SESSION);
+    protected void clearUltraSessionAttrs(WebRequest request) {
+        if (UCRequestUtils.isOKtoUseSession(request)) {
+            request.removeAttribute(UltraLocaleResolverImpl.LOCALE_VAR, WebRequest.SCOPE_SESSION);
+            request.removeAttribute(UltraCurrencyResolverImpl.CURRENCY_VAR, WebRequest.SCOPE_SESSION);
+            request.removeAttribute(UltraTimeZoneResolverImpl.TIMEZONE_VAR, WebRequest.SCOPE_SESSION);
+            request.removeAttribute(UltraSandBoxResolver.SANDBOX_ID_VAR, WebRequest.SCOPE_SESSION);
 
             // From CustomerStateRequestProcessorImpl, using explicit String because it's out of module
-            request.removeAttribute("_blc_anonymousCustomer", WebRequest.SCOPE_SESSION);
-            request.removeAttribute("_blc_anonymousCustomerId", WebRequest.SCOPE_SESSION);
+            request.removeAttribute("_uc_anonymousCustomer", WebRequest.SCOPE_SESSION);
+            request.removeAttribute("_uc_anonymousCustomerId", WebRequest.SCOPE_SESSION);
         }
     }
 }

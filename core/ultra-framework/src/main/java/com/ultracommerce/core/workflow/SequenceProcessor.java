@@ -1,28 +1,28 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.workflow;
+package com.ultracommerce.core.workflow;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.core.workflow.state.ActivityStateManager;
-import org.broadleafcommerce.core.workflow.state.ActivityStateManagerImpl;
-import org.broadleafcommerce.core.workflow.state.RollbackFailureException;
-import org.broadleafcommerce.core.workflow.state.RollbackStateLocal;
+import com.ultracommerce.core.workflow.state.ActivityStateManager;
+import com.ultracommerce.core.workflow.state.ActivityStateManagerImpl;
+import com.ultracommerce.core.workflow.state.RollbackFailureException;
+import com.ultracommerce.core.workflow.state.RollbackStateLocal;
 
 import java.util.List;
 
@@ -47,9 +47,9 @@ public class SequenceProcessor<U, T> extends BaseProcessor<U, T> {
         if (LOG.isDebugEnabled()) {
             LOG.debug(getBeanName() + " processor is running..");
         }
-        ActivityStateManager activityStateManager = getBeanFactory().getBean(ActivityStateManager.class, "blActivityStateManager");
+        ActivityStateManager activityStateManager = getBeanFactory().getBean(ActivityStateManager.class, "ucActivityStateManager");
         if (activityStateManager == null) {
-            throw new IllegalStateException("Unable to find an instance of ActivityStateManager registered under bean id blActivityStateManager");
+            throw new IllegalStateException("Unable to find an instance of ActivityStateManager registered under bean id ucActivityStateManager");
         }
         ProcessContext<U> context = null;
         

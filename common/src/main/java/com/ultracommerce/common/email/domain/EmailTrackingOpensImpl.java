@@ -1,21 +1,21 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.email.domain;
+package com.ultracommerce.common.email.domain;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Index;
@@ -36,7 +36,7 @@ import javax.persistence.Table;
  *
  */
 @Entity
-@Table(name = "BLC_EMAIL_TRACKING_OPENS")
+@Table(name = "UC_EMAIL_TRACKING_OPENS")
 public class EmailTrackingOpensImpl implements EmailTrackingOpens {
 
     /** The Constant serialVersionUID. */
@@ -46,10 +46,10 @@ public class EmailTrackingOpensImpl implements EmailTrackingOpens {
     @GeneratedValue(generator = "OpenId")
     @GenericGenerator(
         name="OpenId",
-        strategy="org.broadleafcommerce.common.persistence.IdOverrideTableGenerator",
+        strategy="com.ultracommerce.common.persistence.IdOverrideTableGenerator",
         parameters = {
             @Parameter(name="segment_value", value="EmailTrackingOpensImpl"),
-            @Parameter(name="entity_name", value="org.broadleafcommerce.common.email.domain.EmailTrackingOpensImpl")
+            @Parameter(name="entity_name", value="com.ultracommerce.common.email.domain.EmailTrackingOpensImpl")
         }
     )
     @Column(name = "OPEN_ID")
@@ -67,7 +67,7 @@ public class EmailTrackingOpensImpl implements EmailTrackingOpens {
     protected EmailTracking emailTracking;
 
     /* (non-Javadoc)
-     * @see org.broadleafcommerce.common.email.domain.EmailTrackingOpens#getId()
+     * @see com.ultracommerce.common.email.domain.EmailTrackingOpens#getId()
      */
     @Override
     public Long getId() {
@@ -75,7 +75,7 @@ public class EmailTrackingOpensImpl implements EmailTrackingOpens {
     }
 
     /* (non-Javadoc)
-     * @see org.broadleafcommerce.common.email.domain.EmailTrackingOpens#setId(java.lang.Long)
+     * @see com.ultracommerce.common.email.domain.EmailTrackingOpens#setId(java.lang.Long)
      */
     @Override
     public void setId(Long id) {
@@ -83,7 +83,7 @@ public class EmailTrackingOpensImpl implements EmailTrackingOpens {
     }
 
     /* (non-Javadoc)
-     * @see org.broadleafcommerce.common.email.domain.EmailTrackingOpens#getDateOpened()
+     * @see com.ultracommerce.common.email.domain.EmailTrackingOpens#getDateOpened()
      */
     @Override
     public Date getDateOpened() {
@@ -91,7 +91,7 @@ public class EmailTrackingOpensImpl implements EmailTrackingOpens {
     }
 
     /* (non-Javadoc)
-     * @see org.broadleafcommerce.common.email.domain.EmailTrackingOpens#setDateOpened(java.util.Date)
+     * @see com.ultracommerce.common.email.domain.EmailTrackingOpens#setDateOpened(java.util.Date)
      */
     @Override
     public void setDateOpened(Date dateOpened) {
@@ -99,7 +99,7 @@ public class EmailTrackingOpensImpl implements EmailTrackingOpens {
     }
 
     /* (non-Javadoc)
-     * @see org.broadleafcommerce.common.email.domain.EmailTrackingOpens#getUserAgent()
+     * @see com.ultracommerce.common.email.domain.EmailTrackingOpens#getUserAgent()
      */
     @Override
     public String getUserAgent() {
@@ -107,7 +107,7 @@ public class EmailTrackingOpensImpl implements EmailTrackingOpens {
     }
 
     /* (non-Javadoc)
-     * @see org.broadleafcommerce.common.email.domain.EmailTrackingOpens#setUserAgent(java.lang.String)
+     * @see com.ultracommerce.common.email.domain.EmailTrackingOpens#setUserAgent(java.lang.String)
      */
     @Override
     public void setUserAgent(String userAgent) {
@@ -118,7 +118,7 @@ public class EmailTrackingOpensImpl implements EmailTrackingOpens {
     }
 
     /* (non-Javadoc)
-     * @see org.broadleafcommerce.common.email.domain.EmailTrackingOpens#getEmailTracking()
+     * @see com.ultracommerce.common.email.domain.EmailTrackingOpens#getEmailTracking()
      */
     @Override
     public EmailTracking getEmailTracking() {
@@ -126,7 +126,7 @@ public class EmailTrackingOpensImpl implements EmailTrackingOpens {
     }
 
     /* (non-Javadoc)
-     * @see org.broadleafcommerce.common.email.domain.EmailTrackingOpens#setEmailTracking(org.broadleafcommerce.common.email.domain.EmailTrackingImpl)
+     * @see com.ultracommerce.common.email.domain.EmailTrackingOpens#setEmailTracking(com.ultracommerce.common.email.domain.EmailTrackingImpl)
      */
     @Override
     public void setEmailTracking(EmailTracking emailTracking) {

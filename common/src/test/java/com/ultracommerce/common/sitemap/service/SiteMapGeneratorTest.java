@@ -1,38 +1,38 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
 
-package org.broadleafcommerce.common.sitemap.service;
+package com.ultracommerce.common.sitemap.service;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.broadleafcommerce.common.config.domain.ModuleConfiguration;
-import org.broadleafcommerce.common.config.service.ModuleConfigurationService;
-import org.broadleafcommerce.common.config.service.type.ModuleConfigurationType;
-import org.broadleafcommerce.common.file.service.BroadleafFileServiceImpl;
-import org.broadleafcommerce.common.file.service.FileServiceProvider;
-import org.broadleafcommerce.common.file.service.FileSystemFileServiceProvider;
-import org.broadleafcommerce.common.sitemap.domain.SiteMapConfiguration;
-import org.broadleafcommerce.common.sitemap.domain.SiteMapConfigurationImpl;
-import org.broadleafcommerce.common.sitemap.domain.SiteMapGeneratorConfiguration;
-import org.broadleafcommerce.common.sitemap.exception.SiteMapException;
-import org.broadleafcommerce.common.sitemap.service.SiteMapGenerationResponse;
-import org.broadleafcommerce.common.sitemap.service.SiteMapGenerator;
-import org.broadleafcommerce.common.sitemap.service.SiteMapServiceImpl;
-import org.broadleafcommerce.common.web.BaseUrlResolver;
+import com.ultracommerce.common.config.domain.ModuleConfiguration;
+import com.ultracommerce.common.config.service.ModuleConfigurationService;
+import com.ultracommerce.common.config.service.type.ModuleConfigurationType;
+import com.ultracommerce.common.file.service.UltraFileServiceImpl;
+import com.ultracommerce.common.file.service.FileServiceProvider;
+import com.ultracommerce.common.file.service.FileSystemFileServiceProvider;
+import com.ultracommerce.common.sitemap.domain.SiteMapConfiguration;
+import com.ultracommerce.common.sitemap.domain.SiteMapConfigurationImpl;
+import com.ultracommerce.common.sitemap.domain.SiteMapGeneratorConfiguration;
+import com.ultracommerce.common.sitemap.exception.SiteMapException;
+import com.ultracommerce.common.sitemap.service.SiteMapGenerationResponse;
+import com.ultracommerce.common.sitemap.service.SiteMapGenerator;
+import com.ultracommerce.common.sitemap.service.SiteMapServiceImpl;
+import com.ultracommerce.common.web.BaseUrlResolver;
 import org.easymock.EasyMock;
 import org.junit.After;
 import org.junit.Assert;
@@ -54,7 +54,7 @@ import java.util.List;
 public class SiteMapGeneratorTest {
 
     protected SiteMapServiceImpl siteMapService = new SiteMapServiceImpl();
-    protected BroadleafFileServiceImpl fileService = new BroadleafFileServiceImpl();
+    protected UltraFileServiceImpl fileService = new UltraFileServiceImpl();
     protected BaseUrlResolver baseUrlResolver = new BaseUrlResolver() {
 
         @Override
@@ -72,7 +72,7 @@ public class SiteMapGeneratorTest {
     public void setup() {
         FileServiceProvider defaultFileServiceProvider = new FileSystemFileServiceProvider();
         fileService.setDefaultFileServiceProvider(defaultFileServiceProvider);
-        siteMapService.broadleafFileService = fileService;
+        siteMapService.ultraFileService = fileService;
         siteMapService.baseUrlResolver = baseUrlResolver;
 
     }

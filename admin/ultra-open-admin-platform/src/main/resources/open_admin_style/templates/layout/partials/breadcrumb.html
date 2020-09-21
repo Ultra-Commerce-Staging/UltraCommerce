@@ -4,7 +4,7 @@
             <span th:text="#{${currentAdminModule.moduleKey}}" ></span>
         </li>
         <li>
-            <a blc_admin:admin_section_href="${currentAdminSection}" th:inline="text">
+            <a uc_admin:admin_section_href="${currentAdminSection}" th:inline="text">
                 [[#{${currentAdminSection.sectionKey}}]]
             </a>
         </li>

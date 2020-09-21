@@ -1,27 +1,27 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.extensibility.jpa.copy;
+package com.ultracommerce.common.extensibility.jpa.copy;
 
-import org.broadleafcommerce.common.extensibility.jpa.convert.BroadleafClassTransformer;
-import org.broadleafcommerce.common.logging.SupportLogManager;
-import org.broadleafcommerce.common.logging.SupportLogger;
-import org.broadleafcommerce.common.weave.ConditionalFieldAnnotationCopyTransformMemberDTO;
-import org.broadleafcommerce.common.weave.ConditionalFieldAnnotationCopyTransformersManager;
+import com.ultracommerce.common.extensibility.jpa.convert.UltraClassTransformer;
+import com.ultracommerce.common.logging.SupportLogManager;
+import com.ultracommerce.common.logging.SupportLogger;
+import com.ultracommerce.common.weave.ConditionalFieldAnnotationCopyTransformMemberDTO;
+import com.ultracommerce.common.weave.ConditionalFieldAnnotationCopyTransformersManager;
 
 import java.io.ByteArrayInputStream;
 import java.lang.instrument.IllegalClassFormatException;
@@ -51,9 +51,9 @@ import javassist.bytecode.annotation.Annotation;
  * @author Kelly Tisdell
  *
  */
-public class ConditionalFieldAnnotationsClassTransformer extends AbstractClassTransformer implements BroadleafClassTransformer {
+public class ConditionalFieldAnnotationsClassTransformer extends AbstractClassTransformer implements UltraClassTransformer {
 
-    @Resource(name = "blConditionalFieldAnnotationsTransformersManager")
+    @Resource(name = "ucConditionalFieldAnnotationsTransformersManager")
     protected ConditionalFieldAnnotationCopyTransformersManager manager;
 
     protected SupportLogger logger;

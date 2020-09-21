@@ -1,30 +1,30 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.file.service;
+package com.ultracommerce.common.file.service;
 
-import org.broadleafcommerce.common.file.domain.FileWorkArea;
+import com.ultracommerce.common.file.domain.FileWorkArea;
 
 import java.io.File;
 import java.io.InputStream;
 import java.util.List;
 
 /**
- * Many components in the Broadleaf Framework can benefit from creating and manipulating temporary files as well
+ * Many components in the Ultra Framework can benefit from creating and manipulating temporary files as well
  * as storing and accessing files in a remote repository (such as AmazonS3).
  * 
  * This service provides a pluggable way to provide those services.
@@ -32,7 +32,7 @@ import java.util.List;
  * @author bpolster
  *
  */
-public interface BroadleafFileService {
+public interface UltraFileService {
 
     /**
      * Create a file work area that can be used for further operations. 
@@ -96,8 +96,8 @@ public interface BroadleafFileService {
     /**   
      * Allows assets to be included in the Java classpath.   
      * 
-     * This method was designed to support an internal Broadleaf use case and may not have general applicability 
-     * beyond that.    For Broadleaf demo sites, many of the product images are shared across the demo sites.   
+     * This method was designed to support an internal Ultra use case and may not have general applicability 
+     * beyond that.    For Ultra demo sites, many of the product images are shared across the demo sites.   
      * 
      * Rather than copy those images, they are stored in a Jar file and shared by all of the sites.
      * 

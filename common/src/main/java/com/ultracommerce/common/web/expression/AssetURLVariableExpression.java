@@ -1,25 +1,25 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.web.expression;
+package com.ultracommerce.common.web.expression;
 
-import org.broadleafcommerce.common.file.service.StaticAssetPathService;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
-import org.broadleafcommerce.presentation.condition.ConditionalOnTemplating;
+import com.ultracommerce.common.file.service.StaticAssetPathService;
+import com.ultracommerce.common.web.UltraRequestContext;
+import com.ultracommerce.presentation.condition.ConditionalOnTemplating;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -35,11 +35,11 @@ import javax.annotation.Resource;
  *
  * @author by reginaldccole
  */
-@Component("blAssetURLVariableExpression")
+@Component("ucAssetURLVariableExpression")
 @ConditionalOnTemplating
-public class AssetURLVariableExpression implements BroadleafVariableExpression {
+public class AssetURLVariableExpression implements UltraVariableExpression {
 
-    @Resource(name="blStaticAssetPathService")
+    @Resource(name="ucStaticAssetPathService")
     protected StaticAssetPathService staticAssetPathService;
 
 
@@ -57,7 +57,7 @@ public class AssetURLVariableExpression implements BroadleafVariableExpression {
      */
     public String fixUrl(String content){
         boolean isSecure = false;
-        BroadleafRequestContext brc = BroadleafRequestContext.getBroadleafRequestContext();
+        UltraRequestContext brc = UltraRequestContext.getUltraRequestContext();
         if (brc != null) {
              isSecure  = brc.getRequest().isSecure();
         }

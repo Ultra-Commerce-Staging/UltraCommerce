@@ -1,40 +1,40 @@
 /*
  * #%L
- * BroadleafCommerce CMS Module
+ * UltraCommerce CMS Module
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.cms.page.domain;
+package com.ultracommerce.cms.page.domain;
 
-import org.broadleafcommerce.common.admin.domain.AdminMainEntity;
-import org.broadleafcommerce.common.copy.CreateResponse;
-import org.broadleafcommerce.common.copy.MultiTenantCopyContext;
-import org.broadleafcommerce.common.extensibility.jpa.clone.IgnoreEnterpriseBehavior;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransform;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformMember;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformTypes;
-import org.broadleafcommerce.common.extensibility.jpa.copy.ProfileEntity;
-import org.broadleafcommerce.common.presentation.AdminPresentation;
-import org.broadleafcommerce.common.presentation.AdminPresentationMap;
-import org.broadleafcommerce.common.presentation.AdminPresentationToOneLookup;
-import org.broadleafcommerce.common.presentation.RequiredOverride;
-import org.broadleafcommerce.common.presentation.ValidationConfiguration;
-import org.broadleafcommerce.common.presentation.client.VisibilityEnum;
-import org.broadleafcommerce.common.presentation.override.AdminPresentationOverride;
-import org.broadleafcommerce.common.presentation.override.AdminPresentationOverrides;
-import org.broadleafcommerce.common.web.Locatable;
-import org.broadleafcommerce.openadmin.audit.AdminAuditableListener;
+import com.ultracommerce.common.admin.domain.AdminMainEntity;
+import com.ultracommerce.common.copy.CreateResponse;
+import com.ultracommerce.common.copy.MultiTenantCopyContext;
+import com.ultracommerce.common.extensibility.jpa.clone.IgnoreEnterpriseBehavior;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransform;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransformMember;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransformTypes;
+import com.ultracommerce.common.extensibility.jpa.copy.ProfileEntity;
+import com.ultracommerce.common.presentation.AdminPresentation;
+import com.ultracommerce.common.presentation.AdminPresentationMap;
+import com.ultracommerce.common.presentation.AdminPresentationToOneLookup;
+import com.ultracommerce.common.presentation.RequiredOverride;
+import com.ultracommerce.common.presentation.ValidationConfiguration;
+import com.ultracommerce.common.presentation.client.VisibilityEnum;
+import com.ultracommerce.common.presentation.override.AdminPresentationOverride;
+import com.ultracommerce.common.presentation.override.AdminPresentationOverrides;
+import com.ultracommerce.common.web.Locatable;
+import com.ultracommerce.openadmin.audit.AdminAuditableListener;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -72,7 +72,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "BLC_PAGE")
+@Table(name = "UC_PAGE")
 @EntityListeners(value = { AdminAuditableListener.class })
 @AdminPresentationOverrides(
     {
@@ -92,7 +92,7 @@ import javax.persistence.Table;
         @DirectCopyTransformMember(templateTokens = DirectCopyTransformTypes.MULTITENANT_SITE),
         @DirectCopyTransformMember(templateTokens = DirectCopyTransformTypes.AUDITABLE_ONLY)
 })
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE, region = "blCMSElements")
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE, region = "ucCMSElements")
 public class PageImpl implements Page, AdminMainEntity, Locatable, ProfileEntity, PageAdminPresentation {
 
     private static final long serialVersionUID = 1L;
@@ -103,10 +103,10 @@ public class PageImpl implements Page, AdminMainEntity, Locatable, ProfileEntity
     @GeneratedValue(generator = "PageId")
     @GenericGenerator(
             name="PageId",
-            strategy="org.broadleafcommerce.common.persistence.IdOverrideTableGenerator",
+            strategy="com.ultracommerce.common.persistence.IdOverrideTableGenerator",
             parameters = {
                 @Parameter(name="segment_value", value="PageImpl"),
-                @Parameter(name="entity_name", value="org.broadleafcommerce.cms.page.domain.PageImpl")
+                @Parameter(name="entity_name", value="com.ultracommerce.cms.page.domain.PageImpl")
             }
         )
     @Column(name = "PAGE_ID")
@@ -132,7 +132,7 @@ public class PageImpl implements Page, AdminMainEntity, Locatable, ProfileEntity
     @AdminPresentation(friendlyName = "PageImpl_Full_Url", order = 3000,
         group = PageAdminPresentation.GroupName.Basic, groupOrder = PageAdminPresentation.GroupOrder.Basic,
         prominent = true, gridOrder = 2,
-        validationConfigurations = { @ValidationConfiguration(validationImplementation = "blUriPropertyValidator") })
+        validationConfigurations = { @ValidationConfiguration(validationImplementation = "ucUriPropertyValidator") })
     protected String fullUrl;
 
     @OneToMany(mappedBy = "page", targetEntity = PageFieldImpl.class, cascade = { CascadeType.ALL })
@@ -154,8 +154,8 @@ public class PageImpl implements Page, AdminMainEntity, Locatable, ProfileEntity
      * This will not work with Enterprise workflows.  Do not use.
      */
     @ManyToMany(targetEntity = PageRuleImpl.class, cascade = {CascadeType.ALL})
-    @JoinTable(name = "BLC_PAGE_RULE_MAP", 
-               joinColumns = @JoinColumn(name = "BLC_PAGE_PAGE_ID", referencedColumnName = "PAGE_ID"), 
+    @JoinTable(name = "UC_PAGE_RULE_MAP", 
+               joinColumns = @JoinColumn(name = "UC_PAGE_PAGE_ID", referencedColumnName = "PAGE_ID"), 
                inverseJoinColumns = @JoinColumn(name = "PAGE_RULE_ID", referencedColumnName = "PAGE_RULE_ID"))
     @Cascade(value = { org.hibernate.annotations.CascadeType.ALL, org.hibernate.annotations.CascadeType.DELETE_ORPHAN })
     @MapKeyColumn(name = "MAP_KEY", nullable = false)
@@ -166,7 +166,7 @@ public class PageImpl implements Page, AdminMainEntity, Locatable, ProfileEntity
      * This will not work with Enterprise workflows. Do not use.
      */
     @OneToMany(fetch = FetchType.LAZY, targetEntity = PageItemCriteriaImpl.class, cascade = { CascadeType.ALL })
-    @JoinTable(name = "BLC_QUAL_CRIT_PAGE_XREF",
+    @JoinTable(name = "UC_QUAL_CRIT_PAGE_XREF",
         joinColumns = @JoinColumn(name = "PAGE_ID"),
         inverseJoinColumns = @JoinColumn(name = "PAGE_ITEM_CRITERIA_ID"))
     @Deprecated

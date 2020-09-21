@@ -1,27 +1,27 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.openadmin.server.service;
+package com.ultracommerce.openadmin.server.service;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.openadmin.dto.AdminExporterDTO;
-import org.broadleafcommerce.openadmin.server.service.export.AdminExporter;
+import com.ultracommerce.openadmin.dto.AdminExporterDTO;
+import com.ultracommerce.openadmin.server.service.export.AdminExporter;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.context.ApplicationContext;
@@ -35,13 +35,13 @@ import java.util.List;
  * 
  * @author Phillip Verheyden
  */
-@Service("blAdminExporterRemoteService")
+@Service("ucAdminExporterRemoteService")
 public class AdminExporterRemoteService implements AdminExporterService, ApplicationContextAware {
 
     private static final Log LOG = LogFactory.getLog(AdminExporterRemoteService.class);
     
-    //Lazy initialization via the blAdminExporters bean definition because exporters are not
-    //provided OOB in Broadleaf
+    //Lazy initialization via the ucAdminExporters bean definition because exporters are not
+    //provided OOB in Ultra
     protected List<AdminExporter> exporters;
     
     @Override
@@ -74,11 +74,11 @@ public class AdminExporterRemoteService implements AdminExporterService, Applica
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         if (exporters == null) {
             try {
-                setExporters((List<AdminExporter>)applicationContext.getBean("blAdminExporters"));
+                setExporters((List<AdminExporter>)applicationContext.getBean("ucAdminExporters"));
             } catch (NoSuchBeanDefinitionException e) {
-                LOG.debug("blAdminExporters could not be found in your application context");
+                LOG.debug("ucAdminExporters could not be found in your application context");
             } catch (BeansException e) {
-                LOG.debug("blAdminExporters could not be obtained");
+                LOG.debug("ucAdminExporters could not be obtained");
             }
         }
     }

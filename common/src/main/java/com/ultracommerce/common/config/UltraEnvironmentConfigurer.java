@@ -1,21 +1,21 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2019 Broadleaf Commerce
+ * Copyright (C) 2009 - 2019 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.config;
+package com.ultracommerce.common.config;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.ArrayUtils;
@@ -44,25 +44,25 @@ import java.util.List;
  * Created as a common class for adding property sources to the Spring {@link Environment}. 
  * 
  * <p>
- * Adds {@code META-INF/spring.factories} entries of type {@link FrameworkCommonClasspathPropertySource} and {@link BroadleafSharedOverrideProfileAwarePropertySource}
+ * Adds {@code META-INF/spring.factories} entries of type {@link FrameworkCommonClasspathPropertySource} and {@link UltraSharedOverrideProfileAwarePropertySource}
  * to the current {@link Environment}. All property sources that this initializer adds are added as composite sources to the {@link Environment} with
  * different priorities, and are added relative to each other via the {@link AnnotationAwareOrderComparator}. The {@link PropertySource}s are in the {@link Environment}
  * in the following order, all as {@link CompositePropertySource}s:
  * 
  * <ol>
  *  <li>{@link #OVERRIDE_SOURCES_NAME} - An external property file given with {@code -Dproperty-override}</li>
- *  <li>{@link #PROFILE_AWARE_SOURCES_NAME} - All {@link BroadleafSharedOverrideProfileAwarePropertySource} entries from {@code META-INF/spring.factories}</li>
+ *  <li>{@link #PROFILE_AWARE_SOURCES_NAME} - All {@link UltraSharedOverrideProfileAwarePropertySource} entries from {@code META-INF/spring.factories}</li>
  *  <li>{@link #FRAMEWORK_SOURCES_NAME} - All {@link FrameworkCommonClasspathPropertySource} entries from {@code META-IF/spring.factories}</li>
  * </ol>
  * 
  * <p>
  * If no Spring profile is active, this will default to {@code "development"} and add that profile to {@link ConfigurableEnvironment#getActiveProfiles()} in order
- * to maintain backwards compatibility with Broadleaf versions prior to 5.2.
+ * to maintain backwards compatibility with Ultra versions prior to 5.2.
  * 
- * @see BroadleafSharedOverrideProfileAwarePropertySource
+ * @see UltraSharedOverrideProfileAwarePropertySource
  * @see FrameworkCommonClasspathPropertySource
  */
-public class BroadleafEnvironmentConfigurer {
+public class UltraEnvironmentConfigurer {
 
     /**
      * A -D argument representing a path to a file that overrides all of the other properties resolved from internal property files
@@ -72,33 +72,33 @@ public class BroadleafEnvironmentConfigurer {
     public static final String DEPRECATED_RUNTIME_ENVIRONMENT_KEY = "runtime.environment";
 
     /**
-     * The name of the Broadleaf framework composite properties within the Environment, useful for ordering before and after
+     * The name of the Ultra framework composite properties within the Environment, useful for ordering before and after
      */
-    public static final String FRAMEWORK_SOURCES_NAME = "broadleafFrameworkSources";
+    public static final String FRAMEWORK_SOURCES_NAME = "ultraFrameworkSources";
 
     /**
      * The name of the profile-aware property sources
      */
-    public static final String PROFILE_AWARE_SOURCES_NAME = "broadleafProfileAwareSources";
+    public static final String PROFILE_AWARE_SOURCES_NAME = "ultraProfileAwareSources";
 
     /**
      * The name of the the property source from the command line -Dproperty-shared-override
      */
-    public static final String SHARED_OVERRIDE_SOURCES_NAME = "broadleafCommandlineArgumentSharedOverridesSource";
+    public static final String SHARED_OVERRIDE_SOURCES_NAME = "ultraCommandlineArgumentSharedOverridesSource";
 
     /**
      * The name of the the property source from the command line -Dproperty-override
      */
-    public static final String OVERRIDE_SOURCES_NAME = "broadleafCommandlineArgumentOverridesSource";
+    public static final String OVERRIDE_SOURCES_NAME = "ultraCommandlineArgumentOverridesSource";
 
-    private static final Log LOG = LogFactory.getLog(BroadleafEnvironmentConfiguringApplicationListener.class);
+    private static final Log LOG = LogFactory.getLog(UltraEnvironmentConfiguringApplicationListener.class);
 
     protected List<FrameworkCommonClasspathPropertySource> getFrameworkSources() {
         return SpringFactoriesLoader.loadFactories(FrameworkCommonClasspathPropertySource.class, null);
     }
 
-    protected List<BroadleafSharedOverrideProfileAwarePropertySource> getProfileAwareSources() {
-        return SpringFactoriesLoader.loadFactories(BroadleafSharedOverrideProfileAwarePropertySource.class, null);
+    protected List<UltraSharedOverrideProfileAwarePropertySource> getProfileAwareSources() {
+        return SpringFactoriesLoader.loadFactories(UltraSharedOverrideProfileAwarePropertySource.class, null);
     }
 
     public void configure(ConfigurableEnvironment environment) {
@@ -124,8 +124,8 @@ public class BroadleafEnvironmentConfigurer {
         List<Resource> commonResources = new ArrayList<>();
         List<Resource> profileSpecificSharedResources = new ArrayList<>();
         List<Resource> profileSpecificResources = new ArrayList<>();
-        List<BroadleafSharedOverrideProfileAwarePropertySource> profileAwareSources = getProfileAwareSources();
-        for (BroadleafSharedOverrideProfileAwarePropertySource source : profileAwareSources) {
+        List<UltraSharedOverrideProfileAwarePropertySource> profileAwareSources = getProfileAwareSources();
+        for (UltraSharedOverrideProfileAwarePropertySource source : profileAwareSources) {
             // then add all of the user property sources
             String configLocation = source.getClasspathFolder();
 

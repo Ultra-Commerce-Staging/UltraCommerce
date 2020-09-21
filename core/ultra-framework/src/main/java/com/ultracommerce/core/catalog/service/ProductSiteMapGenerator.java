@@ -1,34 +1,34 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.catalog.service;
+package com.ultracommerce.core.catalog.service;
 
 import org.apache.commons.lang3.StringUtils;
-import org.broadleafcommerce.common.file.service.BroadleafFileUtils;
-import org.broadleafcommerce.common.media.domain.Media;
-import org.broadleafcommerce.common.sitemap.domain.SiteMapGeneratorConfiguration;
-import org.broadleafcommerce.common.sitemap.service.SiteMapBuilder;
-import org.broadleafcommerce.common.sitemap.service.SiteMapGenerator;
-import org.broadleafcommerce.common.sitemap.service.type.SiteMapGeneratorType;
-import org.broadleafcommerce.common.sitemap.wrapper.SiteMapImageWrapper;
-import org.broadleafcommerce.common.sitemap.wrapper.SiteMapURLWrapper;
-import org.broadleafcommerce.core.catalog.dao.ProductDao;
-import org.broadleafcommerce.core.catalog.domain.Product;
-import org.broadleafcommerce.core.util.service.BroadleafSitemapUtils;
+import com.ultracommerce.common.file.service.UltraFileUtils;
+import com.ultracommerce.common.media.domain.Media;
+import com.ultracommerce.common.sitemap.domain.SiteMapGeneratorConfiguration;
+import com.ultracommerce.common.sitemap.service.SiteMapBuilder;
+import com.ultracommerce.common.sitemap.service.SiteMapGenerator;
+import com.ultracommerce.common.sitemap.service.type.SiteMapGeneratorType;
+import com.ultracommerce.common.sitemap.wrapper.SiteMapImageWrapper;
+import com.ultracommerce.common.sitemap.wrapper.SiteMapURLWrapper;
+import com.ultracommerce.core.catalog.dao.ProductDao;
+import com.ultracommerce.core.catalog.domain.Product;
+import com.ultracommerce.core.util.service.UltraSitemapUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -42,10 +42,10 @@ import javax.annotation.Resource;
  * 
  * @author Joshua Skorton (jskorton)
  */
-@Component("blProductSiteMapGenerator")
+@Component("ucProductSiteMapGenerator")
 public class ProductSiteMapGenerator implements SiteMapGenerator {
 
-    @Resource(name = "blProductDao")
+    @Resource(name = "ucProductDao")
     protected ProductDao productDao;
 
     @Value("${product.site.map.generator.row.limit}")
@@ -94,14 +94,14 @@ public class ProductSiteMapGenerator implements SiteMapGenerator {
         for (Media media : product.getMedia().values()) {
             SiteMapImageWrapper siteMapImage = new SiteMapImageWrapper();
 
-            siteMapImage.setLoc(BroadleafSitemapUtils.generateImageUrl(siteMapBuilder, media));
+            siteMapImage.setLoc(UltraSitemapUtils.generateImageUrl(siteMapBuilder, media));
 
             siteMapUrl.addImage(siteMapImage);
         }
     }
 
     protected String generateUri(SiteMapBuilder smb, Product product) {
-        return BroadleafFileUtils.appendUnixPaths(smb.getBaseUrl(), product.getUrl());
+        return UltraFileUtils.appendUnixPaths(smb.getBaseUrl(), product.getUrl());
     }
 
     protected Date generateDate(Product product) {

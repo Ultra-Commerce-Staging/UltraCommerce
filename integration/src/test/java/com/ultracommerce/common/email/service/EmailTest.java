@@ -1,24 +1,24 @@
 /*
  * #%L
- * BroadleafCommerce Integration
+ * UltraCommerce Integration
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.email.service;
+package com.ultracommerce.common.email.service;
 
-import org.broadleafcommerce.common.email.service.info.EmailInfo;
-import org.broadleafcommerce.test.TestNGSiteIntegrationSetup;
+import com.ultracommerce.common.email.service.info.EmailInfo;
+import com.ultracommerce.test.TestNGSiteIntegrationSetup;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -55,7 +55,7 @@ public class EmailTest extends TestNGSiteIntegrationSetup {
         EmailInfo info = new EmailInfo();
         info.setFromAddress("me@test.com");
         info.setSubject("test");
-        info.setEmailTemplate("org/broadleafcommerce/common/email/service/template/default.vm");
+        info.setEmailTemplate("com/ultracommerce/common/email/service/template/default.vm");
         info.setSendEmailReliableAsync("false");
 
         emailService.sendTemplateEmail("to@localhost", info, null);

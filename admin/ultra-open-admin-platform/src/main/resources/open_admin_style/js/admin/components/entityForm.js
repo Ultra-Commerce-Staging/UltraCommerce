@@ -1,29 +1,29 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
 
-(function($, BLCAdmin) {
+(function($, UCAdmin) {
 
     var excludedEFSectionTabSelectors = ['.workflow-tab', '.system-property-tab', '.upload-tab'];
 
     var originalStickyBarOffset;
     var originalStickyBarHeight;
 
-    BLCAdmin.entityForm = {
+    UCAdmin.entityForm = {
 
         initializeStickyHeader : function () {
             var $stickyContainer = $('.sticky-container');
@@ -35,10 +35,10 @@
             if ($('form.entity-form').length && !$('.oms').length) {
                 var $sc = $('.sticky-container');
                 var $scp = $('.sticky-container-padding');
-                var height = BLCAdmin.entityForm.getOriginalStickyBarHeight();
+                var height = UCAdmin.entityForm.getOriginalStickyBarHeight();
 
                 $scp.show();
-                $sc.addClass('sticky-fixed').css('top', BLCAdmin.entityForm.getOriginalStickyBarOffset());
+                $sc.addClass('sticky-fixed').css('top', UCAdmin.entityForm.getOriginalStickyBarOffset());
                 $sc.outerWidth($('.main-content').outerWidth());
                 $scp.outerHeight(height);
 
@@ -82,8 +82,8 @@
                     // escape the | character from dynamic form fields for jquery to be able to process
                     // replace all '|' and ' ' characters with '-'
                     var fieldGroup = $("#field-" + (error.field).replace(/\|/g, "-").replace(/ /g, "-"));
-                    if (BLCAdmin.currentModal() !== undefined) {
-                        fieldGroup = BLCAdmin.currentModal().find("#field-" + error.field);
+                    if (UCAdmin.currentModal() !== undefined) {
+                        fieldGroup = UCAdmin.currentModal().find("#field-" + error.field);
                     }
 
                     if (fieldGroup.length) {
@@ -91,8 +91,8 @@
                         // this can happen more than once because the indicator is absolute positioning
                         var tabId = '#' + fieldGroup.parents('.entityFormTab').attr("class").substring(0, 4);
                         var $tabWithError = $('a[href="' + tabId + '"]');
-                        if (BLCAdmin.currentModal() !== undefined) {
-                            $tabWithError = BLCAdmin.currentModal().find('a[href="' + tabId + '"]');
+                        if (UCAdmin.currentModal() !== undefined) {
+                            $tabWithError = UCAdmin.currentModal().find('a[href="' + tabId + '"]');
                         }
                         $tabWithError.prepend('<span class="tab-error-indicator danger"></span>');
 
@@ -110,24 +110,24 @@
                         $(".entity-errors").append(error);
                     }
                 } else if (error.errorType == 'global'){
-                    var globalError = "<div class='tabError'><b>" + BLCAdmin.messages.globalErrors + "</b><span class='error'>"
+                    var globalError = "<div class='tabError'><b>" + UCAdmin.messages.globalErrors + "</b><span class='error'>"
                         + error.message + "</span></div>";
                     $(".entity-errors").append(globalError);
                 }
             });
-            BLCAdmin.entityForm.showErrorHeaderAlert(alertMessage);
+            UCAdmin.entityForm.showErrorHeaderAlert(alertMessage);
         },
 
         showErrorHeaderAlert : function (alertMessage) {
-            if (typeof BLCAdmin.currentModal() === 'undefined') {
+            if (typeof UCAdmin.currentModal() === 'undefined') {
                 $('#headerFlashAlertBoxContainer .alert-box').removeClass('success').addClass('alert');
                 $('#headerFlashAlertBoxContainer .alert-box-message').text(alertMessage);
-            } else if (BLCAdmin.currentModal().find('#headerFlashAlertBoxContainer .alert-box').length) {
-                var $headerFlashAlertBoxContainer = BLCAdmin.currentModal().find('#headerFlashAlertBoxContainer');
+            } else if (UCAdmin.currentModal().find('#headerFlashAlertBoxContainer .alert-box').length) {
+                var $headerFlashAlertBoxContainer = UCAdmin.currentModal().find('#headerFlashAlertBoxContainer');
                 $headerFlashAlertBoxContainer.find('.alert-box').removeClass('success').addClass('alert');
                 $headerFlashAlertBoxContainer.find('.alert-box-message').text(alertMessage);
             } else {
-                var $modalFooter = BLCAdmin.currentModal().find('.modal-footer');
+                var $modalFooter = UCAdmin.currentModal().find('.modal-footer');
                 var headerFlashAlertBoxContainer = '<div id="headerFlashAlertBoxContainer"><div id="headerFlashAlertBox" class="alert-box">' +
                     '<span class="alert-box-message"></span></div></div>';
                 $modalFooter.append(headerFlashAlertBoxContainer);
@@ -156,7 +156,7 @@
         },
 
         submitFormViaAjax : function ($form) {
-            var submit = BLCAdmin.runSubmitHandlers($form);
+            var submit = UCAdmin.runSubmitHandlers($form);
 
             if (submit) {
                 var options = {};
@@ -164,7 +164,7 @@
                     // Got some files I need to upload, use FormData
                     // so that they are POSTed correctly
                     // Un-disabling these fields allows us to replicate the same
-                    // functionality as BLC.serializeArray()
+                    // functionality as UC.serializeArray()
                     var $disabledFields = $form.find(':disabled').attr('disabled', false);
                     var formData = new FormData();
                     // First append all the files (works even if there are multiple
@@ -195,11 +195,11 @@
                         url: $form.attr('action'),
                         dataType: "json",
                         type: "POST",
-                        data: BLCAdmin.serializeArray($form)
+                        data: UCAdmin.serializeArray($form)
                     };
                 }
-                BLC.ajax(options, function (data) {
-                    BLCAdmin.entityForm.hideActionSpinner();
+                UC.ajax(options, function (data) {
+                    UCAdmin.entityForm.hideActionSpinner();
 
                     $(".errors, .error, .tab-error-indicator, .tabError").remove();
                     $('.has-error').removeClass('has-error');
@@ -207,26 +207,26 @@
                     if (!data.errors) {
 
                         var $titleBar = $form.closest('.main-content').find('.content-area-title-bar');
-                        BLCAdmin.alert.showAlert($titleBar, 'Successfully ' + BLCAdmin.messages.saved + '!', {
+                        UCAdmin.alert.showAlert($titleBar, 'Successfully ' + UCAdmin.messages.saved + '!', {
                             alertType: 'save-alert',
                             autoClose: 2000,
                             clearOtherAlerts: true
                         });
 
                         if (!$form.closest('.modal').length) {
-                            if (BLCAdmin.entityForm.status) {
-                                BLCAdmin.entityForm.status.clearEntityFormChanges();
+                            if (UCAdmin.entityForm.status) {
+                                UCAdmin.entityForm.status.clearEntityFormChanges();
                             }
                         }
 
                     } else {
-                        BLCAdmin.entityForm.showErrors(data, BLCAdmin.messages.problemSaving);
-                        if (BLCAdmin.entityForm.status) {
-                            BLCAdmin.entityForm.status.setDidConfirmLeave(false);
+                        UCAdmin.entityForm.showErrors(data, UCAdmin.messages.problemSaving);
+                        if (UCAdmin.entityForm.status) {
+                            UCAdmin.entityForm.status.setDidConfirmLeave(false);
                         }
                     }
 
-                    BLCAdmin.runPostFormSubmitHandlers($form, data);
+                    UCAdmin.runPostFormSubmitHandlers($form, data);
                 });
             }
         },
@@ -307,7 +307,7 @@
                 if ($field.hasClass('listgrid-container')) {
                     var $tbody = $field.find('.listgrid-body-wrapper tbody');
                     if ($tbody.length) {
-                        BLCAdmin.listGrid.paginate.updateGridSize($tbody);
+                        UCAdmin.listGrid.paginate.updateGridSize($tbody);
                     }
                 }
             }
@@ -349,11 +349,11 @@
             },
         }
     };
-})(jQuery, BLCAdmin);
+})(jQuery, UCAdmin);
 
 $(document).ready(function() {
 
-    BLCAdmin.entityForm.initializeStickyHeader();
+    UCAdmin.entityForm.initializeStickyHeader();
 
     /**
      * Make the sticky bar (breadcrumb) lock at the top of the window when it's scrolled off the page
@@ -364,11 +364,11 @@ $(document).ready(function() {
         }
         var $sc = $('.sticky-container');
         var $scp = $('.sticky-container-padding');
-        var height = BLCAdmin.entityForm.getOriginalStickyBarHeight();
+        var height = UCAdmin.entityForm.getOriginalStickyBarHeight();
         var minHeight = height - 30;
 
         $scp.show();
-        $sc.addClass('sticky-fixed').css('top', BLCAdmin.entityForm.getOriginalStickyBarOffset());
+        $sc.addClass('sticky-fixed').css('top', UCAdmin.entityForm.getOriginalStickyBarOffset());
         $sc.outerWidth($('.main-content').outerWidth());
         $('.sticky-container-padding').outerHeight(height);
 
@@ -388,13 +388,13 @@ $(document).ready(function() {
         }
     });
 
-    var sectionTabsSelector = 'div.section-tabs li a:not(' + BLCAdmin.entityForm.getExcludedEFSectionTabSelectorString() + ')';
+    var sectionTabsSelector = 'div.section-tabs li a:not(' + UCAdmin.entityForm.getExcludedEFSectionTabSelectorString() + ')';
 
     $(document).on('click', sectionTabsSelector, function (event) {
         var $tab = $(this);
         var $tabBody = $('.' + $tab.attr('href').substring(1) + 'Tab');
         var tabKey = $tab.find('span[data-tabkey]').data('tabkey');
-        var $form = BLCAdmin.getForm($tab);
+        var $form = UCAdmin.getForm($tab);
         var href = $(this).attr('href').replace('#', '');
         var currentAction = $form.attr('action');
         var tabUrlSlug = '/1/' + tabKey;
@@ -406,13 +406,13 @@ $(document).ready(function() {
         }
         var tabUrl = encodeURI(currentAction);
 
-        var isVisitedBefore = BLCAdmin.entityForm.visitedTabs.contains($tab);
-        if (!isVisitedBefore) BLCAdmin.entityForm.visitedTabs.add($tab);
+        var isVisitedBefore = UCAdmin.entityForm.visitedTabs.contains($tab);
+        if (!isVisitedBefore) UCAdmin.entityForm.visitedTabs.add($tab);
 
         if (!isVisitedBefore && !$tab.hasClass('first-tab') && currentAction.search(/\/add($|\W)/) === -1) {
             showTabSpinner($tab, $tabBody);
 
-     		BLC.ajax({
+     		UC.ajax({
      			url: tabUrl,
      			type: "POST",
      			data: $form.serializeArray()
@@ -424,13 +424,13 @@ $(document).ready(function() {
                 $('#' + tabKey + 'Contents .listgrid-container', $(data)).find('.listgrid-header-wrapper table').each(function() {
      				var tableId = $(this).attr('id').replace('-header', '');
                     var $tableWrapper = data.find('table#' + tableId).parents('.listgrid-header-wrapper');
-                    BLCAdmin.listGrid.replaceRelatedCollection($tableWrapper);
-                    BLCAdmin.listGrid.updateGridTitleBarSize($(this).closest('.listgrid-container').find('.fieldgroup-listgrid-wrapper-header'));
+                    UCAdmin.listGrid.replaceRelatedCollection($tableWrapper);
+                    UCAdmin.listGrid.updateGridTitleBarSize($(this).closest('.listgrid-container').find('.fieldgroup-listgrid-wrapper-header'));
      			});
      			$('#' + tabKey + 'Contents .selectize-wrapper', $(data)).each(function() {
      				var tableId = $(this).attr('id');
                     var $selectizeWrapper = data.find('.selectize-wrapper#' + tableId);
-     				BLCAdmin.listGrid.replaceRelatedCollection($selectizeWrapper);
+     				UCAdmin.listGrid.replaceRelatedCollection($selectizeWrapper);
      			});
                 $('#' + tabKey + 'Contents .media-container', $(data)).each(function() {
                     var tableId = $(this).attr('id');
@@ -438,8 +438,8 @@ $(document).ready(function() {
                     var $container = data.find('#' + tableId);
                     var $assetGrid = $($container).find('.asset-grid-container');
 
-                    if (BLCAdmin.assetGrid) {
-                        BLCAdmin.assetGrid.initialize($assetGrid);
+                    if (UCAdmin.assetGrid) {
+                        UCAdmin.assetGrid.initialize($assetGrid);
                     } else {
                         initAssetGrid($assetGrid);
                     }
@@ -455,7 +455,7 @@ $(document).ready(function() {
 
      	} else {
             $('div.' + href + 'Tab .listgrid-container').find('.listgrid-header-wrapper table').each(function() {
-                BLCAdmin.listGrid.updateGridTitleBarSize($(this).closest('.listgrid-container').find('.fieldgroup-listgrid-wrapper-header'));
+                UCAdmin.listGrid.updateGridTitleBarSize($(this).closest('.listgrid-container').find('.fieldgroup-listgrid-wrapper-header'));
             });
         }
      });
@@ -468,11 +468,11 @@ $(document).ready(function() {
         var mustConfirm = $button.data('confirm');
         var confirmMsg = $button.data('confirm-text');
 
-        BLCAdmin.confirmProcessBeforeProceeding(mustConfirm, confirmMsg, processDeleteCall, [$button]);
+        UCAdmin.confirmProcessBeforeProceeding(mustConfirm, confirmMsg, processDeleteCall, [$button]);
 
         function processDeleteCall (params) {
             var $deleteButton = params[0];
-            var $form = BLCAdmin.getForm($deleteButton);
+            var $form = UCAdmin.getForm($deleteButton);
 
             var currentAction = $form.attr('action');
             var deleteUrl = currentAction;
@@ -484,14 +484,14 @@ $(document).ready(function() {
                 deleteUrl += deleteAppend;
             }
 
-            BLCAdmin.entityForm.showActionSpinner($deleteButton.closest('.entity-form-actions'));
+            UCAdmin.entityForm.showActionSpinner($deleteButton.closest('.entity-form-actions'));
 
             // On success this should redirect, on failure we'll get some JSON back
-            BLC.ajax({
+            UC.ajax({
                 url: deleteUrl,
                 type: "POST",
                 data: $form.serializeArray(),
-                complete: BLCAdmin.entityForm.hideActionSpinner()
+                complete: UCAdmin.entityForm.hideActionSpinner()
             }, function (data) {
                 $("#headerFlashAlertBoxContainer").removeClass("hidden");
                 $(".errors, .error, .tab-error-indicator, .tabError").remove();
@@ -499,17 +499,17 @@ $(document).ready(function() {
 
                 if (!data.errors) {
                     var $titleBar = $form.closest('.main-content').find('.content-area-title-bar');
-                    BLCAdmin.alert.showAlert($titleBar, 'Successfully ' + BLCAdmin.messages.deleted + '!', {
+                    UCAdmin.alert.showAlert($titleBar, 'Successfully ' + UCAdmin.messages.deleted + '!', {
                         alertType: 'save-alert',
                         autoClose: 2000,
                         clearOtherAlerts: true
                     });
                 } else {
-                    BLCAdmin.entityForm.showErrors(data, BLCAdmin.messages.problemDeleting);
+                    UCAdmin.entityForm.showErrors(data, UCAdmin.messages.problemDeleting);
                     $('.submit-button').prop('disabled', true);
                 }
 
-                BLCAdmin.runPostFormSubmitHandlers($form, data);
+                UCAdmin.runPostFormSubmitHandlers($form, data);
             });
 
             event.preventDefault();
@@ -518,19 +518,19 @@ $(document).ready(function() {
 
     $('body').on('click', 'button.duplicate-button, a.duplicate-button', function(event) {
         var $button = $(this);
-        var $form = BLCAdmin.getForm($button);
+        var $form = UCAdmin.getForm($button);
 
         var currentAction = $form.attr('action');
         var dupUrl = currentAction + '/duplicate';
 
-        BLCAdmin.entityForm.showActionSpinner($button.closest('.entity-form-actions'));
+        UCAdmin.entityForm.showActionSpinner($button.closest('.entity-form-actions'));
 
         // On success this should redirect, on failure we'll get some JSON back
-        BLC.ajax({
+        UC.ajax({
             url: dupUrl,
             type: "POST",
             data: $form.serializeArray(),
-            complete: BLCAdmin.entityForm.hideActionSpinner()
+            complete: UCAdmin.entityForm.hideActionSpinner()
         }, function (data) {
             $("#headerFlashAlertBoxContainer").removeClass("hidden");
             $(".errors, .error, .tab-error-indicator, .tabError").remove();
@@ -538,16 +538,16 @@ $(document).ready(function() {
 
             if (!data.errors) {
                 var $titleBar = $form.closest('.main-content').find('.content-area-title-bar');
-                BLCAdmin.alert.showAlert($titleBar, 'Successfully ' + BLCAdmin.messages.duplicated + '!', {
+                UCAdmin.alert.showAlert($titleBar, 'Successfully ' + UCAdmin.messages.duplicated + '!', {
                     alertType: 'save-alert',
                     autoClose: 2000,
                     clearOtherAlerts: true
                 });
             } else {
-                BLCAdmin.entityForm.showErrors(data, BLCAdmin.messages.problemDuplicating);
+                UCAdmin.entityForm.showErrors(data, UCAdmin.messages.problemDuplicating);
             }
 
-            BLCAdmin.runPostFormSubmitHandlers($form, data);
+            UCAdmin.runPostFormSubmitHandlers($form, data);
         });
 
         event.preventDefault();
@@ -562,23 +562,23 @@ $(document).ready(function() {
         var mustConfirm = $button.data('confirm');
         var confirmMsg = $button.data('confirm-text');
 
-        BLCAdmin.confirmProcessBeforeProceeding(mustConfirm, confirmMsg, processSubmitCall, [$button]);
+        UCAdmin.confirmProcessBeforeProceeding(mustConfirm, confirmMsg, processSubmitCall, [$button]);
 
         function processSubmitCall(params) {
             var $submitButton = params[0];
 
             $('body').click(); // Defocus any current elements in case they need to act prior to form submission
-            var $form = BLCAdmin.getForm($submitButton);
+            var $form = UCAdmin.getForm($submitButton);
 
-            BLCAdmin.entityForm.showActionSpinner($submitButton.closest('.entity-form-actions'));
+            UCAdmin.entityForm.showActionSpinner($submitButton.closest('.entity-form-actions'));
 
             // This is a save, we need to enable the page to be reloaded (in the case of an initial save)
-            if (BLCAdmin.entityForm.status) {
-                BLCAdmin.entityForm.status.setDidConfirmLeave(true);
+            if (UCAdmin.entityForm.status) {
+                UCAdmin.entityForm.status.setDidConfirmLeave(true);
             }
 
-            if ($(".blc-admin-ajax-update").length && $form.parents(".modal-body").length == 0) {
-                BLCAdmin.entityForm.submitFormViaAjax($form);
+            if ($(".uc-admin-ajax-update").length && $form.parents(".modal-body").length == 0) {
+                UCAdmin.entityForm.submitFormViaAjax($form);
             } else {
                 $form.submit();
             }
@@ -609,34 +609,34 @@ $(document).ready(function() {
     }
 
     $('body').on('submit', 'form.entity-form', function(event) {
-        var submit = BLCAdmin.runSubmitHandlers($(this));
+        var submit = UCAdmin.runSubmitHandlers($(this));
         return submit;
     });
 
     $('body').on('submit', 'form.modal-add-entity-form', function(event) {
         var $form = $(this);
-        var submit = BLCAdmin.runSubmitHandlers($form);
+        var submit = UCAdmin.runSubmitHandlers($form);
 
         if (submit) {
-            BLC.ajax({
+            UC.ajax({
                 url: this.action,
                 type: "POST",
-                data: BLCAdmin.serialize($form)
+                data: UCAdmin.serialize($form)
             }, function(data) {
-                BLCAdmin.runPostFormSubmitHandlers($form, data);
+                UCAdmin.runPostFormSubmitHandlers($form, data);
 
-                BLCAdmin.ruleBuilders.removeModalRuleBuilders($form);
-                var $modal = BLCAdmin.currentModal();
+                UCAdmin.ruleBuilders.removeModalRuleBuilders($form);
+                var $modal = UCAdmin.currentModal();
 
                 if ($modal) {
-                    BLCAdmin.entityForm.swapModalEntityForm($modal, data);
+                    UCAdmin.entityForm.swapModalEntityForm($modal, data);
 
-                    BLCAdmin.initializeFields($modal.find('.modal-body .tabs-content'));
+                    UCAdmin.initializeFields($modal.find('.modal-body .tabs-content'));
                     $modal.find('img.ajax-loader').hide();
                     var $submitButton = $modal.find('.submit-button');
                     $submitButton.show();
                     $submitButton.prop('disabled',false);
-                    BLCAdmin.entityForm.showErrorHeaderAlert(BLCAdmin.messages.problemSavingModal);
+                    UCAdmin.entityForm.showErrorHeaderAlert(UCAdmin.messages.problemSavingModal);
                 }
             });
         }
@@ -645,22 +645,22 @@ $(document).ready(function() {
 
     $('body').on('submit', 'form.modal-form', function (event) {
         var $form = $(this);
-        var submit = BLCAdmin.runSubmitHandlers($form);
+        var submit = UCAdmin.runSubmitHandlers($form);
 
         if (submit) {
-            BLC.ajax({
+            UC.ajax({
                 url: this.action,
                 type: "POST",
-                data: BLCAdmin.serialize($form)
+                data: UCAdmin.serialize($form)
             }, function (data) {
-                BLCAdmin.runPostFormSubmitHandlers($form, data);
+                UCAdmin.runPostFormSubmitHandlers($form, data);
 
-                BLCAdmin.entityForm.hideActionSpinner($form.closest('.modal').find('.entity-form-actions'));
+                UCAdmin.entityForm.hideActionSpinner($form.closest('.modal').find('.entity-form-actions'));
 
                 //if there is a validation error, replace the current form that's there with this new one
                 var $newForm = $(data).find('.modal-body form');
                 if ($newForm[0]) {
-                    BLCAdmin.ruleBuilders.removeModalRuleBuilders($form);
+                    UCAdmin.ruleBuilders.removeModalRuleBuilders($form);
                     //with adorned forms, we have just overwritten the related id property that was selected previously. Ensure
                     //to replace that in the new form
                     var $adornedTargetIdProperty = $(data).find('input#adornedTargetIdProperty');
@@ -687,25 +687,25 @@ $(document).ready(function() {
                     //swap out the forms
                     $form.replaceWith($newForm);
 
-                    //since we just replaced everything, initialize all the fields back. See BLCAdmin.showModal
-                    BLCAdmin.initializeModalTabs($(BLCAdmin.currentModal()));
-                    BLCAdmin.initializeModalButtons($(BLCAdmin.currentModal()));
-                    BLCAdmin.initializeFields();
+                    //since we just replaced everything, initialize all the fields back. See UCAdmin.showModal
+                    UCAdmin.initializeModalTabs($(UCAdmin.currentModal()));
+                    UCAdmin.initializeModalButtons($(UCAdmin.currentModal()));
+                    UCAdmin.initializeFields();
 
                     // For each error field, make sure that its tab signifies that it contains an error
                     $newForm.find('.has-error').each(function(index, el) {
                         if ($(el).is('.hidden')){
-                            BLCAdmin.showMessageAsModal(BLCAdmin.messages.error, BLCAdmin.messages.validationError);
+                            UCAdmin.showMessageAsModal(UCAdmin.messages.error, UCAdmin.messages.validationError);
                         } else {
                             var tabId = '#' + $(el).parents('.entityFormTab').attr("class").substring(0, 4);
-                            var $tabWithError = BLCAdmin.currentModal().find('a[href="' + tabId + '"]');
+                            var $tabWithError = UCAdmin.currentModal().find('a[href="' + tabId + '"]');
                             if ($tabWithError.find('.tab-error-indicator').length == 0) {
                                 $tabWithError.prepend('<span class="tab-error-indicator danger"></span>');
                             }
                         }
                     });
 
-                    var $actions = BLCAdmin.currentModal().find('.entity-form-actions');
+                    var $actions = UCAdmin.currentModal().find('.entity-form-actions');
                     $actions.find('button').show();
                     $actions.find('img.ajax-loader').hide();
                 } else {
@@ -714,8 +714,8 @@ $(document).ready(function() {
                     if ($assetGrid.length) {
                         var $assetListGrid = $(data).find('.asset-listgrid');
 
-                        if (BLCAdmin.assetGrid) {
-                            BLCAdmin.assetGrid.initialize($assetGrid);
+                        if (UCAdmin.assetGrid) {
+                            UCAdmin.assetGrid.initialize($assetGrid);
                         } else {
                             initAssetGrid($assetGrid);
                         }
@@ -724,15 +724,15 @@ $(document).ready(function() {
                         $('.asset-listgrid').replaceWith($assetListGrid);
 
                         $assetGrid.find('.listgrid-container').each(function (index, container) {
-                            BLCAdmin.listGrid.initialize($(container));
+                            UCAdmin.listGrid.initialize($(container));
                         });
-                        BLCAdmin.hideCurrentModal();
+                        UCAdmin.hideCurrentModal();
 
                     } else {
-                        BLCAdmin.hideCurrentModal();
+                        UCAdmin.hideCurrentModal();
 
-                        BLCAdmin.listGrid.replaceRelatedCollection($(data), {
-                            message: BLCAdmin.messages.saved + '!',
+                        UCAdmin.listGrid.replaceRelatedCollection($(data), {
+                            message: UCAdmin.messages.saved + '!',
                             alertType: 'save-alert',
                             autoClose: 3000
                         });
@@ -752,7 +752,7 @@ $(document).ready(function() {
      * rule builders will be removed after that event.
      */
     $('body').on('hide', '.modal', function () {
-        BLCAdmin.ruleBuilders.removeModalRuleBuilders($(this));
+        UCAdmin.ruleBuilders.removeModalRuleBuilders($(this));
     });
 
     $('body').on('click', 'a.js-media-link', function(event) {
@@ -761,7 +761,7 @@ $(document).ready(function() {
         var link = $(this).attr('data-link');
         link += $(this).attr('data-queryparams');
 
-        BLCAdmin.showLinkAsModal(link);
+        UCAdmin.showLinkAsModal(link);
     });
 
     $('body').on('click', 'a.media-grid-remove', function() {
@@ -774,21 +774,21 @@ $(document).ready(function() {
 
         var id = $(asset).data('rowid');
         var $tr = $(this).closest('.select-group').find('.listgrid-container').find('tr[data-rowid=' + id + ']');
-        var rowFields = BLCAdmin.listGrid.getRowFields($tr);
+        var rowFields = UCAdmin.listGrid.getRowFields($tr);
 
-        BLC.ajax({
+        UC.ajax({
             url: link,
             data: rowFields,
             type: "POST"
         }, function(data) {
             if (data.status == 'error') {
-                BLCAdmin.listGrid.showAlert($container, data.message);
+                UCAdmin.listGrid.showAlert($container, data.message);
             } else {
                 var $assetGrid = $(data).find('.asset-grid-container');
                 var $assetListGrid = $(data).find('.asset-listgrid');
 
-                if (BLCAdmin.assetGrid) {
-                    BLCAdmin.assetGrid.initialize($assetGrid);
+                if (UCAdmin.assetGrid) {
+                    UCAdmin.assetGrid.initialize($assetGrid);
                 } else {
                     initAssetGrid($assetGrid);
                 }
@@ -797,7 +797,7 @@ $(document).ready(function() {
                 $container.find('.asset-listgrid').replaceWith($assetListGrid);
 
                 $container.find('.listgrid-container').each(function (index, container) {
-                    BLCAdmin.listGrid.initialize($(container));
+                    UCAdmin.listGrid.initialize($(container));
                 });
             }
         });
@@ -816,7 +816,7 @@ $(document).ready(function() {
             $(content).removeClass('content-collapsed');
 
             // update content height
-            BLCAdmin.updateContentHeight($(this));
+            UCAdmin.updateContentHeight($(this));
         } else {
             $collapser.removeClass('expanded').addClass('collapsed');
             $collapser.text("(show)");
@@ -826,10 +826,10 @@ $(document).ready(function() {
         var $fieldSetCard = $(this).closest('.fieldset-card');
         var $tableBodies = $fieldSetCard.find('.listgrid-body-wrapper tbody');
         $tableBodies.each(function( index, tbody ) {
-            BLCAdmin.listGrid.paginate.updateGridSize($(tbody));
+            UCAdmin.listGrid.paginate.updateGridSize($(tbody));
         });
         $fieldSetCard.find('.fieldgroup-listgrid-wrapper-header').each(function (index, element) {
-            BLCAdmin.listGrid.updateGridTitleBarSize($(element));
+            UCAdmin.listGrid.updateGridTitleBarSize($(element));
         });
     });
 
@@ -930,7 +930,7 @@ $(document).ready(function() {
         }
 
         function showSearchResults() {
-            var params = BLCAdmin.history.getUrlParameters();
+            var params = UCAdmin.history.getUrlParameters();
             if (params) {
                 var nameProperty = params['name'];
                 if (nameProperty) {

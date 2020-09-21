@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
   #%L
-  BroadleafCommerce Framework
+  UltraCommerce Framework
   %%
-  Copyright (C) 2009 - 2016 Broadleaf Commerce
+  Copyright (C) 2009 - 2016 Ultra Commerce
   %%
-  Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
-  (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
-  unless the restrictions on use therein are violated and require payment to Broadleaf in which case
-  the Broadleaf End User License Agreement (EULA), Version 1.1
-  (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+  Licensed under the Ultra Fair Use License Agreement, Version 1.0
+  (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+  unless the restrictions on use therein are violated and require payment to Ultra in which case
+  the Ultra End User License Agreement (EULA), Version 1.1
+  (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
   shall apply.
   
   Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
-  between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+  between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
   #L%
   -->
 
@@ -26,36 +26,36 @@
                            http://www.springframework.org/schema/aop
                            http://www.springframework.org/schema/aop/spring-aop.xsd">
     
-    <bean id="blTaxProviders" class="org.springframework.beans.factory.config.ListFactoryBean">
+    <bean id="ucTaxProviders" class="org.springframework.beans.factory.config.ListFactoryBean">
         <property name="sourceList">
             <list />
         </property>
     </bean>
     
-    <bean id="blFulfillmentLocationResolver" class="org.broadleafcommerce.core.pricing.service.fulfillment.SimpleFulfillmentLocationResolver" />
+    <bean id="ucFulfillmentLocationResolver" class="com.ultracommerce.core.pricing.service.fulfillment.SimpleFulfillmentLocationResolver" />
 
-    <bean id="blFixedPriceFulfillmentPricingProvider"
-            class="org.broadleafcommerce.core.pricing.service.fulfillment.provider.FixedPriceFulfillmentPricingProvider" />
-    <bean id="blBandedFulfillmentPricingProvider"
-            class="org.broadleafcommerce.core.pricing.service.fulfillment.provider.BandedFulfillmentPricingProvider" />
+    <bean id="ucFixedPriceFulfillmentPricingProvider"
+            class="com.ultracommerce.core.pricing.service.fulfillment.provider.FixedPriceFulfillmentPricingProvider" />
+    <bean id="ucBandedFulfillmentPricingProvider"
+            class="com.ultracommerce.core.pricing.service.fulfillment.provider.BandedFulfillmentPricingProvider" />
 
-    <bean id="blFulfillmentPricingProviders" class="org.springframework.beans.factory.config.ListFactoryBean">
+    <bean id="ucFulfillmentPricingProviders" class="org.springframework.beans.factory.config.ListFactoryBean">
         <property name="sourceList">
             <list>
-               <ref bean="blFixedPriceFulfillmentPricingProvider" />
-               <ref bean="blBandedFulfillmentPricingProvider" />
+               <ref bean="ucFixedPriceFulfillmentPricingProvider" />
+               <ref bean="ucBandedFulfillmentPricingProvider" />
             </list>
         </property>
     </bean>
     
     <!-- Pricing Workflow configuration -->
-    <bean id="blPricingWorkflow" class="org.broadleafcommerce.core.workflow.SequenceProcessor">
+    <bean id="ucPricingWorkflow" class="com.ultracommerce.core.workflow.SequenceProcessor">
         <property name="processContextFactory">
-            <bean class="org.broadleafcommerce.core.pricing.service.workflow.PricingProcessContextFactory"/>
+            <bean class="com.ultracommerce.core.pricing.service.workflow.PricingProcessContextFactory"/>
         </property>
-        <property name="activities" ref="blPricingWorkflowActivities"/>
+        <property name="activities" ref="ucPricingWorkflowActivities"/>
         <property name="defaultErrorHandler">
-            <bean class="org.broadleafcommerce.core.workflow.DefaultErrorHandler">
+            <bean class="com.ultracommerce.core.workflow.DefaultErrorHandler">
                 <property name="unloggedExceptionClasses">
                     <list>
                         <value>org.hibernate.exception.LockAcquisitionException</value>
@@ -65,163 +65,163 @@
         </property>
     </bean>
 
-    <bean id="blPricingWorkflowActivities" class="org.springframework.beans.factory.config.ListFactoryBean">
+    <bean id="ucPricingWorkflowActivities" class="org.springframework.beans.factory.config.ListFactoryBean">
         <property name="sourceList">
             <list>
-                <ref bean="blOfferActivity" />
-                <ref bean="blConsolidateFulfillmentFeesActivity" />
-                <ref bean="blFulfillmentItemPricingActivity" />
-                <ref bean="blFulfillmentGroupMerchandiseTotalActivity" />
-                <ref bean="blFulfillmentGroupPricingActivity" />
-                <ref bean="blShippingOfferActivity" />
-                <ref bean="blTaxActivity" />
-                <ref bean="blTotalActivity"/>
-                <ref bean="blAdjustOrderPaymentsActivity"/>
+                <ref bean="ucOfferActivity" />
+                <ref bean="ucConsolidateFulfillmentFeesActivity" />
+                <ref bean="ucFulfillmentItemPricingActivity" />
+                <ref bean="ucFulfillmentGroupMerchandiseTotalActivity" />
+                <ref bean="ucFulfillmentGroupPricingActivity" />
+                <ref bean="ucShippingOfferActivity" />
+                <ref bean="ucTaxActivity" />
+                <ref bean="ucTotalActivity"/>
+                <ref bean="ucAdjustOrderPaymentsActivity"/>
             </list>
         </property>
     </bean>
     
     <!-- Add Item Workflow Configuration -->
-    <bean id="blAddItemWorkflow" class="org.broadleafcommerce.core.workflow.SequenceProcessor">
+    <bean id="ucAddItemWorkflow" class="com.ultracommerce.core.workflow.SequenceProcessor">
         <property name="processContextFactory">
-            <bean class="org.broadleafcommerce.core.order.service.workflow.CartOperationProcessContextFactory"/>
+            <bean class="com.ultracommerce.core.order.service.workflow.CartOperationProcessContextFactory"/>
         </property>
-        <property name="activities" ref="blAddItemWorkflowActivities"/>
+        <property name="activities" ref="ucAddItemWorkflowActivities"/>
         <property name="defaultErrorHandler">
-            <bean class="org.broadleafcommerce.core.workflow.DefaultErrorHandler">
+            <bean class="com.ultracommerce.core.workflow.DefaultErrorHandler">
                 <property name="unloggedExceptionClasses">
                     <list>
-                        <value>org.broadleafcommerce.core.order.service.exception.MinQuantityNotFulfilledException</value>
-                        <value>org.broadleafcommerce.core.inventory.service.InventoryUnavailableException</value>
-                        <value>org.broadleafcommerce.core.order.service.exception.RequiredAttributeNotProvidedException</value>
+                        <value>com.ultracommerce.core.order.service.exception.MinQuantityNotFulfilledException</value>
+                        <value>com.ultracommerce.core.inventory.service.InventoryUnavailableException</value>
+                        <value>com.ultracommerce.core.order.service.exception.RequiredAttributeNotProvidedException</value>
                     </list>
                 </property>
             </bean>
         </property>
     </bean>
 
-    <bean id="blAddItemWorkflowActivities" class="org.springframework.beans.factory.config.ListFactoryBean">
+    <bean id="ucAddItemWorkflowActivities" class="org.springframework.beans.factory.config.ListFactoryBean">
         <property name="sourceList">
             <list>
-                <ref bean="blValidateAddRequestActivity" />
-                <ref bean="blCheckAddAvailabilityActivity" />
-                <ref bean="blAddOrderItemActivity" />
-                <ref bean="blAddFulfillmentGroupItemActivity" />
-                <ref bean="blAddWorkflowPriceOrderIfNecessaryActivity" />
-                <ref bean="blAddWorkflowVerifyFulfillmentGroupItemsActivity" />
+                <ref bean="ucValidateAddRequestActivity" />
+                <ref bean="ucCheckAddAvailabilityActivity" />
+                <ref bean="ucAddOrderItemActivity" />
+                <ref bean="ucAddFulfillmentGroupItemActivity" />
+                <ref bean="ucAddWorkflowPriceOrderIfNecessaryActivity" />
+                <ref bean="ucAddWorkflowVerifyFulfillmentGroupItemsActivity" />
             </list>
         </property>
     </bean>
 
     <!-- Update Item Workflow Configuration -->
-    <bean id="blUpdateItemWorkflow" class="org.broadleafcommerce.core.workflow.SequenceProcessor">
+    <bean id="ucUpdateItemWorkflow" class="com.ultracommerce.core.workflow.SequenceProcessor">
         <property name="processContextFactory">
-            <bean class="org.broadleafcommerce.core.order.service.workflow.CartOperationProcessContextFactory"/>
+            <bean class="com.ultracommerce.core.order.service.workflow.CartOperationProcessContextFactory"/>
         </property>
-        <property name="activities" ref="blUpdateItemWorkflowActivities"/>
+        <property name="activities" ref="ucUpdateItemWorkflowActivities"/>
         <property name="defaultErrorHandler">
-            <bean class="org.broadleafcommerce.core.workflow.DefaultErrorHandler">
+            <bean class="com.ultracommerce.core.workflow.DefaultErrorHandler">
                 <property name="unloggedExceptionClasses">
                     <list>
-                        <value>org.broadleafcommerce.core.order.service.exception.MinQuantityNotFulfilledException</value>
-                        <value>org.broadleafcommerce.core.inventory.service.InventoryUnavailableException</value>
-                        <value>org.broadleafcommerce.core.order.service.exception.RequiredAttributeNotProvidedException</value>
+                        <value>com.ultracommerce.core.order.service.exception.MinQuantityNotFulfilledException</value>
+                        <value>com.ultracommerce.core.inventory.service.InventoryUnavailableException</value>
+                        <value>com.ultracommerce.core.order.service.exception.RequiredAttributeNotProvidedException</value>
                     </list>
                 </property>
             </bean>
         </property>
     </bean>
 
-    <bean id="blUpdateItemWorkflowActivities" class="org.springframework.beans.factory.config.ListFactoryBean">
+    <bean id="ucUpdateItemWorkflowActivities" class="org.springframework.beans.factory.config.ListFactoryBean">
         <property name="sourceList">
             <list>
-                <ref bean="blValidateUpdateRequestActivity" />
-                <ref bean="blCheckUpdateAvailabilityActivity" />
-                <ref bean="blUpdateOrderItemActivity" />
-                <ref bean="blUdateOrderMultishipOptionActivity" />
-                <ref bean="blUpdateFulfillmentGroupItemActivity" />
-                <ref bean="blUpdateWorkflowPriceOrderIfNecessaryActivity" />
-                <ref bean="blUpdateWorkflowVerifyFulfillmentGroupItemsActivity" />
+                <ref bean="ucValidateUpdateRequestActivity" />
+                <ref bean="ucCheckUpdateAvailabilityActivity" />
+                <ref bean="ucUpdateOrderItemActivity" />
+                <ref bean="ucUdateOrderMultishipOptionActivity" />
+                <ref bean="ucUpdateFulfillmentGroupItemActivity" />
+                <ref bean="ucUpdateWorkflowPriceOrderIfNecessaryActivity" />
+                <ref bean="ucUpdateWorkflowVerifyFulfillmentGroupItemsActivity" />
             </list>
         </property>
     </bean>
 
     <!-- Update Item Workflow Configuration -->
-    <bean id="blUpdateProductOptionsForItemWorkflow" class="org.broadleafcommerce.core.workflow.SequenceProcessor">
+    <bean id="ucUpdateProductOptionsForItemWorkflow" class="com.ultracommerce.core.workflow.SequenceProcessor">
         <property name="processContextFactory">
-            <bean class="org.broadleafcommerce.core.order.service.workflow.CartOperationProcessContextFactory"/>
+            <bean class="com.ultracommerce.core.order.service.workflow.CartOperationProcessContextFactory"/>
         </property>
-        <property name="activities" ref="blUpdateProductOptionsForItemWorkflowActivities"/>
-        <property name="defaultErrorHandler" ref="blDefaultErrorHandler"/>
+        <property name="activities" ref="ucUpdateProductOptionsForItemWorkflowActivities"/>
+        <property name="defaultErrorHandler" ref="ucDefaultErrorHandler"/>
     </bean>
 
-    <bean id="blUpdateProductOptionsForItemWorkflowActivities" class="org.springframework.beans.factory.config.ListFactoryBean">
+    <bean id="ucUpdateProductOptionsForItemWorkflowActivities" class="org.springframework.beans.factory.config.ListFactoryBean">
         <property name="sourceList">
             <list>
-                <ref bean="blValidateUpdateProductOptionsRequestActivity" />
-                <ref bean="blUpdateProductOptionsOrderItemActivity" />
+                <ref bean="ucValidateUpdateProductOptionsRequestActivity" />
+                <ref bean="ucUpdateProductOptionsOrderItemActivity" />
             </list>
         </property>
     </bean>
     
     <!-- Remove Item Workflow Configuration -->
-    <bean id="blRemoveItemWorkflow" class="org.broadleafcommerce.core.workflow.SequenceProcessor">
+    <bean id="ucRemoveItemWorkflow" class="com.ultracommerce.core.workflow.SequenceProcessor">
         <property name="processContextFactory">
-            <bean class="org.broadleafcommerce.core.order.service.workflow.CartOperationProcessContextFactory"/>
+            <bean class="com.ultracommerce.core.order.service.workflow.CartOperationProcessContextFactory"/>
         </property>
-        <property name="activities" ref="blRemoveItemWorkflowActivities"/>
-        <property name="defaultErrorHandler" ref="blDefaultErrorHandler"/>
+        <property name="activities" ref="ucRemoveItemWorkflowActivities"/>
+        <property name="defaultErrorHandler" ref="ucDefaultErrorHandler"/>
     </bean>
 
-    <bean id="blRemoveItemWorkflowActivities" class="org.springframework.beans.factory.config.ListFactoryBean">
+    <bean id="ucRemoveItemWorkflowActivities" class="org.springframework.beans.factory.config.ListFactoryBean">
         <property name="sourceList">
             <list>
-                <ref bean="blValidateRemoveRequestActivity" />
-                <ref bean="blRemoveOrderMultishipOptionActivity" />
-                <ref bean="blRemoveFulfillmentGroupItemActivity" />
-                <ref bean="blRemoveOrderItemActivity" />
-                <ref bean="blRemoveWorkflowPriceOrderIfNecessaryActivity" />
-                <ref bean="blRemoveWorkflowVerifyFulfillmentGroupItemsActivity" />
+                <ref bean="ucValidateRemoveRequestActivity" />
+                <ref bean="ucRemoveOrderMultishipOptionActivity" />
+                <ref bean="ucRemoveFulfillmentGroupItemActivity" />
+                <ref bean="ucRemoveOrderItemActivity" />
+                <ref bean="ucRemoveWorkflowPriceOrderIfNecessaryActivity" />
+                <ref bean="ucRemoveWorkflowVerifyFulfillmentGroupItemsActivity" />
             </list>
         </property>
     </bean>
 
     <!-- Checkout Workflow Configuration -->
-    <bean id="blCheckoutWorkflow" class="org.broadleafcommerce.core.workflow.SequenceProcessor">
+    <bean id="ucCheckoutWorkflow" class="com.ultracommerce.core.workflow.SequenceProcessor">
         <property name="processContextFactory">
-            <bean class="org.broadleafcommerce.core.checkout.service.workflow.CheckoutProcessContextFactory"/>
+            <bean class="com.ultracommerce.core.checkout.service.workflow.CheckoutProcessContextFactory"/>
         </property>
-        <property name="activities" ref="blCheckoutWorkflowActivities"/>
+        <property name="activities" ref="ucCheckoutWorkflowActivities"/>
         <property name="defaultErrorHandler">
-            <bean class="org.broadleafcommerce.core.workflow.DefaultErrorHandler">
+            <bean class="com.ultracommerce.core.workflow.DefaultErrorHandler">
                 <property name="unloggedExceptionClasses">
                     <list>
-                        <value>org.broadleafcommerce.core.inventory.service.InventoryUnavailableException</value>
+                        <value>com.ultracommerce.core.inventory.service.InventoryUnavailableException</value>
                     </list>
                 </property>
             </bean>
         </property>
     </bean>
 
-    <bean id="blCheckoutWorkflowActivities" class="org.springframework.beans.factory.config.ListFactoryBean">
+    <bean id="ucCheckoutWorkflowActivities" class="org.springframework.beans.factory.config.ListFactoryBean">
         <property name="sourceList">
             <list>
-                <ref bean="blValidateCheckoutActivity"/>
-                <ref bean="blValidateAvailabilityActivity"/>
-                <ref bean="blVerifyCustomerMaxOfferUsesActivity" />
-                <ref bean="blValidateProductOptionsActivity" />
-                <ref bean="blValidateAndConfirmPaymentActivity" />
-                <ref bean="blRecordOfferUsageActivity" />
-                <ref bean="blCommitTaxActivity" />
-                <ref bean="blDecrementInventoryActivity" />
-                <ref bean="blCompleteOrderActivity" />
+                <ref bean="ucValidateCheckoutActivity"/>
+                <ref bean="ucValidateAvailabilityActivity"/>
+                <ref bean="ucVerifyCustomerMaxOfferUsesActivity" />
+                <ref bean="ucValidateProductOptionsActivity" />
+                <ref bean="ucValidateAndConfirmPaymentActivity" />
+                <ref bean="ucRecordOfferUsageActivity" />
+                <ref bean="ucCommitTaxActivity" />
+                <ref bean="ucDecrementInventoryActivity" />
+                <ref bean="ucCompleteOrderActivity" />
             </list>
         </property>
     </bean>
 
     <aop:config>
-        <aop:aspect id="qosAspect" ref="blServiceMonitor">
-            <aop:pointcut id="qosMethod" expression="execution(* org.broadleafcommerce.common.vendor.service.monitor.ServiceStatusDetectable.process(..))"/>
+        <aop:aspect id="qosAspect" ref="ucServiceMonitor">
+            <aop:pointcut id="qosMethod" expression="execution(* com.ultracommerce.common.vendor.service.monitor.ServiceStatusDetectable.process(..))"/>
             <aop:around method="checkServiceAOP" pointcut-ref="qosMethod"/>
         </aop:aspect>
     </aop:config>

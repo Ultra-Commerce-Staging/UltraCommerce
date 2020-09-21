@@ -1,21 +1,21 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2019 Broadleaf Commerce
+ * Copyright (C) 2009 - 2019 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.util.queue;
+package com.ultracommerce.core.util.queue;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -27,12 +27,12 @@ import org.apache.zookeeper.ZooDefs;
 import org.apache.zookeeper.ZooKeeper;
 import org.apache.zookeeper.data.ACL;
 import org.apache.zookeeper.data.Stat;
-import org.broadleafcommerce.common.util.GenericOperation;
-import org.broadleafcommerce.common.util.GenericOperationUtil;
-import org.broadleafcommerce.core.util.ZookeeperUtil;
-import org.broadleafcommerce.core.util.lock.DistributedLock;
-import org.broadleafcommerce.core.util.lock.DistributedLock.DistributedLockException;
-import org.broadleafcommerce.core.util.lock.ReentrantDistributedZookeeperLock;
+import com.ultracommerce.common.util.GenericOperation;
+import com.ultracommerce.common.util.GenericOperationUtil;
+import com.ultracommerce.core.util.ZookeeperUtil;
+import com.ultracommerce.core.util.lock.DistributedLock;
+import com.ultracommerce.core.util.lock.DistributedLock.DistributedLockException;
+import com.ultracommerce.core.util.lock.ReentrantDistributedZookeeperLock;
 import org.springframework.util.Assert;
 
 import java.io.ByteArrayInputStream;
@@ -74,7 +74,7 @@ public class ZookeeperDistributedQueue<T extends Serializable> implements Distri
      * This is the base folder that all queues will be written to in Solr.  The constructors require a lock path, which will be appended 
      * to this path.
      */
-    public static final String DEFAULT_BASE_FOLDER = "/broadleaf/app/distributed-queues";
+    public static final String DEFAULT_BASE_FOLDER = "/ultra/app/distributed-queues";
     public static final String QUEUE_ENTRY_FOLDER = "/elements";
     public static final String QUEUE_LOCKS_FOLDER = "/locks";
     public static final String QUEUE_CONFIGS_FOLDER = "/configs";
@@ -122,7 +122,7 @@ public class ZookeeperDistributedQueue<T extends Serializable> implements Distri
     /**
      * Constructs a folder structure in Zookeeper for managing a queue and queue state..  The argument, queuePath, should start with a forward slash ('/') and should not 
      * end with a slash.  This argument should be alpha-numeric, not contain whitespaces or other special characters, and can contain forward slashes ('/') to delineate folders. 
-     * If useDefaultBasePath is true, then /broadleaf/app/distributed-queues will be prepended to the queuePath.  Otherwise, the queuePath will be used as it is provided.
+     * If useDefaultBasePath is true, then /ultra/app/distributed-queues will be prepended to the queuePath.  Otherwise, the queuePath will be used as it is provided.
      * 
      * The argument, maxQueueSize, will be a hint.  If another thread creates the queue structure in Zookeeper, then it will persist the maxQueueSize.
      * 

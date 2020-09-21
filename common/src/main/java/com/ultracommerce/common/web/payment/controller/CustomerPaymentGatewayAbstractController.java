@@ -1,31 +1,31 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.web.payment.controller;
+package com.ultracommerce.common.web.payment.controller;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.payment.dto.PaymentResponseDTO;
-import org.broadleafcommerce.common.payment.service.CustomerPaymentGatewayService;
-import org.broadleafcommerce.common.payment.service.PaymentGatewayConfiguration;
-import org.broadleafcommerce.common.payment.service.PaymentGatewayWebResponsePrintService;
-import org.broadleafcommerce.common.payment.service.PaymentGatewayWebResponseService;
-import org.broadleafcommerce.common.vendor.service.exception.PaymentException;
-import org.broadleafcommerce.common.web.controller.BroadleafAbstractController;
+import com.ultracommerce.common.payment.dto.PaymentResponseDTO;
+import com.ultracommerce.common.payment.service.CustomerPaymentGatewayService;
+import com.ultracommerce.common.payment.service.PaymentGatewayConfiguration;
+import com.ultracommerce.common.payment.service.PaymentGatewayWebResponsePrintService;
+import com.ultracommerce.common.payment.service.PaymentGatewayWebResponseService;
+import com.ultracommerce.common.vendor.service.exception.PaymentException;
+import com.ultracommerce.common.web.controller.UltraAbstractController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.ui.Model;
@@ -40,22 +40,22 @@ import javax.servlet.http.HttpServletRequest;
  * with the ability to save it to a customer's profile.
  * </p>
  *
- * <p>If used in conjunction with the core framework, Broadleaf provides all the necessary spring resources, such as
- * "blCustomerPaymentGatewayService" that are needed for this class. If you are using the common jars without the framework
- * dependency, you will either have to implement the blCustomerPaymentGatewayService yourself in order to
+ * <p>If used in conjunction with the core framework, Ultra provides all the necessary spring resources, such as
+ * "ucCustomerPaymentGatewayService" that are needed for this class. If you are using the common jars without the framework
+ * dependency, you will either have to implement the ucCustomerPaymentGatewayService yourself in order to
  * save the token to your implementing customer profile system.</p>
  *
  * @author Elbert Bautista (elbertbautista)
  */
-public abstract class CustomerPaymentGatewayAbstractController extends BroadleafAbstractController {
+public abstract class CustomerPaymentGatewayAbstractController extends UltraAbstractController {
 
     protected static final Log LOG = LogFactory.getLog(CustomerPaymentGatewayAbstractController.class);
 
-    @Resource(name = "blPaymentGatewayWebResponsePrintService")
+    @Resource(name = "ucPaymentGatewayWebResponsePrintService")
     protected PaymentGatewayWebResponsePrintService webResponsePrintService;
 
     @Autowired(required=false)
-    @Qualifier("blCustomerPaymentGatewayService")
+    @Qualifier("ucCustomerPaymentGatewayService")
     protected CustomerPaymentGatewayService customerPaymentGatewayService;
 
     public Long applyCustomerTokenToProfile(PaymentResponseDTO responseDTO) throws IllegalArgumentException {
@@ -78,16 +78,16 @@ public abstract class CustomerPaymentGatewayAbstractController extends Broadleaf
     /**
      * <p>This method is intended to initiate the creation of a saved payment token.</p>
      *
-     * <p>This assumes that the implementing gateway's {@link org.broadleafcommerce.common.payment.service.PaymentGatewayWebResponseService}
+     * <p>This assumes that the implementing gateway's {@link com.ultracommerce.common.payment.service.PaymentGatewayWebResponseService}
      * knows how to parse an incoming {@link javax.servlet.http.HttpServletRequest} into a
-     * {@link org.broadleafcommerce.common.payment.dto.PaymentResponseDTO} which will then be used by the
+     * {@link com.ultracommerce.common.payment.dto.PaymentResponseDTO} which will then be used by the
      * customer profile engine to save a token to the user's account (e.g. wallet).</p>
      *
      * @param model - Spring MVC model
      * @param request - the HTTPServletRequest (originating either from a Payment Gateway or from the implementing checkout engine)
      * @param redirectAttributes - Spring MVC redirect attributes
      * @return the resulting view
-     * @throws org.broadleafcommerce.common.vendor.service.exception.PaymentException
+     * @throws com.ultracommerce.common.vendor.service.exception.PaymentException
      */
     public String createCustomerPayment(Model model, HttpServletRequest request,
                                         final RedirectAttributes redirectAttributes) throws PaymentException {

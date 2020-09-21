@@ -1,38 +1,38 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.search.service.solr;
+package com.ultracommerce.core.search.service.solr;
 
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocument;
-import org.broadleafcommerce.common.extension.AbstractExtensionHandler;
-import org.broadleafcommerce.common.extension.ExtensionResultHolder;
-import org.broadleafcommerce.common.extension.ExtensionResultStatusType;
-import org.broadleafcommerce.core.catalog.domain.Category;
-import org.broadleafcommerce.core.catalog.domain.Product;
-import org.broadleafcommerce.core.search.domain.FieldEntity;
-import org.broadleafcommerce.core.search.domain.IndexField;
-import org.broadleafcommerce.core.search.domain.IndexFieldType;
-import org.broadleafcommerce.core.search.domain.SearchCriteria;
-import org.broadleafcommerce.core.search.domain.SearchFacet;
-import org.broadleafcommerce.core.search.domain.SearchFacetDTO;
-import org.broadleafcommerce.core.search.domain.SearchFacetRange;
-import org.broadleafcommerce.core.search.domain.solr.FieldType;
+import com.ultracommerce.common.extension.AbstractExtensionHandler;
+import com.ultracommerce.common.extension.ExtensionResultHolder;
+import com.ultracommerce.common.extension.ExtensionResultStatusType;
+import com.ultracommerce.core.catalog.domain.Category;
+import com.ultracommerce.core.catalog.domain.Product;
+import com.ultracommerce.core.search.domain.FieldEntity;
+import com.ultracommerce.core.search.domain.IndexField;
+import com.ultracommerce.core.search.domain.IndexFieldType;
+import com.ultracommerce.core.search.domain.SearchCriteria;
+import com.ultracommerce.core.search.domain.SearchFacet;
+import com.ultracommerce.core.search.domain.SearchFacetDTO;
+import com.ultracommerce.core.search.domain.SearchFacetRange;
+import com.ultracommerce.core.search.domain.solr.FieldType;
 
 import java.util.List;
 import java.util.Map;

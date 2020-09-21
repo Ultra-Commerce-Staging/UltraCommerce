@@ -1,28 +1,28 @@
 /*
  * #%L
- * BroadleafCommerce Admin Module
+ * UltraCommerce Admin Module
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.admin.web.rulebuilder.service;
+package com.ultracommerce.admin.web.rulebuilder.service;
 
-import org.broadleafcommerce.common.presentation.RuleIdentifier;
-import org.broadleafcommerce.common.presentation.RuleOperatorType;
-import org.broadleafcommerce.common.presentation.RuleOptionType;
-import org.broadleafcommerce.common.presentation.client.SupportedFieldType;
-import org.broadleafcommerce.openadmin.web.rulebuilder.dto.FieldData;
-import org.broadleafcommerce.openadmin.web.rulebuilder.service.AbstractRuleBuilderFieldService;
+import com.ultracommerce.common.presentation.RuleIdentifier;
+import com.ultracommerce.common.presentation.RuleOperatorType;
+import com.ultracommerce.common.presentation.RuleOptionType;
+import com.ultracommerce.common.presentation.client.SupportedFieldType;
+import com.ultracommerce.openadmin.web.rulebuilder.dto.FieldData;
+import com.ultracommerce.openadmin.web.rulebuilder.service.AbstractRuleBuilderFieldService;
 import org.springframework.stereotype.Service;
 
 /**
@@ -32,14 +32,14 @@ import org.springframework.stereotype.Service;
  *
  * @author Andre Azzolini (apazzolini)
  */
-@Service("blRequestFieldService")
+@Service("ucRequestFieldService")
 public class RequestFieldServiceImpl extends AbstractRuleBuilderFieldService {
 
     @Override
     public void init() {
         fields.add(new FieldData.Builder()
                 .label("rule_requestSearchKeyword")
-                .name("properties['blcSearchKeyword']")
+                .name("properties['ucSearchKeyword']")
                 .operators(RuleOperatorType.TEXT)
                 .options(RuleOptionType.EMPTY_COLLECTION)
                 .type(SupportedFieldType.STRING)
@@ -75,7 +75,7 @@ public class RequestFieldServiceImpl extends AbstractRuleBuilderFieldService {
                 .name("properties['currentDevice']")
                 .operators(RuleOperatorType.SELECTIZE_ENUMERATION)
                 .options(RuleOptionType.WEB_REQUEST_DEVICE_TYPE)
-                .type(SupportedFieldType.BROADLEAF_ENUMERATION)
+                .type(SupportedFieldType.ULTRA_ENUMERATION)
                 .skipValidation(true)
                 .build());
     }
@@ -87,6 +87,6 @@ public class RequestFieldServiceImpl extends AbstractRuleBuilderFieldService {
 
     @Override
     public String getDtoClassName() {
-        return "org.broadleafcommerce.common.RequestDTOImpl";
+        return "com.ultracommerce.common.RequestDTOImpl";
     }
 }

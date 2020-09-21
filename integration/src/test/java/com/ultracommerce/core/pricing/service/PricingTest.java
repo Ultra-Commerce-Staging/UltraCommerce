@@ -1,69 +1,69 @@
 /*
  * #%L
- * BroadleafCommerce Integration
+ * UltraCommerce Integration
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.pricing.service;
+package com.ultracommerce.core.pricing.service;
 
-import org.broadleafcommerce.common.i18n.domain.ISOCountry;
-import org.broadleafcommerce.common.i18n.domain.ISOCountryImpl;
-import org.broadleafcommerce.common.i18n.service.ISOService;
-import org.broadleafcommerce.common.money.Money;
-import org.broadleafcommerce.common.time.SystemTime;
-import org.broadleafcommerce.core.catalog.domain.Sku;
-import org.broadleafcommerce.core.catalog.domain.SkuFee;
-import org.broadleafcommerce.core.catalog.domain.SkuFeeImpl;
-import org.broadleafcommerce.core.catalog.domain.SkuImpl;
-import org.broadleafcommerce.core.catalog.service.CatalogService;
-import org.broadleafcommerce.core.catalog.service.type.SkuFeeType;
-import org.broadleafcommerce.core.offer.domain.Offer;
-import org.broadleafcommerce.core.offer.domain.OfferCode;
-import org.broadleafcommerce.core.offer.domain.OfferCodeImpl;
-import org.broadleafcommerce.core.offer.domain.OfferImpl;
-import org.broadleafcommerce.core.offer.domain.OfferItemCriteria;
-import org.broadleafcommerce.core.offer.domain.OfferItemCriteriaImpl;
-import org.broadleafcommerce.core.offer.domain.OfferTargetCriteriaXref;
-import org.broadleafcommerce.core.offer.domain.OfferTargetCriteriaXrefImpl;
-import org.broadleafcommerce.core.offer.service.OfferService;
-import org.broadleafcommerce.core.offer.service.type.OfferDiscountType;
-import org.broadleafcommerce.core.offer.service.type.OfferType;
-import org.broadleafcommerce.core.order.domain.DiscreteOrderItem;
-import org.broadleafcommerce.core.order.domain.DiscreteOrderItemImpl;
-import org.broadleafcommerce.core.order.domain.FulfillmentGroup;
-import org.broadleafcommerce.core.order.domain.FulfillmentGroupFee;
-import org.broadleafcommerce.core.order.domain.FulfillmentGroupImpl;
-import org.broadleafcommerce.core.order.domain.FulfillmentGroupItem;
-import org.broadleafcommerce.core.order.domain.FulfillmentGroupItemImpl;
-import org.broadleafcommerce.core.order.domain.Order;
-import org.broadleafcommerce.core.order.domain.OrderItem;
-import org.broadleafcommerce.core.order.service.OrderItemService;
-import org.broadleafcommerce.core.order.service.OrderService;
-import org.broadleafcommerce.core.pricing.ShippingRateDataProvider;
-import org.broadleafcommerce.core.pricing.domain.ShippingRate;
-import org.broadleafcommerce.core.pricing.service.workflow.type.ShippingServiceType;
-import org.broadleafcommerce.profile.core.domain.Address;
-import org.broadleafcommerce.profile.core.domain.AddressImpl;
-import org.broadleafcommerce.profile.core.domain.Country;
-import org.broadleafcommerce.profile.core.domain.CountryImpl;
-import org.broadleafcommerce.profile.core.domain.Customer;
-import org.broadleafcommerce.profile.core.domain.State;
-import org.broadleafcommerce.profile.core.domain.StateImpl;
-import org.broadleafcommerce.profile.core.service.CountryService;
-import org.broadleafcommerce.profile.core.service.CustomerService;
-import org.broadleafcommerce.profile.core.service.StateService;
-import org.broadleafcommerce.test.TestNGSiteIntegrationSetup;
+import com.ultracommerce.common.i18n.domain.ISOCountry;
+import com.ultracommerce.common.i18n.domain.ISOCountryImpl;
+import com.ultracommerce.common.i18n.service.ISOService;
+import com.ultracommerce.common.money.Money;
+import com.ultracommerce.common.time.SystemTime;
+import com.ultracommerce.core.catalog.domain.Sku;
+import com.ultracommerce.core.catalog.domain.SkuFee;
+import com.ultracommerce.core.catalog.domain.SkuFeeImpl;
+import com.ultracommerce.core.catalog.domain.SkuImpl;
+import com.ultracommerce.core.catalog.service.CatalogService;
+import com.ultracommerce.core.catalog.service.type.SkuFeeType;
+import com.ultracommerce.core.offer.domain.Offer;
+import com.ultracommerce.core.offer.domain.OfferCode;
+import com.ultracommerce.core.offer.domain.OfferCodeImpl;
+import com.ultracommerce.core.offer.domain.OfferImpl;
+import com.ultracommerce.core.offer.domain.OfferItemCriteria;
+import com.ultracommerce.core.offer.domain.OfferItemCriteriaImpl;
+import com.ultracommerce.core.offer.domain.OfferTargetCriteriaXref;
+import com.ultracommerce.core.offer.domain.OfferTargetCriteriaXrefImpl;
+import com.ultracommerce.core.offer.service.OfferService;
+import com.ultracommerce.core.offer.service.type.OfferDiscountType;
+import com.ultracommerce.core.offer.service.type.OfferType;
+import com.ultracommerce.core.order.domain.DiscreteOrderItem;
+import com.ultracommerce.core.order.domain.DiscreteOrderItemImpl;
+import com.ultracommerce.core.order.domain.FulfillmentGroup;
+import com.ultracommerce.core.order.domain.FulfillmentGroupFee;
+import com.ultracommerce.core.order.domain.FulfillmentGroupImpl;
+import com.ultracommerce.core.order.domain.FulfillmentGroupItem;
+import com.ultracommerce.core.order.domain.FulfillmentGroupItemImpl;
+import com.ultracommerce.core.order.domain.Order;
+import com.ultracommerce.core.order.domain.OrderItem;
+import com.ultracommerce.core.order.service.OrderItemService;
+import com.ultracommerce.core.order.service.OrderService;
+import com.ultracommerce.core.pricing.ShippingRateDataProvider;
+import com.ultracommerce.core.pricing.domain.ShippingRate;
+import com.ultracommerce.core.pricing.service.workflow.type.ShippingServiceType;
+import com.ultracommerce.profile.core.domain.Address;
+import com.ultracommerce.profile.core.domain.AddressImpl;
+import com.ultracommerce.profile.core.domain.Country;
+import com.ultracommerce.profile.core.domain.CountryImpl;
+import com.ultracommerce.profile.core.domain.Customer;
+import com.ultracommerce.profile.core.domain.State;
+import com.ultracommerce.profile.core.domain.StateImpl;
+import com.ultracommerce.profile.core.service.CountryService;
+import com.ultracommerce.profile.core.service.CustomerService;
+import com.ultracommerce.profile.core.service.StateService;
+import com.ultracommerce.test.TestNGSiteIntegrationSetup;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import org.testng.annotations.Test;
@@ -82,7 +82,7 @@ public class PricingTest extends TestNGSiteIntegrationSetup {
     @Resource
     private CustomerService customerService;
 
-    @Resource(name = "blOrderService")
+    @Resource(name = "ucOrderService")
     private OrderService orderService;
 
     @Resource
@@ -91,7 +91,7 @@ public class PricingTest extends TestNGSiteIntegrationSetup {
     @Resource
     private CatalogService catalogService;
     
-    @Resource(name = "blOrderItemService")
+    @Resource(name = "ucOrderItemService")
     private OrderItemService orderItemService;
     
     @Resource

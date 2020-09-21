@@ -1,40 +1,40 @@
 /*
  * #%L
- * BroadleafCommerce Admin Module
+ * UltraCommerce Admin Module
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.admin.server.service.handler;
+package com.ultracommerce.admin.server.service.handler;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections4.ListUtils;
-import org.broadleafcommerce.common.exception.ServiceException;
-import org.broadleafcommerce.common.presentation.client.OperationType;
-import org.broadleafcommerce.common.presentation.client.PersistencePerspectiveItemType;
-import org.broadleafcommerce.common.util.BLCMessageUtils;
-import org.broadleafcommerce.common.util.Tuple;
-import org.broadleafcommerce.core.catalog.domain.Category;
-import org.broadleafcommerce.core.catalog.domain.CategoryImpl;
-import org.broadleafcommerce.core.catalog.domain.CategoryXref;
-import org.broadleafcommerce.core.catalog.domain.CategoryXrefImpl;
-import org.broadleafcommerce.openadmin.dto.AdornedTargetList;
-import org.broadleafcommerce.openadmin.dto.Entity;
-import org.broadleafcommerce.openadmin.dto.PersistencePackage;
-import org.broadleafcommerce.openadmin.server.dao.DynamicEntityDao;
-import org.broadleafcommerce.openadmin.server.service.ValidationException;
-import org.broadleafcommerce.openadmin.server.service.handler.CustomPersistenceHandlerAdapter;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.RecordHelper;
+import com.ultracommerce.common.exception.ServiceException;
+import com.ultracommerce.common.presentation.client.OperationType;
+import com.ultracommerce.common.presentation.client.PersistencePerspectiveItemType;
+import com.ultracommerce.common.util.UCMessageUtils;
+import com.ultracommerce.common.util.Tuple;
+import com.ultracommerce.core.catalog.domain.Category;
+import com.ultracommerce.core.catalog.domain.CategoryImpl;
+import com.ultracommerce.core.catalog.domain.CategoryXref;
+import com.ultracommerce.core.catalog.domain.CategoryXrefImpl;
+import com.ultracommerce.openadmin.dto.AdornedTargetList;
+import com.ultracommerce.openadmin.dto.Entity;
+import com.ultracommerce.openadmin.dto.PersistencePackage;
+import com.ultracommerce.openadmin.server.dao.DynamicEntityDao;
+import com.ultracommerce.openadmin.server.service.ValidationException;
+import com.ultracommerce.openadmin.server.service.handler.CustomPersistenceHandlerAdapter;
+import com.ultracommerce.openadmin.server.service.persistence.module.RecordHelper;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
@@ -45,7 +45,7 @@ import java.util.Set;
 /**
  * @author Jeff Fischer
  */
-@Component("blChildCategoriesCustomPersistenceHandler")
+@Component("ucChildCategoriesCustomPersistenceHandler")
 public class ChildCategoriesCustomPersistenceHandler extends CustomPersistenceHandlerAdapter {
     protected static final String ALL_CHILD_CATEGORY_XREFS = "allChildCategoryXrefs";
     protected static final String ADMIN_CANT_ADD_DUPLICATE_CHILD = "admin.cantAddDuplicateChild";
@@ -65,11 +65,11 @@ public class ChildCategoriesCustomPersistenceHandler extends CustomPersistenceHa
         final CategoryXref categoryXref = createXref(parentAndChild);
 
         if (parent.getAllChildCategoryXrefs().contains(categoryXref)) {
-            throw new ServiceException(BLCMessageUtils.getMessage(ADMIN_CANT_ADD_DUPLICATE_CHILD));
+            throw new ServiceException(UCMessageUtils.getMessage(ADMIN_CANT_ADD_DUPLICATE_CHILD));
         } else if (Objects.equals(child.getId(), parent.getId())) {
-            throw new ServiceException(BLCMessageUtils.getMessage(ADMIN_CANT_ADD_CATEGORY_AS_OWN_PARENT));
+            throw new ServiceException(UCMessageUtils.getMessage(ADMIN_CANT_ADD_CATEGORY_AS_OWN_PARENT));
         } else if (isChildAlreadyAnAncestor(child, parent)) {
-            throw new ServiceException(BLCMessageUtils.getMessage(ADMIN_CANT_ADD_ANCESTOR_AS_CHILD));
+            throw new ServiceException(UCMessageUtils.getMessage(ADMIN_CANT_ADD_ANCESTOR_AS_CHILD));
         }
         
         return helper.getCompatibleModule(OperationType.ADORNEDTARGETLIST).add(persistencePackage);

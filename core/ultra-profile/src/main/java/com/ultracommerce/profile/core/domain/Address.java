@@ -1,24 +1,24 @@
 /*
  * #%L
- * BroadleafCommerce Profile
+ * UltraCommerce Profile
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.profile.core.domain;
+package com.ultracommerce.profile.core.domain;
 
-import org.broadleafcommerce.common.copy.MultiTenantCloneable;
-import org.broadleafcommerce.common.i18n.domain.ISOCountry;
+import com.ultracommerce.common.copy.MultiTenantCloneable;
+import com.ultracommerce.common.i18n.domain.ISOCountry;
 import java.io.Serializable;
 
 public interface Address extends Serializable, MultiTenantCloneable<Address> {
@@ -45,16 +45,16 @@ public interface Address extends Serializable, MultiTenantCloneable<Address> {
 
     /**
      * @deprecated Should use {@link #setIsoCountrySubdivision()} or {@link #setStateProvinceRegion()} instead
-     * The Broadleaf Country and State domains will no longer be used for addresses to better support i18n.
-     * BLC_STATE and BLC_COUNTRY should primarily be used for look-ups or filtering to those country/states you wish to ship.
+     * The Ultra Country and State domains will no longer be used for addresses to better support i18n.
+     * UC_STATE and UC_COUNTRY should primarily be used for look-ups or filtering to those country/states you wish to ship.
      */
     @Deprecated
     public void setState(State state);
 
     /**
      * @deprecated Should use {@link #getIsoCountrySubdivision()} or {@link #getStateProvinceRegion()} instead
-     * The Broadleaf Country and State domains will no longer be used for addresses to better support i18n.
-     * BLC_STATE and BLC_COUNTRY should primarily be used for look-ups or filtering to those country/states you wish to ship.
+     * The Ultra Country and State domains will no longer be used for addresses to better support i18n.
+     * UC_STATE and UC_COUNTRY should primarily be used for look-ups or filtering to those country/states you wish to ship.
      */
     @Deprecated
     public State getState();
@@ -96,16 +96,16 @@ public interface Address extends Serializable, MultiTenantCloneable<Address> {
 
     /**
      * @deprecated Should use {@link #setIsoCountryAlpha2(ISOCountry)} instead
-     * The Broadleaf Country and State domains will no longer be used for addresses to better support i18n.
-     * BLC_STATE and BLC_COUNTRY should primarily be used for look-ups or filtering to those country/states you wish to ship.
+     * The Ultra Country and State domains will no longer be used for addresses to better support i18n.
+     * UC_STATE and UC_COUNTRY should primarily be used for look-ups or filtering to those country/states you wish to ship.
      */
     @Deprecated
     public void setCountry(Country country);
 
     /**
      * @deprecated Should use {@link #getIsoCountryAlpha2()} instead
-     * The Broadleaf Country and State domains will no longer be used for addresses to better support i18n.
-     * BLC_STATE and BLC_COUNTRY should primarily be used for look-ups or filtering to those country/states you wish to ship.
+     * The Ultra Country and State domains will no longer be used for addresses to better support i18n.
+     * UC_STATE and UC_COUNTRY should primarily be used for look-ups or filtering to those country/states you wish to ship.
      */
     @Deprecated
     public Country getCountry();

@@ -1,37 +1,37 @@
 /*
  * #%L
- * BroadleafCommerce Profile
+ * UltraCommerce Profile
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
 
-package org.broadleafcommerce.profile.core.domain;
+package com.ultracommerce.profile.core.domain;
 
-import org.broadleafcommerce.common.copy.CreateResponse;
-import org.broadleafcommerce.common.copy.MultiTenantCopyContext;
-import org.broadleafcommerce.common.payment.PaymentAdditionalFieldType;
-import org.broadleafcommerce.common.payment.PaymentGatewayType;
-import org.broadleafcommerce.common.payment.PaymentType;
-import org.broadleafcommerce.common.presentation.AdminPresentation;
-import org.broadleafcommerce.common.presentation.AdminPresentationMap;
-import org.broadleafcommerce.common.presentation.client.SupportedFieldType;
-import org.broadleafcommerce.common.presentation.client.VisibilityEnum;
-import org.broadleafcommerce.common.presentation.override.AdminPresentationMergeEntry;
-import org.broadleafcommerce.common.presentation.override.AdminPresentationMergeOverride;
-import org.broadleafcommerce.common.presentation.override.AdminPresentationMergeOverrides;
-import org.broadleafcommerce.common.presentation.override.PropertyType;
-import org.broadleafcommerce.common.time.domain.TemporalTimestampListener;
+import com.ultracommerce.common.copy.CreateResponse;
+import com.ultracommerce.common.copy.MultiTenantCopyContext;
+import com.ultracommerce.common.payment.PaymentAdditionalFieldType;
+import com.ultracommerce.common.payment.PaymentGatewayType;
+import com.ultracommerce.common.payment.PaymentType;
+import com.ultracommerce.common.presentation.AdminPresentation;
+import com.ultracommerce.common.presentation.AdminPresentationMap;
+import com.ultracommerce.common.presentation.client.SupportedFieldType;
+import com.ultracommerce.common.presentation.client.VisibilityEnum;
+import com.ultracommerce.common.presentation.override.AdminPresentationMergeEntry;
+import com.ultracommerce.common.presentation.override.AdminPresentationMergeOverride;
+import com.ultracommerce.common.presentation.override.AdminPresentationMergeOverrides;
+import com.ultracommerce.common.presentation.override.PropertyType;
+import com.ultracommerce.common.time.domain.TemporalTimestampListener;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Cascade;
@@ -64,8 +64,8 @@ import javax.persistence.UniqueConstraint;
 @Entity
 @EntityListeners(value = { TemporalTimestampListener.class, CustomerPaymentPersistedEntityListener.class })
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "BLC_CUSTOMER_PAYMENT", uniqueConstraints = @UniqueConstraint(name = "CSTMR_PAY_UNIQUE_CNSTRNT", columnNames = { "CUSTOMER_ID", "PAYMENT_TOKEN" }))
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "blOrderElements")
+@Table(name = "UC_CUSTOMER_PAYMENT", uniqueConstraints = @UniqueConstraint(name = "CSTMR_PAY_UNIQUE_CNSTRNT", columnNames = { "CUSTOMER_ID", "PAYMENT_TOKEN" }))
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "ucOrderElements")
 @AdminPresentationMergeOverrides(
 {
         @AdminPresentationMergeOverride(name = "billingAddress.addressLine1", mergeEntries = {
@@ -85,10 +85,10 @@ public class CustomerPaymentImpl implements CustomerPayment, CustomerPaymentAdmi
     @GeneratedValue(generator = "CustomerPaymentId")
     @GenericGenerator(
             name = "CustomerPaymentId",
-            strategy = "org.broadleafcommerce.common.persistence.IdOverrideTableGenerator",
+            strategy = "com.ultracommerce.common.persistence.IdOverrideTableGenerator",
             parameters = {
                     @Parameter(name = "segment_value", value = "CustomerPaymentImpl"),
-                    @Parameter(name = "entity_name", value = "org.broadleafcommerce.profile.core.domain.CustomerPaymentImpl")
+                    @Parameter(name = "entity_name", value = "com.ultracommerce.profile.core.domain.CustomerPaymentImpl")
             })
     @Column(name = "CUSTOMER_PAYMENT_ID")
     protected Long id;
@@ -112,16 +112,16 @@ public class CustomerPaymentImpl implements CustomerPayment, CustomerPaymentAdmi
     @Index(name="CUSTOMERPAYMENT_TYPE_INDEX", columnNames={"PAYMENT_TYPE"})
     @AdminPresentation(friendlyName = "CustomerPaymentImpl_Payment_Type",
             group = GroupName.Payment, order = FieldOrder.PAYMENT_TYPE,
-            fieldType= SupportedFieldType.BROADLEAF_ENUMERATION,
-            broadleafEnumeration="org.broadleafcommerce.common.payment.PaymentType",
+            fieldType= SupportedFieldType.ULTRA_ENUMERATION,
+            ultraEnumeration="com.ultracommerce.common.payment.PaymentType",
             prominent=true, gridOrder = 1000)
     protected String paymentType;
 
     @Column(name = "GATEWAY_TYPE")
     @AdminPresentation(friendlyName = "CustomerPaymentImpl_Gateway_Type",
             group = GroupName.Payment, order = FieldOrder.PAYMENT_GATEWAY_TYPE,
-            fieldType = SupportedFieldType.BROADLEAF_ENUMERATION,
-            broadleafEnumeration="org.broadleafcommerce.common.payment.PaymentGatewayType",
+            fieldType = SupportedFieldType.ULTRA_ENUMERATION,
+            ultraEnumeration="com.ultracommerce.common.payment.PaymentGatewayType",
             prominent=true, gridOrder = 2000)
     protected String paymentGatewayType;
 
@@ -134,11 +134,11 @@ public class CustomerPaymentImpl implements CustomerPayment, CustomerPaymentAdmi
     @MapKeyType(@Type(type = "java.lang.String"))
     @Lob
     @Type(type = "org.hibernate.type.MaterializedClobType")
-    @CollectionTable(name = "BLC_CUSTOMER_PAYMENT_FIELDS", joinColumns = @JoinColumn(name = "CUSTOMER_PAYMENT_ID"))
+    @CollectionTable(name = "UC_CUSTOMER_PAYMENT_FIELDS", joinColumns = @JoinColumn(name = "CUSTOMER_PAYMENT_ID"))
     @MapKeyColumn(name = "FIELD_NAME", nullable = false)
     @Column(name = "FIELD_VALUE", length = Integer.MAX_VALUE - 1)
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "blStandardElements")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "ucStandardElements")
     @AdminPresentationMap(friendlyName = "CustomerPaymentImpl_additionalFields",
             tab = TabName.Payment,
             keyPropertyFriendlyName = "CustomerPaymentImpl_additional_field_key",

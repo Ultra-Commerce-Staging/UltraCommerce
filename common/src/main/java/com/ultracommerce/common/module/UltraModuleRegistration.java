@@ -1,55 +1,55 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2017 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
 /**
  * 
  */
-package org.broadleafcommerce.common.module;
+package com.ultracommerce.common.module;
 
 import org.apache.commons.lang3.StringUtils;
-import org.broadleafcommerce.common.condition.ConditionalOnBroadleafModule;
-import org.broadleafcommerce.common.condition.OnBroadleafModuleCondition;
-import org.broadleafcommerce.common.logging.ModuleLifecycleLoggingBean;
+import com.ultracommerce.common.condition.ConditionalOnUltraModule;
+import com.ultracommerce.common.condition.OnUltraModuleCondition;
+import com.ultracommerce.common.logging.ModuleLifecycleLoggingBean;
 import org.springframework.core.io.support.SpringFactoriesLoader;
 
 /**
  * <p>
- * Provides the ability for modules to register themselves with Broadleaf to be used with {@link ConditionalOnBroadleafModule} and {@link ModulePresentUtil}
+ * Provides the ability for modules to register themselves with Ultra to be used with {@link ConditionalOnUltraModule} and {@link ModulePresentUtil}
  * in order to provide different behavior in inter-module dependencies.
  * 
  * <p>
  * Module implementations should be registered in a {@code spring.factories} file like so:
  * 
  * <pre>
- * org.broadleafcommerce.common.condition.BroadleafModuleRegistration=com.broadleafcommerce.mymodule.registration.MyModuleRegistration
+ * com.ultracommerce.common.condition.UltraModuleRegistration=com.ultracommerce.mymodule.registration.MyModuleRegistration
  * </pre>
  * 
  * <p>
- * In order to preserve compile-time checking, additional modules should be added to the {@link BroadleafModuleEnum}. However, if they aren't,
+ * In order to preserve compile-time checking, additional modules should be added to the {@link UltraModuleEnum}. However, if they aren't,
  * this can always be checked at runtime instead by just looking for the String-based module name.
  * 
  * @author Phillip Verheyden (phillipuniverse)
- * @see {@link OnBroadleafModuleCondition}
- * @see {@link ConditionalOnBroadleafModule}
+ * @see {@link OnUltraModuleCondition}
+ * @see {@link ConditionalOnUltraModule}
  * @see {@link ModuleLifecycleLoggingBean}
  * @see {@link SpringFactoriesLoader}
  * @since 5.2
  */
-public interface BroadleafModuleRegistration {
+public interface UltraModuleRegistration {
 
     /**
      * The module name that is being registered. This should generally be the same as the logging information from a {@link ModuleLifecycleLoggingBean}.
@@ -57,11 +57,11 @@ public interface BroadleafModuleRegistration {
     public String getModuleName();
     
     /**
-     * List of modules that are known to have declared a {@link BroadleafModuleRegistration} in their {@code spring.factories}.
+     * List of modules that are known to have declared a {@link UltraModuleRegistration} in their {@code spring.factories}.
      * 
      * Note that any changes here should also be done in the respective module
      */
-    public enum BroadleafModuleEnum {
+    public enum UltraModuleEnum {
         ACCOUNT ("Account"),
         ADMIN ("Admin"),
         ADVANCED_CMS ("Advanced CMS"),
@@ -94,21 +94,21 @@ public interface BroadleafModuleRegistration {
         PRODUCT_TYPE ("Product Type"),
         PUNCHOUT2GO ("PunchOut2Go"),
         QUOTE ("Quote"),
-        REST_API ("Broadleaf REST APIs"),
+        REST_API ("Ultra REST APIs"),
         SUBSCRIPTION ("Subscription"),
         TAXCLOUD ("TaxCloud"),
         THEME ("Theme"),
-        THYMELEAF2 ("Broadleaf Thymeleaf 2 Support"),
-        THYMELEAF3 ("Broadleaf Thymeleaf 3 Support"),
+        THYMELEAF2 ("Ultra Thymeleaf 2 Support"),
+        THYMELEAF3 ("Ultra Thymeleaf 3 Support"),
         
         /**
-         * Added in order to provide an optional default value to {@link ConditionalOnBroadleafModule}
+         * Added in order to provide an optional default value to {@link ConditionalOnUltraModule}
          */
         IGNORED ("IGNORED");
 
         private final String name;
 
-        BroadleafModuleEnum(String name) {
+        UltraModuleEnum(String name) {
             this.name = name;
         }
 

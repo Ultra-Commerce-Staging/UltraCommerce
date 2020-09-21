@@ -1,73 +1,73 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.order.service;
+package com.ultracommerce.core.order.service;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.extension.ExtensionResultHolder;
-import org.broadleafcommerce.common.extension.ExtensionResultStatusType;
-import org.broadleafcommerce.common.payment.PaymentType;
-import org.broadleafcommerce.common.util.BLCSystemProperty;
-import org.broadleafcommerce.common.util.TableCreator;
-import org.broadleafcommerce.common.util.TransactionUtils;
-import org.broadleafcommerce.common.util.TypedPredicate;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
-import org.broadleafcommerce.core.catalog.domain.Product;
-import org.broadleafcommerce.core.catalog.domain.Sku;
-import org.broadleafcommerce.core.offer.dao.OfferDao;
-import org.broadleafcommerce.core.offer.domain.Offer;
-import org.broadleafcommerce.core.offer.domain.OfferCode;
-import org.broadleafcommerce.core.offer.service.OfferService;
-import org.broadleafcommerce.core.offer.service.exception.OfferAlreadyAddedException;
-import org.broadleafcommerce.core.offer.service.exception.OfferException;
-import org.broadleafcommerce.core.offer.service.exception.OfferExpiredException;
-import org.broadleafcommerce.core.offer.service.exception.OfferMaxUseExceededException;
-import org.broadleafcommerce.core.order.dao.OrderDao;
-import org.broadleafcommerce.core.order.domain.BundleOrderItem;
-import org.broadleafcommerce.core.order.domain.DiscreteOrderItem;
-import org.broadleafcommerce.core.order.domain.GiftWrapOrderItem;
-import org.broadleafcommerce.core.order.domain.NullOrderFactory;
-import org.broadleafcommerce.core.order.domain.NullOrderImpl;
-import org.broadleafcommerce.core.order.domain.Order;
-import org.broadleafcommerce.core.order.domain.OrderItem;
-import org.broadleafcommerce.core.order.domain.OrderItemAttribute;
-import org.broadleafcommerce.core.order.service.call.ActivityMessageDTO;
-import org.broadleafcommerce.core.order.service.call.GiftWrapOrderItemRequest;
-import org.broadleafcommerce.core.order.service.call.OrderItemRequestDTO;
-import org.broadleafcommerce.core.order.service.exception.AddToCartException;
-import org.broadleafcommerce.core.order.service.exception.IllegalCartOperationException;
-import org.broadleafcommerce.core.order.service.exception.ItemNotFoundException;
-import org.broadleafcommerce.core.order.service.exception.RemoveFromCartException;
-import org.broadleafcommerce.core.order.service.exception.UpdateCartException;
-import org.broadleafcommerce.core.order.service.type.OrderStatus;
-import org.broadleafcommerce.core.order.service.workflow.CartOperationRequest;
-import org.broadleafcommerce.core.payment.dao.OrderPaymentDao;
-import org.broadleafcommerce.core.payment.domain.OrderPayment;
-import org.broadleafcommerce.core.payment.domain.secure.Referenced;
-import org.broadleafcommerce.core.payment.service.SecureOrderPaymentService;
-import org.broadleafcommerce.core.pricing.service.PricingService;
-import org.broadleafcommerce.core.pricing.service.exception.PricingException;
-import org.broadleafcommerce.core.workflow.ActivityMessages;
-import org.broadleafcommerce.core.workflow.ProcessContext;
-import org.broadleafcommerce.core.workflow.Processor;
-import org.broadleafcommerce.core.workflow.WorkflowException;
-import org.broadleafcommerce.profile.core.domain.Customer;
+import com.ultracommerce.common.extension.ExtensionResultHolder;
+import com.ultracommerce.common.extension.ExtensionResultStatusType;
+import com.ultracommerce.common.payment.PaymentType;
+import com.ultracommerce.common.util.UCSystemProperty;
+import com.ultracommerce.common.util.TableCreator;
+import com.ultracommerce.common.util.TransactionUtils;
+import com.ultracommerce.common.util.TypedPredicate;
+import com.ultracommerce.common.web.UltraRequestContext;
+import com.ultracommerce.core.catalog.domain.Product;
+import com.ultracommerce.core.catalog.domain.Sku;
+import com.ultracommerce.core.offer.dao.OfferDao;
+import com.ultracommerce.core.offer.domain.Offer;
+import com.ultracommerce.core.offer.domain.OfferCode;
+import com.ultracommerce.core.offer.service.OfferService;
+import com.ultracommerce.core.offer.service.exception.OfferAlreadyAddedException;
+import com.ultracommerce.core.offer.service.exception.OfferException;
+import com.ultracommerce.core.offer.service.exception.OfferExpiredException;
+import com.ultracommerce.core.offer.service.exception.OfferMaxUseExceededException;
+import com.ultracommerce.core.order.dao.OrderDao;
+import com.ultracommerce.core.order.domain.BundleOrderItem;
+import com.ultracommerce.core.order.domain.DiscreteOrderItem;
+import com.ultracommerce.core.order.domain.GiftWrapOrderItem;
+import com.ultracommerce.core.order.domain.NullOrderFactory;
+import com.ultracommerce.core.order.domain.NullOrderImpl;
+import com.ultracommerce.core.order.domain.Order;
+import com.ultracommerce.core.order.domain.OrderItem;
+import com.ultracommerce.core.order.domain.OrderItemAttribute;
+import com.ultracommerce.core.order.service.call.ActivityMessageDTO;
+import com.ultracommerce.core.order.service.call.GiftWrapOrderItemRequest;
+import com.ultracommerce.core.order.service.call.OrderItemRequestDTO;
+import com.ultracommerce.core.order.service.exception.AddToCartException;
+import com.ultracommerce.core.order.service.exception.IllegalCartOperationException;
+import com.ultracommerce.core.order.service.exception.ItemNotFoundException;
+import com.ultracommerce.core.order.service.exception.RemoveFromCartException;
+import com.ultracommerce.core.order.service.exception.UpdateCartException;
+import com.ultracommerce.core.order.service.type.OrderStatus;
+import com.ultracommerce.core.order.service.workflow.CartOperationRequest;
+import com.ultracommerce.core.payment.dao.OrderPaymentDao;
+import com.ultracommerce.core.payment.domain.OrderPayment;
+import com.ultracommerce.core.payment.domain.secure.Referenced;
+import com.ultracommerce.core.payment.service.SecureOrderPaymentService;
+import com.ultracommerce.core.pricing.service.PricingService;
+import com.ultracommerce.core.pricing.service.exception.PricingException;
+import com.ultracommerce.core.workflow.ActivityMessages;
+import com.ultracommerce.core.workflow.ProcessContext;
+import com.ultracommerce.core.workflow.Processor;
+import com.ultracommerce.core.workflow.WorkflowException;
+import com.ultracommerce.profile.core.domain.Customer;
 import org.hibernate.FlushMode;
 import org.hibernate.Session;
 import org.hibernate.exception.LockAcquisitionException;
@@ -94,61 +94,61 @@ import javax.persistence.PersistenceContext;
 /**
  * @author apazzolini
  */
-@Service("blOrderService")
-@ManagedResource(objectName="org.broadleafcommerce:name=OrderService", description="Order Service", currencyTimeLimit=15)
+@Service("ucOrderService")
+@ManagedResource(objectName="com.ultracommerce:name=OrderService", description="Order Service", currencyTimeLimit=15)
 public class OrderServiceImpl implements OrderService {
     private static final Log LOG = LogFactory.getLog(OrderServiceImpl.class);
 
     /* DAOs */
-    @Resource(name = "blOrderPaymentDao")
+    @Resource(name = "ucOrderPaymentDao")
     protected OrderPaymentDao paymentDao;
     
-    @Resource(name = "blOrderDao")
+    @Resource(name = "ucOrderDao")
     protected OrderDao orderDao;
     
-    @Resource(name = "blOfferDao")
+    @Resource(name = "ucOfferDao")
     protected OfferDao offerDao;
 
     /* Factories */
-    @Resource(name = "blNullOrderFactory")
+    @Resource(name = "ucNullOrderFactory")
     protected NullOrderFactory nullOrderFactory;
     
     /* Services */
-    @Resource(name = "blPricingService")
+    @Resource(name = "ucPricingService")
     protected PricingService pricingService;
     
-    @Resource(name = "blOrderItemService")
+    @Resource(name = "ucOrderItemService")
     protected OrderItemService orderItemService;
     
-    @Resource(name = "blFulfillmentGroupService")
+    @Resource(name = "ucFulfillmentGroupService")
     protected FulfillmentGroupService fulfillmentGroupService;
     
-    @Resource(name = "blOfferService")
+    @Resource(name = "ucOfferService")
     protected OfferService offerService;
 
-    @Resource(name = "blSecureOrderPaymentService")
+    @Resource(name = "ucSecureOrderPaymentService")
     protected SecureOrderPaymentService securePaymentInfoService;
 
-    @Resource(name = "blMergeCartService")
+    @Resource(name = "ucMergeCartService")
     protected MergeCartService mergeCartService;
     
-    @Resource(name = "blOrderServiceExtensionManager")
+    @Resource(name = "ucOrderServiceExtensionManager")
     protected OrderServiceExtensionManager extensionManager;
     
     /* Workflows */
-    @Resource(name = "blAddItemWorkflow")
+    @Resource(name = "ucAddItemWorkflow")
     protected Processor addItemWorkflow;
     
-    @Resource(name = "blUpdateProductOptionsForItemWorkflow")
+    @Resource(name = "ucUpdateProductOptionsForItemWorkflow")
     private Processor updateProductOptionsForItemWorkflow;
 
-    @Resource(name = "blUpdateItemWorkflow")
+    @Resource(name = "ucUpdateItemWorkflow")
     protected Processor updateItemWorkflow;
     
-    @Resource(name = "blRemoveItemWorkflow")
+    @Resource(name = "ucRemoveItemWorkflow")
     protected Processor removeItemWorkflow;
 
-    @Resource(name = "blTransactionManager")
+    @Resource(name = "ucTransactionManager")
     protected PlatformTransactionManager transactionManager;
 
     @Value("${pricing.retry.count.for.lock.failure}")
@@ -189,7 +189,7 @@ public class OrderServiceImpl implements OrderService {
     @Value("${auto.flush.on.query.during.cart.pricing.save:false}")
     protected boolean autoFlushSaveCart = false;
 
-    @PersistenceContext(unitName="blPU")
+    @PersistenceContext(unitName="ucPU")
     protected EntityManager em;
 
     /* Fields */
@@ -198,17 +198,17 @@ public class OrderServiceImpl implements OrderService {
 
     protected Boolean automaticallyMergeLikeItems;
 
-    @Resource(name = "blOrderMultishipOptionService")
+    @Resource(name = "ucOrderMultishipOptionService")
     protected OrderMultishipOptionService orderMultishipOptionService;
 
     @Override
-    @Transactional("blTransactionManager")
+    @Transactional("ucTransactionManager")
     public Order createNewCartForCustomer(Customer customer) {
         return orderDao.createNewCartForCustomer(customer);
     }
 
     @Override
-    @Transactional("blTransactionManager")
+    @Transactional("ucTransactionManager")
     public Order createNamedOrderForCustomer(String name, Customer customer) {
         Order namedOrder = orderDao.create();
         namedOrder.setCustomer(customer);
@@ -219,8 +219,8 @@ public class OrderServiceImpl implements OrderService {
             extensionManager.getProxy().attachAdditionalDataToNewNamedCart(customer, namedOrder);
         }
         
-        if (BroadleafRequestContext.getBroadleafRequestContext() != null) {
-            namedOrder.setLocale(BroadleafRequestContext.getBroadleafRequestContext().getLocale());
+        if (UltraRequestContext.getUltraRequestContext() != null) {
+            namedOrder.setLocale(UltraRequestContext.getUltraRequestContext().getLocale());
         }
         
         return persist(namedOrder); // No need to price here
@@ -287,7 +287,7 @@ public class OrderServiceImpl implements OrderService {
     }
     
     @Override
-    @Transactional("blTransactionManager")
+    @Transactional("ucTransactionManager")
     public OrderPayment addPaymentToOrder(Order order, OrderPayment payment, Referenced securePaymentInfo) {
         payment.setOrder(order);
         order.getPayments().add(payment);
@@ -428,20 +428,20 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    @Transactional("blTransactionManager")
+    @Transactional("ucTransactionManager")
     public void cancelOrder(Order order) {
         orderDao.delete(order);
     }
 
     @Override
-    @Transactional("blTransactionManager")
+    @Transactional("ucTransactionManager")
     public void deleteOrder(Order order) {
         orderMultishipOptionService.deleteAllOrderMultishipOptions(order);
         orderDao.delete(order);
     }
 
     @Override
-    @Transactional("blTransactionManager")
+    @Transactional("ucTransactionManager")
     public Order addOfferCode(Order order, OfferCode offerCode, boolean priceOrder) throws PricingException, OfferException {
         ArrayList<OfferCode> offerCodes = new ArrayList<OfferCode>();
         offerCodes.add(offerCode);
@@ -449,7 +449,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    @Transactional("blTransactionManager")
+    @Transactional("ucTransactionManager")
     public Order addOfferCodes(Order order, List<OfferCode> offerCodes, boolean priceOrder) throws PricingException, OfferException {
         preValidateCartOperation(order);
         Set<Offer> addedOffers = offerService.getUniqueOffersFromOrder(order);
@@ -477,7 +477,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    @Transactional("blTransactionManager")
+    @Transactional("ucTransactionManager")
     public Order removeOfferCode(Order order, OfferCode offerCode, boolean priceOrder) throws PricingException {
         order.getAddedOfferCodes().remove(offerCode);
         order = save(order, priceOrder);
@@ -485,7 +485,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    @Transactional("blTransactionManager")
+    @Transactional("ucTransactionManager")
     public Order removeAllOfferCodes(Order order, boolean priceOrder) throws PricingException {
          order.getAddedOfferCodes().clear();
          order = save(order, priceOrder);
@@ -529,13 +529,13 @@ public class OrderServiceImpl implements OrderService {
     }
     
     @Override
-    @Transactional("blTransactionManager")
+    @Transactional("ucTransactionManager")
     public Order confirmOrder(Order order) {
         return orderDao.submitOrder(order);
     }
     
     @Override
-    @Transactional("blTransactionManager")
+    @Transactional("ucTransactionManager")
     public Order addAllItemsFromNamedOrder(Order namedOrder, boolean priceOrder) throws RemoveFromCartException, AddToCartException {
         Order cartOrder = orderDao.readCartForCustomer(namedOrder.getCustomer());
         if (cartOrder == null) {
@@ -567,7 +567,7 @@ public class OrderServiceImpl implements OrderService {
     }
     
     @Override
-    @Transactional("blTransactionManager")
+    @Transactional("ucTransactionManager")
     public Order addItemFromNamedOrder(Order namedOrder, OrderItem item, boolean priceOrder) throws RemoveFromCartException, AddToCartException {
         Order cartOrder = orderDao.readCartForCustomer(namedOrder.getCustomer());
         if (cartOrder == null) {
@@ -589,7 +589,7 @@ public class OrderServiceImpl implements OrderService {
     }
     
     @Override
-    @Transactional("blTransactionManager")
+    @Transactional("ucTransactionManager")
     public Order addItemFromNamedOrder(Order namedOrder, OrderItem item, int quantity, boolean priceOrder) throws RemoveFromCartException, AddToCartException, UpdateCartException {
         // Validate that the quantity requested makes sense
         if (quantity < 1 || quantity > item.getQuantity()) {
@@ -618,7 +618,7 @@ public class OrderServiceImpl implements OrderService {
     }
     
     @Override
-    @Transactional("blTransactionManager")
+    @Transactional("ucTransactionManager")
     public OrderItem addGiftWrapItemToOrder(Order order, GiftWrapOrderItemRequest itemRequest, boolean priceOrder) throws PricingException {
         GiftWrapOrderItem item = orderItemService.createGiftWrapOrderItem(itemRequest);
         item.setOrder(order);
@@ -631,7 +631,7 @@ public class OrderServiceImpl implements OrderService {
     }
     
     @Override
-    @Transactional(value = "blTransactionManager", rollbackFor = {AddToCartException.class})
+    @Transactional(value = "ucTransactionManager", rollbackFor = {AddToCartException.class})
     public Order addItem(Long orderId, OrderItemRequestDTO orderItemRequestDTO, boolean priceOrder) throws AddToCartException {
         // Don't allow overrides from this method.
         orderItemRequestDTO.setOverrideRetailPrice(null);
@@ -640,7 +640,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    @Transactional(value = "blTransactionManager", rollbackFor = { AddToCartException.class })
+    @Transactional(value = "ucTransactionManager", rollbackFor = { AddToCartException.class })
     public Order addItemWithPriceOverrides(Long orderId, OrderItemRequestDTO orderItemRequestDTO, boolean priceOrder) throws AddToCartException {
         Order order = findOrderById(orderId);
         preValidateCartOperation(order);
@@ -747,7 +747,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    @Transactional(value = "blTransactionManager", rollbackFor = {UpdateCartException.class, RemoveFromCartException.class})
+    @Transactional(value = "ucTransactionManager", rollbackFor = {UpdateCartException.class, RemoveFromCartException.class})
     public Order updateItemQuantity(Long orderId, OrderItemRequestDTO orderItemRequestDTO, boolean priceOrder) throws UpdateCartException, RemoveFromCartException {
         Order order = findOrderById(orderId);
         preValidateCartOperation(order);
@@ -782,7 +782,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    @Transactional(value = "blTransactionManager", rollbackFor = {RemoveFromCartException.class})
+    @Transactional(value = "ucTransactionManager", rollbackFor = {RemoveFromCartException.class})
     public Order removeItem(Long orderId, Long orderItemId, boolean priceOrder) throws RemoveFromCartException {
         preValidateCartOperation(findOrderById(orderId));
         try {
@@ -843,7 +843,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    @Transactional(value = "blTransactionManager", rollbackFor = { RemoveFromCartException.class })
+    @Transactional(value = "ucTransactionManager", rollbackFor = { RemoveFromCartException.class })
     public Order removeInactiveItems(Long orderId, boolean priceOrder) throws RemoveFromCartException {
         Order order = findOrderById(orderId);
         try {
@@ -867,7 +867,7 @@ public class OrderServiceImpl implements OrderService {
             return automaticallyMergeLikeItems;
         }
 
-        return BLCSystemProperty.resolveBooleanSystemProperty("automatically.merge.like.items", true);
+        return UCSystemProperty.resolveBooleanSystemProperty("automatically.merge.like.items", true);
     }
 
     @Override
@@ -894,13 +894,13 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    @Transactional("blTransactionManager")
+    @Transactional("ucTransactionManager")
     public void removeAllPaymentsFromOrder(Order order) {
         removePaymentsFromOrder(order, null);
     }
 
     @Override
-    @Transactional("blTransactionManager")
+    @Transactional("ucTransactionManager")
     public void removePaymentsFromOrder(Order order, PaymentType paymentInfoType) {
         List<OrderPayment> infos = new ArrayList<OrderPayment>();
         for (OrderPayment paymentInfo : order.getPayments()) {
@@ -923,7 +923,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    @Transactional("blTransactionManager")
+    @Transactional("ucTransactionManager")
     public void removePaymentFromOrder(Order order, OrderPayment payment){
         OrderPayment paymentToRemove = null;
         for (OrderPayment info : order.getPayments()){
@@ -1031,7 +1031,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    @Transactional(value = "blTransactionManager", rollbackFor = { UpdateCartException.class })
+    @Transactional(value = "ucTransactionManager", rollbackFor = { UpdateCartException.class })
     public Order updateProductOptionsForItem(Long orderId, OrderItemRequestDTO orderItemRequestDTO, boolean priceOrder) throws UpdateCartException {
         try {
             CartOperationRequest cartOpRequest = new CartOperationRequest(findOrderById(orderId), orderItemRequestDTO, priceOrder);
@@ -1053,7 +1053,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    @Transactional("blTransactionManager")
+    @Transactional("ucTransactionManager")
     public boolean acquireLock(Order order) {
         return orderDao.acquireLock(order);
     }

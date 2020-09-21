@@ -1,41 +1,41 @@
 /*
  * #%L
- * BroadleafCommerce CMS Module
+ * UltraCommerce CMS Module
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.cms.page.service;
+package com.ultracommerce.cms.page.service;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.cms.field.domain.FieldDefinition;
-import org.broadleafcommerce.cms.page.dao.PageDao;
-import org.broadleafcommerce.cms.page.domain.Page;
-import org.broadleafcommerce.cms.page.domain.PageAttribute;
-import org.broadleafcommerce.cms.page.domain.PageField;
-import org.broadleafcommerce.cms.page.domain.PageItemCriteria;
-import org.broadleafcommerce.cms.page.domain.PageRule;
-import org.broadleafcommerce.cms.page.domain.PageTemplateFieldGroupXref;
-import org.broadleafcommerce.common.dao.GenericEntityDao;
-import org.broadleafcommerce.common.extension.ExtensionResultHolder;
-import org.broadleafcommerce.common.extension.ExtensionResultStatusType;
-import org.broadleafcommerce.common.file.service.StaticAssetPathService;
-import org.broadleafcommerce.common.page.dto.PageDTO;
-import org.broadleafcommerce.common.presentation.client.SupportedFieldType;
-import org.broadleafcommerce.common.sandbox.SandBoxHelper;
-import org.broadleafcommerce.common.structure.dto.ItemCriteriaDTO;
+import com.ultracommerce.cms.field.domain.FieldDefinition;
+import com.ultracommerce.cms.page.dao.PageDao;
+import com.ultracommerce.cms.page.domain.Page;
+import com.ultracommerce.cms.page.domain.PageAttribute;
+import com.ultracommerce.cms.page.domain.PageField;
+import com.ultracommerce.cms.page.domain.PageItemCriteria;
+import com.ultracommerce.cms.page.domain.PageRule;
+import com.ultracommerce.cms.page.domain.PageTemplateFieldGroupXref;
+import com.ultracommerce.common.dao.GenericEntityDao;
+import com.ultracommerce.common.extension.ExtensionResultHolder;
+import com.ultracommerce.common.extension.ExtensionResultStatusType;
+import com.ultracommerce.common.file.service.StaticAssetPathService;
+import com.ultracommerce.common.page.dto.PageDTO;
+import com.ultracommerce.common.presentation.client.SupportedFieldType;
+import com.ultracommerce.common.sandbox.SandBoxHelper;
+import com.ultracommerce.common.structure.dto.ItemCriteriaDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -49,27 +49,27 @@ import javax.annotation.Resource;
  * This method is able to convert a fieldKey 
  * Created by bpolster.
  */
-@Service("blPageServiceUtility")
+@Service("ucPageServiceUtility")
 public class PageServiceUtility {
 
     protected static final Log LOG = LogFactory.getLog(PageServiceUtility.class);
     
     protected static String AND = " && ";
-    protected static final String FOREIGN_LOOKUP = "BLC_FOREIGN_LOOKUP";
+    protected static final String FOREIGN_LOOKUP = "UC_FOREIGN_LOOKUP";
 
-    @Resource(name="blPageDao")
+    @Resource(name="ucPageDao")
     protected PageDao pageDao;
     
-    @Resource(name = "blGenericEntityDao")
+    @Resource(name = "ucGenericEntityDao")
     protected GenericEntityDao genericDao;
 
-    @Resource(name = "blPageServiceExtensionManager")
+    @Resource(name = "ucPageServiceExtensionManager")
     protected PageServiceExtensionManager extensionManager;
 
-    @Resource(name="blStaticAssetPathService")
+    @Resource(name="ucStaticAssetPathService")
     protected StaticAssetPathService staticAssetPathService;
 
-    @Resource(name = "blSandBoxHelper")
+    @Resource(name = "ucSandBoxHelper")
     protected SandBoxHelper sandBoxHelper;
 
     public PageDTO buildPageDTO(Page page, boolean secure) {

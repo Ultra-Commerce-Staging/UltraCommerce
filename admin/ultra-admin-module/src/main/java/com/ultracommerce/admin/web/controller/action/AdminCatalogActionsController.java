@@ -1,27 +1,27 @@
 /*
  * #%L
- * BroadleafCommerce Admin Module
+ * UltraCommerce Admin Module
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.admin.web.controller.action;
+package com.ultracommerce.admin.web.controller.action;
 
-import org.broadleafcommerce.admin.server.service.AdminCatalogService;
-import org.broadleafcommerce.admin.web.controller.entity.AdminProductController;
-import org.broadleafcommerce.common.util.BLCMessageUtils;
-import org.broadleafcommerce.core.catalog.domain.Product;
-import org.broadleafcommerce.openadmin.web.controller.AdminAbstractController;
+import com.ultracommerce.admin.server.service.AdminCatalogService;
+import com.ultracommerce.admin.web.controller.entity.AdminProductController;
+import com.ultracommerce.common.util.UCMessageUtils;
+import com.ultracommerce.core.catalog.domain.Product;
+import com.ultracommerce.openadmin.web.controller.AdminAbstractController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
@@ -46,10 +46,10 @@ import javax.servlet.http.HttpServletResponse;
  * @see {@link AdminProductController}
  * 
  */
-@Controller("blAdminCatalogActionsController")
+@Controller("ucAdminCatalogActionsController")
 public class AdminCatalogActionsController extends AdminAbstractController {
     
-    @Resource(name = "blAdminCatalogService")
+    @Resource(name = "ucAdminCatalogService")
     protected AdminCatalogService adminCatalogService;
     
     @Autowired
@@ -75,14 +75,14 @@ public class AdminCatalogActionsController extends AdminAbstractController {
         
         //TODO: Modify the message "Failed to generate Skus...." to include which Product Option is the offender
         if (skusGenerated == 0) {
-            result.put("message", BLCMessageUtils.getMessage(NO_SKUS_GENERATED_KEY));
+            result.put("message", UCMessageUtils.getMessage(NO_SKUS_GENERATED_KEY));
         } else if (skusGenerated == -1) {
-            result.put("message", BLCMessageUtils.getMessage(NO_PRODUCT_OPTIONS_GENERATED_KEY));
+            result.put("message", UCMessageUtils.getMessage(NO_PRODUCT_OPTIONS_GENERATED_KEY));
         } else if (skusGenerated == -2) {
-            result.put("message", BLCMessageUtils.getMessage(FAILED_SKU_GENERATION_KEY));
+            result.put("message", UCMessageUtils.getMessage(FAILED_SKU_GENERATION_KEY));
             result.put("error", "no-allowed-value-error");
         } else {
-            result.put("message", skusGenerated + " " + BLCMessageUtils.getMessage(NUMBER_SKUS_GENERATED_KEY));
+            result.put("message", skusGenerated + " " + UCMessageUtils.getMessage(NUMBER_SKUS_GENERATED_KEY));
         }
         
         String url = request.getRequestURL().toString();

@@ -8,7 +8,7 @@
 </th:block>
 
 <th:block th:unless="${!#strings.isEmpty(listGrid.templateOverride)}">
-    <div class="selectize-wrapper" blc_admin:component_id="${listGrid}">
+    <div class="selectize-wrapper" uc_admin:component_id="${listGrid}">
         <select th:id="'selectize-' + ${listGrid.friendlyName}"
                 class="selectize-adder"
                 multiple="multiple"

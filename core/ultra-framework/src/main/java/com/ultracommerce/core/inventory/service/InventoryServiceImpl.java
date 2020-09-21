@@ -1,40 +1,40 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
 
-package org.broadleafcommerce.core.inventory.service;
+package com.ultracommerce.core.inventory.service;
 
 import org.apache.commons.lang3.ClassUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.event.BroadleafSystemEvent;
-import org.broadleafcommerce.common.event.BroadleafSystemEvent.BroadleafEventScopeType;
-import org.broadleafcommerce.common.event.BroadleafSystemEvent.BroadleafEventWorkerType;
-import org.broadleafcommerce.common.event.BroadleafSystemEventDetail;
-import org.broadleafcommerce.common.extension.ExtensionResultHolder;
-import org.broadleafcommerce.common.extension.ExtensionResultStatusType;
-import org.broadleafcommerce.common.util.TransactionUtils;
-import org.broadleafcommerce.core.catalog.domain.Sku;
-import org.broadleafcommerce.core.catalog.service.CatalogService;
-import org.broadleafcommerce.core.inventory.service.type.InventoryType;
-import org.broadleafcommerce.core.order.domain.BundleOrderItem;
-import org.broadleafcommerce.core.order.domain.DiscreteOrderItem;
-import org.broadleafcommerce.core.order.domain.Order;
-import org.broadleafcommerce.core.order.domain.OrderItem;
+import com.ultracommerce.common.event.UltraSystemEvent;
+import com.ultracommerce.common.event.UltraSystemEvent.UltraEventScopeType;
+import com.ultracommerce.common.event.UltraSystemEvent.UltraEventWorkerType;
+import com.ultracommerce.common.event.UltraSystemEventDetail;
+import com.ultracommerce.common.extension.ExtensionResultHolder;
+import com.ultracommerce.common.extension.ExtensionResultStatusType;
+import com.ultracommerce.common.util.TransactionUtils;
+import com.ultracommerce.core.catalog.domain.Sku;
+import com.ultracommerce.core.catalog.service.CatalogService;
+import com.ultracommerce.core.inventory.service.type.InventoryType;
+import com.ultracommerce.core.order.domain.BundleOrderItem;
+import com.ultracommerce.core.order.domain.DiscreteOrderItem;
+import com.ultracommerce.core.order.domain.Order;
+import com.ultracommerce.core.order.domain.OrderItem;
 import org.hibernate.annotations.Cache;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -52,15 +52,15 @@ import java.util.Map.Entry;
 
 import javax.annotation.Resource;
 
-@Service("blInventoryService")
+@Service("ucInventoryService")
 public class InventoryServiceImpl implements ContextualInventoryService {
 
     private static final Log LOG = LogFactory.getLog(InventoryServiceImpl.class);
     
-    @Resource(name = "blCatalogService")
+    @Resource(name = "ucCatalogService")
     protected CatalogService catalogService;
     
-    @Resource(name = "blInventoryServiceExtensionManager")
+    @Resource(name = "ucInventoryServiceExtensionManager")
     protected InventoryServiceExtensionManager extensionManager;
 
     @Autowired
@@ -359,11 +359,11 @@ public class InventoryServiceImpl implements ContextualInventoryService {
                     LOG.info("region : " + cacheAnnotation.region());
                     LOG.info("id : " + id);
                 }
-                Map<String, BroadleafSystemEventDetail> detailMap = new HashMap<>();
-                detailMap.put("CACHE_REGION", new BroadleafSystemEventDetail("Cache Region", cacheAnnotation.region()));
-                detailMap.put("ENTITY_TYPE", new BroadleafSystemEventDetail("Entity Type", superclazz.getName()));
-                detailMap.put("IDENTIFIER", new BroadleafSystemEventDetail("Identifier", id));
-                BroadleafSystemEvent event = new BroadleafSystemEvent("CACHE", detailMap, BroadleafEventScopeType.GLOBAL, BroadleafEventWorkerType.ANY, true);
+                Map<String, UltraSystemEventDetail> detailMap = new HashMap<>();
+                detailMap.put("CACHE_REGION", new UltraSystemEventDetail("Cache Region", cacheAnnotation.region()));
+                detailMap.put("ENTITY_TYPE", new UltraSystemEventDetail("Entity Type", superclazz.getName()));
+                detailMap.put("IDENTIFIER", new UltraSystemEventDetail("Identifier", id));
+                UltraSystemEvent event = new UltraSystemEvent("CACHE", detailMap, UltraEventScopeType.GLOBAL, UltraEventWorkerType.ANY, true);
                 applicationContext.publishEvent(event);
             } else {
                 if (LOG.isInfoEnabled()) {

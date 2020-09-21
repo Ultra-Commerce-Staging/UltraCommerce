@@ -1,31 +1,31 @@
 /*
  * #%L
- * BroadleafCommerce CMS Module
+ * UltraCommerce CMS Module
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.cms.web.controller;
+package com.ultracommerce.cms.web.controller;
 
-import org.broadleafcommerce.cms.page.service.PageService;
-import org.broadleafcommerce.common.RequestDTO;
-import org.broadleafcommerce.common.TimeDTO;
-import org.broadleafcommerce.common.file.service.BroadleafFileUtils;
-import org.broadleafcommerce.common.page.dto.PageDTO;
-import org.broadleafcommerce.common.time.SystemTime;
-import org.broadleafcommerce.common.web.BaseUrlResolver;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
-import org.broadleafcommerce.common.web.resource.BroadleafContextUtil;
+import com.ultracommerce.cms.page.service.PageService;
+import com.ultracommerce.common.RequestDTO;
+import com.ultracommerce.common.TimeDTO;
+import com.ultracommerce.common.file.service.UltraFileUtils;
+import com.ultracommerce.common.page.dto.PageDTO;
+import com.ultracommerce.common.time.SystemTime;
+import com.ultracommerce.common.web.BaseUrlResolver;
+import com.ultracommerce.common.web.UltraRequestContext;
+import com.ultracommerce.common.web.resource.UltraContextUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -36,28 +36,28 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * This class serves up the Robots.txt file.    The default contents can be overridden by 
- * adding a Page named "/robots.txt" in the BLC admin or DB. 
+ * adding a Page named "/robots.txt" in the UC admin or DB. 
  *
  * @author bpolster
  */
-public class BroadleafRobotsController {
+public class UltraRobotsController {
 
-    public static final String BLC_RULE_MAP_PARAM = "blRuleMap";
+    public static final String UC_RULE_MAP_PARAM = "ucRuleMap";
 
-    // The following attribute is set in BroadleafProcessURLFilter
-    public static final String REQUEST_DTO = "blRequestDTO";
+    // The following attribute is set in UltraProcessURLFilter
+    public static final String REQUEST_DTO = "ucRequestDTO";
 
-    @Resource(name = "blBaseUrlResolver")
+    @Resource(name = "ucBaseUrlResolver")
     private BaseUrlResolver baseUrlResolver;
 
-    @Resource(name = "blPageService")
+    @Resource(name = "ucPageService")
     private PageService pageService;
     
-    @Resource(name = "blBroadleafContextUtil")
-    protected BroadleafContextUtil blcContextUtil;
+    @Resource(name = "ucUltraContextUtil")
+    protected UltraContextUtil ucContextUtil;
 
     public String getRobotsFile(HttpServletRequest request, HttpServletResponse response) {
-    	blcContextUtil.establishThinRequestContext();
+    	ucContextUtil.establishThinRequestContext();
     	
         response.setContentType("text/plain");
         response.setCharacterEncoding("UTF-8");
@@ -84,16 +84,16 @@ public class BroadleafRobotsController {
 
     /**
      * Used to produce a working but simple robots.txt.    Can be overridden in code or by defining a page
-     * managed in the Broadleaf CMS named  "/robots.txt"
+     * managed in the Ultra CMS named  "/robots.txt"
      * 
      * @return
      */
     protected String getDefaultRobotsTxt() {
         StringBuilder sb = new StringBuilder();
-        sb.append("# Using default Broadleaf Commerce robots.txt file").append("\n");
+        sb.append("# Using default Ultra Commerce robots.txt file").append("\n");
         sb.append("User-agent: *").append("\n");
         sb.append("Disallow:").append("\n");
-        String fileLoc = BroadleafFileUtils.appendUnixPaths(baseUrlResolver.getSiteBaseUrl(), "/sitemap.xml.gz");
+        String fileLoc = UltraFileUtils.appendUnixPaths(baseUrlResolver.getSiteBaseUrl(), "/sitemap.xml.gz");
 
         sb.append("Sitemap:").append(fileLoc);
         return sb.toString();
@@ -112,10 +112,10 @@ public class BroadleafRobotsController {
         mvelParameters.put("time", timeDto);
         mvelParameters.put("request", requestDto);
 
-        Map<String, Object> blcRuleMap = (Map<String, Object>) request.getAttribute(BLC_RULE_MAP_PARAM);
-        if (blcRuleMap != null) {
-            for (String mapKey : blcRuleMap.keySet()) {
-                mvelParameters.put(mapKey, blcRuleMap.get(mapKey));
+        Map<String, Object> ucRuleMap = (Map<String, Object>) request.getAttribute(UC_RULE_MAP_PARAM);
+        if (ucRuleMap != null) {
+            for (String mapKey : ucRuleMap.keySet()) {
+                mvelParameters.put(mapKey, ucRuleMap.get(mapKey));
             }
         }
 

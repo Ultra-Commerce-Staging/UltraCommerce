@@ -1,54 +1,54 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2017 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.event;
+package com.ultracommerce.common.event;
 
-import org.broadleafcommerce.common.currency.domain.BroadleafCurrency;
-import org.broadleafcommerce.common.currency.service.BroadleafCurrencyService;
-import org.broadleafcommerce.common.locale.domain.Locale;
-import org.broadleafcommerce.common.locale.service.LocaleService;
-import org.broadleafcommerce.common.site.domain.Catalog;
-import org.broadleafcommerce.common.site.domain.Site;
-import org.broadleafcommerce.common.site.service.SiteService;
-import org.broadleafcommerce.common.util.tenant.IdentityExecutionUtils;
-import org.broadleafcommerce.common.util.tenant.IdentityOperation;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
+import com.ultracommerce.common.currency.domain.UltraCurrency;
+import com.ultracommerce.common.currency.service.UltraCurrencyService;
+import com.ultracommerce.common.locale.domain.Locale;
+import com.ultracommerce.common.locale.service.LocaleService;
+import com.ultracommerce.common.site.domain.Catalog;
+import com.ultracommerce.common.site.domain.Site;
+import com.ultracommerce.common.site.service.SiteService;
+import com.ultracommerce.common.util.tenant.IdentityExecutionUtils;
+import com.ultracommerce.common.util.tenant.IdentityOperation;
+import com.ultracommerce.common.web.UltraRequestContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import java.util.TimeZone;
 
 /**
- * This abstract class contains the plumbing that sets up the context for handling a {@code BroadleafApplicationEvent}.
+ * This abstract class contains the plumbing that sets up the context for handling a {@code UltraApplicationEvent}.
  *
  * @author Nick Crum ncrum
  */
-public abstract class AbstractBroadleafApplicationEventListener<T extends BroadleafApplicationEvent>
-        implements BroadleafApplicationListener<T> {
+public abstract class AbstractUltraApplicationEventListener<T extends UltraApplicationEvent>
+        implements UltraApplicationListener<T> {
 
     @Autowired
-    @Qualifier("blSiteService")
+    @Qualifier("ucSiteService")
     protected SiteService siteService;
 
     @Autowired
-    @Qualifier("blCurrencyService")
-    protected BroadleafCurrencyService currencyService;
+    @Qualifier("ucCurrencyService")
+    protected UltraCurrencyService currencyService;
 
     @Autowired
-    @Qualifier("blLocaleService")
+    @Qualifier("ucLocaleService")
     protected LocaleService localeService;
 
     protected abstract void handleApplicationEvent(T event);
@@ -62,19 +62,19 @@ public abstract class AbstractBroadleafApplicationEventListener<T extends Broadl
         IdentityExecutionUtils.runOperationByIdentifier(new IdentityOperation<Void,RuntimeException>() {
             @Override
             public Void execute() throws RuntimeException {
-                BroadleafRequestContext ctx = BroadleafRequestContext.getBroadleafRequestContext();
+                UltraRequestContext ctx = UltraRequestContext.getUltraRequestContext();
                 TimeZone origTimeZone = ctx.getTimeZone();
                 Locale origLocale = ctx.getLocale();
-                BroadleafCurrency origCurrency = ctx.getBroadleafCurrency();
+                UltraCurrency origCurrency = ctx.getUltraCurrency();
                 try {
                     ctx.setTimeZone(getTimeZone(event));
                     ctx.setLocale(getLocale(event));
-                    ctx.setBroadleafCurrency(getCurrency(event));
+                    ctx.setUltraCurrency(getCurrency(event));
                     handleApplicationEvent(event);
                 } finally {
                     ctx.setTimeZone(origTimeZone);
                     ctx.setLocale(origLocale);
-                    ctx.setBroadleafCurrency(origCurrency);
+                    ctx.setUltraCurrency(origCurrency);
                 }
                 return null;
             }
@@ -102,7 +102,7 @@ public abstract class AbstractBroadleafApplicationEventListener<T extends Broadl
         return null;
     }
 
-    protected BroadleafCurrency getCurrency(T event) {
+    protected UltraCurrency getCurrency(T event) {
         if (event.getCurrencyCode() != null) {
             return currencyService.findCurrencyByCode(event.getCurrencyCode());
         }

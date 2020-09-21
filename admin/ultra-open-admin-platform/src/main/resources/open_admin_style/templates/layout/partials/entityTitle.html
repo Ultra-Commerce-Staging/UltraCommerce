@@ -1,5 +1,5 @@
 <div class="content-area-title-bar entity-form-actions" th:classappend="${entityCatalog != null} ? 'entityWithCatalog' : ''" >
-    <th:block th:if="${entityFriendlyName}" blc_admin:admin_section_href="${currentAdminSection}" >
+    <th:block th:if="${entityFriendlyName}" uc_admin:admin_section_href="${currentAdminSection}" >
         <h3>
             <span class="filter-text" style="display: none;">Filtered </span>
             <span th:inline="text" class="admin-section">
@@ -93,7 +93,7 @@
     </th:block>
 
     <th:block th:if="${entityForm}">
-        <a class="back-button" blc_admin:admin_section_href="${currentAdminSection}" >
+        <a class="back-button" uc_admin:admin_section_href="${currentAdminSection}" >
             <i class="fa fa-angle-left fa-2x"></i>&nbsp;&nbsp;&nbsp;
             <h3>
                 <span th:inline="text">

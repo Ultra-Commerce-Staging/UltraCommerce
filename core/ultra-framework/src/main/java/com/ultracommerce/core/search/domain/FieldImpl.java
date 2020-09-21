@@ -1,34 +1,34 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.search.domain;
+package com.ultracommerce.core.search.domain;
 
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.broadleafcommerce.common.admin.domain.AdminMainEntity;
-import org.broadleafcommerce.common.copy.CreateResponse;
-import org.broadleafcommerce.common.copy.MultiTenantCopyContext;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransform;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformMember;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformTypes;
-import org.broadleafcommerce.common.i18n.service.DynamicTranslationProvider;
-import org.broadleafcommerce.common.presentation.AdminPresentation;
-import org.broadleafcommerce.common.presentation.RequiredOverride;
-import org.broadleafcommerce.common.presentation.client.SupportedFieldType;
-import org.broadleafcommerce.common.presentation.client.VisibilityEnum;
+import com.ultracommerce.common.admin.domain.AdminMainEntity;
+import com.ultracommerce.common.copy.CreateResponse;
+import com.ultracommerce.common.copy.MultiTenantCopyContext;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransform;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransformMember;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransformTypes;
+import com.ultracommerce.common.i18n.service.DynamicTranslationProvider;
+import com.ultracommerce.common.presentation.AdminPresentation;
+import com.ultracommerce.common.presentation.RequiredOverride;
+import com.ultracommerce.common.presentation.client.SupportedFieldType;
+import com.ultracommerce.common.presentation.client.VisibilityEnum;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
@@ -47,8 +47,8 @@ import javax.persistence.Table;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "BLC_FIELD")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "blStandardElements")
+@Table(name = "UC_FIELD")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "ucStandardElements")
 @DirectCopyTransform({
     @DirectCopyTransformMember(templateTokens = DirectCopyTransformTypes.MULTITENANT_SITE),
     @DirectCopyTransformMember(templateTokens = DirectCopyTransformTypes.AUDITABLE_ONLY),
@@ -66,25 +66,25 @@ public class FieldImpl implements Field, FieldAdminPresentation, AdminMainEntity
     @GeneratedValue(generator = "FieldId")
     @GenericGenerator(
         name="FieldId",
-        strategy="org.broadleafcommerce.common.persistence.IdOverrideTableGenerator",
+        strategy="com.ultracommerce.common.persistence.IdOverrideTableGenerator",
         parameters = {
             @Parameter(name="segment_value", value="FieldImpl"),
-            @Parameter(name="entity_name", value="org.broadleafcommerce.core.search.domain.FieldImpl")
+            @Parameter(name="entity_name", value="com.ultracommerce.core.search.domain.FieldImpl")
         }
     )
     @Column(name = "FIELD_ID")
     @AdminPresentation(friendlyName = "FieldImpl_ID", group = "FieldImpl_general",visibility=VisibilityEnum.HIDDEN_ALL)
     protected Long id;
     
-    // This is a broadleaf enumeration
+    // This is a ultra enumeration
     @Column(name = "ENTITY_TYPE", nullable = false)
     @Index(name="ENTITY_TYPE_INDEX", columnNames={"ENTITY_TYPE"})
     @AdminPresentation(friendlyName = "FieldImpl_EntityType",
             group = GroupName.General, order = FieldOrder.ENTITY_TYPE,
             prominent = true, gridOrder = 1,
-            fieldType = SupportedFieldType.BROADLEAF_ENUMERATION,
-            broadleafEnumeration = "org.broadleafcommerce.core.search.domain.FieldEntity",
-            defaultValue = "org.broadleafcommerce.core.catalog.domain.ProductImpl",
+            fieldType = SupportedFieldType.ULTRA_ENUMERATION,
+            ultraEnumeration = "com.ultracommerce.core.search.domain.FieldEntity",
+            defaultValue = "com.ultracommerce.core.catalog.domain.ProductImpl",
             requiredOverride = RequiredOverride.REQUIRED)
     protected String entityType;
     

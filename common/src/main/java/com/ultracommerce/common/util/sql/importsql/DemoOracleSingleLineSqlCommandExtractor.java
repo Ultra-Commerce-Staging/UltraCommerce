@@ -1,24 +1,24 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.util.sql.importsql;
+package com.ultracommerce.common.util.sql.importsql;
 
-import org.broadleafcommerce.common.logging.SupportLogManager;
-import org.broadleafcommerce.common.logging.SupportLogger;
+import com.ultracommerce.common.logging.SupportLogManager;
+import com.ultracommerce.common.logging.SupportLogger;
 import org.hibernate.tool.hbm2ddl.SingleLineSqlCommandExtractor;
 
 import java.io.Reader;
@@ -29,7 +29,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * This is a utility class that is only meant to be used for testing the BLC demo on Oracle. In our current
+ * This is a utility class that is only meant to be used for testing the UC demo on Oracle. In our current
  * import sql files, there are a number of value declarations that are incompatible with Oracle. This
  * custom extractor takes care of transforming those values into something Oracle understands.
  *

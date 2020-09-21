@@ -1,25 +1,25 @@
 /*
  * #%L
- * broadleaf-theme
+ * ultra-theme
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.web.resource.transformer;
+package com.ultracommerce.common.web.resource.transformer;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.web.resource.resolver.BroadleafResourceTransformerOrder;
+import com.ultracommerce.common.web.resource.resolver.UltraResourceTransformerOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -43,29 +43,29 @@ import javax.servlet.http.HttpServletRequest;
  *  {@code }
  * 
  * @author Brian Polster
- * @since Broadleaf 4.0
+ * @since Ultra 4.0
  */
-@Component("blCachingResourceTransformer")
-public class BroadleafCachingResourceTransformer extends CachingResourceTransformer implements Ordered {
+@Component("ucCachingResourceTransformer")
+public class UltraCachingResourceTransformer extends CachingResourceTransformer implements Ordered {
 
-    protected static final Log LOG = LogFactory.getLog(BroadleafCachingResourceTransformer.class);
-    private int order = BroadleafResourceTransformerOrder.BLC_CACHE_RESOURCE_TRANSFORMER;
+    protected static final Log LOG = LogFactory.getLog(UltraCachingResourceTransformer.class);
+    private int order = UltraResourceTransformerOrder.UC_CACHE_RESOURCE_TRANSFORMER;
     
-    @javax.annotation.Resource(name = "blSpringCacheManager")
+    @javax.annotation.Resource(name = "ucSpringCacheManager")
     private CacheManager cacheManager;
     
-    private static final String DEFAULT_CACHE_NAME = "blResourceTransformerCacheElements";
+    private static final String DEFAULT_CACHE_NAME = "ucResourceTransformerCacheElements";
 
     @Value("${resource.transformer.caching.enabled:true}")
     protected boolean resourceTransformerCachingEnabled;
 
     @Autowired
-    public BroadleafCachingResourceTransformer(@Qualifier("blSpringCacheManager") CacheManager cacheManager) {
+    public UltraCachingResourceTransformer(@Qualifier("ucSpringCacheManager") CacheManager cacheManager) {
         super(cacheManager, DEFAULT_CACHE_NAME);
     }
 
     // Allows for an implementor to override the default cache settings.
-    public BroadleafCachingResourceTransformer(Cache cache) {
+    public UltraCachingResourceTransformer(Cache cache) {
         super(cache);
     }
 

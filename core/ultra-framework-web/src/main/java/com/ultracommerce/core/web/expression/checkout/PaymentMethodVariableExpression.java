@@ -1,38 +1,38 @@
 /*
  * #%L
- * BroadleafCommerce Framework Web
+ * UltraCommerce Framework Web
  * %%
- * Copyright (C) 2009 - 2017 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.web.expression.checkout;
+package com.ultracommerce.core.web.expression.checkout;
 
-import org.broadleafcommerce.common.payment.PaymentAdditionalFieldType;
-import org.broadleafcommerce.common.payment.PaymentType;
-import org.broadleafcommerce.common.payment.dto.PaymentRequestDTO;
-import org.broadleafcommerce.common.util.BLCPaymentMethodUtils;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
-import org.broadleafcommerce.common.web.expression.BroadleafVariableExpression;
-import org.broadleafcommerce.common.web.payment.controller.PaymentGatewayAbstractController;
-import org.broadleafcommerce.core.order.domain.NullOrderImpl;
-import org.broadleafcommerce.core.order.domain.Order;
-import org.broadleafcommerce.core.payment.domain.OrderPayment;
-import org.broadleafcommerce.core.payment.domain.PaymentTransaction;
-import org.broadleafcommerce.core.payment.service.OrderPaymentService;
-import org.broadleafcommerce.core.payment.service.OrderToPaymentRequestDTOService;
-import org.broadleafcommerce.core.web.order.CartState;
-import org.broadleafcommerce.core.web.order.service.CartStateService;
-import org.broadleafcommerce.presentation.condition.ConditionalOnTemplating;
+import com.ultracommerce.common.payment.PaymentAdditionalFieldType;
+import com.ultracommerce.common.payment.PaymentType;
+import com.ultracommerce.common.payment.dto.PaymentRequestDTO;
+import com.ultracommerce.common.util.UCPaymentMethodUtils;
+import com.ultracommerce.common.web.UltraRequestContext;
+import com.ultracommerce.common.web.expression.UltraVariableExpression;
+import com.ultracommerce.common.web.payment.controller.PaymentGatewayAbstractController;
+import com.ultracommerce.core.order.domain.NullOrderImpl;
+import com.ultracommerce.core.order.domain.Order;
+import com.ultracommerce.core.payment.domain.OrderPayment;
+import com.ultracommerce.core.payment.domain.PaymentTransaction;
+import com.ultracommerce.core.payment.service.OrderPaymentService;
+import com.ultracommerce.core.payment.service.OrderToPaymentRequestDTOService;
+import com.ultracommerce.core.web.order.CartState;
+import com.ultracommerce.core.web.order.service.CartStateService;
+import com.ultracommerce.presentation.condition.ConditionalOnTemplating;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -43,17 +43,17 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Chris Kittrell (ckittrell)
  */
-@Component("blPaymentMethodVariableExpression")
+@Component("ucPaymentMethodVariableExpression")
 @ConditionalOnTemplating
-public class PaymentMethodVariableExpression implements BroadleafVariableExpression {
+public class PaymentMethodVariableExpression implements UltraVariableExpression {
 
-    @Resource(name = "blCartStateService")
+    @Resource(name = "ucCartStateService")
     protected CartStateService cartStateService;
 
-    @Resource(name = "blOrderPaymentService")
+    @Resource(name = "ucOrderPaymentService")
     protected OrderPaymentService orderPaymentService;
 
-    @Resource(name = "blOrderToPaymentRequestDTOService")
+    @Resource(name = "ucOrderToPaymentRequestDTOService")
     protected OrderToPaymentRequestDTOService orderToPaymentRequestDTOService;
 
     @Override
@@ -117,7 +117,7 @@ public class PaymentMethodVariableExpression implements BroadleafVariableExpress
      * @return List containing expiration months of the form "01 - January"
      */
     public List<String> getExpirationMonthOptions() {
-        return BLCPaymentMethodUtils.getExpirationMonthOptions();
+        return UCPaymentMethodUtils.getExpirationMonthOptions();
     }
 
     /**
@@ -127,7 +127,7 @@ public class PaymentMethodVariableExpression implements BroadleafVariableExpress
      * @return List of the next ten years starting with the current year.
      */
     public List<String> getExpirationYearOptions() {
-        return BLCPaymentMethodUtils.getExpirationYearOptions();
+        return UCPaymentMethodUtils.getExpirationYearOptions();
     }
 
     public String getCreditCardTypeFromCart() {
@@ -161,8 +161,8 @@ public class PaymentMethodVariableExpression implements BroadleafVariableExpress
      * as a Redirect Attribute when attempting to checkout.
      */
     public String getPaymentProcessingError() {
-        BroadleafRequestContext blcContext = BroadleafRequestContext.getBroadleafRequestContext();
-        HttpServletRequest request = blcContext.getRequest();
+        UltraRequestContext ucContext = UltraRequestContext.getUltraRequestContext();
+        HttpServletRequest request = ucContext.getRequest();
 
         return request.getParameter(PaymentGatewayAbstractController.PAYMENT_PROCESSING_ERROR);
     }

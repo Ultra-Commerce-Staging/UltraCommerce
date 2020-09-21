@@ -1,36 +1,36 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.sandbox.domain;
+package com.ultracommerce.common.sandbox.domain;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.admin.domain.AdminMainEntity;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransform;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformMember;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformTypes;
-import org.broadleafcommerce.common.persistence.ArchiveStatus;
-import org.broadleafcommerce.common.presentation.AdminPresentation;
-import org.broadleafcommerce.common.presentation.ValidationConfiguration;
-import org.broadleafcommerce.common.presentation.client.SupportedFieldType;
-import org.broadleafcommerce.common.presentation.client.VisibilityEnum;
+import com.ultracommerce.common.admin.domain.AdminMainEntity;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransform;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransformMember;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransformTypes;
+import com.ultracommerce.common.persistence.ArchiveStatus;
+import com.ultracommerce.common.presentation.AdminPresentation;
+import com.ultracommerce.common.presentation.ValidationConfiguration;
+import com.ultracommerce.common.presentation.client.SupportedFieldType;
+import com.ultracommerce.common.presentation.client.VisibilityEnum;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
@@ -56,9 +56,9 @@ import java.util.List;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name="BLC_SANDBOX")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region="blSandBoxElements")
-@SQLDelete(sql="UPDATE BLC_SANDBOX SET ARCHIVED = 'Y' WHERE SANDBOX_ID = ?")
+@Table(name="UC_SANDBOX")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region="ucSandBoxElements")
+@SQLDelete(sql="UPDATE UC_SANDBOX SET ARCHIVED = 'Y' WHERE SANDBOX_ID = ?")
 @DirectCopyTransform({
     @DirectCopyTransformMember(templateTokens = DirectCopyTransformTypes.AUDITABLE_ONLY)
 })
@@ -71,10 +71,10 @@ public class SandBoxImpl implements SandBox, AdminMainEntity {
     @GeneratedValue(generator = "SandBoxId")
     @GenericGenerator(
         name="SandBoxId",
-        strategy="org.broadleafcommerce.common.persistence.IdOverrideTableGenerator",
+        strategy="com.ultracommerce.common.persistence.IdOverrideTableGenerator",
         parameters = {
             @Parameter(name="segment_value", value="SandBoxImpl"),
-            @Parameter(name="entity_name", value="org.broadleafcommerce.common.sandbox.domain.SandBoxImpl")
+            @Parameter(name="entity_name", value="com.ultracommerce.common.sandbox.domain.SandBoxImpl")
         }
     )
     @Column(name = "SANDBOX_ID")
@@ -85,7 +85,7 @@ public class SandBoxImpl implements SandBox, AdminMainEntity {
     @Index(name="SANDBOX_NAME_INDEX", columnNames={"SANDBOX_NAME"})
     @AdminPresentation(friendlyName = "SandBoxImpl_Name", group = SandboxAdminPresentation.GroupName.Description, prominent = true, 
             gridOrder = 2000, order = 1000,
-            validationConfigurations = { @ValidationConfiguration(validationImplementation = "blSandBoxNameValidator") })
+            validationConfigurations = { @ValidationConfiguration(validationImplementation = "ucSandBoxNameValidator") })
     protected String name;
     
     @Column(name="AUTHOR")
@@ -96,18 +96,18 @@ public class SandBoxImpl implements SandBox, AdminMainEntity {
     @Column(name = "SANDBOX_TYPE")
     @AdminPresentation(friendlyName = "SandBoxImpl_SandBox_Type", group = SandboxAdminPresentation.GroupName.Description,
         visibility = VisibilityEnum.HIDDEN_ALL, readOnly = true,
-        fieldType = SupportedFieldType.BROADLEAF_ENUMERATION,
-        broadleafEnumeration="org.broadleafcommerce.common.sandbox.domain.SandBoxType")
+        fieldType = SupportedFieldType.ULTRA_ENUMERATION,
+        ultraEnumeration="com.ultracommerce.common.sandbox.domain.SandBoxType")
     //need to set a default value so that add sandbox works correctly in the admin
     protected String sandboxType = SandBoxType.APPROVAL.getType();
 
     @ManyToOne(targetEntity = SandBoxImpl.class)
     @JoinColumn(name = "PARENT_SANDBOX_ID")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region="blSandBoxElements")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region="ucSandBoxElements")
     protected SandBox parentSandBox;
 
     @OneToMany(mappedBy = "parentSandBox", targetEntity = SandBoxImpl.class)
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region="blSandBoxElements")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region="ucSandBoxElements")
     protected List<SandBox> childSandBoxes;
 
     @Column(name = "COLOR")

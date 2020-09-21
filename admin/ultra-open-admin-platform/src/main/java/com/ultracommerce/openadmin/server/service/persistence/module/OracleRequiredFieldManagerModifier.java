@@ -1,27 +1,27 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.openadmin.server.service.persistence.module;
+package com.ultracommerce.openadmin.server.service.persistence.module;
 
 import org.apache.commons.lang3.StringUtils;
-import org.broadleafcommerce.common.presentation.AdminPresentation;
-import org.broadleafcommerce.common.presentation.RequiredOverride;
-import org.broadleafcommerce.common.presentation.client.SupportedFieldType;
-import org.broadleafcommerce.common.util.DialectHelper;
+import com.ultracommerce.common.presentation.AdminPresentation;
+import com.ultracommerce.common.presentation.RequiredOverride;
+import com.ultracommerce.common.presentation.client.SupportedFieldType;
+import com.ultracommerce.common.util.DialectHelper;
 import org.springframework.stereotype.Component;
 import java.lang.reflect.Field;
 import java.util.Arrays;
@@ -36,7 +36,7 @@ import javax.persistence.EntityManager;
  *
  * @author Nick Crum ncrum
  */
-@Component("blOracleRequiredFieldManagerModifier")
+@Component("ucOracleRequiredFieldManagerModifier")
 public class OracleRequiredFieldManagerModifier implements FieldManagerModifier {
 
     private static final String ORACLE_SINGLE_SPACE_DEFAULT = " ";
@@ -49,7 +49,7 @@ public class OracleRequiredFieldManagerModifier implements FieldManagerModifier 
             SupportedFieldType.CODE.toString(),
             SupportedFieldType.COLOR.toString());
 
-    @Resource(name = "blDialectHelper")
+    @Resource(name = "ucDialectHelper")
     protected DialectHelper dialectHelper;
 
     @Override

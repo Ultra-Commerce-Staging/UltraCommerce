@@ -1,35 +1,35 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
 /**
  * @author Austin Rooke (austinrooke)
  */
-package org.broadleafcommerce.core.spec.order.service
+package com.ultracommerce.core.spec.order.service
 
-import org.broadleafcommerce.common.money.Money
-import org.broadleafcommerce.core.order.domain.Order
-import org.broadleafcommerce.core.order.domain.OrderImpl
-import org.broadleafcommerce.core.order.service.OrderItemService
-import org.broadleafcommerce.core.order.service.call.OrderItemRequestDTO
-import org.broadleafcommerce.core.order.service.workflow.CartOperationRequest
-import org.broadleafcommerce.core.workflow.DefaultProcessContextImpl
-import org.broadleafcommerce.core.workflow.ProcessContext
-import org.broadleafcommerce.profile.core.domain.Customer
-import org.broadleafcommerce.profile.core.domain.CustomerImpl
+import com.ultracommerce.common.money.Money
+import com.ultracommerce.core.order.domain.Order
+import com.ultracommerce.core.order.domain.OrderImpl
+import com.ultracommerce.core.order.service.OrderItemService
+import com.ultracommerce.core.order.service.call.OrderItemRequestDTO
+import com.ultracommerce.core.order.service.workflow.CartOperationRequest
+import com.ultracommerce.core.workflow.DefaultProcessContextImpl
+import com.ultracommerce.core.workflow.ProcessContext
+import com.ultracommerce.profile.core.domain.Customer
+import com.ultracommerce.profile.core.domain.CustomerImpl
 import spock.lang.Specification
 
 class BaseBuildOrderItemFromDTOSpec extends Specification {

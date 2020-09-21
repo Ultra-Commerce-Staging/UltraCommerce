@@ -1,81 +1,81 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
   #%L
-  BroadleafCommerce Admin Module
+  UltraCommerce Admin Module
   %%
-  Copyright (C) 2009 - 2016 Broadleaf Commerce
+  Copyright (C) 2009 - 2016 Ultra Commerce
   %%
-  Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
-  (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
-  unless the restrictions on use therein are violated and require payment to Broadleaf in which case
-  the Broadleaf End User License Agreement (EULA), Version 1.1
-  (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+  Licensed under the Ultra Fair Use License Agreement, Version 1.0
+  (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+  unless the restrictions on use therein are violated and require payment to Ultra in which case
+  the Ultra End User License Agreement (EULA), Version 1.1
+  (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
   shall apply.
   
   Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
-  between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+  between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
   #L%
   -->
 
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:mo="http://schema.broadleafcommerce.org/mo"
+       xmlns:mo="http://schema.ultracommerce.org/mo"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
                http://www.springframework.org/schema/beans/spring-beans.xsd
                http://www.springframework.org/schema/context
                http://www.springframework.org/schema/context/spring-context.xsd
-               http://schema.broadleafcommerce.org/mo
-               http://schema.broadleafcommerce.org/mo/mo-3.0.xsd">
+               http://schema.ultracommerce.org/mo
+               http://schema.ultracommerce.org/mo/mo-3.0.xsd">
 
-    <context:component-scan base-package="org.broadleafcommerce.admin">
-        <context:exclude-filter type="regex" expression="org.broadleafcommerce.admin.web.controller.*"/>
+    <context:component-scan base-package="com.ultracommerce.admin">
+        <context:exclude-filter type="regex" expression="com.ultracommerce.admin.web.controller.*"/>
     </context:component-scan>
 
-    <bean id="blFieldMetadataProviders-core-admin" class="org.broadleafcommerce.common.util.SortedListFactoryBean" scope="prototype">
+    <bean id="ucFieldMetadataProviders-core-admin" class="com.ultracommerce.common.util.SortedListFactoryBean" scope="prototype">
         <property name="sourceList">
             <list>
-                <ref bean="blCustomerUsernameFieldMetadataProvider"/>
+                <ref bean="ucCustomerUsernameFieldMetadataProvider"/>
             </list>
         </property>
     </bean>
 
-    <bean class="org.broadleafcommerce.common.extensibility.context.merge.LateStageMergeBeanPostProcessor">
-        <property name="collectionRef" value="blFieldMetadataProviders-core-admin"/>
-        <property name="targetRef" value="blFieldMetadataProviders"/>
+    <bean class="com.ultracommerce.common.extensibility.context.merge.LateStageMergeBeanPostProcessor">
+        <property name="collectionRef" value="ucFieldMetadataProviders-core-admin"/>
+        <property name="targetRef" value="ucFieldMetadataProviders"/>
     </bean>
 
-    <bean id="blCustomPersistenceHandlers-core-admin" class="org.springframework.beans.factory.config.ListFactoryBean" scope="prototype">
+    <bean id="ucCustomPersistenceHandlers-core-admin" class="org.springframework.beans.factory.config.ListFactoryBean" scope="prototype">
         <property name="sourceList">
             <list>
-                <ref bean="blCategoryCustomPersistenceHandler" />
-                <ref bean="blCustomerPasswordCustomPersistenceHandler" />
-                <ref bean="blCustomerCustomPersistenceHandler" />
-                <ref bean="blCustomerPaymentCustomPersistenceHandler"/>
-                <ref bean="blProductCustomPersistenceHandler" />
-                <ref bean="blChildCategoriesCustomPersistenceHandler" />
-                <ref bean="blSkuCustomPersistenceHandler" />
-                <ref bean="blSkuLookupByProductCustomPersistenceHandler" />
-                <ref bean="blISOCountryPersistenceHandler"/>
-                <ref bean="blSkuBundleItemCustomPersistenceHandler" />
-                <ref bean="blSearchFacetRangeCustomPersistenceHandler" />
-                <ref bean="blIndexFieldCustomPersistenceHandler" />
-                <ref bean="blProductOptionsCustomPersistenceHandler" />
-                <ref bean="blFieldOnlyPropertiesCustomPersistenceHandler" />
-                <ref bean="blSearchFacetCustomPersistenceHandler" />
-                <ref bean="blOfferCustomPersistenceHandler" />
-                <ref bean="blOfferCodeCustomPersistenceHandler" />
-                <ref bean="blProductOptionValuesCustomPersistenceHandler" />
+                <ref bean="ucCategoryCustomPersistenceHandler" />
+                <ref bean="ucCustomerPasswordCustomPersistenceHandler" />
+                <ref bean="ucCustomerCustomPersistenceHandler" />
+                <ref bean="ucCustomerPaymentCustomPersistenceHandler"/>
+                <ref bean="ucProductCustomPersistenceHandler" />
+                <ref bean="ucChildCategoriesCustomPersistenceHandler" />
+                <ref bean="ucSkuCustomPersistenceHandler" />
+                <ref bean="ucSkuLookupByProductCustomPersistenceHandler" />
+                <ref bean="ucISOCountryPersistenceHandler"/>
+                <ref bean="ucSkuBundleItemCustomPersistenceHandler" />
+                <ref bean="ucSearchFacetRangeCustomPersistenceHandler" />
+                <ref bean="ucIndexFieldCustomPersistenceHandler" />
+                <ref bean="ucProductOptionsCustomPersistenceHandler" />
+                <ref bean="ucFieldOnlyPropertiesCustomPersistenceHandler" />
+                <ref bean="ucSearchFacetCustomPersistenceHandler" />
+                <ref bean="ucOfferCustomPersistenceHandler" />
+                <ref bean="ucOfferCodeCustomPersistenceHandler" />
+                <ref bean="ucProductOptionValuesCustomPersistenceHandler" />
             </list>
         </property>
     </bean>
 
-    <bean class="org.broadleafcommerce.common.extensibility.context.merge.LateStageMergeBeanPostProcessor">
-        <property name="collectionRef" value="blCustomPersistenceHandlers-core-admin"/>
-        <property name="targetRef" value="blCustomPersistenceHandlers"/>
+    <bean class="com.ultracommerce.common.extensibility.context.merge.LateStageMergeBeanPostProcessor">
+        <property name="collectionRef" value="ucCustomPersistenceHandlers-core-admin"/>
+        <property name="targetRef" value="ucCustomPersistenceHandlers"/>
     </bean>
 
-    <mo:override id="blMetadataOverrides">
+    <mo:override id="ucMetadataOverrides">
         <!-- Add required validation to some default Sku fields. These should not occur on the additionalSkus list, which
             is why these are marked required in this fashion rather than in @AdminPresentation annotations on SkuImpl -->
     
@@ -188,7 +188,7 @@
         </mo:overrideItem>
     </mo:override>
 
-    <bean id="blMessageSourceBaseNames-core-admin" class="org.springframework.beans.factory.config.ListFactoryBean">
+    <bean id="ucMessageSourceBaseNames-core-admin" class="org.springframework.beans.factory.config.ListFactoryBean">
         <property name="sourceList">
             <list>
                 <value>classpath:/messages/CustomerCareMessages</value>
@@ -201,79 +201,79 @@
         </property>
     </bean>
 
-    <bean class="org.broadleafcommerce.common.extensibility.context.merge.LateStageMergeBeanPostProcessor">
-        <property name="collectionRef" value="blMessageSourceBaseNames-core-admin" />
-        <property name="targetRef" value="blMessageSourceBaseNames" />
+    <bean class="com.ultracommerce.common.extensibility.context.merge.LateStageMergeBeanPostProcessor">
+        <property name="collectionRef" value="ucMessageSourceBaseNames-core-admin" />
+        <property name="targetRef" value="ucMessageSourceBaseNames" />
     </bean>
 
-    <bean id="blAdminExtendedRuleBuilderFieldServices" class="org.springframework.beans.factory.config.ListFactoryBean">
+    <bean id="ucAdminExtendedRuleBuilderFieldServices" class="org.springframework.beans.factory.config.ListFactoryBean">
         <property name="sourceList">
             <list>
-                <ref bean="blOrderItemFieldService"/>
-                <ref bean="blCustomerFieldService"/>
-                <ref bean="blCategoryFieldService"/>
-                <ref bean="blTimeFieldService"/>
-                <ref bean="blRequestFieldService"/>
-                <ref bean="blOrderFieldService"/>
-                <ref bean="blFulfillmentGroupFieldService"/>
-                <ref bean="blLocaleFieldService"/>
-                <ref bean="blSkuFieldService"/>
-                <ref bean="blProductFieldService"/>
+                <ref bean="ucOrderItemFieldService"/>
+                <ref bean="ucCustomerFieldService"/>
+                <ref bean="ucCategoryFieldService"/>
+                <ref bean="ucTimeFieldService"/>
+                <ref bean="ucRequestFieldService"/>
+                <ref bean="ucOrderFieldService"/>
+                <ref bean="ucFulfillmentGroupFieldService"/>
+                <ref bean="ucLocaleFieldService"/>
+                <ref bean="ucSkuFieldService"/>
+                <ref bean="ucProductFieldService"/>
             </list>
         </property>
     </bean>
-    <bean class="org.broadleafcommerce.common.extensibility.context.merge.LateStageMergeBeanPostProcessor">
-        <property name="collectionRef" value="blAdminExtendedRuleBuilderFieldServices" />
-        <property name="targetRef" value="blRuleBuilderFieldServices" />
+    <bean class="com.ultracommerce.common.extensibility.context.merge.LateStageMergeBeanPostProcessor">
+        <property name="collectionRef" value="ucAdminExtendedRuleBuilderFieldServices" />
+        <property name="targetRef" value="ucRuleBuilderFieldServices" />
     </bean>
     
-    <bean id="blAdminExtendedRuleBuilderOptionsExtensionListeners" class="org.springframework.beans.factory.config.ListFactoryBean">
+    <bean id="ucAdminExtendedRuleBuilderOptionsExtensionListeners" class="org.springframework.beans.factory.config.ListFactoryBean">
         <property name="sourceList">
             <list>
-                <ref bean="blTimeOptionsExtensionListener" />
-                <ref bean="blInventoryTypeOptionsExtensionListener" />
-                <ref bean="blFulfillmentTypeOptionsExtensionListener" />
-                <ref bean="blTemplateTypeOptionsExtensionListener" />       
-                <ref bean="blWebRequestDeviceTypeEnumOptionsExtensionListener" />
+                <ref bean="ucTimeOptionsExtensionListener" />
+                <ref bean="ucInventoryTypeOptionsExtensionListener" />
+                <ref bean="ucFulfillmentTypeOptionsExtensionListener" />
+                <ref bean="ucTemplateTypeOptionsExtensionListener" />       
+                <ref bean="ucWebRequestDeviceTypeEnumOptionsExtensionListener" />
             </list>
         </property>
     </bean>
-    <bean class="org.broadleafcommerce.common.extensibility.context.merge.LateStageMergeBeanPostProcessor">
-        <property name="collectionRef" value="blAdminExtendedRuleBuilderOptionsExtensionListeners" />
-        <property name="targetRef" value="blRuleBuilderEnumOptionsExtensionListeners" />
+    <bean class="com.ultracommerce.common.extensibility.context.merge.LateStageMergeBeanPostProcessor">
+        <property name="collectionRef" value="ucAdminExtendedRuleBuilderOptionsExtensionListeners" />
+        <property name="targetRef" value="ucRuleBuilderEnumOptionsExtensionListeners" />
     </bean>
     
-    <bean id="blAdminExtendedPersistenceProviders" class="org.springframework.beans.factory.config.ListFactoryBean">
+    <bean id="ucAdminExtendedPersistenceProviders" class="org.springframework.beans.factory.config.ListFactoryBean">
         <property name="sourceList">
             <list>
-                <ref bean="blSkuPricingPersistenceProvider"/>
-                <ref bean="blSkuFieldsPersistenceProvider"/>
-                <ref bean="blForeignSkuFieldPersistenceProvider"/>
-                <ref bean="blProductParentCategoryFieldPersistenceProvider"/>
-                <ref bean="blCategoryParentCategoryFieldPersistenceProvider"/>
-                <ref bean="blTypedEntityFieldPersistenceProvider"/>
-                <ref bean="blProductUrlFieldPersistenceProvider"/>
+                <ref bean="ucSkuPricingPersistenceProvider"/>
+                <ref bean="ucSkuFieldsPersistenceProvider"/>
+                <ref bean="ucForeignSkuFieldPersistenceProvider"/>
+                <ref bean="ucProductParentCategoryFieldPersistenceProvider"/>
+                <ref bean="ucCategoryParentCategoryFieldPersistenceProvider"/>
+                <ref bean="ucTypedEntityFieldPersistenceProvider"/>
+                <ref bean="ucProductUrlFieldPersistenceProvider"/>
             </list>
         </property>
     </bean>
-    <bean class="org.broadleafcommerce.common.extensibility.context.merge.LateStageMergeBeanPostProcessor">
-        <property name="collectionRef" value="blAdminExtendedPersistenceProviders" />
-        <property name="targetRef" value="blPersistenceProviders" />
+    <bean class="com.ultracommerce.common.extensibility.context.merge.LateStageMergeBeanPostProcessor">
+        <property name="collectionRef" value="ucAdminExtendedPersistenceProviders" />
+        <property name="targetRef" value="ucPersistenceProviders" />
     </bean>
     
-    <bean id="blAdminJsLocations" class="org.springframework.beans.factory.config.ListFactoryBean">
+    <bean id="ucAdminJsLocations" class="org.springframework.beans.factory.config.ListFactoryBean">
         <property name="sourceList">
             <list>
                 <value>classpath:/admin_style/js/</value>
             </list>
         </property>
     </bean>
-    <bean class="org.broadleafcommerce.common.extensibility.context.merge.LateStageMergeBeanPostProcessor">
-        <property name="collectionRef" value="blAdminJsLocations" />
-        <property name="targetRef" value="blJsLocations" />
+    <bean class="com.ultracommerce.common.extensibility.context.merge.LateStageMergeBeanPostProcessor">
+        <property name="collectionRef" value="ucAdminJsLocations" />
+        <property name="targetRef" value="ucJsLocations" />
     </bean>
     
-    <bean id="blAdminJsFileList" class="org.springframework.beans.factory.config.ListFactoryBean" >
+    <bean id="ucAdminJsFileList" class="org.springframework.beans.factory.config.ListFactoryBean" >
         <property name="sourceList">
             <list>
                 <value>admin/catalog/product.js</value>
@@ -287,9 +287,9 @@
             </list>
         </property>
     </bean>
-    <bean class="org.broadleafcommerce.common.extensibility.context.merge.LateStageMergeBeanPostProcessor">
-        <property name="collectionRef" value="blAdminJsFileList" />
-        <property name="targetRef" value="blJsFileList" />
+    <bean class="com.ultracommerce.common.extensibility.context.merge.LateStageMergeBeanPostProcessor">
+        <property name="collectionRef" value="ucAdminJsFileList" />
+        <property name="targetRef" value="ucJsFileList" />
     </bean>
     
 </beans>

@@ -1,25 +1,25 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.web;
+package com.ultracommerce.common.web;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.util.BLCRequestUtils;
+import com.ultracommerce.common.util.UCRequestUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.WebRequest;
 
@@ -30,19 +30,19 @@ import java.util.TimeZone;
  *
  * @author Priyesh Patel
  */
-@Component("blTimeZoneResolver")
-public class BroadleafTimeZoneResolverImpl implements BroadleafTimeZoneResolver {
-    private final Log LOG = LogFactory.getLog(BroadleafTimeZoneResolverImpl.class);
+@Component("ucTimeZoneResolver")
+public class UltraTimeZoneResolverImpl implements UltraTimeZoneResolver {
+    private final Log LOG = LogFactory.getLog(UltraTimeZoneResolverImpl.class);
     
     /**
      * Parameter/Attribute name for the current language
      */
-    public static String TIMEZONE_VAR = "blTimeZone";
+    public static String TIMEZONE_VAR = "ucTimeZone";
 
     /**
      * Parameter/Attribute name for the current language
      */
-    public static String TIMEZONE_CODE_PARAM = "blTimeZoneCode";
+    public static String TIMEZONE_CODE_PARAM = "ucTimeZoneCode";
 
     @Override
     public TimeZone resolveTimeZone(WebRequest request) {
@@ -52,8 +52,8 @@ public class BroadleafTimeZoneResolverImpl implements BroadleafTimeZoneResolver 
         timeZone = (TimeZone) request.getAttribute(TIMEZONE_VAR, WebRequest.SCOPE_REQUEST);
 
         // Second, check for a request parameter
-        if (timeZone == null && BLCRequestUtils.getURLorHeaderParameter(request, TIMEZONE_CODE_PARAM) != null) {
-            String timeZoneCode = BLCRequestUtils.getURLorHeaderParameter(request, TIMEZONE_CODE_PARAM);
+        if (timeZone == null && UCRequestUtils.getURLorHeaderParameter(request, TIMEZONE_CODE_PARAM) != null) {
+            String timeZoneCode = UCRequestUtils.getURLorHeaderParameter(request, TIMEZONE_CODE_PARAM);
             timeZone = TimeZone.getTimeZone(timeZoneCode);
 
             if (LOG.isTraceEnabled()) {
@@ -62,7 +62,7 @@ public class BroadleafTimeZoneResolverImpl implements BroadleafTimeZoneResolver 
         }
 
         // Third, check the session 
-        if (timeZone == null && BLCRequestUtils.isOKtoUseSession(request)) {
+        if (timeZone == null && UCRequestUtils.isOKtoUseSession(request)) {
             //@TODO verify if we should take this from global session
             timeZone = (TimeZone) request.getAttribute(TIMEZONE_VAR, WebRequest.SCOPE_SESSION);
             if (LOG.isTraceEnabled()) {
@@ -79,7 +79,7 @@ public class BroadleafTimeZoneResolverImpl implements BroadleafTimeZoneResolver 
             }
         }
 
-        if (BLCRequestUtils.isOKtoUseSession(request)) {
+        if (UCRequestUtils.isOKtoUseSession(request)) {
             request.setAttribute(TIMEZONE_VAR, timeZone, WebRequest.SCOPE_SESSION);
         }
         return timeZone;

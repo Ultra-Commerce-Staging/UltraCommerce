@@ -1,22 +1,22 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-/* Utility methods provided by Broadleaf Commerce for admin */
-var BLCAdmin = (function($) {
+/* Utility methods provided by Ultra Commerce for admin */
+var UCAdmin = (function($) {
     
     // This will keep track of our current active modals so that we are able to overlay them
     var modals = [];
@@ -73,7 +73,7 @@ var BLCAdmin = (function($) {
 
             // Remove all filterBuilders that were created for this modal that is being removed
             $(this).find('.filter-info .filter-button').each(function() {
-                BLCAdmin.filterBuilders.removeFilterBuilderByHiddenId($(this).data('hiddenid'));
+                UCAdmin.filterBuilders.removeFilterBuilderByHiddenId($(this).data('hiddenid'));
             });
 
             // Remove the modal from the DOM and from our stack
@@ -89,22 +89,22 @@ var BLCAdmin = (function($) {
                 modals.last().css('z-index', parseInt($backdrop.css('z-index')) + 1);
             }
 
-            if (BLCAdmin.currentModal()) {
-                BLCAdmin.currentModal().find('.submit-button').show();
-                BLCAdmin.currentModal().find('img.ajax-loader').hide();
+            if (UCAdmin.currentModal()) {
+                UCAdmin.currentModal().find('.submit-button').show();
+                UCAdmin.currentModal().find('img.ajax-loader').hide();
             }
         });
 
         // Only initialize all fields if NOT a normal EntityForm in modal
         // Should initialize for lookups
-        if (BLCAdmin.currentModal().find('.modal-body>.content-yield .entity-form.modal-form').length === 0) {
-            BLCAdmin.initializeFields(BLCAdmin.currentModal());
+        if (UCAdmin.currentModal().find('.modal-body>.content-yield .entity-form.modal-form').length === 0) {
+            UCAdmin.initializeFields(UCAdmin.currentModal());
         } else {
-            BLCAdmin.initializeModalTabs($data);
+            UCAdmin.initializeModalTabs($data);
         }
 
-        BLCAdmin.initializeModalButtons($data);
-        BLCAdmin.setModalMaxHeight(BLCAdmin.currentModal());
+        UCAdmin.initializeModalButtons($data);
+        UCAdmin.setModalMaxHeight(UCAdmin.currentModal());
     }
 
     function wrapInModal($data) {
@@ -227,9 +227,9 @@ var BLCAdmin = (function($) {
          * be submitted to the server
          */
         runSubmitHandlers : function($form) {
-            BLCAdmin.runPreValidationSubmitHandlers($form);
-            var submit = BLCAdmin.runValidationSubmitHandlers($form);
-            BLCAdmin.runPostValidationSubmitHandlers($form);
+            UCAdmin.runPreValidationSubmitHandlers($form);
+            var submit = UCAdmin.runValidationSubmitHandlers($form);
+            UCAdmin.runPostValidationSubmitHandlers($form);
             return submit;
         },
 
@@ -295,9 +295,9 @@ var BLCAdmin = (function($) {
         },
 
         initializeModalTabs : function($data) {
-            $.fn.broadleafTabs();
+            $.fn.ultraTabs();
 
-            BLCAdmin.currentModal().find('.nav-tabs li.active > a').click();
+            UCAdmin.currentModal().find('.nav-tabs li.active > a').click();
         },
 
         initializeModalButtons : function($data) {
@@ -327,11 +327,11 @@ var BLCAdmin = (function($) {
         },
 
         showMessageAsModalWithCallback : function(header, message, onModalHide, onModalHideArgs) {
-            if (BLCAdmin.currentModal() != null && BLCAdmin.currentModal().hasClass('loading-modal')) {
-                BLCAdmin.hideCurrentModal();
+            if (UCAdmin.currentModal() != null && UCAdmin.currentModal().hasClass('loading-modal')) {
+                UCAdmin.hideCurrentModal();
             }
 
-            var $modal = BLCAdmin.getModalSkeleton();
+            var $modal = UCAdmin.getModalSkeleton();
 
             $modal.find('.modal-header h3').text(header);
             $modal.find('.modal-body').append(message);
@@ -341,8 +341,8 @@ var BLCAdmin = (function($) {
         },
 
         showElementAsModal : function($element, onModalHide, onModalHideArgs) {
-            if (BLCAdmin.currentModal() != null && BLCAdmin.currentModal().hasClass('loading-modal')) {
-                BLCAdmin.hideCurrentModal();
+            if (UCAdmin.currentModal() != null && UCAdmin.currentModal().hasClass('loading-modal')) {
+                UCAdmin.hideCurrentModal();
             }
 
             if (!$element.find('.content-yield').length) {
@@ -358,23 +358,23 @@ var BLCAdmin = (function($) {
 
         showLinkAsModal : function(link, onModalHide, onModalHideArgs) {
             // Show a loading message
-            var $modal = BLCAdmin.getModalSkeleton();
+            var $modal = UCAdmin.getModalSkeleton();
             $modal.addClass('loading-modal');
-            $modal.find('.modal-header h3').text(BLCAdmin.messages.loading);
+            $modal.find('.modal-header h3').text(UCAdmin.messages.loading);
             $modal.find('.modal-body').append($('<i>', { 'class' : 'fa-pulse fa fa-spinner' }));
             $modal.find('.modal-body').css('text-align', 'center').css('font-size', '24px').css('padding-bottom', '15px');
 
-            BLCAdmin.showElementAsModal($modal, onModalHide, onModalHideArgs);
+            UCAdmin.showElementAsModal($modal, onModalHide, onModalHideArgs);
             
             // Then replace it with the actual requested link
-            BLCAdmin.modalNavigateTo(link);
+            UCAdmin.modalNavigateTo(link);
         },
 
         // Convenience function for hiding the replacing the current modal with the given link
         modalNavigateTo : function(link) {
-            if (BLCAdmin.currentModal()) {
-                BLCAdmin.currentModal().data('initialized', 'false');
-                BLC.ajax({
+            if (UCAdmin.currentModal()) {
+                UCAdmin.currentModal().data('initialized', 'false');
+                UC.ajax({
                     url : link,
                     type : "GET"
                 }, function(data) {
@@ -385,51 +385,51 @@ var BLCAdmin = (function($) {
                     var classes = $data.attr('class').split(' ');
                     if (classes.length > 2) {
                         for (var i = 2; i < classes.length; i++) {
-                            BLCAdmin.currentModal().addClass(classes[i]);
+                            UCAdmin.currentModal().addClass(classes[i]);
                         }
                     }
 
                     $data = $data.children();
 
-                    BLCAdmin.currentModal().empty().append($data);
+                    UCAdmin.currentModal().empty().append($data);
 
-                    if (!BLCAdmin.currentModal().find('.content-yield').length) {
+                    if (!UCAdmin.currentModal().find('.content-yield').length) {
                         var content = $('<div>', { 'class': 'content-yield'});
-                        BLCAdmin.currentModal().find('.modal-body').wrapInner(content);
+                        UCAdmin.currentModal().find('.modal-body').wrapInner(content);
                     }
 
                     // Only initialize all fields if NOT a normal EntityForm in modal
                     // Should initialize for lookups
-                    if (BLCAdmin.currentModal().find('.modal-body>.content-yield .entity-form.modal-form').length === 0) {
-                        BLCAdmin.initializeFields(BLCAdmin.currentModal());
+                    if (UCAdmin.currentModal().find('.modal-body>.content-yield .entity-form.modal-form').length === 0) {
+                        UCAdmin.initializeFields(UCAdmin.currentModal());
                     } else {
-                        BLCAdmin.initializeModalTabs($data);
+                        UCAdmin.initializeModalTabs($data);
                     }
 
-                    BLCAdmin.initializeModalButtons(BLCAdmin.currentModal());
-                    BLCAdmin.setModalMaxHeight(BLCAdmin.currentModal());
+                    UCAdmin.initializeModalButtons(UCAdmin.currentModal());
+                    UCAdmin.setModalMaxHeight(UCAdmin.currentModal());
 
-                    BLCAdmin.currentModal().removeClass('loading-modal');
+                    UCAdmin.currentModal().removeClass('loading-modal');
 
-                    if (BLCAdmin.currentModal().hasClass('asset-selector')) {
-                        var $header = BLCAdmin.currentModal().find('.modal-header');
+                    if (UCAdmin.currentModal().hasClass('asset-selector')) {
+                        var $header = UCAdmin.currentModal().find('.modal-header');
                         var $closeBtn = $header.find('.close');
-                        var $tabSection = BLCAdmin.currentModal().find('.modal-body .section-tabs');
+                        var $tabSection = UCAdmin.currentModal().find('.modal-body .section-tabs');
 
                         $tabSection.append($closeBtn);
                         $header.hide();
                     }
 
                     // disable submit button if adorned/adornedWith form (must select a listGrid item to enable submission)
-                    if (BLCAdmin.currentModal().find('.adorned-select-wrapper').length) {
-                        var $submitButton = BLCAdmin.currentModal().find("button[type='submit']");
+                    if (UCAdmin.currentModal().find('.adorned-select-wrapper').length) {
+                        var $submitButton = UCAdmin.currentModal().find("button[type='submit']");
                         $submitButton.prop('disabled', true);
                     }
 
-                    BLCAdmin.currentModal().trigger('content-loaded');
+                    UCAdmin.currentModal().trigger('content-loaded');
                 });
             } else {
-                BLCAdmin.showLinkAsModal(link);
+                UCAdmin.showLinkAsModal(link);
             }
         },
 
@@ -439,22 +439,22 @@ var BLCAdmin = (function($) {
         },
 
         hideCurrentModal : function() {
-            if (BLCAdmin.currentModal()) {
-                BLCAdmin.currentModal().modal('hide');
+            if (UCAdmin.currentModal()) {
+                UCAdmin.currentModal().modal('hide');
             }
         },
 
         hideAllModals : function() {
-            var currentModal = BLCAdmin.currentModal();
+            var currentModal = UCAdmin.currentModal();
             while (currentModal) {
                 currentModal.modal('hide');
-                currentModal = BLCAdmin.currentModal();
+                currentModal = UCAdmin.currentModal();
             }
         },
 
         focusOnTopModal : function() {
-            if (BLCAdmin.currentModal()) {
-                BLCAdmin.currentModal().focus();
+            if (UCAdmin.currentModal()) {
+                UCAdmin.currentModal().focus();
             }
         },
 
@@ -485,11 +485,11 @@ var BLCAdmin = (function($) {
 
             // If there is no container specified, we'll initialize the active tab (or the body if there are no tabs)
             if ($container == null) {
-                $container = BLCAdmin.getActiveTab();
+                $container = UCAdmin.getActiveTab();
             }
 
             // run field initialization handlers and see if we should continue initializing fields
-            var continueInitialization = BLCAdmin.runFieldInitializationHandlers($container);
+            var continueInitialization = UCAdmin.runFieldInitializationHandlers($container);
 
             // If we've already initialized this container, we'll skip it.
             if ($container.data('initialized') === 'true' || !continueInitialization) {
@@ -498,8 +498,8 @@ var BLCAdmin = (function($) {
                 }
                 // Update all listgrids sizing on the current tab just in case.
                 $container.find('.listgrid-container tbody').each(function (index, element) {
-                    BLCAdmin.listGrid.updateGridTitleBarSize($(element).closest('.listgrid-container').find('.fieldgroup-listgrid-wrapper-header'));
-                    BLCAdmin.listGrid.paginate.updateGridSize($(element));
+                    UCAdmin.listGrid.updateGridTitleBarSize($(element).closest('.listgrid-container').find('.fieldgroup-listgrid-wrapper-header'));
+                    UCAdmin.listGrid.paginate.updateGridSize($(element));
                 });
                 return;
             }
@@ -517,8 +517,8 @@ var BLCAdmin = (function($) {
                 var tabId = '#' + $container.attr("class").substring(0, 4);
 
                 var $tabWithError = $('a[href="' + tabId + '"]');
-                if (BLCAdmin.currentModal() !== undefined) {
-                    $tabWithError = BLCAdmin.currentModal().find('a[href="' + tabId + '"]');
+                if (UCAdmin.currentModal() !== undefined) {
+                    $tabWithError = UCAdmin.currentModal().find('a[href="' + tabId + '"]');
                 }
 
                 if ($tabWithError.length) {
@@ -526,11 +526,11 @@ var BLCAdmin = (function($) {
                 }
             }
 
-            BLCAdmin.initializeTextAreaFields($container);
-            BLCAdmin.initializeColorPickerFields($container);
-            BLCAdmin.initializeSelectizeFields($container);
-            BLCAdmin.initializeRadioFields($container);
-            BLCAdmin.initializeDateFields($container);
+            UCAdmin.initializeTextAreaFields($container);
+            UCAdmin.initializeColorPickerFields($container);
+            UCAdmin.initializeSelectizeFields($container);
+            UCAdmin.initializeRadioFields($container);
+            UCAdmin.initializeDateFields($container);
 
             // Run any additionally configured initialization handlers
             for (var i = 0; i < initializationHandlers.length; i++) {
@@ -690,7 +690,7 @@ var BLCAdmin = (function($) {
             }
 
             $container.find('select:not(".selectize-collection, .selectize-adder' + excludedSelectors + '")')
-                .blSelectize({
+                .ucSelectize({
                     sortField: 'text',
                     closeAfterSelect: true,
                     onItemAdd: function(value, $item) {
@@ -738,7 +738,7 @@ var BLCAdmin = (function($) {
                         var queryData = {};
                         queryData[selectizeSearchField] = query;
 
-                        BLC.ajax({
+                        UC.ajax({
                             url: selectizeUrl + "/selectize",
                             type: 'GET',
                             data: queryData
@@ -781,12 +781,12 @@ var BLCAdmin = (function($) {
                             data["fields['" + linkedPath + "'].value"] = linkedId;
                         }
 
-                        BLC.ajax({
+                        UC.ajax({
                             url : selectizeUrl + "/selectize-add",
                             type : "POST",
                             data : data
                         }, function(data) {
-                            BLCAdmin.alert.showAlert($(selectizeCollection), BLCAdmin.messages.saved + '!', {
+                            UCAdmin.alert.showAlert($(selectizeCollection), UCAdmin.messages.saved + '!', {
                                 alertType: 'save-alert',
                                 autoClose: 3000,
                                 clearOtherAlerts: true
@@ -799,13 +799,13 @@ var BLCAdmin = (function($) {
                             }
 
                             $item.closest('.selectize-input').find('input').blur();
-                            BLCAdmin.runSelectizeUpdateHandlers($(selectizeWrapper));
+                            UCAdmin.runSelectizeUpdateHandlers($(selectizeWrapper));
                         });
                     },
                     onItemRemove: function (value, $item) {
                         select_adder.addOption({value: $item.data('value'), text: $item.html()});
                         $select_adder.siblings('.selectize-control.selectize-adder').find('.selectize-input input').attr('placeholder', placeholder);
-                        BLCAdmin.runSelectizeUpdateHandlers($(selectizeWrapper));
+                        UCAdmin.runSelectizeUpdateHandlers($(selectizeWrapper));
                     }
                 };
 
@@ -839,11 +839,11 @@ var BLCAdmin = (function($) {
                             url = selectizeUrl + "/" + value + "/delete";
                         }
 
-                        BLC.ajax({
+                        UC.ajax({
                             url: url,
                             type: "POST"
                         }, function(data) {
-                            BLCAdmin.alert.showAlert($(selectizeCollection), BLCAdmin.messages.saved + '!', {
+                            UCAdmin.alert.showAlert($(selectizeCollection), UCAdmin.messages.saved + '!', {
                                 alertType: 'save-alert',
                                 autoClose: 3000,
                                 clearOtherAlerts: true
@@ -975,7 +975,7 @@ var BLCAdmin = (function($) {
          */
         addDependentFieldHandler : function addDependentFieldHandler(className, parentFieldSelector, childFieldSelector, 
                 showIfValue, options) {
-            BLCAdmin.addInitializationHandler(function($container) {
+            UCAdmin.addInitializationHandler(function($container) {
                 var $form = $container.find('form').length ? $container.find('form') : $container.closest('form');
                 var thisClass = $form.find('input[name="ceilingEntityClassname"]').val();
                 if (!!thisClass && thisClass.indexOf(className) >= 0) {
@@ -987,7 +987,7 @@ var BLCAdmin = (function($) {
                         var $parentField = $containerParent.find(event.data.parentFieldSelector);
                         var $childField = $containerParent.find(event.data.childFieldSelector);
                         var options = event.data.options;
-                        var parentValue = BLCAdmin.extractFieldValue($parentField);
+                        var parentValue = UCAdmin.extractFieldValue($parentField);
                         
                         // Either match the string or execute a function to figure out if the child field should be shown
                         var shouldShow = false;
@@ -999,10 +999,10 @@ var BLCAdmin = (function($) {
 
                         // Clear the data in the child field if that option was set
                         if (!$.isEmptyObject(options) && options['clearChildData'] && !event.initialization && !event.revertEntityFormChanges) {
-                            BLCAdmin.setFieldValue($childField, null);
+                            UCAdmin.setFieldValue($childField, null);
                         }
 
-                        BLCAdmin.entityForm.toggleFieldVisibility($childField, shouldShow);
+                        UCAdmin.entityForm.toggleFieldVisibility($childField, shouldShow);
                         
                         if (!$.isEmptyObject(options)
                                 && options['additionalChangeAction'] 
@@ -1049,7 +1049,7 @@ var BLCAdmin = (function($) {
             
             // If the parentFieldRequired option is turned on, we need to toggle the behavior of the child field accordingly
             if (options != null && options['parentFieldRequired']) {
-                BLCAdmin.addDependentFieldHandler(className, parentFieldSelector, '#' + childFieldName, function(val) {
+                UCAdmin.addDependentFieldHandler(className, parentFieldSelector, '#' + childFieldName, function(val) {
                     return val != null && val != "";
                 }, { 
                     clearChildData : true
@@ -1107,7 +1107,7 @@ var BLCAdmin = (function($) {
                     var fieldError = "<span class='error'>" + error.message + "</span>";
                     $(fieldError).insertAfter(fieldLabel);
                 } else if (error.errorType == 'global'){
-                    var globalError = "<div class='tabError'><b>" + BLCAdmin.messages.globalErrors + "</b><span class='error'>"
+                    var globalError = "<div class='tabError'><b>" + UCAdmin.messages.globalErrors + "</b><span class='error'>"
                         + error.message + "</span></div>";
                     $(".errors").append(globalError);
                 }
@@ -1151,7 +1151,7 @@ var BLCAdmin = (function($) {
             var dataArray = [];
             $.each(data.split(delimiter), function(index, item) {
                 var item = item.replace(/(^\[")|("$)|(^")|("\]$)/g, '');
-                item = BLCAdmin.unescapeString(item);
+                item = UCAdmin.unescapeString(item);
                 dataArray.push(item);
             });
             return dataArray;
@@ -1163,8 +1163,8 @@ var BLCAdmin = (function($) {
 
         updateAdminNavigation: function() {
             // var url = window.location.pathname.replace("/admin", '');
-            BLC.ajax({
-                url: BLC.servletContext + '/update-navigation',
+            UC.ajax({
+                url: UC.servletContext + '/update-navigation',
                 type: "GET",
                 error: function (error) {
                 }
@@ -1177,7 +1177,7 @@ var BLCAdmin = (function($) {
         confirmProcessBeforeProceeding: function(mustConfirm, confirmMsg, processMethod, methodParams) {
             if (mustConfirm) {
                 if (confirmMsg == undefined || !confirmMsg.length) {
-                    confirmMsg = BLCAdmin.messages.defaultConfirmMessage;
+                    confirmMsg = UCAdmin.messages.defaultConfirmMessage;
                 }
 
                 var cancel = false;
@@ -1210,7 +1210,7 @@ var BLCAdmin = (function($) {
 
 })(jQuery);
 
-$.fn.blSelectize = function (settings_user) {
+$.fn.ucSelectize = function (settings_user) {
     if (!this.length) {
         return;
     }
@@ -1346,11 +1346,11 @@ Selectize.define('enter_key_blur', function (options) {
 
 // Replace the default AJAX error handler with this custom admin one that relies on the exception
 // being set on the model instead of a stack trace page when an error occurs on an AJAX request.
-BLC.defaultErrorHandler = function(data) {
+UC.defaultErrorHandler = function(data) {
     if (data.status == "403") {
-		BLCAdmin.showMessageAsModal(BLCAdmin.messages.error, BLCAdmin.messages.forbidden403);
+		UCAdmin.showMessageAsModal(UCAdmin.messages.error, UCAdmin.messages.forbidden403);
 	} else if (data.status == "409") {
-		BLCAdmin.showMessageAsModal(BLCAdmin.messages.error, BLCAdmin.messages.staleContent);
+		UCAdmin.showMessageAsModal(UCAdmin.messages.error, UCAdmin.messages.staleContent);
     } else {
         var $data;
         
@@ -1361,15 +1361,15 @@ BLC.defaultErrorHandler = function(data) {
         }
     
         if ($data.length == 1) {
-            BLCAdmin.showElementAsModal($data);
+            UCAdmin.showElementAsModal($data);
         } else {
             // This shouldn't happen, but it's here as a fallback just in case
-            BLCAdmin.showMessageAsModal(BLCAdmin.messages.error, BLCAdmin.messages.errorOccurred);
+            UCAdmin.showMessageAsModal(UCAdmin.messages.error, UCAdmin.messages.errorOccurred);
         }
     }
 };
 
-BLC.addPreAjaxCallbackHandler(function($data) {
+UC.addPreAjaxCallbackHandler(function($data) {
     if (!($data instanceof jQuery)) {
         return true;
     }
@@ -1409,7 +1409,7 @@ var getCurrentHashVal = function() {
 };
 
 function finalPageLoadIfReady() {
-    if (BLC.readyEventTriggered && BLC.loadEventTriggered) {
+    if (UC.readyEventTriggered && UC.loadEventTriggered) {
         $(document).trigger("finalPageLoadEvent");
     }
 };
@@ -1420,24 +1420,24 @@ $(document).on('finalPageLoadEvent', function () {
 });
 
 $(window).on('load', function () {
-    BLC.loadEventTriggered = true;
+    UC.loadEventTriggered = true;
     finalPageLoadIfReady();
 });
 
 $(document).ready(function() {
 
-    BLC.readyEventTriggered = true;
+    UC.readyEventTriggered = true;
     finalPageLoadIfReady();
 
     //moved show-translations to an initializationHandler so it gets fired for modals as well 
-    BLCAdmin.addInitializationHandler(function($container) {
+    UCAdmin.addInitializationHandler(function($container) {
         $('a.show-translations:not(.always-disabled)').removeClass('disabled');
      });
     
     $(window).resize(function() {
         $.doTimeout('resize', 150, function() {
-            if (BLCAdmin.currentModal() != null) {
-                BLCAdmin.setModalMaxHeight(BLCAdmin.currentModal());
+            if (UCAdmin.currentModal() != null) {
+                UCAdmin.setModalMaxHeight(UCAdmin.currentModal());
             }
         });
     });
@@ -1450,7 +1450,7 @@ $(document).ready(function() {
 // Close current modal on escape key
 $('body').on('keyup', function(event) {
     if (event.keyCode == 27) {  // if key is escape
-        BLCAdmin.hideCurrentModal();
+        UCAdmin.hideCurrentModal();
     }
 });
 
@@ -1479,7 +1479,7 @@ $('body').on('click', '.boolean-link', function(e) {
 
     if ($(this).hasClass('view-options')) {
         $(this).removeClass('view-options').addClass('hide-options');
-        BLCAdmin.updateContentHeight($(this));
+        UCAdmin.updateContentHeight($(this));
     } else {
         $(this).addClass('view-options').removeClass('hide-options');
     }
@@ -1509,17 +1509,17 @@ $(document).keyup(function(e){
 $('body').on('click', 'a.change-password', function(event) {
     event.preventDefault();
     var $this = $(this);
-    BLC.ajax({
+    UC.ajax({
         url : $this.attr('href')
     }, function(data) {
-        var $modal = BLCAdmin.getModalSkeleton();
+        var $modal = UCAdmin.getModalSkeleton();
         $modal.find('.modal-body').append($(data));
-        BLCAdmin.showElementAsModal($modal);
+        UCAdmin.showElementAsModal($modal);
 
         //$this.closest('div.attached').append(data);
         /*$this.parent().find('div.action-popup').find('div.generated-url-container').each(function(idx, el) {
             if ($(el).data('overridden-url') != true) {
-                BLCAdmin.generatedUrl.registerUrlGenerator($(el));
+                UCAdmin.generatedUrl.registerUrlGenerator($(el));
             }
         })
         */
@@ -1539,14 +1539,14 @@ $('body').on('click', 'button.change-password-confirm', function(event) {
     $this.closest('.action-popup').find('input[name=password]').css('border', '1px solid #D8D5D0');
     $this.closest('.action-popup').find('input[name=confirmPassword]').css('border', '1px solid #D8D5D0');
 
-    BLC.ajax({
+    UC.ajax({
         url: $form.attr('action'),
         type: "POST",
-        data: BLCAdmin.serialize($form),
+        data: UCAdmin.serialize($form),
         error: function(data) {
             $this.closest('.actions').show();
             $this.closest('.action-popup').find('img.ajax-loader').hide();
-            BLC.defaultErrorHandler(data);
+            UC.defaultErrorHandler(data);
         }
     }, function(data) {
         if (data instanceof Object && data.hasOwnProperty('status') && data.status == 'error') {
@@ -1601,11 +1601,11 @@ $('body').on('click', 'button.change-password-confirm', function(event) {
 });
 
 $('body').on('click', '.add-main-entity', function (e) {
-    if (BLCAdmin.workflow == undefined) {
+    if (UCAdmin.workflow == undefined) {
         e.preventDefault();
         var action = $(this).data('url');
 
-        BLCAdmin.showLinkAsModal(action);
+        UCAdmin.showLinkAsModal(action);
     }
 });
 
@@ -1638,6 +1638,6 @@ $('body').on('input', 'input.resize-as-needed', function () {
 $("a.add-url-param-click").on('click', function () {
     var param = $(this).attr('data-param');
     var prop = $(this).attr('data-prop');
-    BLC.addUrlParam(document.location.search, prop, param);
+    UC.addUrlParam(document.location.search, prop, param);
     return false;
 });

@@ -1,63 +1,63 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
 /**
  * @author Austin Rooke(austinrooke)
  */
-package org.broadleafcommerce.core.spec.checkout.service.workflow
+package com.ultracommerce.core.spec.checkout.service.workflow
 
-import org.broadleafcommerce.common.money.Money
-import org.broadleafcommerce.common.payment.PaymentGatewayType
-import org.broadleafcommerce.common.payment.PaymentTransactionType
-import org.broadleafcommerce.common.payment.dto.PaymentRequestDTO
-import org.broadleafcommerce.common.payment.dto.PaymentResponseDTO
-import org.broadleafcommerce.common.payment.service.PaymentGatewayCheckoutService
-import org.broadleafcommerce.common.payment.service.PaymentGatewayClientTokenService
-import org.broadleafcommerce.common.payment.service.PaymentGatewayConfiguration
-import org.broadleafcommerce.common.payment.service.PaymentGatewayConfigurationService
-import org.broadleafcommerce.common.payment.service.PaymentGatewayConfigurationServiceProvider
-import org.broadleafcommerce.common.payment.service.PaymentGatewayCreditCardService
-import org.broadleafcommerce.common.payment.service.PaymentGatewayCustomerService
-import org.broadleafcommerce.common.payment.service.PaymentGatewayFraudService
-import org.broadleafcommerce.common.payment.service.PaymentGatewayHostedService
-import org.broadleafcommerce.common.payment.service.PaymentGatewayReportingService
-import org.broadleafcommerce.common.payment.service.PaymentGatewayRollbackService
-import org.broadleafcommerce.common.payment.service.PaymentGatewaySubscriptionService
-import org.broadleafcommerce.common.payment.service.PaymentGatewayTransactionConfirmationService
-import org.broadleafcommerce.common.payment.service.PaymentGatewayTransactionService
-import org.broadleafcommerce.common.payment.service.PaymentGatewayTransparentRedirectService
-import org.broadleafcommerce.common.payment.service.PaymentGatewayWebResponseService
-import org.broadleafcommerce.common.vendor.service.exception.PaymentException
-import org.broadleafcommerce.common.web.payment.expression.PaymentGatewayFieldExtensionHandler
-import org.broadleafcommerce.common.web.payment.processor.CreditCardTypesExtensionHandler
-import org.broadleafcommerce.common.web.payment.processor.TRCreditCardExtensionHandler
-import org.broadleafcommerce.core.checkout.service.workflow.ConfirmPaymentsRollbackHandler
-import org.broadleafcommerce.core.checkout.service.workflow.ValidateAndConfirmPaymentActivity
-import org.broadleafcommerce.core.order.domain.Order
-import org.broadleafcommerce.core.order.service.OrderService
-import org.broadleafcommerce.core.payment.domain.OrderPayment
-import org.broadleafcommerce.core.payment.domain.OrderPaymentImpl
-import org.broadleafcommerce.core.payment.domain.PaymentTransaction
-import org.broadleafcommerce.core.payment.domain.PaymentTransactionImpl
-import org.broadleafcommerce.core.payment.service.OrderPaymentService
-import org.broadleafcommerce.core.payment.service.OrderToPaymentRequestDTOService
-import org.broadleafcommerce.core.pricing.service.exception.PricingException
-import org.broadleafcommerce.core.workflow.state.RollbackFailureException
-import org.broadleafcommerce.core.workflow.state.RollbackHandler
+import com.ultracommerce.common.money.Money
+import com.ultracommerce.common.payment.PaymentGatewayType
+import com.ultracommerce.common.payment.PaymentTransactionType
+import com.ultracommerce.common.payment.dto.PaymentRequestDTO
+import com.ultracommerce.common.payment.dto.PaymentResponseDTO
+import com.ultracommerce.common.payment.service.PaymentGatewayCheckoutService
+import com.ultracommerce.common.payment.service.PaymentGatewayClientTokenService
+import com.ultracommerce.common.payment.service.PaymentGatewayConfiguration
+import com.ultracommerce.common.payment.service.PaymentGatewayConfigurationService
+import com.ultracommerce.common.payment.service.PaymentGatewayConfigurationServiceProvider
+import com.ultracommerce.common.payment.service.PaymentGatewayCreditCardService
+import com.ultracommerce.common.payment.service.PaymentGatewayCustomerService
+import com.ultracommerce.common.payment.service.PaymentGatewayFraudService
+import com.ultracommerce.common.payment.service.PaymentGatewayHostedService
+import com.ultracommerce.common.payment.service.PaymentGatewayReportingService
+import com.ultracommerce.common.payment.service.PaymentGatewayRollbackService
+import com.ultracommerce.common.payment.service.PaymentGatewaySubscriptionService
+import com.ultracommerce.common.payment.service.PaymentGatewayTransactionConfirmationService
+import com.ultracommerce.common.payment.service.PaymentGatewayTransactionService
+import com.ultracommerce.common.payment.service.PaymentGatewayTransparentRedirectService
+import com.ultracommerce.common.payment.service.PaymentGatewayWebResponseService
+import com.ultracommerce.common.vendor.service.exception.PaymentException
+import com.ultracommerce.common.web.payment.expression.PaymentGatewayFieldExtensionHandler
+import com.ultracommerce.common.web.payment.processor.CreditCardTypesExtensionHandler
+import com.ultracommerce.common.web.payment.processor.TRCreditCardExtensionHandler
+import com.ultracommerce.core.checkout.service.workflow.ConfirmPaymentsRollbackHandler
+import com.ultracommerce.core.checkout.service.workflow.ValidateAndConfirmPaymentActivity
+import com.ultracommerce.core.order.domain.Order
+import com.ultracommerce.core.order.service.OrderService
+import com.ultracommerce.core.payment.domain.OrderPayment
+import com.ultracommerce.core.payment.domain.OrderPaymentImpl
+import com.ultracommerce.core.payment.domain.PaymentTransaction
+import com.ultracommerce.core.payment.domain.PaymentTransactionImpl
+import com.ultracommerce.core.payment.service.OrderPaymentService
+import com.ultracommerce.core.payment.service.OrderToPaymentRequestDTOService
+import com.ultracommerce.core.pricing.service.exception.PricingException
+import com.ultracommerce.core.workflow.state.RollbackFailureException
+import com.ultracommerce.core.workflow.state.RollbackHandler
 
 
 class ConfirmPaymentsRollbackHandlerSpec extends BaseCheckoutRollbackSpec{

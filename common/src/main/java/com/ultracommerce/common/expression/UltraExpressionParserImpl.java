@@ -1,21 +1,21 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2017 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.expression;
+package com.ultracommerce.common.expression;
 
 import org.springframework.context.expression.MapAccessor;
 import org.springframework.expression.Expression;
@@ -34,13 +34,13 @@ import java.util.Map;
 /**
  * @author Nick Crum ncrum
  */
-@Component("blExpressionParser")
-public class BroadleafExpressionParserImpl implements BroadleafExpressionParser {
+@Component("ucExpressionParser")
+public class UltraExpressionParserImpl implements UltraExpressionParser {
 
     protected final ExpressionParser parser;
     protected final List<PropertyAccessor> propertyAccessors;
 
-    public BroadleafExpressionParserImpl() {
+    public UltraExpressionParserImpl() {
         this.parser =  new SpelExpressionParser();
         this.propertyAccessors = Arrays.asList(new MapAccessor(), new ReflectivePropertyAccessor());
     }

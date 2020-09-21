@@ -1,36 +1,36 @@
 /*
  * #%L
- * BroadleafCommerce Admin Module
+ * UltraCommerce Admin Module
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.admin.server.service;
+package com.ultracommerce.admin.server.service;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.admin.server.service.extension.AdminCatalogServiceExtensionManager;
-import org.broadleafcommerce.common.extension.ExtensionResultHolder;
-import org.broadleafcommerce.common.extension.ExtensionResultStatusType;
-import org.broadleafcommerce.common.util.BLCCollectionUtils;
-import org.broadleafcommerce.common.util.TypedTransformer;
-import org.broadleafcommerce.core.catalog.dao.SkuDao;
-import org.broadleafcommerce.core.catalog.domain.Product;
-import org.broadleafcommerce.core.catalog.domain.ProductOption;
-import org.broadleafcommerce.core.catalog.domain.ProductOptionValue;
-import org.broadleafcommerce.core.catalog.domain.Sku;
-import org.broadleafcommerce.core.catalog.service.CatalogService;
+import com.ultracommerce.admin.server.service.extension.AdminCatalogServiceExtensionManager;
+import com.ultracommerce.common.extension.ExtensionResultHolder;
+import com.ultracommerce.common.extension.ExtensionResultStatusType;
+import com.ultracommerce.common.util.UCCollectionUtils;
+import com.ultracommerce.common.util.TypedTransformer;
+import com.ultracommerce.core.catalog.dao.SkuDao;
+import com.ultracommerce.core.catalog.domain.Product;
+import com.ultracommerce.core.catalog.domain.ProductOption;
+import com.ultracommerce.core.catalog.domain.ProductOptionValue;
+import com.ultracommerce.core.catalog.domain.Sku;
+import com.ultracommerce.core.catalog.service.CatalogService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -46,21 +46,21 @@ import javax.persistence.PersistenceContext;
  * @author Phillip Verheyden
  *
  */
-@Service("blAdminCatalogService")
+@Service("ucAdminCatalogService")
 public class AdminCatalogServiceImpl implements AdminCatalogService {
 
     private static final Log LOG = LogFactory.getLog(AdminCatalogServiceImpl.class);
 
-    @Resource(name = "blCatalogService")
+    @Resource(name = "ucCatalogService")
     protected CatalogService catalogService;
 
-    @Resource(name = "blSkuDao")
+    @Resource(name = "ucSkuDao")
     protected SkuDao skuDao;
 
-    @PersistenceContext(unitName="blPU")
+    @PersistenceContext(unitName="ucPU")
     protected EntityManager em;
 
-    @Resource(name = "blAdminCatalogServiceExtensionManager")
+    @Resource(name = "ucAdminCatalogServiceExtensionManager")
     protected AdminCatalogServiceExtensionManager extensionManager;
 
     @Override
@@ -125,14 +125,14 @@ public class AdminCatalogServiceImpl implements AdminCatalogService {
     protected boolean isSamePermutation(List<ProductOptionValue> perm1, List<ProductOptionValue> perm2) {
         if (perm1.size() == perm2.size()) {
 
-            Collection<Long> perm1Ids = BLCCollectionUtils.collect(perm1, new TypedTransformer<Long>() {
+            Collection<Long> perm1Ids = UCCollectionUtils.collect(perm1, new TypedTransformer<Long>() {
                 @Override
                 public Long transform(Object input) {
                     return ((ProductOptionValue) input).getId();
                 }
             });
 
-            Collection<Long> perm2Ids = BLCCollectionUtils.collect(perm2, new TypedTransformer<Long>() {
+            Collection<Long> perm2Ids = UCCollectionUtils.collect(perm2, new TypedTransformer<Long>() {
                 @Override
                 public Long transform(Object input) {
                     return ((ProductOptionValue) input).getId();

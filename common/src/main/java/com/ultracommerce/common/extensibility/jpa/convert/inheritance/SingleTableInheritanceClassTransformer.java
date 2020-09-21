@@ -1,26 +1,26 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.extensibility.jpa.convert.inheritance;
+package com.ultracommerce.common.extensibility.jpa.convert.inheritance;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.extensibility.jpa.convert.BroadleafClassTransformer;
-import org.broadleafcommerce.common.extensibility.jpa.copy.AbstractClassTransformer;
+import com.ultracommerce.common.extensibility.jpa.convert.UltraClassTransformer;
+import com.ultracommerce.common.extensibility.jpa.copy.AbstractClassTransformer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.util.StringUtils;
 
@@ -54,9 +54,9 @@ import javax.persistence.InheritanceType;
  * @author jfischer
  *
  */
-public class SingleTableInheritanceClassTransformer extends AbstractClassTransformer implements BroadleafClassTransformer {
+public class SingleTableInheritanceClassTransformer extends AbstractClassTransformer implements UltraClassTransformer {
     
-    public static final String SINGLE_TABLE_ENTITIES = "broadleaf.ejb.entities.override_single_table";
+    public static final String SINGLE_TABLE_ENTITIES = "ultra.ejb.entities.override_single_table";
     
     private static final Log LOG = LogFactory.getLog(SingleTableInheritanceClassTransformer.class);
     protected List<SingleTableInheritanceInfo> infos = new ArrayList<SingleTableInheritanceInfo>();
@@ -75,14 +75,14 @@ public class SingleTableInheritanceClassTransformer extends AbstractClassTransfo
                 }
                 SingleTableInheritanceInfo info = new SingleTableInheritanceInfo();
                 info.setClassName(clazz);
-                String discriminatorName = props.getProperty("broadleaf.ejb."+keyName+".discriminator.name");
+                String discriminatorName = props.getProperty("ultra.ejb."+keyName+".discriminator.name");
                 if (discriminatorName != null) {
                     info.setDiscriminatorName(discriminatorName);
-                    String type = props.getProperty("broadleaf.ejb."+keyName+".discriminator.type");
+                    String type = props.getProperty("ultra.ejb."+keyName+".discriminator.type");
                     if (type != null) {
                         info.setDiscriminatorType(DiscriminatorType.valueOf(type));
                     }
-                    String length = props.getProperty("broadleaf.ejb."+keyName+".discriminator.length");
+                    String length = props.getProperty("ultra.ejb."+keyName+".discriminator.length");
                     if (length != null) {
                         info.setDiscriminatorLength(Integer.parseInt(length));
                     }

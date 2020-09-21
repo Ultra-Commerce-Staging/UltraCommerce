@@ -1,46 +1,46 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.checkout.service.strategy;
+package com.ultracommerce.core.checkout.service.strategy;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.config.service.SystemPropertiesService;
-import org.broadleafcommerce.common.money.Money;
-import org.broadleafcommerce.common.payment.PaymentGatewayRequestType;
-import org.broadleafcommerce.common.payment.PaymentGatewayType;
-import org.broadleafcommerce.common.payment.PaymentTransactionType;
-import org.broadleafcommerce.common.payment.PaymentType;
-import org.broadleafcommerce.common.payment.dto.PaymentRequestDTO;
-import org.broadleafcommerce.common.payment.dto.PaymentResponseDTO;
-import org.broadleafcommerce.common.payment.service.PaymentGatewayConfigurationService;
-import org.broadleafcommerce.common.payment.service.PaymentGatewayConfigurationServiceProvider;
-import org.broadleafcommerce.common.vendor.service.exception.PaymentException;
-import org.broadleafcommerce.core.checkout.service.exception.CheckoutException;
-import org.broadleafcommerce.core.checkout.service.workflow.CheckoutSeed;
-import org.broadleafcommerce.core.order.domain.Order;
-import org.broadleafcommerce.core.payment.domain.OrderPayment;
-import org.broadleafcommerce.core.payment.domain.PaymentTransaction;
-import org.broadleafcommerce.core.payment.domain.secure.CreditCardPayment;
-import org.broadleafcommerce.core.payment.service.OrderToPaymentRequestDTOService;
-import org.broadleafcommerce.core.payment.service.SecureOrderPaymentService;
-import org.broadleafcommerce.core.workflow.ProcessContext;
-import org.broadleafcommerce.core.workflow.WorkflowException;
+import com.ultracommerce.common.config.service.SystemPropertiesService;
+import com.ultracommerce.common.money.Money;
+import com.ultracommerce.common.payment.PaymentGatewayRequestType;
+import com.ultracommerce.common.payment.PaymentGatewayType;
+import com.ultracommerce.common.payment.PaymentTransactionType;
+import com.ultracommerce.common.payment.PaymentType;
+import com.ultracommerce.common.payment.dto.PaymentRequestDTO;
+import com.ultracommerce.common.payment.dto.PaymentResponseDTO;
+import com.ultracommerce.common.payment.service.PaymentGatewayConfigurationService;
+import com.ultracommerce.common.payment.service.PaymentGatewayConfigurationServiceProvider;
+import com.ultracommerce.common.vendor.service.exception.PaymentException;
+import com.ultracommerce.core.checkout.service.exception.CheckoutException;
+import com.ultracommerce.core.checkout.service.workflow.CheckoutSeed;
+import com.ultracommerce.core.order.domain.Order;
+import com.ultracommerce.core.payment.domain.OrderPayment;
+import com.ultracommerce.core.payment.domain.PaymentTransaction;
+import com.ultracommerce.core.payment.domain.secure.CreditCardPayment;
+import com.ultracommerce.core.payment.service.OrderToPaymentRequestDTOService;
+import com.ultracommerce.core.payment.service.SecureOrderPaymentService;
+import com.ultracommerce.core.workflow.ProcessContext;
+import com.ultracommerce.core.workflow.WorkflowException;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -53,30 +53,30 @@ import javax.annotation.Resource;
  *
  * The default implementation is to (based on the passed in payment type):
  *  - If PaymentType == CREDIT_CARD -> AUTHORIZE or AUTHORIZE_AND_CAPTURE based on configuration of the gateway
- *  - Otherwise -> call the configured gateways {@link org.broadleafcommerce.common.payment.service.PaymentGatewayTransactionConfirmationService}
+ *  - Otherwise -> call the configured gateways {@link com.ultracommerce.common.payment.service.PaymentGatewayTransactionConfirmationService}
  *
  * However, if PENDING payments are enabled, then this logic will be by-passed and a new transaction
  * will be created as the payment is marked to be charged offline or asynchronously.
  *
- * @see {@link org.broadleafcommerce.core.checkout.service.workflow.ValidateAndConfirmPaymentActivity}
+ * @see {@link com.ultracommerce.core.checkout.service.workflow.ValidateAndConfirmPaymentActivity}
  * @author Elbert Bautista (elbertbautista)
  */
-@Service("blOrderPaymentConfirmationStrategy")
+@Service("ucOrderPaymentConfirmationStrategy")
 public class OrderPaymentConfirmationStrategyImpl implements OrderPaymentConfirmationStrategy {
 
     protected static final Log LOG = LogFactory.getLog(OrderPaymentConfirmationStrategyImpl.class);
 
     @Autowired(required = false)
-    @Qualifier("blPaymentGatewayConfigurationServiceProvider")
+    @Qualifier("ucPaymentGatewayConfigurationServiceProvider")
     protected PaymentGatewayConfigurationServiceProvider paymentConfigurationServiceProvider;
 
-    @Resource(name = "blOrderToPaymentRequestDTOService")
+    @Resource(name = "ucOrderToPaymentRequestDTOService")
     protected OrderToPaymentRequestDTOService orderToPaymentRequestService;
 
-    @Resource(name = "blSecureOrderPaymentService")
+    @Resource(name = "ucSecureOrderPaymentService")
     protected SecureOrderPaymentService secureOrderPaymentService;
 
-    @Resource(name = "blSystemPropertiesService")
+    @Resource(name = "ucSystemPropertiesService")
     protected SystemPropertiesService systemPropertiesService;
 
     @Override
@@ -121,8 +121,8 @@ public class OrderPaymentConfirmationStrategyImpl implements OrderPaymentConfirm
         } else {
             if (PaymentType.CREDIT_CARD.equals(payment.getType())) {
                 // Handles the PCI-Compliant Scenario where you have an UNCONFIRMED CREDIT_CARD payment on the order.
-                // This can happen if you send the Credit Card directly to Broadleaf or you use a Digital Wallet solution like MasterPass.
-                // The Actual Credit Card PAN is stored in blSecurePU and will need to be sent to the Payment Gateway for processing.
+                // This can happen if you send the Credit Card directly to Ultra or you use a Digital Wallet solution like MasterPass.
+                // The Actual Credit Card PAN is stored in ucSecurePU and will need to be sent to the Payment Gateway for processing.
 
                 populateCreditCardOnRequest(confirmationRequest, payment);
 

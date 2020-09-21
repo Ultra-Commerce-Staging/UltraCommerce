@@ -1,36 +1,36 @@
 /*
  * #%L
- * BroadleafCommerce Framework Web
+ * UltraCommerce Framework Web
  * %%
- * Copyright (C) 2009 - 2020 Broadleaf Commerce
+ * Copyright (C) 2009 - 2020 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.web.processor;
+package com.ultracommerce.core.web.processor;
 
 import org.apache.commons.lang3.StringUtils;
-import org.broadleafcommerce.presentation.dialect.AbstractBroadleafTagReplacementProcessor;
-import org.broadleafcommerce.presentation.model.BroadleafTemplateContext;
-import org.broadleafcommerce.presentation.model.BroadleafTemplateElement;
-import org.broadleafcommerce.presentation.model.BroadleafTemplateModel;
-import org.broadleafcommerce.presentation.model.BroadleafTemplateNonVoidElement;
+import com.ultracommerce.presentation.dialect.AbstractUltraTagReplacementProcessor;
+import com.ultracommerce.presentation.model.UltraTemplateContext;
+import com.ultracommerce.presentation.model.UltraTemplateElement;
+import com.ultracommerce.presentation.model.UltraTemplateModel;
+import com.ultracommerce.presentation.model.UltraTemplateNonVoidElement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
-@Component("blGoogleEndTagManagerProcessor")
-public class GoogleEndTagManagerProcessor extends AbstractBroadleafTagReplacementProcessor {
+@Component("ucGoogleEndTagManagerProcessor")
+public class GoogleEndTagManagerProcessor extends AbstractUltraTagReplacementProcessor {
 
     @Autowired
     Environment env;
@@ -46,7 +46,7 @@ public class GoogleEndTagManagerProcessor extends AbstractBroadleafTagReplacemen
     }
 
     @Override
-    public BroadleafTemplateModel getReplacementModel(String tagName, Map<String, String> tagAttributes, BroadleafTemplateContext context) {
+    public UltraTemplateModel getReplacementModel(String tagName, Map<String, String> tagAttributes, UltraTemplateContext context) {
         if (StringUtils.isBlank(getTagManagerAccountId())) {
             return context.createModel();
         }
@@ -58,12 +58,12 @@ public class GoogleEndTagManagerProcessor extends AbstractBroadleafTagReplacemen
         return buildScriptTagFromString(context, sb);
     }
 
-    private BroadleafTemplateModel buildScriptTagFromString(BroadleafTemplateContext context, StringBuffer sb) {
-        BroadleafTemplateModel model = context.createModel();
+    private UltraTemplateModel buildScriptTagFromString(UltraTemplateContext context, StringBuffer sb) {
+        UltraTemplateModel model = context.createModel();
 
-        BroadleafTemplateNonVoidElement scriptTag = context.createNonVoidElement("noscript");
+        UltraTemplateNonVoidElement scriptTag = context.createNonVoidElement("noscript");
 
-        BroadleafTemplateElement script = context.createTextElement(sb.toString());
+        UltraTemplateElement script = context.createTextElement(sb.toString());
 
         scriptTag.addChild(script);
         model.addElement(scriptTag);

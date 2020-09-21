@@ -1,24 +1,24 @@
-#specify fully qualified resource path. e.g.: /org/broadleafcommerce/profile/extensibility/applicationContext.xml
+#specify fully qualified resource path. e.g.: /com/ultracommerce/profile/extensibility/applicationContext.xml
 #separate each entry with a new line
 #comments may be added by placing a pound symbol '#' in front of the line
-bl-common-applicationContext-persistence.xml
-bl-profile-applicationContext-persistence.xml
-bl-framework-applicationContext-persistence.xml
+uc-common-applicationContext-persistence.xml
+uc-profile-applicationContext-persistence.xml
+uc-framework-applicationContext-persistence.xml
 #persistence xml files should appear first to ensure that entity managers are loaded first
-bl-common-applicationContext.xml
-bl-profile-applicationContext.xml
-bl-profile-web-applicationContext.xml
-bl-framework-applicationContext.xml
-bl-framework-applicationContext-workflow.xml
-bl-framework-applicationContext-workflow-payment.xml
-bl-framework-web-applicationContext.xml
-bl-framework-web-applicationContext-api-wrapper.xml
-#The application context files below are not added by default to the BLC runtime
+uc-common-applicationContext.xml
+uc-profile-applicationContext.xml
+uc-profile-web-applicationContext.xml
+uc-framework-applicationContext.xml
+uc-framework-applicationContext-workflow.xml
+uc-framework-applicationContext-workflow-payment.xml
+uc-framework-web-applicationContext.xml
+uc-framework-web-applicationContext-api-wrapper.xml
+#The application context files below are not added by default to the UC runtime
 #Instead, these items must be explicitly declared for import in web.xml, if desired
-bl-open-admin-contentClient-applicationContext.xml
-bl-open-admin-contentCreator-applicationContext.xml
-bl-admin-applicationContext.xml
+uc-open-admin-contentClient-applicationContext.xml
+uc-open-admin-contentCreator-applicationContext.xml
+uc-admin-applicationContext.xml
 #testing application context files
-bl-framework-applicationContext-test.xml
-#bl-applicationContext-test.xml
-bl-applicationContext-test-security.xml
+uc-framework-applicationContext-test.xml
+#uc-applicationContext-test.xml
+uc-applicationContext-test-security.xml

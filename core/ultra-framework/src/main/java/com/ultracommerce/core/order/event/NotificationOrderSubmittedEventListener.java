@@ -1,35 +1,35 @@
 /*-
  * #%L
- * BroadleafCommerce Advanced CMS
+ * UltraCommerce Advanced CMS
  * %%
- * Copyright (C) 2009 - 2017 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.order.event;
+package com.ultracommerce.core.order.event;
 
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.event.AbstractBroadleafApplicationEventListener;
-import org.broadleafcommerce.common.event.BroadleafApplicationEventMulticaster;
-import org.broadleafcommerce.common.event.OrderSubmittedEvent;
-import org.broadleafcommerce.common.exception.ServiceException;
-import org.broadleafcommerce.common.notification.service.NotificationDispatcher;
-import org.broadleafcommerce.common.notification.service.type.EmailNotification;
-import org.broadleafcommerce.common.notification.service.type.NotificationEventType;
-import org.broadleafcommerce.common.notification.service.type.SMSNotification;
-import org.broadleafcommerce.core.order.domain.Order;
-import org.broadleafcommerce.core.order.service.OrderService;
+import com.ultracommerce.common.event.AbstractUltraApplicationEventListener;
+import com.ultracommerce.common.event.UltraApplicationEventMulticaster;
+import com.ultracommerce.common.event.OrderSubmittedEvent;
+import com.ultracommerce.common.exception.ServiceException;
+import com.ultracommerce.common.notification.service.NotificationDispatcher;
+import com.ultracommerce.common.notification.service.type.EmailNotification;
+import com.ultracommerce.common.notification.service.type.NotificationEventType;
+import com.ultracommerce.common.notification.service.type.SMSNotification;
+import com.ultracommerce.core.order.domain.Order;
+import com.ultracommerce.core.order.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -38,25 +38,25 @@ import java.util.Map;
 
 /**
  * This event listener is responsible for sending any notifications in response to an {@code OrderSubmittedEvent}. By
- * default, this listener will handle the event synchronously unless the {@link BroadleafApplicationEventMulticaster} is
+ * default, this listener will handle the event synchronously unless the {@link UltraApplicationEventMulticaster} is
  * injected and configured correctly to handle asynchronous events.
  *
- * @see org.broadleafcommerce.core.checkout.service.workflow.CompleteOrderActivity for where the event is typically published
+ * @see com.ultracommerce.core.checkout.service.workflow.CompleteOrderActivity for where the event is typically published
  * @author Nick Crum ncrum
  */
-@Component("blNotificationOrderSubmittedEventListener")
-public class NotificationOrderSubmittedEventListener extends AbstractBroadleafApplicationEventListener<OrderSubmittedEvent> {
+@Component("ucNotificationOrderSubmittedEventListener")
+public class NotificationOrderSubmittedEventListener extends AbstractUltraApplicationEventListener<OrderSubmittedEvent> {
 
     protected static final String ORDER_CONTEXT_KEY = "order";
     protected static final String CUSTOMER_CONTEXT_KEY = "customer";
     protected final Log LOG = LogFactory.getLog(NotificationOrderSubmittedEventListener.class);
 
     @Autowired
-    @Qualifier("blOrderService")
+    @Qualifier("ucOrderService")
     protected OrderService orderService;
 
     @Autowired
-    @Qualifier("blNotificationDispatcher")
+    @Qualifier("ucNotificationDispatcher")
     protected NotificationDispatcher notificationDispatcher;
 
     @Override

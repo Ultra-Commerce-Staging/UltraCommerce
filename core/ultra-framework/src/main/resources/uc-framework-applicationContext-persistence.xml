@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
   #%L
-  BroadleafCommerce Framework
+  UltraCommerce Framework
   %%
-  Copyright (C) 2009 - 2016 Broadleaf Commerce
+  Copyright (C) 2009 - 2016 Ultra Commerce
   %%
-  Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
-  (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
-  unless the restrictions on use therein are violated and require payment to Broadleaf in which case
-  the Broadleaf End User License Agreement (EULA), Version 1.1
-  (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+  Licensed under the Ultra Fair Use License Agreement, Version 1.0
+  (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+  unless the restrictions on use therein are violated and require payment to Ultra in which case
+  the Ultra End User License Agreement (EULA), Version 1.1
+  (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
   shall apply.
   
   Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
-  between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+  between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
   #L%
   -->
 
@@ -25,20 +25,20 @@
            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
-    <bean id="blMergedEntityContexts-framework" class="org.springframework.beans.factory.config.ListFactoryBean">
+    <bean id="ucMergedEntityContexts-framework" class="org.springframework.beans.factory.config.ListFactoryBean">
         <property name="sourceList">
             <list>
-                <value>classpath:bl-framework-applicationContext-entity.xml</value>
+                <value>classpath:uc-framework-applicationContext-entity.xml</value>
             </list>
         </property>
     </bean>
 
-    <bean class="org.broadleafcommerce.common.extensibility.context.merge.EarlyStageMergeBeanPostProcessor">
-        <property name="collectionRef" value="blMergedEntityContexts-framework"/>
-        <property name="targetRef" value="blMergedEntityContexts"/>
+    <bean class="com.ultracommerce.common.extensibility.context.merge.EarlyStageMergeBeanPostProcessor">
+        <property name="collectionRef" value="ucMergedEntityContexts-framework"/>
+        <property name="targetRef" value="ucMergedEntityContexts"/>
     </bean>
 
-    <bean id="blMergedPersistenceXmlLocations-framework" class="org.springframework.beans.factory.config.ListFactoryBean">
+    <bean id="ucMergedPersistenceXmlLocations-framework" class="org.springframework.beans.factory.config.ListFactoryBean">
         <property name="sourceList">
             <list>
                 <value>classpath*:/META-INF/persistence-framework.xml</value>
@@ -46,22 +46,22 @@
         </property>
     </bean>
 
-    <bean class="org.broadleafcommerce.common.extensibility.context.merge.EarlyStageMergeBeanPostProcessor">
-        <property name="collectionRef" value="blMergedPersistenceXmlLocations-framework"/>
-        <property name="targetRef" value="blMergedPersistenceXmlLocations"/>
+    <bean class="com.ultracommerce.common.extensibility.context.merge.EarlyStageMergeBeanPostProcessor">
+        <property name="collectionRef" value="ucMergedPersistenceXmlLocations-framework"/>
+        <property name="targetRef" value="ucMergedPersistenceXmlLocations"/>
     </bean>
     
-    <bean id="blEntityManagerFactorySecureInfo" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean" depends-on="blCacheManager">
-        <property name="jpaVendorAdapter" ref="blJpaVendorAdapter"/>
-        <property name="persistenceUnitManager" ref="blPersistenceUnitManager" />
-        <property name="persistenceUnitName" value="blSecurePU"/>
+    <bean id="ucEntityManagerFactorySecureInfo" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean" depends-on="ucCacheManager">
+        <property name="jpaVendorAdapter" ref="ucJpaVendorAdapter"/>
+        <property name="persistenceUnitManager" ref="ucPersistenceUnitManager" />
+        <property name="persistenceUnitName" value="ucSecurePU"/>
     </bean>
 
-    <bean id="blTransactionManagerSecureInfo" class="org.springframework.orm.jpa.JpaTransactionManager">
-        <property name="entityManagerFactory" ref="blEntityManagerFactorySecureInfo" />
+    <bean id="ucTransactionManagerSecureInfo" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="ucEntityManagerFactorySecureInfo" />
     </bean>
 
-    <tx:advice id="blTxAdviceSecureInfo" transaction-manager="blTransactionManagerSecureInfo">
+    <tx:advice id="ucTxAdviceSecureInfo" transaction-manager="ucTransactionManagerSecureInfo">
         <tx:attributes>
           <tx:method name="*" propagation="REQUIRED"/>
         </tx:attributes>
@@ -69,13 +69,13 @@
 
     <!-- Not modifying, legacy stuff so doesn't really matter -->
     <aop:config>
-        <aop:pointcut id="blLegacyOrderServiceOperation" expression="execution(* org.broadleafcommerce.core.order.service.legacy.LegacyOrderService.*(..))"/>
-        <aop:advisor advice-ref="blTxAdvice" pointcut-ref="blLegacyOrderServiceOperation" order="1"/>
+        <aop:pointcut id="ucLegacyOrderServiceOperation" expression="execution(* com.ultracommerce.core.order.service.legacy.LegacyOrderService.*(..))"/>
+        <aop:advisor advice-ref="ucTxAdvice" pointcut-ref="ucLegacyOrderServiceOperation" order="1"/>
     </aop:config>
     
     <aop:config>
-        <aop:pointcut id="blLegacyCartServiceOperation" expression="execution(* org.broadleafcommerce.core.order.service.legacy.LegacyCartService.*(..))"/>
-        <aop:advisor advice-ref="blTxAdvice" pointcut-ref="blLegacyCartServiceOperation" order="1"/>
+        <aop:pointcut id="ucLegacyCartServiceOperation" expression="execution(* com.ultracommerce.core.order.service.legacy.LegacyCartService.*(..))"/>
+        <aop:advisor advice-ref="ucTxAdvice" pointcut-ref="ucLegacyCartServiceOperation" order="1"/>
     </aop:config>
 
 </beans>

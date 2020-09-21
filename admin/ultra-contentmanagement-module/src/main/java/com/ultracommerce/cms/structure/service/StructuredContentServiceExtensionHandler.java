@@ -1,27 +1,27 @@
 /*
  * #%L
- * BroadleafCommerce CMS Module
+ * UltraCommerce CMS Module
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.cms.structure.service;
+package com.ultracommerce.cms.structure.service;
 
-import org.broadleafcommerce.cms.structure.domain.StructuredContent;
-import org.broadleafcommerce.common.extension.ExtensionHandler;
-import org.broadleafcommerce.common.extension.ExtensionResultHolder;
-import org.broadleafcommerce.common.extension.ExtensionResultStatusType;
-import org.broadleafcommerce.common.structure.dto.StructuredContentDTO;
+import com.ultracommerce.cms.structure.domain.StructuredContent;
+import com.ultracommerce.common.extension.ExtensionHandler;
+import com.ultracommerce.common.extension.ExtensionResultHolder;
+import com.ultracommerce.common.extension.ExtensionResultStatusType;
+import com.ultracommerce.common.structure.dto.StructuredContentDTO;
 
 import java.util.List;
 
@@ -40,7 +40,7 @@ public interface StructuredContentServiceExtensionHandler extends ExtensionHandl
      * the {@link StructuredContentDTO} by using information from the {@link StructuredContent}.
      * 
      * @param sc the {@link StructuredContent} that should further be wrapped into the <b>dto</b>
-     * @param dto the DTO that has already been mostly populated by Broadleaf. At this stage, this parameter will have all of
+     * @param dto the DTO that has already been mostly populated by Ultra. At this stage, this parameter will have all of
      * the properties from the default {@link StructuredContentDTO} already parsed
      * @param secure whether or not the request is secure
      * @return the result of executing this extension handler

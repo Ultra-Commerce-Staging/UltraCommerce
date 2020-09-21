@@ -1,32 +1,32 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
 
-package org.broadleafcommerce.common.web.payment.processor;
+package com.ultracommerce.common.web.payment.processor;
 
 import org.apache.commons.collections.MapUtils;
-import org.broadleafcommerce.common.payment.dto.PaymentRequestDTO;
-import org.broadleafcommerce.common.vendor.service.exception.PaymentException;
-import org.broadleafcommerce.presentation.condition.ConditionalOnTemplating;
-import org.broadleafcommerce.presentation.dialect.AbstractBroadleafModelModifierProcessor;
-import org.broadleafcommerce.presentation.model.BroadleafTemplateContext;
-import org.broadleafcommerce.presentation.model.BroadleafTemplateElement;
-import org.broadleafcommerce.presentation.model.BroadleafTemplateModel;
-import org.broadleafcommerce.presentation.model.BroadleafTemplateModelModifierDTO;
+import com.ultracommerce.common.payment.dto.PaymentRequestDTO;
+import com.ultracommerce.common.vendor.service.exception.PaymentException;
+import com.ultracommerce.presentation.condition.ConditionalOnTemplating;
+import com.ultracommerce.presentation.dialect.AbstractUltraModelModifierProcessor;
+import com.ultracommerce.presentation.model.UltraTemplateContext;
+import com.ultracommerce.presentation.model.UltraTemplateElement;
+import com.ultracommerce.presentation.model.UltraTemplateModel;
+import com.ultracommerce.presentation.model.UltraTemplateModelModifierDTO;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -58,20 +58,20 @@ import javax.annotation.Resource;
  *     </blc:transparent_credit_form>
  * </code></pre>
  *
- * <p>NOTE: please see {@link org.broadleafcommerce.common.web.payment.expression.PaymentGatewayFieldVariableExpression}
+ * <p>NOTE: please see {@link com.ultracommerce.common.web.payment.expression.PaymentGatewayFieldVariableExpression}
  * to modify the input "name" fields for a particular gateway</p>
  *
- * @see {@link org.broadleafcommerce.common.web.payment.expression.PaymentGatewayFieldVariableExpression}
+ * @see {@link com.ultracommerce.common.web.payment.expression.PaymentGatewayFieldVariableExpression}
  * @see {@link TRCreditCardExtensionHandler}
  * @see {@link AbstractTRCreditCardExtensionHandler}
  *
  * @author Elbert Bautista (elbertbautista)
  */
-@Component("blTransparentRedirectCreditCardFormProcessor")
+@Component("ucTransparentRedirectCreditCardFormProcessor")
 @ConditionalOnTemplating
-public class TransparentRedirectCreditCardFormProcessor extends AbstractBroadleafModelModifierProcessor {
+public class TransparentRedirectCreditCardFormProcessor extends AbstractUltraModelModifierProcessor {
 
-    @Resource(name = "blTRCreditCardExtensionManager")
+    @Resource(name = "ucTRCreditCardExtensionManager")
     protected TRCreditCardExtensionManager extensionManager;
 
     public TRCreditCardExtensionManager getExtensionManager() {
@@ -93,7 +93,7 @@ public class TransparentRedirectCreditCardFormProcessor extends AbstractBroadlea
     }
     
     @Override
-    public BroadleafTemplateModelModifierDTO getInjectedModelAndTagAttributes(String rootTagName, Map<String, String> rootTagAttributes, BroadleafTemplateContext context) {
+    public UltraTemplateModelModifierDTO getInjectedModelAndTagAttributes(String rootTagName, Map<String, String> rootTagAttributes, UltraTemplateContext context) {
         PaymentRequestDTO requestDTO = (PaymentRequestDTO) context.parseExpression(rootTagAttributes.get("paymentRequestDTO"));
 
         Map<String, Map<String, String>> formParameters = new HashMap<>();
@@ -133,7 +133,7 @@ public class TransparentRedirectCreditCardFormProcessor extends AbstractBroadlea
         }
         keysToKeep.put("action", actionUrl);
 
-        BroadleafTemplateModel model = context.createModel();
+        UltraTemplateModel model = context.createModel();
         //Append any hidden fields necessary for the Transparent Redirect
         Map<String, String> hiddenFields = formParameters.get(formHiddenParamsKey.toString());
         if (MapUtils.isNotEmpty(hiddenFields)) {
@@ -142,11 +142,11 @@ public class TransparentRedirectCreditCardFormProcessor extends AbstractBroadlea
                 attributes.put("type", "hidden");
                 attributes.put("name", key);
                 attributes.put("value", hiddenFields.get(key));
-                BroadleafTemplateElement input = context.createStandaloneElement("input", attributes, true);
+                UltraTemplateElement input = context.createStandaloneElement("input", attributes, true);
                 model.addElement(input);
             }
         }
-        return new BroadleafTemplateModelModifierDTO(model, keysToKeep, "form");
+        return new UltraTemplateModelModifierDTO(model, keysToKeep, "form");
     }
 
     @Override

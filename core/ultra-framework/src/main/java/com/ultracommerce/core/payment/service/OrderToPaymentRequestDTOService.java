@@ -1,29 +1,29 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
 
-package org.broadleafcommerce.core.payment.service;
+package com.ultracommerce.core.payment.service;
 
-import org.broadleafcommerce.common.money.Money;
-import org.broadleafcommerce.common.payment.PaymentType;
-import org.broadleafcommerce.common.payment.dto.PaymentRequestDTO;
-import org.broadleafcommerce.core.order.domain.Order;
-import org.broadleafcommerce.core.order.service.FulfillmentGroupService;
-import org.broadleafcommerce.core.payment.domain.PaymentTransaction;
+import com.ultracommerce.common.money.Money;
+import com.ultracommerce.common.payment.PaymentType;
+import com.ultracommerce.common.payment.dto.PaymentRequestDTO;
+import com.ultracommerce.core.order.domain.Order;
+import com.ultracommerce.core.order.service.FulfillmentGroupService;
+import com.ultracommerce.core.payment.domain.PaymentTransaction;
 
 /**
  * @author Elbert Bautista (elbertbautista)
@@ -46,8 +46,8 @@ public interface OrderToPaymentRequestDTOService {
     /**
      * Utilizes the {@link PaymentTransaction#getAdditionalFields()} map to populate necessary request parameters on the
      * resulting {@link PaymentRequestDTO}. These additional fields are then used by the payment gateway to construct
-     * additional requests. For example, an existing {@link org.broadleafcommerce.core.payment.domain.PaymentTransaction} of
-     * type {@link org.broadleafcommerce.common.payment.PaymentTransactionType#AUTHORIZE} might be passed into this method
+     * additional requests. For example, an existing {@link com.ultracommerce.core.payment.domain.PaymentTransaction} of
+     * type {@link com.ultracommerce.common.payment.PaymentTransactionType#AUTHORIZE} might be passed into this method
      * in order for the gateway issue a "reverse auth" against this original transaction.
      *
      * @param transactionAmount the amount that should be placed on {@link PaymentRequestDTO#getTransactionTotal()}
@@ -56,19 +56,19 @@ public interface OrderToPaymentRequestDTOService {
      * @return a new {@link PaymentRequestDTO} populated with the additional fields from <b>paymentTransaction</b> and
      *         the amount from <b>transactionAmount<b> OR override with final payment details on the order if coming in from a
      *         payment flow.
-     * @see {@link org.broadleafcommerce.core.checkout.service.workflow.ValidateAndConfirmPaymentActivity}
-     * @see {@link org.broadleafcommerce.core.checkout.service.workflow.ConfirmPaymentsRollbackHandler}
+     * @see {@link com.ultracommerce.core.checkout.service.workflow.ValidateAndConfirmPaymentActivity}
+     * @see {@link com.ultracommerce.core.checkout.service.workflow.ConfirmPaymentsRollbackHandler}
      */
     public PaymentRequestDTO translatePaymentTransaction(Money transactionAmount, PaymentTransaction paymentTransaction);
 
     /**
      * Important: As of 4.0.1-GA+, there is a requirement to automatically populate the transaction amount on the DTO
      * only if coming from a "checkout payment flow". That is, if you are invoking this method via the
-     * {@link org.broadleafcommerce.core.checkout.service.workflow.ValidateAndConfirmPaymentActivity} and the
-     * payment transaction passed in is of type {@link org.broadleafcommerce.common.payment.PaymentTransactionType#UNCONFIRMED}.
+     * {@link com.ultracommerce.core.checkout.service.workflow.ValidateAndConfirmPaymentActivity} and the
+     * payment transaction passed in is of type {@link com.ultracommerce.common.payment.PaymentTransactionType#UNCONFIRMED}.
      * If the totals need to be auto-calculated, the transaction total will be set from the "final payment" details that
      * are coming off the order itself (along with other details like shipping/billing info etc...)
-     * @see {@link https://github.com/BroadleafCommerce/BroadleafCommerce/issues/1423} for details.
+     * @see {@link https://github.com/UltraCommerce/UltraCommerce/issues/1423} for details.
      *
      * @param transactionAmount
      * @param paymentTransaction
@@ -79,10 +79,10 @@ public interface OrderToPaymentRequestDTOService {
 
     /**
      * Uses total information on the Order to populate the
-     * {@link org.broadleafcommerce.common.payment.dto.PaymentRequestDTO#transactionTotal(String)}()}
-     * {@link org.broadleafcommerce.common.payment.dto.PaymentRequestDTO#taxTotal(String)}()}
-     * {@link org.broadleafcommerce.common.payment.dto.PaymentRequestDTO#shippingTotal(String)}()}
-     * {@link org.broadleafcommerce.common.payment.dto.PaymentRequestDTO#orderCurrencyCode(String)}()}
+     * {@link com.ultracommerce.common.payment.dto.PaymentRequestDTO#transactionTotal(String)}()}
+     * {@link com.ultracommerce.common.payment.dto.PaymentRequestDTO#taxTotal(String)}()}
+     * {@link com.ultracommerce.common.payment.dto.PaymentRequestDTO#shippingTotal(String)}()}
+     * {@link com.ultracommerce.common.payment.dto.PaymentRequestDTO#orderCurrencyCode(String)}()}
      * @param order the {@link Order} to get data from
      * @param requestDTO the {@link PaymentRequestDTO} that should be populated
      */
@@ -90,7 +90,7 @@ public interface OrderToPaymentRequestDTOService {
 
     /**
      * Uses customer information on the Order to populate the
-     * {@link org.broadleafcommerce.common.payment.dto.PaymentRequestDTO#customer()} object
+     * {@link com.ultracommerce.common.payment.dto.PaymentRequestDTO#customer()} object
      * @param order the {@link Order} to get data from
      * @param requestDTO the {@link PaymentRequestDTO} that should be populated
      */
@@ -106,7 +106,7 @@ public interface OrderToPaymentRequestDTOService {
 
     /**
      * Uses billing information on the Order to populate the
-     * {@link org.broadleafcommerce.common.payment.dto.PaymentRequestDTO#billTo()} object
+     * {@link com.ultracommerce.common.payment.dto.PaymentRequestDTO#billTo()} object
      * @param order the {@link Order} to get data from
      * @param requestDTO the {@link PaymentRequestDTO} that should be populated
      */

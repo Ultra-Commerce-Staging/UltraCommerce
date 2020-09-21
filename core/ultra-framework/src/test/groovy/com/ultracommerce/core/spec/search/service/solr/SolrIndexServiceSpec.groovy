@@ -1,40 +1,40 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.spec.search.service.solr
+package com.ultracommerce.core.spec.search.service.solr
 
 import org.apache.solr.client.solrj.SolrClient
-import org.broadleafcommerce.common.locale.service.LocaleService
-import org.broadleafcommerce.common.sandbox.SandBoxHelper
-import org.broadleafcommerce.core.catalog.dao.ProductDao
-import org.broadleafcommerce.core.catalog.dao.SkuDao
-import org.broadleafcommerce.core.catalog.domain.ProductImpl
-import org.broadleafcommerce.core.catalog.domain.Sku
-import org.broadleafcommerce.core.catalog.domain.SkuImpl
-import org.broadleafcommerce.core.search.dao.IndexFieldDao
-import org.broadleafcommerce.core.search.dao.SolrIndexDao
-import org.broadleafcommerce.core.search.domain.Field
-import org.broadleafcommerce.core.search.domain.FieldEntity
-import org.broadleafcommerce.core.search.service.solr.SolrHelperService
-import org.broadleafcommerce.core.search.service.solr.SolrHelperServiceImpl
-import org.broadleafcommerce.core.search.service.solr.SolrSearchServiceExtensionHandler
-import org.broadleafcommerce.core.search.service.solr.index.SolrIndexServiceExtensionHandler
-import org.broadleafcommerce.core.search.service.solr.index.SolrIndexServiceExtensionManager
-import org.broadleafcommerce.core.search.service.solr.index.SolrIndexServiceImpl
+import com.ultracommerce.common.locale.service.LocaleService
+import com.ultracommerce.common.sandbox.SandBoxHelper
+import com.ultracommerce.core.catalog.dao.ProductDao
+import com.ultracommerce.core.catalog.dao.SkuDao
+import com.ultracommerce.core.catalog.domain.ProductImpl
+import com.ultracommerce.core.catalog.domain.Sku
+import com.ultracommerce.core.catalog.domain.SkuImpl
+import com.ultracommerce.core.search.dao.IndexFieldDao
+import com.ultracommerce.core.search.dao.SolrIndexDao
+import com.ultracommerce.core.search.domain.Field
+import com.ultracommerce.core.search.domain.FieldEntity
+import com.ultracommerce.core.search.service.solr.SolrHelperService
+import com.ultracommerce.core.search.service.solr.SolrHelperServiceImpl
+import com.ultracommerce.core.search.service.solr.SolrSearchServiceExtensionHandler
+import com.ultracommerce.core.search.service.solr.index.SolrIndexServiceExtensionHandler
+import com.ultracommerce.core.search.service.solr.index.SolrIndexServiceExtensionManager
+import com.ultracommerce.core.search.service.solr.index.SolrIndexServiceImpl
 import org.springframework.transaction.PlatformTransactionManager
 import spock.lang.Specification
 

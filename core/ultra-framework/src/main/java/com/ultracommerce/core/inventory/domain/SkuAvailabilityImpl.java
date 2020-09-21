@@ -1,27 +1,27 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.inventory.domain;
+package com.ultracommerce.core.inventory.domain;
 
-import org.broadleafcommerce.common.presentation.AdminPresentation;
-import org.broadleafcommerce.common.presentation.client.SupportedFieldType;
-import org.broadleafcommerce.common.presentation.client.VisibilityEnum;
-import org.broadleafcommerce.core.catalog.domain.Sku;
-import org.broadleafcommerce.core.inventory.service.type.AvailabilityStatusType;
+import com.ultracommerce.common.presentation.AdminPresentation;
+import com.ultracommerce.common.presentation.client.SupportedFieldType;
+import com.ultracommerce.common.presentation.client.VisibilityEnum;
+import com.ultracommerce.core.catalog.domain.Sku;
+import com.ultracommerce.core.inventory.service.type.AvailabilityStatusType;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
@@ -48,7 +48,7 @@ import javax.persistence.Table;
  * <br>
  * This implementation uses a Hibernate implementation of JPA configured through annotations.
  * The Entity references the following tables:
- * BLC_SKU_AVAILABILITY
+ * UC_SKU_AVAILABILITY
  *
  * @see {@link Sku}
  * @author bpolster
@@ -58,8 +58,8 @@ import javax.persistence.Table;
 @Deprecated
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "BLC_SKU_AVAILABILITY")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region="blInventoryElements")
+@Table(name = "UC_SKU_AVAILABILITY")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region="ucInventoryElements")
 public class SkuAvailabilityImpl implements SkuAvailability {
 
     /** The Constant serialVersionUID. */
@@ -70,10 +70,10 @@ public class SkuAvailabilityImpl implements SkuAvailability {
     @GeneratedValue(generator = "SkuAvailabilityId")
     @GenericGenerator(
         name="SkuAvailabilityId",
-        strategy="org.broadleafcommerce.common.persistence.IdOverrideTableGenerator",
+        strategy="com.ultracommerce.common.persistence.IdOverrideTableGenerator",
         parameters = {
             @Parameter(name="segment_value", value="SkuAvailabilityImpl"),
-            @Parameter(name="entity_name", value="org.broadleafcommerce.core.inventory.domain.SkuAvailabilityImpl")
+            @Parameter(name="entity_name", value="com.ultracommerce.core.inventory.domain.SkuAvailabilityImpl")
         }
     )
     @Column(name = "SKU_AVAILABILITY_ID")
@@ -105,7 +105,7 @@ public class SkuAvailabilityImpl implements SkuAvailability {
     /** The description. */
     @Column(name = "AVAILABILITY_STATUS")
     @Index(name="SKUAVAIL_STATUS_INDEX", columnNames={"AVAILABILITY_STATUS"})
-    @AdminPresentation(friendlyName = "SkuAvailabilityImpl_Availability_Status", group = "SkuAvailabilityImpl_Description", fieldType= SupportedFieldType.BROADLEAF_ENUMERATION, broadleafEnumeration="org.broadleafcommerce.core.inventory.service.type.AvailabilityStatusType")
+    @AdminPresentation(friendlyName = "SkuAvailabilityImpl_Availability_Status", group = "SkuAvailabilityImpl_Description", fieldType= SupportedFieldType.ULTRA_ENUMERATION, ultraEnumeration="com.ultracommerce.core.inventory.service.type.AvailabilityStatusType")
     protected String availabilityStatus;
 
     /** The date this product will be available. */

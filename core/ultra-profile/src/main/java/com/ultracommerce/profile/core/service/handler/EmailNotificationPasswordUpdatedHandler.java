@@ -1,28 +1,28 @@
 /*
  * #%L
- * BroadleafCommerce Profile
+ * UltraCommerce Profile
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.profile.core.service.handler;
+package com.ultracommerce.profile.core.service.handler;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.email.service.EmailService;
-import org.broadleafcommerce.common.email.service.info.EmailInfo;
-import org.broadleafcommerce.common.security.util.PasswordReset;
-import org.broadleafcommerce.profile.core.domain.Customer;
+import com.ultracommerce.common.email.service.EmailService;
+import com.ultracommerce.common.email.service.info.EmailInfo;
+import com.ultracommerce.common.security.util.PasswordReset;
+import com.ultracommerce.profile.core.domain.Customer;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -30,7 +30,7 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * @deprecated - This email approach is no longer recommended.   See documentation for BroadleafCommerce    
+ * @deprecated - This email approach is no longer recommended.   See documentation for UltraCommerce    
  * @author bpolster
  */
 public class EmailNotificationPasswordUpdatedHandler implements PasswordUpdatedHandler {
@@ -38,7 +38,7 @@ public class EmailNotificationPasswordUpdatedHandler implements PasswordUpdatedH
     private static final Log LOG = LogFactory.getLog(EmailNotificationPasswordUpdatedHandler.class);
     public static final String CUSTOMER_PASSWORD_TEMPLATE_VARIABLE = "customerPasswordTemplateVariable";
     
-    @Resource(name="blEmailService")
+    @Resource(name="ucEmailService")
     protected EmailService emailService;
     
     protected Map<Locale, String> passwordResetEmailSubject = new HashMap<Locale, String>();
@@ -50,9 +50,9 @@ public class EmailNotificationPasswordUpdatedHandler implements PasswordUpdatedH
     @SuppressWarnings({ "rawtypes", "unchecked" })
     public void passwordChanged(PasswordReset passwordReset, Customer customer, String newPassword) {
         Locale localeToUse = null;
-        org.broadleafcommerce.common.locale.domain.Locale blLocale = customer.getCustomerLocale();
-        if (blLocale != null) {
-            String[] splitLocale = blLocale.getLocaleCode().split("_");
+        com.ultracommerce.common.locale.domain.Locale ucLocale = customer.getCustomerLocale();
+        if (ucLocale != null) {
+            String[] splitLocale = ucLocale.getLocaleCode().split("_");
             if (splitLocale.length > 1) {
                 localeToUse = new Locale(splitLocale[0], splitLocale[1]);
             } else {

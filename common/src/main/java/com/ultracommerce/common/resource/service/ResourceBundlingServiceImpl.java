@@ -1,34 +1,34 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.resource.service;
+package com.ultracommerce.common.resource.service;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.cache.StatisticsService;
-import org.broadleafcommerce.common.file.domain.FileWorkArea;
-import org.broadleafcommerce.common.file.service.BroadleafFileService;
-import org.broadleafcommerce.common.resource.BundledResourceInfo;
-import org.broadleafcommerce.common.resource.GeneratedResource;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
-import org.broadleafcommerce.common.web.resource.BroadleafDefaultResourceResolverChain;
+import com.ultracommerce.common.cache.StatisticsService;
+import com.ultracommerce.common.file.domain.FileWorkArea;
+import com.ultracommerce.common.file.service.UltraFileService;
+import com.ultracommerce.common.resource.BundledResourceInfo;
+import com.ultracommerce.common.resource.GeneratedResource;
+import com.ultracommerce.common.web.UltraRequestContext;
+import com.ultracommerce.common.web.resource.UltraDefaultResourceResolverChain;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -69,7 +69,7 @@ import de.jkeylockmanager.manager.LockCallback;
  * @author Andre Azzolini (apazzolini)
  * @author Brian Polster (bpolster)
  */
-@Service("blResourceBundlingService")
+@Service("ucResourceBundlingService")
 public class ResourceBundlingServiceImpl implements ResourceBundlingService {
     protected static final Log LOG = LogFactory.getLog(ResourceBundlingServiceImpl.class);
 
@@ -79,11 +79,11 @@ public class ResourceBundlingServiceImpl implements ResourceBundlingService {
      *  This has to use an @Resource annotation because Spring's @Autowired cannot work with the type erasure from the
      *  Map<String, List<String>> type.
      */
-    @javax.annotation.Resource(name = "blAdditionalBundleFiles")
+    @javax.annotation.Resource(name = "ucAdditionalBundleFiles")
     protected Map<String, List<String>> additionalBundleFiles;
             
-    @javax.annotation.Resource(name = "blFileService")
-    protected BroadleafFileService fileService;
+    @javax.annotation.Resource(name = "ucFileService")
+    protected UltraFileService fileService;
 
     /**
      * These properties are looked up manually within {@link #initializeResources(ContextRefreshedEvent)}
@@ -94,7 +94,7 @@ public class ResourceBundlingServiceImpl implements ResourceBundlingService {
     @Autowired
     protected ApplicationContext appctx;
 
-    @javax.annotation.Resource(name="blStatisticsService")
+    @javax.annotation.Resource(name="ucStatisticsService")
     protected StatisticsService statisticsService;
 
     @Autowired
@@ -105,12 +105,12 @@ public class ResourceBundlingServiceImpl implements ResourceBundlingService {
     private ConcurrentHashMap<String, BundledResourceInfo> createdBundles = new ConcurrentHashMap<>();
     
     /**
-     * Initalize the blJsResources and blCssResources. The reason that we are doing it this way and not via the normal
+     * Initalize the ucJsResources and ucCssResources. The reason that we are doing it this way and not via the normal
      * autowiring process is because there is technically a circular dependency here:
      *   ResourceBundlingService
-     *      -> blJsResources
-     *          -> blSiteResourceResolvers/blAdminResourceResolvers
-     *              -> blBundleResourceResolver
+     *      -> ucJsResources
+     *          -> ucSiteResourceResolvers/ucAdminResourceResolvers
+     *              -> ucBundleResourceResolver
      *                  -> ResourceBundlingService
      *                      -> ...
      * We can easily hit an IllegalStateException depending on the order in which things are initialized. This essentially breaks
@@ -121,7 +121,7 @@ public class ResourceBundlingServiceImpl implements ResourceBundlingService {
     public void initializeResources(ContextRefreshedEvent event) {
         if (jsResourceHandler == null) {
             try {
-                jsResourceHandler = appctx.getBean("blJsResources", ResourceHttpRequestHandler.class);
+                jsResourceHandler = appctx.getBean("ucJsResources", ResourceHttpRequestHandler.class);
             } catch (NoSuchBeanDefinitionException e) {
                 // do nothing, this bean is optional
             }
@@ -129,7 +129,7 @@ public class ResourceBundlingServiceImpl implements ResourceBundlingService {
         
         if (cssResourceHandler == null) {
             try {
-                cssResourceHandler = appctx.getBean("blCssResources", ResourceHttpRequestHandler.class);
+                cssResourceHandler = appctx.getBean("ucCssResources", ResourceHttpRequestHandler.class);
             } catch (NoSuchBeanDefinitionException e) {
                 // do nothing, this bean is optional
             }
@@ -145,7 +145,7 @@ public class ResourceBundlingServiceImpl implements ResourceBundlingService {
             createdBundles.remove(resourceName);
             ResourceHttpRequestHandler handler = findResourceHttpRequestHandler(requestedBundleName);
             if (handler != null) {
-                ResourceResolverChain resolverChain = new BroadleafDefaultResourceResolverChain(handler.getResourceResolvers());
+                ResourceResolverChain resolverChain = new UltraDefaultResourceResolverChain(handler.getResourceResolvers());
                 List<Resource> locations = handler.getLocations();
                 List<String> bundledFilePaths = bundleInfo.getBundledFilePaths();
 
@@ -165,7 +165,7 @@ public class ResourceBundlingServiceImpl implements ResourceBundlingService {
     public String resolveBundleResourceName(String requestedBundleName, String mappingPrefix, List<String> files, String bundleAppend) {
         ResourceHttpRequestHandler resourceRequestHandler = findResourceHttpRequestHandler(requestedBundleName);
         if (resourceRequestHandler != null && CollectionUtils.isNotEmpty(files)) {
-            ResourceResolverChain resolverChain = new BroadleafDefaultResourceResolverChain(
+            ResourceResolverChain resolverChain = new UltraDefaultResourceResolverChain(
                     resourceRequestHandler.getResourceResolvers());
             List<Resource> locations = resourceRequestHandler.getLocations();
                     
@@ -271,7 +271,7 @@ public class ResourceBundlingServiceImpl implements ResourceBundlingService {
     protected Resource createBundle(String versionedBundleName, List<String> filePaths,
             ResourceResolverChain resolverChain, List<Resource> locations, String bundleAppend) {
 
-        HttpServletRequest req = BroadleafRequestContext.getBroadleafRequestContext().getRequest();
+        HttpServletRequest req = UltraRequestContext.getUltraRequestContext().getRequest();
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         byte[] bytes;

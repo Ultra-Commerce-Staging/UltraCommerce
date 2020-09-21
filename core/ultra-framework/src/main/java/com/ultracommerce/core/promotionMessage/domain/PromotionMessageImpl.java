@@ -1,48 +1,48 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.promotionMessage.domain;
+package com.ultracommerce.core.promotionMessage.domain;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.broadleafcommerce.common.admin.domain.AdminMainEntity;
-import org.broadleafcommerce.common.copy.CreateResponse;
-import org.broadleafcommerce.common.copy.MultiTenantCopyContext;
-import org.broadleafcommerce.common.extensibility.jpa.clone.ClonePolicy;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransform;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformMember;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformTypes;
-import org.broadleafcommerce.common.locale.domain.Locale;
-import org.broadleafcommerce.common.locale.domain.LocaleImpl;
-import org.broadleafcommerce.common.media.domain.Media;
-import org.broadleafcommerce.common.media.domain.MediaImpl;
-import org.broadleafcommerce.common.persistence.ArchiveStatus;
-import org.broadleafcommerce.common.presentation.AdminPresentation;
-import org.broadleafcommerce.common.presentation.AdminPresentationToOneLookup;
-import org.broadleafcommerce.common.presentation.ConfigurationItem;
-import org.broadleafcommerce.common.presentation.RequiredOverride;
-import org.broadleafcommerce.common.presentation.ValidationConfiguration;
-import org.broadleafcommerce.common.presentation.client.SupportedFieldType;
-import org.broadleafcommerce.common.presentation.client.VisibilityEnum;
-import org.broadleafcommerce.common.presentation.override.AdminPresentationMergeEntry;
-import org.broadleafcommerce.common.presentation.override.AdminPresentationMergeOverride;
-import org.broadleafcommerce.common.presentation.override.AdminPresentationMergeOverrides;
-import org.broadleafcommerce.common.presentation.override.PropertyType;
-import org.broadleafcommerce.common.util.DateUtil;
+import com.ultracommerce.common.admin.domain.AdminMainEntity;
+import com.ultracommerce.common.copy.CreateResponse;
+import com.ultracommerce.common.copy.MultiTenantCopyContext;
+import com.ultracommerce.common.extensibility.jpa.clone.ClonePolicy;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransform;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransformMember;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransformTypes;
+import com.ultracommerce.common.locale.domain.Locale;
+import com.ultracommerce.common.locale.domain.LocaleImpl;
+import com.ultracommerce.common.media.domain.Media;
+import com.ultracommerce.common.media.domain.MediaImpl;
+import com.ultracommerce.common.persistence.ArchiveStatus;
+import com.ultracommerce.common.presentation.AdminPresentation;
+import com.ultracommerce.common.presentation.AdminPresentationToOneLookup;
+import com.ultracommerce.common.presentation.ConfigurationItem;
+import com.ultracommerce.common.presentation.RequiredOverride;
+import com.ultracommerce.common.presentation.ValidationConfiguration;
+import com.ultracommerce.common.presentation.client.SupportedFieldType;
+import com.ultracommerce.common.presentation.client.VisibilityEnum;
+import com.ultracommerce.common.presentation.override.AdminPresentationMergeEntry;
+import com.ultracommerce.common.presentation.override.AdminPresentationMergeOverride;
+import com.ultracommerce.common.presentation.override.AdminPresentationMergeOverrides;
+import com.ultracommerce.common.presentation.override.PropertyType;
+import com.ultracommerce.common.util.DateUtil;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
@@ -65,10 +65,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "BLC_PROMOTION_MESSAGE")
+@Table(name = "UC_PROMOTION_MESSAGE")
 @Inheritance(strategy=InheritanceType.JOINED)
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region="blStandardElements")
-@SQLDelete(sql="UPDATE BLC_PROMOTION_MESSAGE SET ARCHIVED = 'Y' WHERE PROMOTION_MESSAGE_ID = ?")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region="ucStandardElements")
+@SQLDelete(sql="UPDATE UC_PROMOTION_MESSAGE SET ARCHIVED = 'Y' WHERE PROMOTION_MESSAGE_ID = ?")
 @AdminPresentationMergeOverrides({
     @AdminPresentationMergeOverride(name = "media.url", mergeEntries = {
         @AdminPresentationMergeEntry(propertyType = PropertyType.AdminPresentation.EXCLUDED, booleanOverrideValue = false),
@@ -122,10 +122,10 @@ public class PromotionMessageImpl implements PromotionMessage, AdminMainEntity, 
     @GeneratedValue(generator= "PromotionMessageId")
     @GenericGenerator(
         name="PromotionMessageId",
-        strategy="org.broadleafcommerce.common.persistence.IdOverrideTableGenerator",
+        strategy="com.ultracommerce.common.persistence.IdOverrideTableGenerator",
         parameters = {
             @Parameter(name="segment_value", value="PromotionMessageImpl"),
-            @Parameter(name="entity_name", value="org.broadleafcommerce.core.promotionMessage.domain.PromotionMessageImpl")
+            @Parameter(name="entity_name", value="com.ultracommerce.core.promotionMessage.domain.PromotionMessageImpl")
         }
     )
     @Column(name = "PROMOTION_MESSAGE_ID")
@@ -174,7 +174,7 @@ public class PromotionMessageImpl implements PromotionMessage, AdminMainEntity, 
         group = GroupName.ActiveRange, groupOrder = GroupOrder.ActiveRange, order = FieldOrder.EndDate,
         validationConfigurations = {
             @ValidationConfiguration(
-                validationImplementation = "blAfterStartDateValidator",
+                validationImplementation = "ucAfterStartDateValidator",
                 configurationItems = {
                     @ConfigurationItem(itemName = "otherField", itemValue = "startDate")
                 })
@@ -185,8 +185,8 @@ public class PromotionMessageImpl implements PromotionMessage, AdminMainEntity, 
     @AdminPresentation(friendlyName = "PromotionMessageImpl_MessagePlacement",
         tab = TabName.General, tabOrder = TabOrder.General,
         group = GroupName.Placement, groupOrder = GroupOrder.Placement, order = FieldOrder.MessagePlacement,
-        fieldType= SupportedFieldType.BROADLEAF_ENUMERATION,
-        broadleafEnumeration="org.broadleafcommerce.core.promotionMessage.domain.type.PromotionMessagePlacementType",
+        fieldType= SupportedFieldType.ULTRA_ENUMERATION,
+        ultraEnumeration="com.ultracommerce.core.promotionMessage.domain.type.PromotionMessagePlacementType",
         defaultValue = "EVERYWHERE",
         requiredOverride = RequiredOverride.REQUIRED)
     protected String messagePlacement;

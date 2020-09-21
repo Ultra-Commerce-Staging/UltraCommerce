@@ -1,21 +1,21 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.presentation;
+package com.ultracommerce.common.presentation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -33,14 +33,14 @@ import java.lang.annotation.Target;
 public @interface ValidationConfiguration {
     
     /**
-     * <p>The fully qualified classname of the org.broadleafcommerce.openadmin.server.service.persistence.validation.PropertyValidator
+     * <p>The fully qualified classname of the com.ultracommerce.openadmin.server.service.persistence.validation.PropertyValidator
      * instance to use for validation</p>
      * 
      * <p>If you need to do dependency injection, this can also correspond to a bean ID that implements the 
-     * org.broadleafcommerce.openadmin.server.service.persistence.validation.PropertyValidator interface.</p>
+     * com.ultracommerce.openadmin.server.service.persistence.validation.PropertyValidator interface.</p>
      * 
      * @return the validator implementation. This implementation should be an instance of
-     * org.broadleafcommerce.openadmin.server.service.persistence.validation.PropertyValidator and could be either a bean
+     * com.ultracommerce.openadmin.server.service.persistence.validation.PropertyValidator and could be either a bean
      * name or fully-qualified class name
      */
     String validationImplementation();

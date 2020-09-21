@@ -1,45 +1,45 @@
 /*
  * #%L
- * BroadleafCommerce Framework Web
+ * UltraCommerce Framework Web
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.web.controller.cart;
+package com.ultracommerce.core.web.controller.cart;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.broadleafcommerce.common.util.BLCMessageUtils;
-import org.broadleafcommerce.core.catalog.domain.Product;
-import org.broadleafcommerce.core.offer.domain.OfferCode;
-import org.broadleafcommerce.core.offer.service.exception.OfferAlreadyAddedException;
-import org.broadleafcommerce.core.offer.service.exception.OfferException;
-import org.broadleafcommerce.core.offer.service.exception.OfferExpiredException;
-import org.broadleafcommerce.core.offer.service.exception.OfferMaxUseExceededException;
-import org.broadleafcommerce.core.order.domain.DiscreteOrderItem;
-import org.broadleafcommerce.core.order.domain.NullOrderImpl;
-import org.broadleafcommerce.core.order.domain.Order;
-import org.broadleafcommerce.core.order.domain.OrderItem;
-import org.broadleafcommerce.core.order.service.call.AddToCartItem;
-import org.broadleafcommerce.core.order.service.call.ConfigurableOrderItemRequest;
-import org.broadleafcommerce.core.order.service.call.OrderItemRequestDTO;
-import org.broadleafcommerce.core.order.service.exception.AddToCartException;
-import org.broadleafcommerce.core.order.service.exception.IllegalCartOperationException;
-import org.broadleafcommerce.core.order.service.exception.RemoveFromCartException;
-import org.broadleafcommerce.core.order.service.exception.UpdateCartException;
-import org.broadleafcommerce.core.pricing.service.exception.PricingException;
-import org.broadleafcommerce.core.web.order.CartState;
-import org.broadleafcommerce.profile.web.core.CustomerState;
+import com.ultracommerce.common.util.UCMessageUtils;
+import com.ultracommerce.core.catalog.domain.Product;
+import com.ultracommerce.core.offer.domain.OfferCode;
+import com.ultracommerce.core.offer.service.exception.OfferAlreadyAddedException;
+import com.ultracommerce.core.offer.service.exception.OfferException;
+import com.ultracommerce.core.offer.service.exception.OfferExpiredException;
+import com.ultracommerce.core.offer.service.exception.OfferMaxUseExceededException;
+import com.ultracommerce.core.order.domain.DiscreteOrderItem;
+import com.ultracommerce.core.order.domain.NullOrderImpl;
+import com.ultracommerce.core.order.domain.Order;
+import com.ultracommerce.core.order.domain.OrderItem;
+import com.ultracommerce.core.order.service.call.AddToCartItem;
+import com.ultracommerce.core.order.service.call.ConfigurableOrderItemRequest;
+import com.ultracommerce.core.order.service.call.OrderItemRequestDTO;
+import com.ultracommerce.core.order.service.exception.AddToCartException;
+import com.ultracommerce.core.order.service.exception.IllegalCartOperationException;
+import com.ultracommerce.core.order.service.exception.RemoveFromCartException;
+import com.ultracommerce.core.order.service.exception.UpdateCartException;
+import com.ultracommerce.core.pricing.service.exception.PricingException;
+import com.ultracommerce.core.web.order.CartState;
+import com.ultracommerce.profile.web.core.CustomerState;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.ui.Model;
 
@@ -58,7 +58,7 @@ import javax.servlet.http.HttpServletResponse;
  * 
  * @author Andre Azzolini (apazzolini)
  */
-public class BroadleafCartController extends AbstractCartController {
+public class UltraCartController extends AbstractCartController {
 
     protected static String cartView = "cart/cart";
     protected static String checkoutView = "checkout/checkout";
@@ -66,7 +66,7 @@ public class BroadleafCartController extends AbstractCartController {
     protected static String configureView = "configure/partials/configure";
     protected static String configurePageRedirect = "redirect:/cart/configure";
 
-    protected static String ALL_PRODUCTS_ATTRIBUTE_NAME = "blcAllDisplayedProducts";
+    protected static String ALL_PRODUCTS_ATTRIBUTE_NAME = "ucAllDisplayedProducts";
 
     @Value("${automatically.add.complete.items}")
     protected boolean automaticallyAddCompleteItems;
@@ -483,7 +483,7 @@ public class BroadleafCartController extends AbstractCartController {
     public Map<String, String> handleIllegalCartOpException(IllegalCartOperationException ex) {
         Map<String, String> returnMap = new HashMap<>();
         returnMap.put("error", "illegalCartOperation");
-        returnMap.put("exception", BLCMessageUtils.getMessage(ex.getType()));
+        returnMap.put("exception", UCMessageUtils.getMessage(ex.getType()));
         return returnMap;
     }
 

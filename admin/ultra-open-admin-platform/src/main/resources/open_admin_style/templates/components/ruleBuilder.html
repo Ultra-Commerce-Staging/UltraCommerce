@@ -1,7 +1,7 @@
-<blc_admin:admin_field_builder fieldBuilder="${field.fieldBuilder}" ceilingEntity="${currentAdminSection.ceilingEntity}">
+<uc_admin:admin_field_builder fieldBuilder="${field.fieldBuilder}" ceilingEntity="${currentAdminSection.ceilingEntity}">
 
     <!--/*
-    The BLC Rule Builder has several different UI states in which it can be rendered:
+    The UC Rule Builder has several different UI states in which it can be rendered:
     For example, you may wish to display a specific builder differently based on its position on the page.
     This component will render and respond to the "displayType" attribute on the field:
         - "NORMAL" : normal display of the builder
@@ -131,4 +131,4 @@
     </div>
 
     <span class="error" th:errors="*{fields['__${field.name}__'].value}"></span>
-</blc_admin:admin_field_builder>
+</uc_admin:admin_field_builder>

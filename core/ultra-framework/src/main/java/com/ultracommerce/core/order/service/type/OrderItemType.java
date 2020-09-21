@@ -1,23 +1,23 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.order.service.type;
+package com.ultracommerce.core.order.service.type;
 
-import org.broadleafcommerce.common.BroadleafEnumerationType;
+import com.ultracommerce.common.UltraEnumerationType;
 
 import java.io.Serializable;
 import java.util.LinkedHashMap;
@@ -28,17 +28,17 @@ import java.util.Map;
  * 
  * @author jfischer
  */
-public class OrderItemType implements Serializable, BroadleafEnumerationType {
+public class OrderItemType implements Serializable, UltraEnumerationType {
 
     private static final long serialVersionUID = 1L;
 
     private static final Map<String, OrderItemType> TYPES = new LinkedHashMap<String, OrderItemType>();
 
-    public static final OrderItemType BASIC  = new OrderItemType("org.broadleafcommerce.core.order.domain.OrderItem", "Basic Order Item");
-    public static final OrderItemType DISCRETE  = new OrderItemType("org.broadleafcommerce.core.order.domain.DiscreteOrderItem", "Discrete Order Item");
-    public static final OrderItemType EXTERNALLY_PRICED  = new OrderItemType("org.broadleafcommerce.core.order.domain.DynamicPriceDiscreteOrderItem", "Externally Priced Discrete Order Item");
-    public static final OrderItemType BUNDLE = new OrderItemType("org.broadleafcommerce.core.order.domain.BundleOrderItem", "Bundle Order Item");
-    public static final OrderItemType GIFTWRAP = new OrderItemType("org.broadleafcommerce.core.order.domain.GiftWrapOrderItem", "Gift Wrap Order Item");
+    public static final OrderItemType BASIC  = new OrderItemType("com.ultracommerce.core.order.domain.OrderItem", "Basic Order Item");
+    public static final OrderItemType DISCRETE  = new OrderItemType("com.ultracommerce.core.order.domain.DiscreteOrderItem", "Discrete Order Item");
+    public static final OrderItemType EXTERNALLY_PRICED  = new OrderItemType("com.ultracommerce.core.order.domain.DynamicPriceDiscreteOrderItem", "Externally Priced Discrete Order Item");
+    public static final OrderItemType BUNDLE = new OrderItemType("com.ultracommerce.core.order.domain.BundleOrderItem", "Bundle Order Item");
+    public static final OrderItemType GIFTWRAP = new OrderItemType("com.ultracommerce.core.order.domain.GiftWrapOrderItem", "Gift Wrap Order Item");
 
     public static OrderItemType getInstance(final String type) {
         return TYPES.get(type);

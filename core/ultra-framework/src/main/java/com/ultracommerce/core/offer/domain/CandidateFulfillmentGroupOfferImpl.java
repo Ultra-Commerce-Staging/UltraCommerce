@@ -1,29 +1,29 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.offer.domain;
+package com.ultracommerce.core.offer.domain;
 
-import org.broadleafcommerce.common.currency.util.BroadleafCurrencyUtils;
-import org.broadleafcommerce.common.money.Money;
-import org.broadleafcommerce.common.persistence.DefaultPostLoaderDao;
-import org.broadleafcommerce.common.persistence.PostLoaderDao;
-import org.broadleafcommerce.common.util.HibernateUtils;
-import org.broadleafcommerce.core.order.domain.FulfillmentGroup;
-import org.broadleafcommerce.core.order.domain.FulfillmentGroupImpl;
+import com.ultracommerce.common.currency.util.UltraCurrencyUtils;
+import com.ultracommerce.common.money.Money;
+import com.ultracommerce.common.persistence.DefaultPostLoaderDao;
+import com.ultracommerce.common.persistence.PostLoaderDao;
+import com.ultracommerce.common.util.HibernateUtils;
+import com.ultracommerce.core.order.domain.FulfillmentGroup;
+import com.ultracommerce.core.order.domain.FulfillmentGroupImpl;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
@@ -45,9 +45,9 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Entity
-@Table(name = "BLC_CANDIDATE_FG_OFFER")
+@Table(name = "UC_CANDIDATE_FG_OFFER")
 @Inheritance(strategy=InheritanceType.JOINED)
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "blOrderElements")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "ucOrderElements")
 public class CandidateFulfillmentGroupOfferImpl implements CandidateFulfillmentGroupOffer {
 
     public static final long serialVersionUID = 1L;
@@ -56,10 +56,10 @@ public class CandidateFulfillmentGroupOfferImpl implements CandidateFulfillmentG
     @GeneratedValue(generator= "CandidateFGOfferId")
     @GenericGenerator(
         name="CandidateFGOfferId",
-        strategy="org.broadleafcommerce.common.persistence.IdOverrideTableGenerator",
+        strategy="com.ultracommerce.common.persistence.IdOverrideTableGenerator",
         parameters = {
             @Parameter(name="segment_value", value="CandidateFulfillmentGroupOfferImpl"),
-            @Parameter(name="entity_name", value="org.broadleafcommerce.core.offer.domain.CandidateFulfillmentGroupOfferImpl")
+            @Parameter(name="entity_name", value="com.ultracommerce.core.offer.domain.CandidateFulfillmentGroupOfferImpl")
         }
     )
     @Column(name = "CANDIDATE_FG_OFFER_ID")
@@ -116,7 +116,7 @@ public class CandidateFulfillmentGroupOfferImpl implements CandidateFulfillmentG
 
     @Override
     public Money getDiscountedPrice() {
-        return discountedPrice == null ? null : BroadleafCurrencyUtils.getMoney(discountedPrice, getFulfillmentGroup().getOrder().getCurrency());
+        return discountedPrice == null ? null : UltraCurrencyUtils.getMoney(discountedPrice, getFulfillmentGroup().getOrder().getCurrency());
     }
     
     @Override

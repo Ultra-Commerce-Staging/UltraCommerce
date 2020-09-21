@@ -1,27 +1,27 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.pricing.service.fulfillment.provider;
+package com.ultracommerce.core.pricing.service.fulfillment.provider;
 
-import org.broadleafcommerce.common.vendor.service.exception.FulfillmentPriceException;
-import org.broadleafcommerce.core.order.domain.FulfillmentGroup;
-import org.broadleafcommerce.core.order.domain.FulfillmentOption;
-import org.broadleafcommerce.core.pricing.service.FulfillmentPricingService;
-import org.broadleafcommerce.core.pricing.service.workflow.FulfillmentGroupPricingActivity;
+import com.ultracommerce.common.vendor.service.exception.FulfillmentPriceException;
+import com.ultracommerce.core.order.domain.FulfillmentGroup;
+import com.ultracommerce.core.order.domain.FulfillmentOption;
+import com.ultracommerce.core.pricing.service.FulfillmentPricingService;
+import com.ultracommerce.core.pricing.service.workflow.FulfillmentGroupPricingActivity;
 
 import java.util.Set;
 
@@ -37,7 +37,7 @@ public interface FulfillmentPricingProvider {
      * Calculates the total cost for this FulfillmentGroup. Specific configurations for calculating
      * this cost can come from {@link FulfillmentGroup#getFulfillmentOption()}. This method is invoked
      * during the pricing workflow and will only be called if {@link #canCalculateCostForFulfillmentGroup(FulfillmentGroup, FulfillmentOption)}
-     * returns true. This should call {@link FulfillmentGroup#setShippingPrice(org.broadleafcommerce.common.money.Money)} to
+     * returns true. This should call {@link FulfillmentGroup#setShippingPrice(com.ultracommerce.common.money.Money)} to
      * set the shipping price on <b>fulfillmentGroup</b>
      * 
      * @param fulfillmentGroup - the {@link FulfillmentGroup} to calculate costs for
@@ -64,7 +64,7 @@ public interface FulfillmentPricingProvider {
      * Estimates the cost for the fulfilling the given fulfillment group with the given options. The response should not include prices that the implementor of this interface
      * cannot respond to.  So, if the invoker of this method passes in several types of fulfillment options, the response should only contain prices for the fulfillment options
      * that will would cause a call to
-     * {@link #canCalculateCostForFulfillmentGroup(org.broadleafcommerce.core.order.domain.FulfillmentGroup, org.broadleafcommerce.core.order.domain.FulfillmentOption)}
+     * {@link #canCalculateCostForFulfillmentGroup(com.ultracommerce.core.order.domain.FulfillmentGroup, com.ultracommerce.core.order.domain.FulfillmentOption)}
      * to return true.  This method may return null or it may return a non-null response with an empty map, indicating that no price estimate was available for the options given. This
      * method SHOULD NOT throw an exception if it encounters a FulfillmentOption that it can not price. It should simply ignore that option.
      * 

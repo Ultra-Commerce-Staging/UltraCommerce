@@ -1,25 +1,25 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2017 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.config;
+package com.ultracommerce.common.config;
 
-import org.broadleafcommerce.common.config.EnableBroadleafAdminServletAutoConfiguration.BroadleafAdminServletAutoConfiguration;
-import org.broadleafcommerce.common.config.EnableBroadleafAdminServletAutoConfiguration.BroadleafAdminServletAutoConfigurationOverrides;
-import org.broadleafcommerce.common.extensibility.FrameworkXmlBeanDefinitionReader;
+import com.ultracommerce.common.config.EnableUltraAdminServletAutoConfiguration.UltraAdminServletAutoConfiguration;
+import com.ultracommerce.common.config.EnableUltraAdminServletAutoConfiguration.UltraAdminServletAutoConfigurationOverrides;
+import com.ultracommerce.common.extensibility.FrameworkXmlBeanDefinitionReader;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.ImportResource;
@@ -34,7 +34,7 @@ import javax.servlet.ServletContainerInitializer;
 
 /**
  * <p>
- * Bootstraps Broadleaf admin configuration XML for both servlet and non-servlet beans. If you have a customized {@link ServletContainerInitializer}
+ * Bootstraps Ultra admin configuration XML for both servlet and non-servlet beans. If you have a customized {@link ServletContainerInitializer}
  * with a servlet-specific {@link ApplicationContext}, this annotation should only be placed on an {@literal @}Configuration class within
  * <b>that</b> servlet-specific {@lnk ApplicationContext}. If this is not the case and no servlet-specific {@link ApplicationContext} exists in your
  * project and you are using Spring Boot, this <b>must</b> be placed on an <b>inner static class</b> within the {@literal @}SpringBootApplication class. Example:
@@ -44,8 +44,8 @@ import javax.servlet.ServletContainerInitializer;
  * public class MyApplication extends SpringBootServletInitializer {
  * 
  *     {@literal @}Configuration
- *     {@literal @}EnableBroadleafAdminServletAutoConfiguration
- *     public static class BroadleafConfiguration { }
+ *     {@literal @}EnableUltraAdminServletAutoConfiguration
+ *     public static class UltraConfiguration { }
  *     
  *     public static void main(String[] args) {
  *         SpringApplication.run(ApiApplication.class, args);
@@ -65,8 +65,8 @@ import javax.servlet.ServletContainerInitializer;
  * any additional {@literal @}Import applied.
  * 
  * <p>
- * This annotation assumes that you have activated the root configuration via {@link EnableBroadleafAdminRootAutoConfiguration} in a parent
- * context. Rather than utilizing this annotation in a parent-child configuration consider using {@link EnableBroadleafAdminAutoConfiguration} to
+ * This annotation assumes that you have activated the root configuration via {@link EnableUltraAdminRootAutoConfiguration} in a parent
+ * context. Rather than utilizing this annotation in a parent-child configuration consider using {@link EnableUltraAdminAutoConfiguration} to
  * ensure that only a single {@link ApplicationContext} is present.
  * 
  * <p>
@@ -75,35 +75,35 @@ import javax.servlet.ServletContainerInitializer;
  *
  * @author Phillip Verheyden (phillipuniverse)
  * @author Nick Crum (ncrum)
- * @see EnableBroadleafAdminAutoConfiguration
- * @see EnableBroadleafAdminRootAutoConfiguration
- * @see EnableBroadleafAutoConfiguration
+ * @see EnableUltraAdminAutoConfiguration
+ * @see EnableUltraAdminRootAutoConfiguration
+ * @see EnableUltraAutoConfiguration
  * @since 5.2
  */
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Import({
-    EnableBroadleafServletAutoConfiguration.BroadleafServletAutoConfiguration.class,
-    BroadleafAdminServletAutoConfiguration.class,
-    BroadleafAdminServletAutoConfigurationOverrides.class
+    EnableUltraServletAutoConfiguration.UltraServletAutoConfiguration.class,
+    UltraAdminServletAutoConfiguration.class,
+    UltraAdminServletAutoConfigurationOverrides.class
 })
-public @interface EnableBroadleafAdminServletAutoConfiguration {
+public @interface EnableUltraAdminServletAutoConfiguration {
 
     /**
      * We are deliberately leaving off the {@link org.springframework.context.annotation.Configuration} annotation since
      * this inner class is being included in the {@code Import} above, which interprets this as a
      * {@link org.springframework.context.annotation.Configuration}. We do this to avoid component scanning this inner class.
      */
-    @Import(EnableBroadleafServletAutoConfiguration.BroadleafServletAutoConfiguration.class)
+    @Import(EnableUltraServletAutoConfiguration.UltraServletAutoConfiguration.class)
     @ImportResource(locations = {
-            "classpath*:/blc-config/admin/framework/bl-*-applicationContext-servlet.xml",
-            "classpath*:/blc-config/admin/early/bl-*-applicationContext-servlet.xml",
-            "classpath*:/blc-config/admin/bl-*-applicationContext-servlet.xml",
-            "classpath*:/blc-config/admin/late/bl-*-applicationContext-servlet.xml",
+            "classpath*:/uc-config/admin/framework/uc-*-applicationContext-servlet.xml",
+            "classpath*:/uc-config/admin/early/uc-*-applicationContext-servlet.xml",
+            "classpath*:/uc-config/admin/uc-*-applicationContext-servlet.xml",
+            "classpath*:/uc-config/admin/late/uc-*-applicationContext-servlet.xml",
     }, reader = FrameworkXmlBeanDefinitionReader.class)
-    class BroadleafAdminServletAutoConfiguration {}
+    class UltraAdminServletAutoConfiguration {}
     
     @ImportResource("classpath:/override-contexts/admin-servlet-autoconfiguration-overrides.xml")
-    class BroadleafAdminServletAutoConfigurationOverrides {}
+    class UltraAdminServletAutoConfigurationOverrides {}
 }

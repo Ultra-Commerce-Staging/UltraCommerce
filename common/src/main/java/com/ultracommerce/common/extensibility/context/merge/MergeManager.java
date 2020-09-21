@@ -1,29 +1,29 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.extensibility.context.merge;
+package com.ultracommerce.common.extensibility.context.merge;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.extensibility.context.merge.exceptions.MergeException;
-import org.broadleafcommerce.common.extensibility.context.merge.exceptions.MergeManagerSetupException;
-import org.broadleafcommerce.common.extensibility.context.merge.handlers.MergeHandler;
-import org.broadleafcommerce.common.extensibility.context.merge.handlers.MergeHandlerAdapter;
+import com.ultracommerce.common.extensibility.context.merge.exceptions.MergeException;
+import com.ultracommerce.common.extensibility.context.merge.exceptions.MergeManagerSetupException;
+import com.ultracommerce.common.extensibility.context.merge.handlers.MergeHandler;
+import com.ultracommerce.common.extensibility.context.merge.handlers.MergeHandlerAdapter;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
@@ -69,11 +69,11 @@ public class MergeManager {
      * may be overriden to change their current behavior. This is accomplished by
      * specifying the system property denoted by the key MergeManager.MERGE_DEFINITION_SYSTEM_PROPERTY
      * with a value stating the fully qualified path of user-created property file. Please refer
-     * to the default properties file located at org/broadleafcommerce/profile/extensibility/context/merge/default.properties
+     * to the default properties file located at com/ultracommerce/profile/extensibility/context/merge/default.properties
      * for more details.
      *
      */
-    public static final String MERGE_DEFINITION_SYSTEM_PROPERTY = "org.broadleafcommerce.extensibility.context.merge.handlers.merge.properties";
+    public static final String MERGE_DEFINITION_SYSTEM_PROPERTY = "com.ultracommerce.extensibility.context.merge.handlers.merge.properties";
 
     private static final Log LOG = LogFactory.getLog(MergeManager.class);
 
@@ -116,7 +116,7 @@ public class MergeManager {
         BufferedReader bufferedReader = null;
         try {
             inputStream = this.getClass().getClassLoader()
-                    .getResourceAsStream("/broadleaf-commmerce/skipMergeComponents.txt");
+                    .getResourceAsStream("/ultra-commmerce/skipMergeComponents.txt");
 
             if (inputStream == null) {
                 return;
@@ -138,7 +138,7 @@ public class MergeManager {
                 removeSkipMergeComponents(props, line);
             }
         } catch (IOException e) {
-            LOG.error("Error reading resource - /broadleaf-commmerce/skipMergeComponents.txt", e);
+            LOG.error("Error reading resource - /ultra-commmerce/skipMergeComponents.txt", e);
         } finally {
             if (inputStream != null) {
                 IOUtils.closeQuietly(inputStream);
@@ -231,7 +231,7 @@ public class MergeManager {
      * @param stream1
      * @param stream2
      * @return the stream representing the merged document
-     * @throws org.broadleafcommerce.common.extensibility.context.merge.exceptions.MergeException
+     * @throws com.ultracommerce.common.extensibility.context.merge.exceptions.MergeException
      */
     public ResourceInputStream merge(ResourceInputStream stream1, ResourceInputStream stream2) throws MergeException {
         try {

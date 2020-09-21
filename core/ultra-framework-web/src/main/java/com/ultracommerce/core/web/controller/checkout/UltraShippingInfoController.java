@@ -1,40 +1,40 @@
 /*
  * #%L
- * BroadleafCommerce Framework Web
+ * UltraCommerce Framework Web
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
 
-package org.broadleafcommerce.core.web.controller.checkout;
+package com.ultracommerce.core.web.controller.checkout;
 
 import org.apache.commons.lang.StringUtils;
-import org.broadleafcommerce.common.exception.ServiceException;
-import org.broadleafcommerce.common.payment.PaymentType;
-import org.broadleafcommerce.core.order.domain.FulfillmentGroup;
-import org.broadleafcommerce.core.order.domain.FulfillmentOption;
-import org.broadleafcommerce.core.order.domain.Order;
-import org.broadleafcommerce.core.payment.domain.OrderPayment;
-import org.broadleafcommerce.core.pricing.service.exception.PricingException;
-import org.broadleafcommerce.core.web.checkout.model.MultiShipInstructionForm;
-import org.broadleafcommerce.core.web.checkout.model.OrderMultishipOptionForm;
-import org.broadleafcommerce.core.web.checkout.model.ShippingInfoForm;
-import org.broadleafcommerce.core.web.order.CartState;
-import org.broadleafcommerce.profile.core.domain.Address;
-import org.broadleafcommerce.profile.core.domain.Customer;
-import org.broadleafcommerce.profile.core.domain.CustomerAddress;
-import org.broadleafcommerce.profile.core.domain.Phone;
-import org.broadleafcommerce.profile.web.core.CustomerState;
+import com.ultracommerce.common.exception.ServiceException;
+import com.ultracommerce.common.payment.PaymentType;
+import com.ultracommerce.core.order.domain.FulfillmentGroup;
+import com.ultracommerce.core.order.domain.FulfillmentOption;
+import com.ultracommerce.core.order.domain.Order;
+import com.ultracommerce.core.payment.domain.OrderPayment;
+import com.ultracommerce.core.pricing.service.exception.PricingException;
+import com.ultracommerce.core.web.checkout.model.MultiShipInstructionForm;
+import com.ultracommerce.core.web.checkout.model.OrderMultishipOptionForm;
+import com.ultracommerce.core.web.checkout.model.ShippingInfoForm;
+import com.ultracommerce.core.web.order.CartState;
+import com.ultracommerce.profile.core.domain.Address;
+import com.ultracommerce.profile.core.domain.Customer;
+import com.ultracommerce.profile.core.domain.CustomerAddress;
+import com.ultracommerce.profile.core.domain.Phone;
+import com.ultracommerce.profile.web.core.CustomerState;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 
@@ -48,7 +48,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author Elbert Bautista (elbertbautista)
  * @author Joshua Skorton (jskorton)
  */
-public class BroadleafShippingInfoController extends AbstractCheckoutController {
+public class UltraShippingInfoController extends AbstractCheckoutController {
 
     protected static String multishipView = "checkout/multiship";
     protected static String multishipAddAddressView = "checkout/multishipAddAddressForm";
@@ -79,7 +79,7 @@ public class BroadleafShippingInfoController extends AbstractCheckoutController 
      * @param response
      * @param model
      * @return a redirect to /checkout
-     * @throws org.broadleafcommerce.core.pricing.service.exception.PricingException
+     * @throws com.ultracommerce.core.pricing.service.exception.PricingException
      */
     public String convertToSingleship(HttpServletRequest request, HttpServletResponse response, Model model) throws PricingException {
         Order cart = CartState.getCart();
@@ -94,7 +94,7 @@ public class BroadleafShippingInfoController extends AbstractCheckoutController 
     /**
      * Processes the request to save a single shipping address.  Allows modules to add module specific shipping logic.
      *
-     * Note:  the default Broadleaf implementation creates an order
+     * Note:  the default Ultra implementation creates an order
      * with a single fulfillment group. In the case of shipping to multiple addresses,
      * the multiship methods should be used.
      *
@@ -103,7 +103,7 @@ public class BroadleafShippingInfoController extends AbstractCheckoutController 
      * @param model
      * @param shippingForm
      * @return the return path
-     * @throws org.broadleafcommerce.common.exception.ServiceException
+     * @throws com.ultracommerce.common.exception.ServiceException
      */
     public String saveSingleShip(HttpServletRequest request, HttpServletResponse response, Model model,
                                  ShippingInfoForm shippingForm, BindingResult result) throws PricingException, ServiceException {
@@ -190,7 +190,7 @@ public class BroadleafShippingInfoController extends AbstractCheckoutController 
      * Renders the multiship page. This page is used by the user when shipping items
      * to different locations (or with different FulfillmentOptions) is desired.
      *
-     * Note that the default Broadleaf implementation will require the user to input
+     * Note that the default Ultra implementation will require the user to input
      * an Address and FulfillmentOption for each quantity of each DiscreteOrderItem.
      *
      * @param request

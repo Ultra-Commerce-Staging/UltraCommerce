@@ -1,30 +1,30 @@
 /*
  * #%L
- * BroadleafCommerce Profile Web
+ * UltraCommerce Profile Web
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.profile.web.core.security;
+package com.ultracommerce.profile.web.core.security;
 
 import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.util.StringUtil;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
-import org.broadleafcommerce.profile.core.domain.Customer;
-import org.broadleafcommerce.profile.core.service.CustomerService;
-import org.broadleafcommerce.profile.web.core.CustomerState;
+import com.ultracommerce.common.util.StringUtil;
+import com.ultracommerce.common.web.UltraRequestContext;
+import com.ultracommerce.profile.core.domain.Customer;
+import com.ultracommerce.profile.core.service.CustomerService;
+import com.ultracommerce.profile.web.core.CustomerState;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.Ordered;
@@ -44,7 +44,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * This is a basic filter for finding the customer ID on the request and setting the customer object on the request.
- * This must come after the BroadleafRequestFilter (blRequestFilter). This should come after any security filters.
+ * This must come after the UltraRequestFilter (ucRequestFilter). This should come after any security filters.
  * This filter DOES NOT provide any security.  It simply looks for a "customerId" parameter on the request or in the request header.  If it finds
  * this parameter it looks up the customer and makes it available as a request attribute.  This is generally for use in a filter chain for RESTful web services,
  * allowing the client consuming services to specify the customerId on whos behalf they are invoking the service.  It is assumed that services are invoked either
@@ -62,11 +62,11 @@ public class RestApiCustomerStateFilter extends GenericFilterBean implements Ord
     protected static final Log LOG = LogFactory.getLog(RestApiCustomerStateFilter.class);
 
     @Autowired
-    @Qualifier("blCustomerService")
+    @Qualifier("ucCustomerService")
     protected CustomerService customerService;
 
     public static final String CUSTOMER_ID_ATTRIBUTE = "customerId";
-    public static final String BLC_RULE_MAP_PARAM = "blRuleMap";
+    public static final String UC_RULE_MAP_PARAM = "ucRuleMap";
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
@@ -116,7 +116,7 @@ public class RestApiCustomerStateFilter extends GenericFilterBean implements Ord
         }
         if (CustomerState.getCustomer() == null) { //we need to create an anonymous customer for API calls
             ServletWebRequest servletWebRequest = new ServletWebRequest(request, (HttpServletResponse)servletResponse);
-            BroadleafRequestContext.getBroadleafRequestContext().setWebRequest(servletWebRequest);
+            UltraRequestContext.getUltraRequestContext().setWebRequest(servletWebRequest);
             Customer customer = this.customerService.createCustomer();
             CustomerState.setCustomer(customer);
             setupCustomerForRuleProcessing(customer, request);
@@ -128,12 +128,12 @@ public class RestApiCustomerStateFilter extends GenericFilterBean implements Ord
     private void setupCustomerForRuleProcessing(Customer customer, HttpServletRequest request) {
         // Setup customer for content rule processing
         @SuppressWarnings("unchecked")
-        Map<String,Object> ruleMap = (Map<String, Object>) request.getAttribute(BLC_RULE_MAP_PARAM);
+        Map<String,Object> ruleMap = (Map<String, Object>) request.getAttribute(UC_RULE_MAP_PARAM);
         if (ruleMap == null) {
             ruleMap = new HashMap<String,Object>();
         }
         ruleMap.put("customer", customer);
-        request.setAttribute(BLC_RULE_MAP_PARAM, ruleMap);
+        request.setAttribute(UC_RULE_MAP_PARAM, ruleMap);
     }
 
     @Override

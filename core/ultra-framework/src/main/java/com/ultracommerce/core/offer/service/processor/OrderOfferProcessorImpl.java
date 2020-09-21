@@ -1,52 +1,52 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.offer.service.processor;
+package com.ultracommerce.core.offer.service.processor;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.money.Money;
-import org.broadleafcommerce.core.offer.dao.OfferDao;
-import org.broadleafcommerce.core.offer.domain.FulfillmentGroupAdjustment;
-import org.broadleafcommerce.core.offer.domain.Offer;
-import org.broadleafcommerce.core.offer.domain.OfferOfferRuleXref;
-import org.broadleafcommerce.core.offer.domain.OrderAdjustment;
-import org.broadleafcommerce.core.offer.domain.OrderItemPriceDetailAdjustment;
-import org.broadleafcommerce.core.offer.service.OfferServiceUtilities;
-import org.broadleafcommerce.core.offer.service.discount.CandidatePromotionItems;
-import org.broadleafcommerce.core.offer.service.discount.PromotionQualifier;
-import org.broadleafcommerce.core.offer.service.discount.domain.PromotableCandidateOrderOffer;
-import org.broadleafcommerce.core.offer.service.discount.domain.PromotableFulfillmentGroup;
-import org.broadleafcommerce.core.offer.service.discount.domain.PromotableFulfillmentGroupAdjustment;
-import org.broadleafcommerce.core.offer.service.discount.domain.PromotableItemFactory;
-import org.broadleafcommerce.core.offer.service.discount.domain.PromotableOfferUtility;
-import org.broadleafcommerce.core.offer.service.discount.domain.PromotableOrder;
-import org.broadleafcommerce.core.offer.service.discount.domain.PromotableOrderAdjustment;
-import org.broadleafcommerce.core.offer.service.discount.domain.PromotableOrderItem;
-import org.broadleafcommerce.core.offer.service.discount.domain.PromotableOrderItemPriceDetail;
-import org.broadleafcommerce.core.offer.service.discount.domain.PromotableOrderItemPriceDetailAdjustment;
-import org.broadleafcommerce.core.offer.service.type.OfferDiscountType;
-import org.broadleafcommerce.core.offer.service.type.OfferRuleType;
-import org.broadleafcommerce.core.order.dao.OrderItemDao;
-import org.broadleafcommerce.core.order.domain.FulfillmentGroup;
-import org.broadleafcommerce.core.order.domain.Order;
-import org.broadleafcommerce.core.order.domain.OrderItem;
-import org.broadleafcommerce.core.order.domain.OrderItemPriceDetail;
-import org.broadleafcommerce.core.order.domain.OrderItemQualifier;
+import com.ultracommerce.common.money.Money;
+import com.ultracommerce.core.offer.dao.OfferDao;
+import com.ultracommerce.core.offer.domain.FulfillmentGroupAdjustment;
+import com.ultracommerce.core.offer.domain.Offer;
+import com.ultracommerce.core.offer.domain.OfferOfferRuleXref;
+import com.ultracommerce.core.offer.domain.OrderAdjustment;
+import com.ultracommerce.core.offer.domain.OrderItemPriceDetailAdjustment;
+import com.ultracommerce.core.offer.service.OfferServiceUtilities;
+import com.ultracommerce.core.offer.service.discount.CandidatePromotionItems;
+import com.ultracommerce.core.offer.service.discount.PromotionQualifier;
+import com.ultracommerce.core.offer.service.discount.domain.PromotableCandidateOrderOffer;
+import com.ultracommerce.core.offer.service.discount.domain.PromotableFulfillmentGroup;
+import com.ultracommerce.core.offer.service.discount.domain.PromotableFulfillmentGroupAdjustment;
+import com.ultracommerce.core.offer.service.discount.domain.PromotableItemFactory;
+import com.ultracommerce.core.offer.service.discount.domain.PromotableOfferUtility;
+import com.ultracommerce.core.offer.service.discount.domain.PromotableOrder;
+import com.ultracommerce.core.offer.service.discount.domain.PromotableOrderAdjustment;
+import com.ultracommerce.core.offer.service.discount.domain.PromotableOrderItem;
+import com.ultracommerce.core.offer.service.discount.domain.PromotableOrderItemPriceDetail;
+import com.ultracommerce.core.offer.service.discount.domain.PromotableOrderItemPriceDetailAdjustment;
+import com.ultracommerce.core.offer.service.type.OfferDiscountType;
+import com.ultracommerce.core.offer.service.type.OfferRuleType;
+import com.ultracommerce.core.order.dao.OrderItemDao;
+import com.ultracommerce.core.order.domain.FulfillmentGroup;
+import com.ultracommerce.core.order.domain.Order;
+import com.ultracommerce.core.order.domain.OrderItem;
+import com.ultracommerce.core.order.domain.OrderItemPriceDetail;
+import com.ultracommerce.core.order.domain.OrderItemQualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -61,21 +61,21 @@ import javax.annotation.Resource;
 /**
  * @author jfischer, bpolster
  */
-@Service("blOrderOfferProcessor")
+@Service("ucOrderOfferProcessor")
 public class OrderOfferProcessorImpl extends AbstractBaseProcessor implements OrderOfferProcessor {
 
     private static final Log LOG = LogFactory.getLog(OrderOfferProcessorImpl.class);
 
-    @Resource(name = "blPromotableItemFactory")
+    @Resource(name = "ucPromotableItemFactory")
     protected PromotableItemFactory promotableItemFactory;
 
-    @Resource(name = "blOrderItemDao")
+    @Resource(name = "ucOrderItemDao")
     protected OrderItemDao orderItemDao;
 
-    @Resource(name = "blOfferDao")
+    @Resource(name = "ucOfferDao")
     protected OfferDao offerDao;
 
-    @Resource(name = "blOfferServiceUtilities")
+    @Resource(name = "ucOfferServiceUtilities")
     protected OfferServiceUtilities offerServiceUtilities;
 
     public OrderOfferProcessorImpl(PromotableOfferUtility promotableOfferUtility) {

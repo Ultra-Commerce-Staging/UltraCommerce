@@ -1,21 +1,21 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.search.service.solr;
+package com.ultracommerce.core.search.service.solr;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
@@ -27,10 +27,10 @@ import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.apache.solr.client.solrj.request.CollectionAdminRequest;
 import org.apache.solr.common.cloud.Aliases;
 import org.apache.solr.common.util.NamedList;
-import org.broadleafcommerce.common.exception.ExceptionHelper;
-import org.broadleafcommerce.common.site.domain.Site;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
-import org.broadleafcommerce.core.search.service.solr.index.SolrIndexServiceImpl;
+import com.ultracommerce.common.exception.ExceptionHelper;
+import com.ultracommerce.common.site.domain.Site;
+import com.ultracommerce.common.web.UltraRequestContext;
+import com.ultracommerce.core.search.service.solr.index.SolrIndexServiceImpl;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 
@@ -79,7 +79,7 @@ public class SolrConfiguration implements InitializingBean {
     @Value("${solr.index.site.alias.name:site}")
     protected String siteAliasBase;
 
-    @Value("${solr.index.site.collection.name:blcSite}")
+    @Value("${solr.index.site.collection.name:ucSite}")
     protected String siteCollectionBase;
     
     public String getPrimaryName() {
@@ -160,7 +160,7 @@ public class SolrConfiguration implements InitializingBean {
                 if (server == reindexServer) {
                     throw new IllegalArgumentException("The primary and reindex CloudSolrServers are the same instances. "
                             + "They must be different instances. Each instance must have a different defaultCollection or "
-                            + "the defaultCollection must be unspecified and Broadleaf will set it.");
+                            + "the defaultCollection must be unspecified and Ultra will set it.");
                 }
                 
                 if (CloudSolrClient.class.isAssignableFrom(reindexServer.getClass())) {
@@ -200,7 +200,7 @@ public class SolrConfiguration implements InitializingBean {
                 if (server == primaryServer) {
                     throw new IllegalArgumentException("The primary and reindex CloudSolrServers are the same instances. "
                             + "They must be different instances. Each instance must have a different defaultCollection or "
-                            + "the defaultCollection must be unspecified and Broadleaf will set it.");
+                            + "the defaultCollection must be unspecified and Ultra will set it.");
                 }
 
                 if (CloudSolrClient.class.isAssignableFrom(primaryServer.getClass())) {
@@ -245,7 +245,7 @@ public class SolrConfiguration implements InitializingBean {
      * 
      * By default, this method attempts to return an admin server if configured. Otherwise, 
      * it returns the primary server if the admin server is null, which is backwards compatible 
-     * with the way that BLC worked prior to this change.
+     * with the way that UC worked prior to this change.
      * 
      * @return
      */
@@ -538,7 +538,7 @@ public class SolrConfiguration implements InitializingBean {
                 //Create a completely new collection
                 String collectionName = null;
                 for (int i = 0; i < 1000; i++) {
-                    collectionName = "blcCollection" + i;
+                    collectionName = "ucCollection" + i;
                     if (collectionNames.contains(collectionName)) {
                         collectionName = null;
                     } else {
@@ -568,7 +568,7 @@ public class SolrConfiguration implements InitializingBean {
                 //Create a completely new collection
                 String collectionName = null;
                 for (int i = 0; i < 1000; i++) {
-                    collectionName = "blcCollection" + i;
+                    collectionName = "ucCollection" + i;
                     if (collectionNames.contains(collectionName)) {
                         collectionName = null;
                     } else {
@@ -591,7 +591,7 @@ public class SolrConfiguration implements InitializingBean {
     
     
     public SolrClient getSiteServer() {
-        BroadleafRequestContext ctx = BroadleafRequestContext.getBroadleafRequestContext();
+        UltraRequestContext ctx = UltraRequestContext.getUltraRequestContext();
         Site site = ctx.getNonPersistentSite();
 
         CloudSolrClient client = (CloudSolrClient) primaryServer;
@@ -609,7 +609,7 @@ public class SolrConfiguration implements InitializingBean {
     }
     
     public SolrClient getSiteReindexServer() {
-        BroadleafRequestContext ctx = BroadleafRequestContext.getBroadleafRequestContext();
+        UltraRequestContext ctx = UltraRequestContext.getUltraRequestContext();
         Site site = ctx.getNonPersistentSite();
 
         CloudSolrClient client = (CloudSolrClient) primaryServer;
@@ -734,7 +734,7 @@ public class SolrConfiguration implements InitializingBean {
 
     public String getQueryCollectionName() {
         if (isSiteCollections() && isSolrCloudMode()) {
-            Site site = BroadleafRequestContext.getBroadleafRequestContext().getNonPersistentSite();
+            Site site = UltraRequestContext.getUltraRequestContext().getNonPersistentSite();
             return getSiteAliasName(site);
         } else if (isSolrCloudMode()) {
             return primaryName;
@@ -745,7 +745,7 @@ public class SolrConfiguration implements InitializingBean {
 
     public String getReindexCollectionName() {
         if (isSiteCollections() && isSolrCloudMode()) {
-            Site site = BroadleafRequestContext.getBroadleafRequestContext().getNonPersistentSite();
+            Site site = UltraRequestContext.getUltraRequestContext().getNonPersistentSite();
             return getSiteReindexAliasName(site);
         } else if (isSolrCloudMode()) {
             return reindexName;

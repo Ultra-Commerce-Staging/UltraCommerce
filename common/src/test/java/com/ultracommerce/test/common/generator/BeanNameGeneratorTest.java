@@ -1,26 +1,26 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2017 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
 /**
  * 
  */
-package org.broadleafcommerce.test.common.generator;
+package com.ultracommerce.test.common.generator;
 
-import org.broadleafcommerce.common.config.BroadleafBeanNameGenerator;
+import com.ultracommerce.common.config.UltraBeanNameGenerator;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,7 +31,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 /**
- * Tests for the {@link BroadleafBeanNameGenerator}
+ * Tests for the {@link UltraBeanNameGenerator}
  * 
  * @author Phillip Verheyden (phillipuniverse)
  */
@@ -39,7 +39,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class BeanNameGeneratorTest {
     
     @Configuration
-    @ComponentScan(basePackages = "org.broadleafcommerce.test.common.generator", nameGenerator = BroadleafBeanNameGenerator.class)
+    @ComponentScan(basePackages = "com.ultracommerce.test.common.generator", nameGenerator = UltraBeanNameGenerator.class)
     static class Config { }
     
     @Autowired
@@ -47,11 +47,11 @@ public class BeanNameGeneratorTest {
     
     @Test
     public void testAddingBlPrefix() {
-        Assert.assertEquals("blScannedBean", appctx.getBeanNamesForType(ScannedBean.class)[0]);
+        Assert.assertEquals("ucScannedBean", appctx.getBeanNamesForType(ScannedBean.class)[0]);
     }
     
     @Test
     public void testExistingBlPrefix() {
-        Assert.assertEquals("blAlreadyPrefixScannedBean", appctx.getBeanNamesForType(AlreadyPrefixedScannedBean.class)[0]);
+        Assert.assertEquals("ucAlreadyPrefixScannedBean", appctx.getBeanNamesForType(AlreadyPrefixedScannedBean.class)[0]);
     }
 }

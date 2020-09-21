@@ -1,24 +1,24 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.extension;
+package com.ultracommerce.common.extension;
 
-import org.broadleafcommerce.common.site.domain.SiteImpl;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
+import com.ultracommerce.common.site.domain.SiteImpl;
+import com.ultracommerce.common.web.UltraRequestContext;
 
 /**
  * <p>
@@ -26,28 +26,28 @@ import org.broadleafcommerce.common.web.BroadleafRequestContext;
  * possible that dynamically weaved in columns from embeddables need to contribute to those methods.
  * 
  * <p>
- * Managers that implement this handler should add themselves to the {@code blEntityExtensionManagers} list:
+ * Managers that implement this handler should add themselves to the {@code ucEntityExtensionManagers} list:
  * 
  * <pre>
  * {@code
  * <bean id="myEntityExtensionManagers" class="org.springframework.beans.factory.config.MapFactoryBean">
  *       <property name="sourceMap">
  *           <map>
- *               <entry key="blSomeEntityExtensionManager" value-ref="blSomeEntityExtensionManager"/>
+ *               <entry key="ucSomeEntityExtensionManager" value-ref="ucSomeEntityExtensionManager"/>
  *           </map>
  *       </property>
  *   </bean>
  *
- *   <bean class="org.broadleafcommerce.common.extensibility.context.merge.LateStageMergeBeanPostProcessor">
+ *   <bean class="com.ultracommerce.common.extensibility.context.merge.LateStageMergeBeanPostProcessor">
  *       <property name="collectionRef" value="myEntityExtensionManagers"/>
- *       <property name="targetRef" value="blEntityExtensionManagers"/>
+ *       <property name="targetRef" value="ucEntityExtensionManagers"/>
  *   </bean>
  * }
  * </pre>
  * 
  * <p>
- * These {@link blEntityExtensionManagers} are added onto the {@link BroadleafRequestContext} with
- * {@link BroadleafRequestContext#getAdditionalProperties()}. Native methods can use that to pull it off
+ * These {@link ucEntityExtensionManagers} are added onto the {@link UltraRequestContext} with
+ * {@link UltraRequestContext#getAdditionalProperties()}. Native methods can use that to pull it off
  * 
  * <p>
  * Example use case is in {@link SiteImpl#clone} as well as {@link CategoryImpl#getAllChildCategoryXrefs()}

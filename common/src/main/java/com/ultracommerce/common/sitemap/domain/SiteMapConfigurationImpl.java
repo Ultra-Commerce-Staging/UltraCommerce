@@ -1,32 +1,32 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
 
-package org.broadleafcommerce.common.sitemap.domain;
+package com.ultracommerce.common.sitemap.domain;
 
 import org.apache.commons.lang3.StringUtils;
-import org.broadleafcommerce.common.config.domain.AbstractModuleConfiguration;
-import org.broadleafcommerce.common.config.domain.AbstractModuleConfigurationAdminPresentation;
-import org.broadleafcommerce.common.config.service.type.ModuleConfigurationType;
-import org.broadleafcommerce.common.extensibility.jpa.SiteDiscriminatable;
-import org.broadleafcommerce.common.extensibility.jpa.SiteDiscriminatableType;
-import org.broadleafcommerce.common.presentation.AdminPresentation;
-import org.broadleafcommerce.common.presentation.AdminPresentationCollection;
-import org.broadleafcommerce.common.presentation.client.VisibilityEnum;
+import com.ultracommerce.common.config.domain.AbstractModuleConfiguration;
+import com.ultracommerce.common.config.domain.AbstractModuleConfigurationAdminPresentation;
+import com.ultracommerce.common.config.service.type.ModuleConfigurationType;
+import com.ultracommerce.common.extensibility.jpa.SiteDiscriminatable;
+import com.ultracommerce.common.extensibility.jpa.SiteDiscriminatableType;
+import com.ultracommerce.common.presentation.AdminPresentation;
+import com.ultracommerce.common.presentation.AdminPresentationCollection;
+import com.ultracommerce.common.presentation.client.VisibilityEnum;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,8 +43,8 @@ import javax.persistence.Table;
  * @author Joshua Skorton (jskorton)
  */
 @Entity
-@Table(name = "BLC_SITE_MAP_CFG")
-//@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "blConfigurationModuleElements")
+@Table(name = "UC_SITE_MAP_CFG")
+//@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "ucConfigurationModuleElements")
 //@AdminPresentationClass(friendlyName = "SiteMapConfigurationImpl")
 public class SiteMapConfigurationImpl extends AbstractModuleConfiguration implements SiteMapConfiguration, AbstractModuleConfigurationAdminPresentation {
 

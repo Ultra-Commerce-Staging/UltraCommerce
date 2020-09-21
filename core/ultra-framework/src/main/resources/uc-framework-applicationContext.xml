@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
   #%L
-  BroadleafCommerce Framework
+  UltraCommerce Framework
   %%
-  Copyright (C) 2009 - 2016 Broadleaf Commerce
+  Copyright (C) 2009 - 2016 Ultra Commerce
   %%
-  Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
-  (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
-  unless the restrictions on use therein are violated and require payment to Broadleaf in which case
-  the Broadleaf End User License Agreement (EULA), Version 1.1
-  (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+  Licensed under the Ultra Fair Use License Agreement, Version 1.0
+  (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+  unless the restrictions on use therein are violated and require payment to Ultra in which case
+  the Ultra End User License Agreement (EULA), Version 1.1
+  (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
   shall apply.
   
   Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
-  between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+  between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
   #L%
   -->
 
@@ -25,24 +25,24 @@
            http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
     
-    <import resource="classpath:bl-framework-applicationContext-persistence.xml"/>
-    <import resource="classpath:bl-framework-applicationContext-workflow.xml"/>
+    <import resource="classpath:uc-framework-applicationContext-persistence.xml"/>
+    <import resource="classpath:uc-framework-applicationContext-workflow.xml"/>
     
-    <context:component-scan base-package="org.broadleafcommerce.core">
-        <context:exclude-filter type="regex" expression="org.broadleafcommerce.core.web.*"/> 
+    <context:component-scan base-package="com.ultracommerce.core">
+        <context:exclude-filter type="regex" expression="com.ultracommerce.core.web.*"/> 
     </context:component-scan>
 
     <!-- Bean for encrypting PCI data -->
-    <bean id="blEncryptionModule" class="org.broadleafcommerce.common.encryption.PassthroughEncryptionModule"/>
+    <bean id="ucEncryptionModule" class="com.ultracommerce.common.encryption.PassthroughEncryptionModule"/>
     
-    <bean id="blAccountNumberMask" class="org.broadleafcommerce.common.payment.AccountNumberMask">
+    <bean id="ucAccountNumberMask" class="com.ultracommerce.common.payment.AccountNumberMask">
         <constructor-arg index="0">
             <list>
-                <bean class="org.broadleafcommerce.common.payment.UnmaskRange">
+                <bean class="com.ultracommerce.common.payment.UnmaskRange">
                     <constructor-arg value="0"/>
                     <constructor-arg value="0"/>
                 </bean>
-                <bean class="org.broadleafcommerce.common.payment.UnmaskRange">
+                <bean class="com.ultracommerce.common.payment.UnmaskRange">
                     <constructor-arg value="1"/>
                     <constructor-arg value="4"/>
                 </bean>
@@ -51,107 +51,107 @@
         <constructor-arg index="1" value="X"/>
     </bean>
 
-    <bean id="blContentCartRuleProcessor" class="org.broadleafcommerce.core.order.service.StructuredContentCartRuleProcessor">
-        <property name="orderDao" ref="blOrderDao"/>
+    <bean id="ucContentCartRuleProcessor" class="com.ultracommerce.core.order.service.StructuredContentCartRuleProcessor">
+        <property name="orderDao" ref="ucOrderDao"/>
         <property name="contextClassNames">
             <map>
-                <entry key="discreteOrderItem" value="org.broadleafcommerce.core.order.domain.DiscreteOrderItem" />
+                <entry key="discreteOrderItem" value="com.ultracommerce.core.order.domain.DiscreteOrderItem" />
             </map>
         </property>
     </bean>
 
     <!-- Append the content rule processor that checks for cart contents -->
-    <bean id="blContentRuleProcessors" class="org.springframework.beans.factory.config.ListFactoryBean">
+    <bean id="ucContentRuleProcessors" class="org.springframework.beans.factory.config.ListFactoryBean">
         <property name="sourceList">
             <list>
-                <ref bean="blContentCartRuleProcessor"/>
+                <ref bean="ucContentCartRuleProcessor"/>
             </list>
         </property>
     </bean>
     
-    <bean id="blPageCartRuleProcessor" class="org.broadleafcommerce.core.order.service.PageCartRuleProcessor">
-        <property name="orderDao" ref="blOrderDao"/>
+    <bean id="ucPageCartRuleProcessor" class="com.ultracommerce.core.order.service.PageCartRuleProcessor">
+        <property name="orderDao" ref="ucOrderDao"/>
         <property name="contextClassNames">
             <map>
-                <entry key="discreteOrderItem" value="org.broadleafcommerce.core.order.domain.DiscreteOrderItem" />
+                <entry key="discreteOrderItem" value="com.ultracommerce.core.order.domain.DiscreteOrderItem" />
             </map>
         </property>
     </bean>
 
     <!-- Append the content rule processor that checks for cart contents -->
-    <bean id="blPageRuleProcessors" class="org.springframework.beans.factory.config.ListFactoryBean">
+    <bean id="ucPageRuleProcessors" class="org.springframework.beans.factory.config.ListFactoryBean">
         <property name="sourceList">
             <list>
-                <ref bean="blPageCartRuleProcessor"/>
+                <ref bean="ucPageCartRuleProcessor"/>
             </list>
         </property>
     </bean>    
 
-    <bean id="blConverters" class="org.springframework.beans.factory.config.SetFactoryBean">
+    <bean id="ucConverters" class="org.springframework.beans.factory.config.SetFactoryBean">
         <property name="sourceSet">
             <set>
-                <bean class="org.broadleafcommerce.common.locale.util.LocaleConverter" />
+                <bean class="com.ultracommerce.common.locale.util.LocaleConverter" />
             </set>
         </property>
     </bean>
     
     <bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
-        <property name="converters" ref="blConverters" />
+        <property name="converters" ref="ucConverters" />
     </bean>
     
-    <bean id="blFrameworkSiteMapGenerators" class="org.springframework.beans.factory.config.ListFactoryBean">
+    <bean id="ucFrameworkSiteMapGenerators" class="org.springframework.beans.factory.config.ListFactoryBean">
         <property name="sourceList">
             <list>
-                <ref bean="blCategorySiteMapGenerator" />
-                <ref bean="blProductSiteMapGenerator" />
-                <ref bean="blSkuSiteMapGenerator" />
+                <ref bean="ucCategorySiteMapGenerator" />
+                <ref bean="ucProductSiteMapGenerator" />
+                <ref bean="ucSkuSiteMapGenerator" />
             </list>
         </property>
     </bean>
 
-    <bean class="org.broadleafcommerce.common.extensibility.context.merge.LateStageMergeBeanPostProcessor">
-        <property name="collectionRef" value="blFrameworkSiteMapGenerators" />
-        <property name="targetRef" value="blSiteMapGenerators" />
+    <bean class="com.ultracommerce.common.extensibility.context.merge.LateStageMergeBeanPostProcessor">
+        <property name="collectionRef" value="ucFrameworkSiteMapGenerators" />
+        <property name="targetRef" value="ucSiteMapGenerators" />
     </bean>
 
-    <bean id="blFrameworkEntityExtensionManagers" class="org.springframework.beans.factory.config.MapFactoryBean">
+    <bean id="ucFrameworkEntityExtensionManagers" class="org.springframework.beans.factory.config.MapFactoryBean">
         <property name="sourceMap">
             <map>
             </map>
         </property>
     </bean>
 
-    <bean class="org.broadleafcommerce.common.extensibility.context.merge.LateStageMergeBeanPostProcessor">
-        <property name="collectionRef" value="blFrameworkEntityExtensionManagers"/>
-        <property name="targetRef" value="blEntityExtensionManagers"/>
+    <bean class="com.ultracommerce.common.extensibility.context.merge.LateStageMergeBeanPostProcessor">
+        <property name="collectionRef" value="ucFrameworkEntityExtensionManagers"/>
+        <property name="targetRef" value="ucEntityExtensionManagers"/>
     </bean>
 
     <!-- Add a default implementation for payments of type PaymentGatewayType.PASSTHROUGH -->
-    <bean id="blPassthroughPaymentConfigurationServiceList" class="org.springframework.beans.factory.config.ListFactoryBean" >
+    <bean id="ucPassthroughPaymentConfigurationServiceList" class="org.springframework.beans.factory.config.ListFactoryBean" >
         <property name="sourceList">
             <list>
-                <ref bean="blPassthroughPaymentConfigurationService"/>
+                <ref bean="ucPassthroughPaymentConfigurationService"/>
             </list>
         </property>
     </bean>
 
-    <bean class="org.broadleafcommerce.common.extensibility.context.merge.LateStageMergeBeanPostProcessor">
-        <property name="collectionRef" value="blPassthroughPaymentConfigurationServiceList"/>
-        <property name="targetRef" value="blPaymentGatewayConfigurationServices"/>
+    <bean class="com.ultracommerce.common.extensibility.context.merge.LateStageMergeBeanPostProcessor">
+        <property name="collectionRef" value="ucPassthroughPaymentConfigurationServiceList"/>
+        <property name="targetRef" value="ucPaymentGatewayConfigurationServices"/>
     </bean>
 
-    <bean class="org.broadleafcommerce.core.search.service.solr.FileSystemSolrIndexStatusProviderImpl" name="blFileSystemSolrIndexStatusProvider"/>
+    <bean class="com.ultracommerce.core.search.service.solr.FileSystemSolrIndexStatusProviderImpl" name="ucFileSystemSolrIndexStatusProvider"/>
 
-    <bean id="blSolrIndexStatusProviders" class="org.springframework.beans.factory.config.ListFactoryBean" >
+    <bean id="ucSolrIndexStatusProviders" class="org.springframework.beans.factory.config.ListFactoryBean" >
         <property name="sourceList">
             <list>
-                <ref bean="blFileSystemSolrIndexStatusProvider"/>
+                <ref bean="ucFileSystemSolrIndexStatusProvider"/>
             </list>
         </property>
     </bean>
 
     <!-- Begin Section Custom Criteria -->
-    <bean id="blProductSectionCustomCriteria" class="org.springframework.beans.factory.config.ListFactoryBean">
+    <bean id="ucProductSectionCustomCriteria" class="org.springframework.beans.factory.config.ListFactoryBean">
         <property name="sourceList">
             <list>
                 <value>productDirectEdit</value>
@@ -159,7 +159,7 @@
         </property>
     </bean>
 
-    <bean id="blCategorySectionCustomCriteria" class="org.springframework.beans.factory.config.ListFactoryBean">
+    <bean id="ucCategorySectionCustomCriteria" class="org.springframework.beans.factory.config.ListFactoryBean">
         <property name="sourceList">
             <list>
                 <value>categoryDirectEdit</value>
@@ -167,7 +167,7 @@
         </property>
     </bean>
 
-    <bean id="blAdvancedPageSectionCustomCriteria" class="org.springframework.beans.factory.config.ListFactoryBean">
+    <bean id="ucAdvancedPageSectionCustomCriteria" class="org.springframework.beans.factory.config.ListFactoryBean">
         <property name="sourceList">
             <list>
                 <value>advancedPage</value>
@@ -175,71 +175,71 @@
         </property>
     </bean>
 
-    <bean id="blSectionCustomCriteriaMap" class="org.springframework.beans.factory.config.MapFactoryBean">
+    <bean id="ucSectionCustomCriteriaMap" class="org.springframework.beans.factory.config.MapFactoryBean">
         <property name="sourceMap">
             <map>
-                <entry key="org.broadleafcommerce.core.catalog.domain.Product" value-ref="blProductSectionCustomCriteria"/>
-                <entry key="org.broadleafcommerce.core.catalog.domain.Category" value-ref="blCategorySectionCustomCriteria"/>
-                <entry key="org.broadleafcommerce.cms.page.domain.Page" value-ref="blAdvancedPageSectionCustomCriteria"/>
+                <entry key="com.ultracommerce.core.catalog.domain.Product" value-ref="ucProductSectionCustomCriteria"/>
+                <entry key="com.ultracommerce.core.catalog.domain.Category" value-ref="ucCategorySectionCustomCriteria"/>
+                <entry key="com.ultracommerce.cms.page.domain.Page" value-ref="ucAdvancedPageSectionCustomCriteria"/>
             </map>
         </property>
     </bean>
     <!-- End Section Custom Criteria -->
 
-    <bean id="blOptionalFrameworkTokenMap" class="org.springframework.beans.factory.config.MapFactoryBean">
+    <bean id="ucOptionalFrameworkTokenMap" class="org.springframework.beans.factory.config.MapFactoryBean">
         <property name="sourceMap">
             <map>
-                <entry key="optionalOfferUsesFields" value="org.broadleafcommerce.core.offer.weave.WeaveLegacyOfferUses"/>
-                <entry key="optionalSkuMinOrderQuantityField" value="org.broadleafcommerce.core.catalog.domain.WeaveSkuMinOrderQuantity"/>
+                <entry key="optionalOfferUsesFields" value="com.ultracommerce.core.offer.weave.WeaveLegacyOfferUses"/>
+                <entry key="optionalSkuMinOrderQuantityField" value="com.ultracommerce.core.catalog.domain.WeaveSkuMinOrderQuantity"/>
             </map>
         </property>
     </bean>
 
-    <bean class="org.broadleafcommerce.common.extensibility.context.merge.EarlyStageMergeBeanPostProcessor">
-        <property name="collectionRef" value="blOptionalFrameworkTokenMap"/>
-        <property name="targetRef" value="blDirectCopyTransformTokenMap"/>
+    <bean class="com.ultracommerce.common.extensibility.context.merge.EarlyStageMergeBeanPostProcessor">
+        <property name="collectionRef" value="ucOptionalFrameworkTokenMap"/>
+        <property name="targetRef" value="ucDirectCopyTransformTokenMap"/>
     </bean>
 
-    <bean id="blOfferUsesConditionalDirectCopyTransformerMember" class="org.broadleafcommerce.common.weave.ConditionalDirectCopyTransformMemberDto">
+    <bean id="ucOfferUsesConditionalDirectCopyTransformerMember" class="com.ultracommerce.common.weave.ConditionalDirectCopyTransformMemberDto">
         <property name="templateTokens">
-            <util:constant static-field="org.broadleafcommerce.core.offer.service.type.OfferOptionalDirectCopyTransformTypes.OPTIONAL_OFFER_USES_FIELDS"/>
+            <util:constant static-field="com.ultracommerce.core.offer.service.type.OfferOptionalDirectCopyTransformTypes.OPTIONAL_OFFER_USES_FIELDS"/>
         </property>
         <property name="conditionalProperty" value="enable.optional.offer.uses.fields"/>
     </bean>
 
-    <bean id="blSkuMinOrderQuantityConditionalDirectCopyTransformerMember" class="org.broadleafcommerce.common.weave.ConditionalDirectCopyTransformMemberDto">
+    <bean id="ucSkuMinOrderQuantityConditionalDirectCopyTransformerMember" class="com.ultracommerce.common.weave.ConditionalDirectCopyTransformMemberDto">
         <property name="templateTokens" value="optionalSkuMinOrderQuantityField"/>
         <property name="conditionalProperty" value="enable.sku.minOrderQuantity.field"/>
     </bean>
 
-    <bean id="blFrameworkConditionalDirectCopyTransformers" class="org.springframework.beans.factory.config.MapFactoryBean">
+    <bean id="ucFrameworkConditionalDirectCopyTransformers" class="org.springframework.beans.factory.config.MapFactoryBean">
         <property name="sourceMap">
             <map>
-                <entry key="org.broadleafcommerce.core.offer.domain.OfferImpl" value-ref="blOfferUsesConditionalDirectCopyTransformerMember" />
-                <entry key="org.broadleafcommerce.core.catalog.domain.SkuImpl" value-ref="blSkuMinOrderQuantityConditionalDirectCopyTransformerMember" />
+                <entry key="com.ultracommerce.core.offer.domain.OfferImpl" value-ref="ucOfferUsesConditionalDirectCopyTransformerMember" />
+                <entry key="com.ultracommerce.core.catalog.domain.SkuImpl" value-ref="ucSkuMinOrderQuantityConditionalDirectCopyTransformerMember" />
             </map>
         </property>
     </bean>
 
-    <bean class="org.broadleafcommerce.common.extensibility.context.merge.EarlyStageMergeBeanPostProcessor">
-        <property name="collectionRef" value="blFrameworkConditionalDirectCopyTransformers"/>
-        <property name="targetRef" value="blConditionalDirectCopyTransformers"/>
+    <bean class="com.ultracommerce.common.extensibility.context.merge.EarlyStageMergeBeanPostProcessor">
+        <property name="collectionRef" value="ucFrameworkConditionalDirectCopyTransformers"/>
+        <property name="targetRef" value="ucConditionalDirectCopyTransformers"/>
     </bean>
 
-    <bean id="blPromotionMessageGenerators" class="org.springframework.beans.factory.config.ListFactoryBean">
+    <bean id="ucPromotionMessageGenerators" class="org.springframework.beans.factory.config.ListFactoryBean">
         <property name="sourceList">
             <list>
             </list>
         </property>
     </bean>
 
-	<bean id="blEntityIdentifierUtil" class="org.broadleafcommerce.core.util.EntityIdentifierUtil" />
+	<bean id="ucEntityIdentifierUtil" class="com.ultracommerce.core.util.EntityIdentifierUtil" />
 
-    <bean id="blEntityDuplicationHelpers"
+    <bean id="ucEntityDuplicationHelpers"
           class="org.springframework.beans.factory.config.ListFactoryBean" scope="prototype">
         <property name="sourceList">
             <list>
-                <ref bean="blOfferDuplicateModifier"/>
+                <ref bean="ucOfferDuplicateModifier"/>
             </list>
         </property>
     </bean>

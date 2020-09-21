@@ -1,33 +1,33 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.rule;
+package com.ultracommerce.common.rule;
 
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.RequestDTO;
-import org.broadleafcommerce.common.TimeDTO;
-import org.broadleafcommerce.common.presentation.client.SupportedFieldType;
-import org.broadleafcommerce.common.time.SystemTime;
-import org.broadleafcommerce.common.util.EfficientLRUMap;
-import org.broadleafcommerce.common.util.FormatUtil;
-import org.broadleafcommerce.common.util.StringUtil;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
+import com.ultracommerce.common.RequestDTO;
+import com.ultracommerce.common.TimeDTO;
+import com.ultracommerce.common.presentation.client.SupportedFieldType;
+import com.ultracommerce.common.time.SystemTime;
+import com.ultracommerce.common.util.EfficientLRUMap;
+import com.ultracommerce.common.util.FormatUtil;
+import com.ultracommerce.common.util.StringUtil;
+import com.ultracommerce.common.web.UltraRequestContext;
 import org.mvel2.MVEL;
 import org.mvel2.ParserContext;
 
@@ -44,7 +44,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * Helper class for some common rule functions that can be called from mvel as well as utility functions
- * to make calling MVEL rules within Broadleaf easier.  
+ * to make calling MVEL rules within Ultra easier.  
  * 
  * An instance of this class is available to the mvel runtime under the variable name MvelHelper with the 
  * following functions:
@@ -61,10 +61,10 @@ public class MvelHelper {
 
     private static boolean TEST_MODE = false;
     
-    public static final String BLC_RULE_MAP_PARAM = "blRuleMap";
+    public static final String UC_RULE_MAP_PARAM = "ucRuleMap";
 
-    // The following attribute is set in BroadleafProcessURLFilter
-    public static final String REQUEST_DTO = "blRequestDTO";
+    // The following attribute is set in UltraProcessURLFilter
+    public static final String REQUEST_DTO = "ucRequestDTO";
 
     static {
         System.setProperty("mvel2.disable.jit", "true");
@@ -277,7 +277,7 @@ public class MvelHelper {
      */
     public static Map<String, Object> buildMvelParameters() {
         Map<String, Object> mvelParameters = new HashMap<String, Object>();
-        BroadleafRequestContext brc = BroadleafRequestContext.getBroadleafRequestContext();
+        UltraRequestContext brc = UltraRequestContext.getUltraRequestContext();
         if (brc != null && brc.getRequest() != null) {
            TimeDTO timeDto = new TimeDTO(SystemTime.asCalendar());
             HttpServletRequest request = brc.getRequest();
@@ -285,10 +285,10 @@ public class MvelHelper {
             mvelParameters.put("time", timeDto);
             mvelParameters.put("request", requestDto);
 
-            Map<String, Object> blcRuleMap = (Map<String, Object>) request.getAttribute(BLC_RULE_MAP_PARAM);
-            if (blcRuleMap != null) {
-                for (String mapKey : blcRuleMap.keySet()) {
-                    mvelParameters.put(mapKey, blcRuleMap.get(mapKey));
+            Map<String, Object> ucRuleMap = (Map<String, Object>) request.getAttribute(UC_RULE_MAP_PARAM);
+            if (ucRuleMap != null) {
+                for (String mapKey : ucRuleMap.keySet()) {
+                    mvelParameters.put(mapKey, ucRuleMap.get(mapKey));
                 }
             }
         }

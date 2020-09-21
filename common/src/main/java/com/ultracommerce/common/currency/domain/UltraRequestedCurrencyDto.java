@@ -1,24 +1,24 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.currency.domain;
+package com.ultracommerce.common.currency.domain;
 
 /**
- * The BroadleafCurrencyResolver can be implemented to set the currency (e.g. CurrencyToUse).   
+ * The UltraCurrencyResolver can be implemented to set the currency (e.g. CurrencyToUse).   
  * 
  * This may differ from the currency that was requested (e.g. from the locale, etc.)   
  * 
@@ -28,12 +28,12 @@ package org.broadleafcommerce.common.currency.domain;
  * @author bpolster
  *
  */
-public class BroadleafRequestedCurrencyDto {
+public class UltraRequestedCurrencyDto {
 
-    BroadleafCurrency currencyToUse;
-    BroadleafCurrency requestedCurrency;
+    UltraCurrency currencyToUse;
+    UltraCurrency requestedCurrency;
 
-    public BroadleafRequestedCurrencyDto(BroadleafCurrency currencyToUse, BroadleafCurrency requestedCurrency) {
+    public UltraRequestedCurrencyDto(UltraCurrency currencyToUse, UltraCurrency requestedCurrency) {
         super();
         this.currencyToUse = currencyToUse;
         this.requestedCurrency = requestedCurrency;
@@ -42,14 +42,14 @@ public class BroadleafRequestedCurrencyDto {
     /**
      * @return the currencyToUse
      */
-    public BroadleafCurrency getCurrencyToUse() {
+    public UltraCurrency getCurrencyToUse() {
         return currencyToUse;
     }
 
     /**
      * @return the requestedCurrency
      */
-    public BroadleafCurrency getRequestedCurrency() {
+    public UltraCurrency getRequestedCurrency() {
         return requestedCurrency;
     }
 

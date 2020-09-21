@@ -1,24 +1,24 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.extensibility.context.merge;
+package com.ultracommerce.common.extensibility.context.merge;
 
 import org.apache.commons.collections.MapUtils;
-import org.broadleafcommerce.common.exception.ExceptionHelper;
+import com.ultracommerce.common.exception.ExceptionHelper;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.AnnotatedBeanDefinition;
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -82,7 +82,7 @@ public class MergeAnnotationAwareBeanDefinitionRegistryPostProcessor implements 
                                 attributes.get("targetRef") +
                                 (isEarly?"Early":"Late") +
                                 ANNOTATED_POST_PROCESSOR_SUFFIX;
-                        if (isBroadleafAnnotationBean(metadata)) {
+                        if (isUltraAnnotationBean(metadata)) {
                             registry.registerBeanDefinition(beanName, definition);
                         } else {
                             clientAnnotatedBeanPostProcessors.put(beanName, definition);
@@ -98,7 +98,7 @@ public class MergeAnnotationAwareBeanDefinitionRegistryPostProcessor implements 
             if (beanDefinition.getBeanClassName() != null
                     && (beanDefinition.getBeanClassName().equals(EarlyStageMergeBeanPostProcessor.class.getName())
                     || beanDefinition.getBeanClassName().equals(LateStageMergeBeanPostProcessor.class.getName()))) {
-                if (!isBroadleafBean(beanDefinition)) {
+                if (!isUltraBean(beanDefinition)) {
                     registry.removeBeanDefinition(name);
                     clientBeanPostProcessors.put(name, beanDefinition);
                 }
@@ -118,16 +118,16 @@ public class MergeAnnotationAwareBeanDefinitionRegistryPostProcessor implements 
         }
     }
 
-    protected boolean isBroadleafAnnotationBean(MethodMetadata metadata) {
-        return metadata.getDeclaringClassName().contains("org.broadleafcommerce")
-                || metadata.getDeclaringClassName().contains("com.broadleafcommerce");
+    protected boolean isUltraAnnotationBean(MethodMetadata metadata) {
+        return metadata.getDeclaringClassName().contains("com.ultracommerce")
+                || metadata.getDeclaringClassName().contains("com.ultracommerce");
     }
 
-    protected boolean isBroadleafBean(BeanDefinition beanDefinition) {
+    protected boolean isUltraBean(BeanDefinition beanDefinition) {
         if (beanDefinition instanceof AnnotatedBeanDefinition){
-            return isBroadleafAnnotationBean(((AnnotatedBeanDefinition) beanDefinition).getFactoryMethodMetadata());
+            return isUltraAnnotationBean(((AnnotatedBeanDefinition) beanDefinition).getFactoryMethodMetadata());
         } else if (beanDefinition instanceof GenericBeanDefinition && ((GenericBeanDefinition) beanDefinition).getResource() != null) {
-            return ((GenericBeanDefinition) beanDefinition).getResource().getFilename().startsWith("bl-");
+            return ((GenericBeanDefinition) beanDefinition).getResource().getFilename().startsWith("uc-");
         }
 
         return false;

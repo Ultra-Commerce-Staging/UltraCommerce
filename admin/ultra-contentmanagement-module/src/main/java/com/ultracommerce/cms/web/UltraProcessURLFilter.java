@@ -1,36 +1,36 @@
 /*
  * #%L
- * BroadleafCommerce CMS Module
+ * UltraCommerce CMS Module
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.cms.web;
+package com.ultracommerce.cms.web;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.RequestDTOImpl;
-import org.broadleafcommerce.common.locale.domain.Locale;
-import org.broadleafcommerce.common.locale.service.LocaleService;
-import org.broadleafcommerce.common.sandbox.domain.SandBox;
-import org.broadleafcommerce.common.sandbox.domain.SandBoxType;
-import org.broadleafcommerce.common.sandbox.service.SandBoxService;
-import org.broadleafcommerce.common.site.domain.Site;
-import org.broadleafcommerce.common.time.FixedTimeSource;
-import org.broadleafcommerce.common.time.SystemTime;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
-import org.broadleafcommerce.common.web.util.StatusExposingServletResponse;
+import com.ultracommerce.common.RequestDTOImpl;
+import com.ultracommerce.common.locale.domain.Locale;
+import com.ultracommerce.common.locale.service.LocaleService;
+import com.ultracommerce.common.sandbox.domain.SandBox;
+import com.ultracommerce.common.sandbox.domain.SandBoxType;
+import com.ultracommerce.common.sandbox.service.SandBoxService;
+import com.ultracommerce.common.site.domain.Site;
+import com.ultracommerce.common.time.FixedTimeSource;
+import com.ultracommerce.common.time.SystemTime;
+import com.ultracommerce.common.web.UltraRequestContext;
+import com.ultracommerce.common.web.util.StatusExposingServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -62,8 +62,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * @deprecated In favor of org.broadleafcommerce.common.web.BroadleafRequestFilter.
- * formally component name "blProcessURLFilter"
+ * @deprecated In favor of com.ultracommerce.common.web.UltraRequestFilter.
+ * formally component name "ucProcessURLFilter"
  *
  * This filter sets up the CMS system by setting the current sandbox, locale, time of day, and languageCode
  * that used by content items.
@@ -80,8 +80,8 @@ import javax.servlet.http.HttpSession;
  * @author bpolster
  */
 @Deprecated
-public class BroadleafProcessURLFilter extends OncePerRequestFilter {
-    private final Log LOG = LogFactory.getLog(BroadleafProcessURLFilter.class);
+public class UltraProcessURLFilter extends OncePerRequestFilter {
+    private final Log LOG = LogFactory.getLog(UltraProcessURLFilter.class);
 
     // List of URLProcessors
     private List<URLProcessor> urlProcessorList = new ArrayList<URLProcessor>();
@@ -95,11 +95,11 @@ public class BroadleafProcessURLFilter extends OncePerRequestFilter {
 
 
     @Autowired
-    @Qualifier("blSandBoxService")
+    @Qualifier("ucSandBoxService")
     private SandBoxService sandBoxService;
 
     @Autowired
-    @Qualifier("blLocaleService")
+    @Qualifier("ucLocaleService")
     private LocaleService localeService;
 
     protected Boolean sandBoxPreviewEnabled = true;
@@ -107,42 +107,42 @@ public class BroadleafProcessURLFilter extends OncePerRequestFilter {
     /**
      * Parameter/Attribute name for the current language
      */
-    public static String LOCALE_VAR = "blLocale";
+    public static String LOCALE_VAR = "ucLocale";
 
     /**
      * Parameter/Attribute name for the current language
      */
-    public static String LOCALE_CODE_PARAM = "blLocaleCode";
+    public static String LOCALE_CODE_PARAM = "ucLocaleCode";
 
     /**
      * Parameter/Attribute name for the current language
      */
-    public static String REQUEST_DTO = "blRequestDTO";
+    public static String REQUEST_DTO = "ucRequestDTO";
 
     /**
      * Request attribute to store the current sandbox
      */
-    public static String SANDBOX_VAR = "blSandbox";
+    public static String SANDBOX_VAR = "ucSandbox";
 
     // Properties to manage URLs that will not be processed by this filter.
-    private static final String BLC_ADMIN_GWT = "org.broadleafcommerce.admin";
-    private static final String BLC_ADMIN_PREFIX = "blcadmin";
-    private static final String BLC_ADMIN_SERVICE = ".service";
+    private static final String UC_ADMIN_GWT = "com.ultracommerce.admin";
+    private static final String UC_ADMIN_PREFIX = "ucadmin";
+    private static final String UC_ADMIN_SERVICE = ".service";
     private HashSet<String> ignoreSuffixes;
 
     // Request Parameters and Attributes for Sandbox Mode properties - mostly date values.
-    private static String SANDBOX_ID_VAR = "blSandboxId";
-    private static String SANDBOX_DATE_TIME_VAR = "blSandboxDateTime";
+    private static String SANDBOX_ID_VAR = "ucSandboxId";
+    private static String SANDBOX_DATE_TIME_VAR = "ucSandboxDateTime";
     private static final SimpleDateFormat CONTENT_DATE_FORMATTER = new SimpleDateFormat("yyyyMMddHHmm");
     private static final SimpleDateFormat CONTENT_DATE_DISPLAY_FORMATTER = new SimpleDateFormat("MM/dd/yyyy");
     private static final SimpleDateFormat CONTENT_DATE_DISPLAY_HOURS_FORMATTER = new SimpleDateFormat("h");
     private static final SimpleDateFormat CONTENT_DATE_DISPLAY_MINUTES_FORMATTER = new SimpleDateFormat("mm");
     private static final SimpleDateFormat CONTENT_DATE_PARSE_FORMAT = new SimpleDateFormat("MM/dd/yyyy hh:mm aa");
-    private static String SANDBOX_DATE_TIME_RIBBON_OVERRIDE_PARAM = "blSandboxDateTimeRibbonOverride";
-    private static final String SANDBOX_DISPLAY_DATE_TIME_DATE_PARAM = "blSandboxDisplayDateTimeDate";
-    private static final String SANDBOX_DISPLAY_DATE_TIME_HOURS_PARAM = "blSandboxDisplayDateTimeHours";
-    private static final String SANDBOX_DISPLAY_DATE_TIME_MINUTES_PARAM = "blSandboxDisplayDateTimeMinutes";
-    private static final String SANDBOX_DISPLAY_DATE_TIME_AMPM_PARAM = "blSandboxDisplayDateTimeAMPM";
+    private static String SANDBOX_DATE_TIME_RIBBON_OVERRIDE_PARAM = "ucSandboxDateTimeRibbonOverride";
+    private static final String SANDBOX_DISPLAY_DATE_TIME_DATE_PARAM = "ucSandboxDisplayDateTimeDate";
+    private static final String SANDBOX_DISPLAY_DATE_TIME_HOURS_PARAM = "ucSandboxDisplayDateTimeHours";
+    private static final String SANDBOX_DISPLAY_DATE_TIME_MINUTES_PARAM = "ucSandboxDisplayDateTimeMinutes";
+    private static final String SANDBOX_DISPLAY_DATE_TIME_AMPM_PARAM = "ucSandboxDisplayDateTimeAMPM";
 
 
     /**
@@ -181,12 +181,12 @@ public class BroadleafProcessURLFilter extends OncePerRequestFilter {
         Site site = determineSite(request);
         SandBox currentSandbox = determineSandbox(request, site);
 
-        BroadleafRequestContext brc = new BroadleafRequestContext();
+        UltraRequestContext brc = new UltraRequestContext();
         brc.setLocale(determineLocale(request, site));
         brc.setSandBox(currentSandbox);
         brc.setRequest(request);
         brc.setResponse(response);
-        BroadleafRequestContext.setBroadleafRequestContext(brc);
+        UltraRequestContext.setUltraRequestContext(brc);
 
         try {
             URLProcessor urlProcessor = null;
@@ -206,7 +206,7 @@ public class BroadleafProcessURLFilter extends OncePerRequestFilter {
             if (urlProcessor instanceof NullURLProcessor) {
                 // Pass request down the filter chain
                 if (LOG.isTraceEnabled()) {
-                    LOG.trace("URL not being processed by a Broadleaf URLProcessor " + requestURIWithoutContext);
+                    LOG.trace("URL not being processed by a Ultra URLProcessor " + requestURIWithoutContext);
                 }
                 StatusExposingServletResponse sesResponse = new StatusExposingServletResponse(response);
                 filterChain.doFilter(request, sesResponse);
@@ -218,7 +218,7 @@ public class BroadleafProcessURLFilter extends OncePerRequestFilter {
                 }
             } else {
                 if (LOG.isTraceEnabled()) {
-                    LOG.trace("URL about to be processed by a Broadleaf URLProcessor " + requestURIWithoutContext);
+                    LOG.trace("URL about to be processed by a Ultra URLProcessor " + requestURIWithoutContext);
                 }
                 urlProcessor.processURL(requestURIWithoutContext);
             }
@@ -281,7 +281,7 @@ public class BroadleafProcessURLFilter extends OncePerRequestFilter {
     /**
      * Determines if the passed in URL should be processed by the content management system.
      * <p/>
-     * By default, this method returns false for any BLC-Admin URLs and service calls and for all
+     * By default, this method returns false for any UC-Admin URLs and service calls and for all
      * common image/digital mime-types (as determined by an internal call to {@code getIgnoreSuffixes}.
      * <p/>
      * This check is called with the {@code doFilterInternal} method to short-circuit the content
@@ -291,11 +291,11 @@ public class BroadleafProcessURLFilter extends OncePerRequestFilter {
      * @return true if the {@code HttpServletRequest} should be processed
      */
     protected boolean shouldProcessURL(HttpServletRequest request, String requestURI) {
-        if (requestURI.contains(BLC_ADMIN_GWT) ||
-            requestURI.endsWith(BLC_ADMIN_SERVICE) ||
-            requestURI.contains(BLC_ADMIN_PREFIX)) {
+        if (requestURI.contains(UC_ADMIN_GWT) ||
+            requestURI.endsWith(UC_ADMIN_SERVICE) ||
+            requestURI.contains(UC_ADMIN_PREFIX)) {
             if (LOG.isTraceEnabled()) {
-                LOG.trace("BroadleafProcessURLFilter ignoring admin request URI " + requestURI);
+                LOG.trace("UltraProcessURLFilter ignoring admin request URI " + requestURI);
             }
             return false;
         } else {
@@ -304,7 +304,7 @@ public class BroadleafProcessURLFilter extends OncePerRequestFilter {
                 String suffix = requestURI.substring(pos);
                 if (getIgnoreSuffixes().contains(suffix.toLowerCase())) {
                     if (LOG.isTraceEnabled()) {
-                        LOG.trace("BroadleafProcessURLFilter ignoring request due to suffix " + requestURI);
+                        LOG.trace("UltraProcessURLFilter ignoring request due to suffix " + requestURI);
                     }
                     return false;
                 }
@@ -323,7 +323,7 @@ public class BroadleafProcessURLFilter extends OncePerRequestFilter {
             request.setAttribute(SANDBOX_VAR, currentSandbox);
         } else {
             Long sandboxId = null;
-            if (request.getParameter("blSandboxDateTimeRibbonProduction") == null) {
+            if (request.getParameter("ucSandboxDateTimeRibbonProduction") == null) {
                 sandboxId = lookupSandboxId(request);
             } else {
                 request.getSession().removeAttribute(SANDBOX_DATE_TIME_VAR);
@@ -402,10 +402,10 @@ public class BroadleafProcessURLFilter extends OncePerRequestFilter {
         request.setAttribute(LOCALE_VAR, locale);
         request.getSession().setAttribute(LOCALE_VAR, locale);
 
-        Map<String, Object> ruleMap = (Map<String, Object>) request.getAttribute("blRuleMap");
+        Map<String, Object> ruleMap = (Map<String, Object>) request.getAttribute("ucRuleMap");
         if (ruleMap == null) {
             ruleMap = new HashMap<String, Object>();
-            request.setAttribute("blRuleMap", ruleMap);
+            request.setAttribute("ucRuleMap", ruleMap);
         }
         ruleMap.put("locale", locale);
         return locale;
@@ -423,7 +423,7 @@ public class BroadleafProcessURLFilter extends OncePerRequestFilter {
                     LOG.trace("SandboxId found on request " + sandboxId);
                 }
             } catch (NumberFormatException nfe) {
-                LOG.warn("blcSandboxId parameter could not be converted into a Long", nfe);
+                LOG.warn("ucSandboxId parameter could not be converted into a Long", nfe);
             }
         }
 

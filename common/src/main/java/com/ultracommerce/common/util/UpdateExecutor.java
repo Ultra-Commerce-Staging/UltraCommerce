@@ -1,25 +1,25 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.util;
+package com.ultracommerce.common.util;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.broadleafcommerce.common.util.dao.HibernateMappingProvider;
+import com.ultracommerce.common.util.dao.HibernateMappingProvider;
 import org.hibernate.FlushMode;
 import org.hibernate.Session;
 import org.hibernate.cache.spi.UpdateTimestampsCache;
@@ -66,7 +66,7 @@ public class UpdateExecutor {
      * usage with update queries that have an IN clause at the end. This implementation uses Hibernate Session
      * directly to avoid a problem with assigning NULL values. The query should be written in native SQL.
      * </p>
-     * An example looks like: 'UPDATE BLC_SNDBX_WRKFLW_ITEM SET SCHEDULED_DATE = ? WHERE WRKFLW_SNDBX_ITEM_ID IN (%s)'
+     * An example looks like: 'UPDATE UC_SNDBX_WRKFLW_ITEM SET SCHEDULED_DATE = ? WHERE WRKFLW_SNDBX_ITEM_ID IN (%s)'
      *
      * @deprecated Highly recommended not to use this method. This method results in global L2 cache region clearing. Use {@link #executeUpdateQuery(EntityManager, String, String, Object[], Type[], List)} instead.
      * @param em The entity manager to use for the persistence operation
@@ -110,7 +110,7 @@ public class UpdateExecutor {
      * usage with update queries that have an IN clause at the end. This implementation uses Hibernate Session
      * directly to avoid a problem with assigning NULL values. The query should be written in native SQL.
      * </p>
-     * An example looks like: 'UPDATE BLC_SNDBX_WRKFLW_ITEM SET SCHEDULED_DATE = ? WHERE WRKFLW_SNDBX_ITEM_ID IN (%s)'
+     * An example looks like: 'UPDATE UC_SNDBX_WRKFLW_ITEM SET SCHEDULED_DATE = ? WHERE WRKFLW_SNDBX_ITEM_ID IN (%s)'
      *
      * @param em The entity manager to use for the persistence operation
      * @param template the overall update sql template. The IN clause parameter should be written using 'IN (%s)'.

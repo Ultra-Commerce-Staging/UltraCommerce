@@ -49,7 +49,7 @@
     </build>
     <profiles>
         <profile>
-            <id>blc-development</id>
+            <id>uc-development</id>
             <build>
                 <plugins>
                     <plugin>

@@ -1,31 +1,31 @@
 /*
  * #%L
- * BroadleafCommerce Admin Module
+ * UltraCommerce Admin Module
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.admin.web.controller.extension;
+package com.ultracommerce.admin.web.controller.extension;
 
-import org.broadleafcommerce.admin.web.controller.entity.AdminOfferController;
-import org.broadleafcommerce.common.extension.ExtensionResultStatusType;
-import org.broadleafcommerce.common.presentation.client.RuleBuilderDisplayType;
-import org.broadleafcommerce.core.offer.domain.OfferAdminPresentation;
-import org.broadleafcommerce.openadmin.web.controller.AbstractAdminAbstractControllerExtensionHandler;
-import org.broadleafcommerce.openadmin.web.controller.AdminAbstractControllerExtensionManager;
-import org.broadleafcommerce.openadmin.web.form.entity.EntityForm;
-import org.broadleafcommerce.openadmin.web.form.entity.Field;
-import org.broadleafcommerce.openadmin.web.form.entity.FieldGroup;
+import com.ultracommerce.admin.web.controller.entity.AdminOfferController;
+import com.ultracommerce.common.extension.ExtensionResultStatusType;
+import com.ultracommerce.common.presentation.client.RuleBuilderDisplayType;
+import com.ultracommerce.core.offer.domain.OfferAdminPresentation;
+import com.ultracommerce.openadmin.web.controller.AbstractAdminAbstractControllerExtensionHandler;
+import com.ultracommerce.openadmin.web.controller.AdminAbstractControllerExtensionManager;
+import com.ultracommerce.openadmin.web.form.entity.EntityForm;
+import com.ultracommerce.openadmin.web.form.entity.Field;
+import com.ultracommerce.openadmin.web.form.entity.FieldGroup;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 import javax.annotation.PostConstruct;
@@ -34,10 +34,10 @@ import javax.annotation.Resource;
 /**
  * @author Elbert Bautista (elbertbautista)
  */
-@Component("blAdminOfferControllerExtensionHandler")
+@Component("ucAdminOfferControllerExtensionHandler")
 public class AdminOfferControllerExtensionHandler extends AbstractAdminAbstractControllerExtensionHandler {
 
-    @Resource(name = "blAdminAbstractControllerExtensionManager")
+    @Resource(name = "ucAdminAbstractControllerExtensionManager")
     protected AdminAbstractControllerExtensionManager extensionManager;
 
     @PostConstruct

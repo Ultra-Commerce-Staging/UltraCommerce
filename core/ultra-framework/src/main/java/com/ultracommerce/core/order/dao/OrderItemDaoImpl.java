@@ -1,36 +1,36 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.order.dao;
+package com.ultracommerce.core.order.dao;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.broadleafcommerce.common.persistence.EntityConfiguration;
-import org.broadleafcommerce.core.order.domain.GiftWrapOrderItem;
-import org.broadleafcommerce.core.order.domain.Order;
-import org.broadleafcommerce.core.order.domain.OrderImpl;
-import org.broadleafcommerce.core.order.domain.OrderItem;
-import org.broadleafcommerce.core.order.domain.OrderItemImpl;
-import org.broadleafcommerce.core.order.domain.OrderItemPriceDetail;
-import org.broadleafcommerce.core.order.domain.OrderItemPriceDetailImpl;
-import org.broadleafcommerce.core.order.domain.OrderItemQualifier;
-import org.broadleafcommerce.core.order.domain.OrderItemQualifierImpl;
-import org.broadleafcommerce.core.order.domain.PersonalMessage;
-import org.broadleafcommerce.core.order.service.type.OrderItemType;
-import org.broadleafcommerce.core.order.service.type.OrderStatus;
+import com.ultracommerce.common.persistence.EntityConfiguration;
+import com.ultracommerce.core.order.domain.GiftWrapOrderItem;
+import com.ultracommerce.core.order.domain.Order;
+import com.ultracommerce.core.order.domain.OrderImpl;
+import com.ultracommerce.core.order.domain.OrderItem;
+import com.ultracommerce.core.order.domain.OrderItemImpl;
+import com.ultracommerce.core.order.domain.OrderItemPriceDetail;
+import com.ultracommerce.core.order.domain.OrderItemPriceDetailImpl;
+import com.ultracommerce.core.order.domain.OrderItemQualifier;
+import com.ultracommerce.core.order.domain.OrderItemQualifierImpl;
+import com.ultracommerce.core.order.domain.PersonalMessage;
+import com.ultracommerce.core.order.service.type.OrderItemType;
+import com.ultracommerce.core.order.service.type.OrderStatus;
 import org.hibernate.jpa.QueryHints;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,17 +49,17 @@ import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-@Repository("blOrderItemDao")
+@Repository("ucOrderItemDao")
 public class OrderItemDaoImpl implements OrderItemDao {
 
-    @PersistenceContext(unitName="blPU")
+    @PersistenceContext(unitName="ucPU")
     protected EntityManager em;
 
-    @Resource(name="blEntityConfiguration")
+    @Resource(name="ucEntityConfiguration")
     protected EntityConfiguration entityConfiguration;
 
     @Override
-    @Transactional("blTransactionManager")
+    @Transactional("ucTransactionManager")
     public OrderItem save(final OrderItem orderItem) {
         return em.merge(orderItem);
     }
@@ -70,7 +70,7 @@ public class OrderItemDaoImpl implements OrderItemDao {
     }
 
     @Override
-    @Transactional("blTransactionManager")
+    @Transactional("ucTransactionManager")
     public void delete(OrderItem orderItem) {
         if (!em.contains(orderItem)) {
             orderItem = readOrderItemById(orderItem.getId());
@@ -100,7 +100,7 @@ public class OrderItemDaoImpl implements OrderItemDao {
     }
 
     @Override
-    @Transactional("blTransactionManager")
+    @Transactional("ucTransactionManager")
     public OrderItem saveOrderItem(final OrderItem orderItem) {
         return em.merge(orderItem);
     }

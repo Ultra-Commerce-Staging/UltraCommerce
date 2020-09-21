@@ -1,26 +1,26 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-(function($, BLCAdmin) {
+(function($, UCAdmin) {
     
     var currentRedactor = null;
     
     // Add utility functions for assets
-    BLCAdmin.asset = {
+    UCAdmin.asset = {
         /**
          * Triggered when a user has chosen a file from the file system. Responsible for creating an 
          * iFrame to allow AJAX file upload, triggering the upload, and delegating the response handling
@@ -59,10 +59,10 @@
                 if (assetUrl.charAt(0) == "/") assetUrl = assetUrl.substr(1);
                 var $img = $('<img>', { 'src' : assetUrl, 'alt': altText });
                 currentRedactor.insert.html($img.outerHTML());
-                BLCAdmin.hideCurrentModal();
+                UCAdmin.hideCurrentModal();
             });
 
-            BLCAdmin.showLinkAsModal($('textarea.redactor').data('select-asset-url'), function() {
+            UCAdmin.showLinkAsModal($('textarea.redactor').data('select-asset-url'), function() {
                 $('textarea.redactor').unbind('assetInfoSelected');
                 currentRedactor = null;
             });
@@ -88,7 +88,7 @@
         }
     };
     
-})(jQuery, BLCAdmin);
+})(jQuery, UCAdmin);
 
 $(document).ready(function() {
     
@@ -155,10 +155,10 @@ $(document).ready(function() {
 
             $container.find('div.asset-url').html(fields['assetUrl']);
 
-            BLCAdmin.hideCurrentModal();
+            UCAdmin.hideCurrentModal();
         });
 
-        BLCAdmin.showLinkAsModal($(this).data('select-url'), function() {
+        UCAdmin.showLinkAsModal($(this).data('select-url'), function() {
             $('div.asset-selector-container').unbind('assetInfoSelected');
         });
 
@@ -169,32 +169,32 @@ $(document).ready(function() {
 
     $('body').on('click', 'button.edit-asset-selector', function() {
 
-        var $modal = BLCAdmin.getModalSkeleton();
+        var $modal = UCAdmin.getModalSkeleton();
         var primaryData = JSON.parse($("#fields\\'defaultSku__skuMedia---primary\\'\\.value").val());
         var primaryDatum = primaryData['id'];
-        var linkTitleTranslations ="<a class=\"show-translations\" href=\"/admin/translation?ceilingEntity=org.broadleafcommerce.common.media.domain.Media&entityId="+primaryDatum+"&propertyName=title&isRte=false\">"+
-            "<i class=\"blc-icon-globe\" style=\"color: #94AF39; \">"+"</i>"+
+        var linkTitleTranslations ="<a class=\"show-translations\" href=\"/admin/translation?ceilingEntity=com.ultracommerce.common.media.domain.Media&entityId="+primaryDatum+"&propertyName=title&isRte=false\">"+
+            "<i class=\"uc-icon-globe\" style=\"color: #94AF39; \">"+"</i>"+
             "<span>"+" Translations"+"</span>"+"</a>";
 
-        var linkAltTextTranslations ="<a class=\"show-translations\" href=\"/admin/translation?ceilingEntity=org.broadleafcommerce.common.media.domain.Media&entityId="+primaryDatum+"&propertyName=altText&isRte=false\">"+
-            "<i class=\"blc-icon-globe\" style=\"color: #94AF39; \">"+"</i>"+
+        var linkAltTextTranslations ="<a class=\"show-translations\" href=\"/admin/translation?ceilingEntity=com.ultracommerce.common.media.domain.Media&entityId="+primaryDatum+"&propertyName=altText&isRte=false\">"+
+            "<i class=\"uc-icon-globe\" style=\"color: #94AF39; \">"+"</i>"+
             "<span>"+" Translations"+"</span>"+"</a>";
 
         $modal.addClass('primary-media-attrs-modal');
-        $modal.find('.modal-header h3').text(BLCAdmin.messages.primaryMediaAttrsFormTitle);
+        $modal.find('.modal-header h3').text(UCAdmin.messages.primaryMediaAttrsFormTitle);
         $modal.find('.modal-body').append(
             "<form id='primary-media-attrs-form'>" +
                 "<div class='field-group'>" +
                     "<label for='primary-media-title'>" +
             "</label>" +
-                         "<span>" + BLCAdmin.messages.primaryMediaAttrsTitle +" "+"</span>" +
+                         "<span>" + UCAdmin.messages.primaryMediaAttrsTitle +" "+"</span>" +
                     "</label>"  +
             linkTitleTranslations+
                     "<div><input id='primary-media-title' type='text'></div>" +
                 "</div>" +
                 "<div class='field-group'>" +
                     "<label for='primary-media-altText'>" +
-                        "<span>" + BLCAdmin.messages.primaryMediaAttrsAltText +" "+ "</span>" +
+                        "<span>" + UCAdmin.messages.primaryMediaAttrsAltText +" "+ "</span>" +
             linkAltTextTranslations+
                 "</label>" +
             "<div><input id='primary-media-altText' type='text'></div>" +
@@ -202,7 +202,7 @@ $(document).ready(function() {
                 "</div>" +
                 "<div class='field-group'>" +
                     "<label for='primary-media-tags'>" +
-                        "<span>" + BLCAdmin.messages.primaryMediaAttrsTags + "</span>" +
+                        "<span>" + UCAdmin.messages.primaryMediaAttrsTags + "</span>" +
                     "</label>" +
                     "<div><input id='primary-media-tags' type='text'></div>" +
                 "</div>" +
@@ -210,11 +210,11 @@ $(document).ready(function() {
         );
         $modal.find('.modal-footer').append(
             "<button form='primary-media-attrs-form' class='button primary large' disabled>" +
-                BLCAdmin.messages.primaryMediaAttrsBtnApply +
+                UCAdmin.messages.primaryMediaAttrsBtnApply +
             "</button>"
         );
 
-        BLCAdmin.showElementAsModal($modal);
+        UCAdmin.showElementAsModal($modal);
 
 
 
@@ -257,7 +257,7 @@ $(document).ready(function() {
 
     // When we detect that a user has selected a file from his file system, we will trigger an event
     $('body').on('change', 'input.ajaxUploadFile[type="file"]', function() {
-        BLCAdmin.asset.assetSelected($(this));
+        UCAdmin.asset.assetSelected($(this));
     }); 
     
     // Invisibly proxy a click on our button to the hidden input with type="file" to trigger the 
@@ -302,7 +302,7 @@ $(document).ready(function() {
 
         $('.submit-button').prop('disabled', false);
 
-        BLCAdmin.hideCurrentModal();
+        UCAdmin.hideCurrentModal();
 
         return false;
     });

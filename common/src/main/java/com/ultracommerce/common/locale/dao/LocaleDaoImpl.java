@@ -1,27 +1,27 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.locale.dao;
+package com.ultracommerce.common.locale.dao;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.locale.domain.Locale;
-import org.broadleafcommerce.common.persistence.EntityConfiguration;
-import org.broadleafcommerce.common.util.StringUtil;
+import com.ultracommerce.common.locale.domain.Locale;
+import com.ultracommerce.common.persistence.EntityConfiguration;
+import com.ultracommerce.common.util.StringUtil;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;
@@ -33,14 +33,14 @@ import java.util.List;
 /**
  * Created by bpolster.
  */
-@Repository("blLocaleDao")
+@Repository("ucLocaleDao")
 public class LocaleDaoImpl implements LocaleDao {
     private static final Log LOG = LogFactory.getLog(LocaleDaoImpl.class);
 
-    @PersistenceContext(unitName = "blPU")
+    @PersistenceContext(unitName = "ucPU")
     protected EntityManager em;
 
-    @Resource(name="blEntityConfiguration")
+    @Resource(name="ucEntityConfiguration")
     protected EntityConfiguration entityConfiguration;
 
     /**
@@ -48,7 +48,7 @@ public class LocaleDaoImpl implements LocaleDao {
      */
     @Override
     public Locale findLocaleByCode(String localeCode) {
-        Query query = em.createNamedQuery("BC_READ_LOCALE_BY_CODE");
+        Query query = em.createNamedQuery("UC_READ_LOCALE_BY_CODE");
         query.setParameter("localeCode", localeCode);
         query.setHint(org.hibernate.jpa.QueryHints.HINT_CACHEABLE, true);
         List<Locale> localeList = (List<Locale>) query.getResultList();
@@ -68,7 +68,7 @@ public class LocaleDaoImpl implements LocaleDao {
      */
     @Override
     public Locale findDefaultLocale() {
-        Query query = em.createNamedQuery("BC_READ_DEFAULT_LOCALE");
+        Query query = em.createNamedQuery("UC_READ_DEFAULT_LOCALE");
         query.setHint(org.hibernate.jpa.QueryHints.HINT_CACHEABLE, true);
         List<Locale> localeList = (List<Locale>) query.getResultList();
         if (localeList.size() >= 1) {
@@ -81,11 +81,11 @@ public class LocaleDaoImpl implements LocaleDao {
     }
 
     /**
-     * Returns all supported BLC locales.
+     * Returns all supported UC locales.
      * @return
      */
     public List<Locale> findAllLocales() {
-        Query query = em.createNamedQuery("BC_READ_ALL_LOCALES");
+        Query query = em.createNamedQuery("UC_READ_ALL_LOCALES");
         query.setHint(org.hibernate.jpa.QueryHints.HINT_CACHEABLE, true);
         return (List<Locale>) query.getResultList();
     }

@@ -1,51 +1,51 @@
 /*
  * #%L
- * BroadleafCommerce Admin Module
+ * UltraCommerce Admin Module
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.admin.web.controller.entity;
+package com.ultracommerce.admin.web.controller.entity;
 
 import org.apache.commons.lang3.StringUtils;
-import org.broadleafcommerce.admin.server.service.handler.ProductCustomPersistenceHandler;
-import org.broadleafcommerce.common.exception.ServiceException;
-import org.broadleafcommerce.common.presentation.client.SupportedFieldType;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
-import org.broadleafcommerce.core.catalog.domain.Category;
-import org.broadleafcommerce.core.catalog.domain.Product;
-import org.broadleafcommerce.core.catalog.domain.ProductBundle;
-import org.broadleafcommerce.core.catalog.domain.Sku;
-import org.broadleafcommerce.core.catalog.domain.SkuImpl;
-import org.broadleafcommerce.core.catalog.service.CatalogService;
-import org.broadleafcommerce.core.catalog.service.type.ProductType;
-import org.broadleafcommerce.openadmin.dto.BasicCollectionMetadata;
-import org.broadleafcommerce.openadmin.dto.ClassMetadata;
-import org.broadleafcommerce.openadmin.dto.CriteriaTransferObject;
-import org.broadleafcommerce.openadmin.dto.DynamicResultSet;
-import org.broadleafcommerce.openadmin.dto.Entity;
-import org.broadleafcommerce.openadmin.dto.FieldMetadata;
-import org.broadleafcommerce.openadmin.dto.FilterAndSortCriteria;
-import org.broadleafcommerce.openadmin.dto.Property;
-import org.broadleafcommerce.openadmin.dto.SectionCrumb;
-import org.broadleafcommerce.openadmin.server.domain.PersistencePackageRequest;
-import org.broadleafcommerce.openadmin.web.controller.entity.AdminBasicEntityController;
-import org.broadleafcommerce.openadmin.web.controller.modal.ModalHeaderType;
-import org.broadleafcommerce.openadmin.web.form.component.ListGrid;
-import org.broadleafcommerce.openadmin.web.form.component.ListGridAction;
-import org.broadleafcommerce.openadmin.web.form.entity.DefaultEntityFormActions;
-import org.broadleafcommerce.openadmin.web.form.entity.EntityForm;
-import org.broadleafcommerce.openadmin.web.form.entity.Field;
+import com.ultracommerce.admin.server.service.handler.ProductCustomPersistenceHandler;
+import com.ultracommerce.common.exception.ServiceException;
+import com.ultracommerce.common.presentation.client.SupportedFieldType;
+import com.ultracommerce.common.web.UltraRequestContext;
+import com.ultracommerce.core.catalog.domain.Category;
+import com.ultracommerce.core.catalog.domain.Product;
+import com.ultracommerce.core.catalog.domain.ProductBundle;
+import com.ultracommerce.core.catalog.domain.Sku;
+import com.ultracommerce.core.catalog.domain.SkuImpl;
+import com.ultracommerce.core.catalog.service.CatalogService;
+import com.ultracommerce.core.catalog.service.type.ProductType;
+import com.ultracommerce.openadmin.dto.BasicCollectionMetadata;
+import com.ultracommerce.openadmin.dto.ClassMetadata;
+import com.ultracommerce.openadmin.dto.CriteriaTransferObject;
+import com.ultracommerce.openadmin.dto.DynamicResultSet;
+import com.ultracommerce.openadmin.dto.Entity;
+import com.ultracommerce.openadmin.dto.FieldMetadata;
+import com.ultracommerce.openadmin.dto.FilterAndSortCriteria;
+import com.ultracommerce.openadmin.dto.Property;
+import com.ultracommerce.openadmin.dto.SectionCrumb;
+import com.ultracommerce.openadmin.server.domain.PersistencePackageRequest;
+import com.ultracommerce.openadmin.web.controller.entity.AdminBasicEntityController;
+import com.ultracommerce.openadmin.web.controller.modal.ModalHeaderType;
+import com.ultracommerce.openadmin.web.form.component.ListGrid;
+import com.ultracommerce.openadmin.web.form.component.ListGridAction;
+import com.ultracommerce.openadmin.web.form.entity.DefaultEntityFormActions;
+import com.ultracommerce.openadmin.web.form.entity.EntityForm;
+import com.ultracommerce.openadmin.web.form.entity.Field;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.MultiValueMap;
@@ -71,7 +71,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author Andre Azzolini (apazzolini)
  * @see {@link ProductCustomPersistenceHandler}
  */
-@Controller("blAdminProductController")
+@Controller("ucAdminProductController")
 @RequestMapping("/" + AdminProductController.SECTION_KEY)
 public class AdminProductController extends AdminBasicEntityController {
 
@@ -79,7 +79,7 @@ public class AdminProductController extends AdminBasicEntityController {
     public static final String DEFAULT_SKU_NAME = "defaultSku.name";
     public static final String SELECTIZE_NAME_PROPERTY = "name";
 
-    @Resource(name = "blCatalogService")
+    @Resource(name = "ucCatalogService")
     protected CatalogService catalogService;
 
     @Override
@@ -214,7 +214,7 @@ public class AdminProductController extends AdminBasicEntityController {
 
         // Ensure that operations on the Sku subcollections go to the proper URL
         for (ListGrid lg : entityForm.getAllListGrids()) {
-            lg.setSectionKey("org.broadleafcommerce.core.catalog.domain.Sku");
+            lg.setSectionKey("com.ultracommerce.core.catalog.domain.Sku");
             lg.setSectionCrumbs(sectionCrumbs);
         }
 
@@ -362,7 +362,7 @@ public class AdminProductController extends AdminBasicEntityController {
     @Override
     protected void modifyCriteria(Map<String, FilterAndSortCriteria> fasMap) {
         super.modifyCriteria(fasMap);
-        if(BroadleafRequestContext.getBroadleafRequestContext().getRequest().getRequestURL().toString().contains("product:")) {
+        if(UltraRequestContext.getUltraRequestContext().getRequest().getRequestURL().toString().contains("product:")) {
             CriteriaTransferObject criteriaTransferObject = new CriteriaTransferObject();
             criteriaTransferObject.setCriteriaMap(fasMap);
             try {

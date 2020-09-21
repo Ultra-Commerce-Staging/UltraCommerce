@@ -1,23 +1,23 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.util;
+package com.ultracommerce.common.util;
 
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
+import com.ultracommerce.common.web.UltraRequestContext;
 import org.springframework.web.context.request.WebRequest;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,14 +28,14 @@ import javax.servlet.http.HttpServletRequest;
  * 
  * @author bpolster
  */
-public class BLCRequestUtils {
+public class UCRequestUtils {
     
-    private static String OK_TO_USE_SESSION = "blOkToUseSession";
-    private static String URI_IS_FILTER_IGNORED = "blUriIsFilterIgnored";
+    private static String OK_TO_USE_SESSION = "ucOkToUseSession";
+    private static String URI_IS_FILTER_IGNORED = "ucUriIsFilterIgnored";
     
     /**
-     * Broadleaf "Resolver" and "Filter" classes may need to know if they are allowed to utilize the session.
-     * BLC uses a pattern where we will store an attribute in the request indicating whether or not the 
+     * Ultra "Resolver" and "Filter" classes may need to know if they are allowed to utilize the session.
+     * UC uses a pattern where we will store an attribute in the request indicating whether or not the 
      * session can be used.   For example, when using the REST APIs, we typically do not want to utilize the
      * session.
      *
@@ -85,7 +85,7 @@ public class BLCRequestUtils {
     }
     
     /**
-     * Sets whether or not Broadleaf can utilize the session in request processing.   Used by the REST API
+     * Sets whether or not Ultra can utilize the session in request processing.   Used by the REST API
      * flow so that RESTful calls do not utilize the session.
      *
      */
@@ -116,7 +116,7 @@ public class BLCRequestUtils {
      * to Third Party Gateways.
      */
     public static String getRequestedServerPrefix() {
-        HttpServletRequest request = BroadleafRequestContext.getBroadleafRequestContext().getRequest();
+        HttpServletRequest request = UltraRequestContext.getUltraRequestContext().getRequest();
         String scheme = request.getScheme();
         StringBuilder serverPrefix = new StringBuilder(scheme);
         serverPrefix.append("://");

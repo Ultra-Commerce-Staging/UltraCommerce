@@ -1,22 +1,22 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
 
-package org.broadleafcommerce.openadmin.server.service.persistence.module;
+package com.ultracommerce.openadmin.server.service.persistence.module;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.collections.CollectionUtils;
@@ -27,66 +27,66 @@ import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.commons.lang3.reflect.MethodUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.admin.domain.AdminMainEntity;
-import org.broadleafcommerce.common.exception.ExceptionHelper;
-import org.broadleafcommerce.common.exception.SecurityServiceException;
-import org.broadleafcommerce.common.exception.ServiceException;
-import org.broadleafcommerce.common.extension.ExtensionResultHolder;
-import org.broadleafcommerce.common.i18n.domain.TranslatedEntity;
-import org.broadleafcommerce.common.i18n.domain.TranslationImpl;
-import org.broadleafcommerce.common.locale.service.LocaleService;
-import org.broadleafcommerce.common.money.Money;
-import org.broadleafcommerce.common.presentation.client.OperationType;
-import org.broadleafcommerce.common.presentation.client.PersistencePerspectiveItemType;
-import org.broadleafcommerce.common.presentation.client.SupportedFieldType;
-import org.broadleafcommerce.common.presentation.client.VisibilityEnum;
-import org.broadleafcommerce.common.util.FormatUtil;
-import org.broadleafcommerce.common.util.StringUtil;
-import org.broadleafcommerce.common.util.ValidationUtil;
-import org.broadleafcommerce.common.util.dao.TQJoin;
-import org.broadleafcommerce.common.util.dao.TQOrder;
-import org.broadleafcommerce.common.util.dao.TQRestriction;
-import org.broadleafcommerce.common.util.dao.TypedQueryBuilder;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
-import org.broadleafcommerce.openadmin.dto.BasicFieldMetadata;
-import org.broadleafcommerce.openadmin.dto.CriteriaTransferObject;
-import org.broadleafcommerce.openadmin.dto.DynamicResultSet;
-import org.broadleafcommerce.openadmin.dto.Entity;
-import org.broadleafcommerce.openadmin.dto.EntityResult;
-import org.broadleafcommerce.openadmin.dto.FieldMetadata;
-import org.broadleafcommerce.openadmin.dto.FilterAndSortCriteria;
-import org.broadleafcommerce.openadmin.dto.ForeignKey;
-import org.broadleafcommerce.openadmin.dto.MergedPropertyType;
-import org.broadleafcommerce.openadmin.dto.PersistencePackage;
-import org.broadleafcommerce.openadmin.dto.PersistencePerspective;
-import org.broadleafcommerce.openadmin.dto.Property;
-import org.broadleafcommerce.openadmin.dto.SortDirection;
-import org.broadleafcommerce.openadmin.server.dao.provider.metadata.AdvancedCollectionFieldMetadataProvider;
-import org.broadleafcommerce.openadmin.server.service.ValidationException;
-import org.broadleafcommerce.openadmin.server.service.persistence.ParentEntityPersistenceException;
-import org.broadleafcommerce.openadmin.server.service.persistence.PersistenceException;
-import org.broadleafcommerce.openadmin.server.service.persistence.PersistenceManager;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.criteria.CriteriaConversionException;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.criteria.CriteriaTranslator;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.criteria.FieldPath;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.criteria.FieldPathBuilder;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.criteria.FilterMapping;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.criteria.Restriction;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.criteria.RestrictionFactory;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.criteria.converter.FilterValueConverter;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.criteria.predicate.EqPredicateProvider;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.criteria.predicate.LikePredicateProvider;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.criteria.predicate.PredicateProvider;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.extension.BasicPersistenceModuleExtensionManager;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.provider.FieldPersistenceProvider;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.provider.request.AddFilterPropertiesRequest;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.provider.request.AddSearchMappingRequest;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.provider.request.ExtractValueRequest;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.provider.request.PopulateValueRequest;
-import org.broadleafcommerce.openadmin.server.service.persistence.validation.EntityValidatorService;
-import org.broadleafcommerce.openadmin.server.service.persistence.validation.PopulateValueRequestValidator;
-import org.broadleafcommerce.openadmin.server.service.persistence.validation.PropertyValidationResult;
-import org.broadleafcommerce.openadmin.server.service.type.MetadataProviderResponse;
+import com.ultracommerce.common.admin.domain.AdminMainEntity;
+import com.ultracommerce.common.exception.ExceptionHelper;
+import com.ultracommerce.common.exception.SecurityServiceException;
+import com.ultracommerce.common.exception.ServiceException;
+import com.ultracommerce.common.extension.ExtensionResultHolder;
+import com.ultracommerce.common.i18n.domain.TranslatedEntity;
+import com.ultracommerce.common.i18n.domain.TranslationImpl;
+import com.ultracommerce.common.locale.service.LocaleService;
+import com.ultracommerce.common.money.Money;
+import com.ultracommerce.common.presentation.client.OperationType;
+import com.ultracommerce.common.presentation.client.PersistencePerspectiveItemType;
+import com.ultracommerce.common.presentation.client.SupportedFieldType;
+import com.ultracommerce.common.presentation.client.VisibilityEnum;
+import com.ultracommerce.common.util.FormatUtil;
+import com.ultracommerce.common.util.StringUtil;
+import com.ultracommerce.common.util.ValidationUtil;
+import com.ultracommerce.common.util.dao.TQJoin;
+import com.ultracommerce.common.util.dao.TQOrder;
+import com.ultracommerce.common.util.dao.TQRestriction;
+import com.ultracommerce.common.util.dao.TypedQueryBuilder;
+import com.ultracommerce.common.web.UltraRequestContext;
+import com.ultracommerce.openadmin.dto.BasicFieldMetadata;
+import com.ultracommerce.openadmin.dto.CriteriaTransferObject;
+import com.ultracommerce.openadmin.dto.DynamicResultSet;
+import com.ultracommerce.openadmin.dto.Entity;
+import com.ultracommerce.openadmin.dto.EntityResult;
+import com.ultracommerce.openadmin.dto.FieldMetadata;
+import com.ultracommerce.openadmin.dto.FilterAndSortCriteria;
+import com.ultracommerce.openadmin.dto.ForeignKey;
+import com.ultracommerce.openadmin.dto.MergedPropertyType;
+import com.ultracommerce.openadmin.dto.PersistencePackage;
+import com.ultracommerce.openadmin.dto.PersistencePerspective;
+import com.ultracommerce.openadmin.dto.Property;
+import com.ultracommerce.openadmin.dto.SortDirection;
+import com.ultracommerce.openadmin.server.dao.provider.metadata.AdvancedCollectionFieldMetadataProvider;
+import com.ultracommerce.openadmin.server.service.ValidationException;
+import com.ultracommerce.openadmin.server.service.persistence.ParentEntityPersistenceException;
+import com.ultracommerce.openadmin.server.service.persistence.PersistenceException;
+import com.ultracommerce.openadmin.server.service.persistence.PersistenceManager;
+import com.ultracommerce.openadmin.server.service.persistence.module.criteria.CriteriaConversionException;
+import com.ultracommerce.openadmin.server.service.persistence.module.criteria.CriteriaTranslator;
+import com.ultracommerce.openadmin.server.service.persistence.module.criteria.FieldPath;
+import com.ultracommerce.openadmin.server.service.persistence.module.criteria.FieldPathBuilder;
+import com.ultracommerce.openadmin.server.service.persistence.module.criteria.FilterMapping;
+import com.ultracommerce.openadmin.server.service.persistence.module.criteria.Restriction;
+import com.ultracommerce.openadmin.server.service.persistence.module.criteria.RestrictionFactory;
+import com.ultracommerce.openadmin.server.service.persistence.module.criteria.converter.FilterValueConverter;
+import com.ultracommerce.openadmin.server.service.persistence.module.criteria.predicate.EqPredicateProvider;
+import com.ultracommerce.openadmin.server.service.persistence.module.criteria.predicate.LikePredicateProvider;
+import com.ultracommerce.openadmin.server.service.persistence.module.criteria.predicate.PredicateProvider;
+import com.ultracommerce.openadmin.server.service.persistence.module.extension.BasicPersistenceModuleExtensionManager;
+import com.ultracommerce.openadmin.server.service.persistence.module.provider.FieldPersistenceProvider;
+import com.ultracommerce.openadmin.server.service.persistence.module.provider.request.AddFilterPropertiesRequest;
+import com.ultracommerce.openadmin.server.service.persistence.module.provider.request.AddSearchMappingRequest;
+import com.ultracommerce.openadmin.server.service.persistence.module.provider.request.ExtractValueRequest;
+import com.ultracommerce.openadmin.server.service.persistence.module.provider.request.PopulateValueRequest;
+import com.ultracommerce.openadmin.server.service.persistence.validation.EntityValidatorService;
+import com.ultracommerce.openadmin.server.service.persistence.validation.PopulateValueRequestValidator;
+import com.ultracommerce.openadmin.server.service.persistence.validation.PropertyValidationResult;
+import com.ultracommerce.openadmin.server.service.type.MetadataProviderResponse;
 import org.hibernate.FlushMode;
 import org.hibernate.Session;
 import org.springframework.beans.BeansException;
@@ -136,7 +136,7 @@ import javax.persistence.criteria.Subquery;
  * @author jfischer
  */
 @Primary
-@Component("blBasicPersistenceModule")
+@Component("ucBasicPersistenceModule")
 @Scope("prototype")
 public class BasicPersistenceModule implements PersistenceModule, RecordHelper, ApplicationContextAware {
 
@@ -148,34 +148,34 @@ public class BasicPersistenceModule implements PersistenceModule, RecordHelper, 
     protected ApplicationContext applicationContext;
     protected PersistenceManager persistenceManager;
 
-    @Resource(name = "blEntityValidatorService")
+    @Resource(name = "ucEntityValidatorService")
     protected EntityValidatorService entityValidatorService;
 
-    @Resource(name = "blPersistenceProviders")
+    @Resource(name = "ucPersistenceProviders")
     protected List<FieldPersistenceProvider> fieldPersistenceProviders = new ArrayList<FieldPersistenceProvider>();
 
-    @Resource(name = "blPopulateValueRequestValidators")
+    @Resource(name = "ucPopulateValueRequestValidators")
     protected List<PopulateValueRequestValidator> populateValidators;
 
-    @Resource(name = "blDefaultFieldPersistenceProvider")
+    @Resource(name = "ucDefaultFieldPersistenceProvider")
     protected FieldPersistenceProvider defaultFieldPersistenceProvider;
 
-    @Resource(name = "blCriteriaTranslator")
+    @Resource(name = "ucCriteriaTranslator")
     protected CriteriaTranslator criteriaTranslator;
 
-    @Resource(name = "blRestrictionFactory")
+    @Resource(name = "ucRestrictionFactory")
     protected RestrictionFactory restrictionFactory;
 
-    @Resource(name = "blBasicPersistenceModuleExtensionManager")
+    @Resource(name = "ucBasicPersistenceModuleExtensionManager")
     protected BasicPersistenceModuleExtensionManager extensionManager;
 
-    @Resource(name = "blFetchWrapper")
+    @Resource(name = "ucFetchWrapper")
     protected FetchWrapper fetchWrapper;
 
     @Value("${use.translation.search:false}")
     protected boolean useTranslationSearch;
 
-    @Resource(name = "blLocaleService")
+    @Resource(name = "ucLocaleService")
     protected LocaleService localeService;
 
     @PostConstruct
@@ -218,7 +218,7 @@ public class BasicPersistenceModule implements PersistenceModule, RecordHelper, 
 
     @Override
     public DecimalFormat getDecimalFormatter() {
-        BroadleafRequestContext brc = BroadleafRequestContext.getBroadleafRequestContext();
+        UltraRequestContext brc = UltraRequestContext.getUltraRequestContext();
         Locale locale = brc.getJavaLocale();
         DecimalFormat format = (DecimalFormat) NumberFormat.getInstance(locale);
         format.applyPattern("0.########");
@@ -253,7 +253,7 @@ public class BasicPersistenceModule implements PersistenceModule, RecordHelper, 
         return newMap;
     }
 
-    protected Class<?> getBasicBroadleafType(SupportedFieldType fieldType) {
+    protected Class<?> getBasicUltraType(SupportedFieldType fieldType) {
         Class<?> response;
         switch (fieldType) {
             case BOOLEAN:
@@ -352,7 +352,7 @@ public class BasicPersistenceModule implements PersistenceModule, RecordHelper, 
                     }
                     returnType = getMapFieldType(instance, fieldManager, property);
                     if (returnType == null) {
-                        returnType = getBasicBroadleafType(metadata.getFieldType());
+                        returnType = getBasicUltraType(metadata.getFieldType());
                     }
                 }
                 if (returnType == null) {
@@ -1252,8 +1252,8 @@ public class BasicPersistenceModule implements PersistenceModule, RecordHelper, 
         //For example, if locale = "en" than we use also "en_GB" and "en_US"
         if (filterValues.size() > 0 && filterValues.get(0).indexOf("_") < 0) {
             String currentLocaleCode = filterValues.get(0);
-            List<org.broadleafcommerce.common.locale.domain.Locale> locales = localeService.findAllLocales();
-            for (org.broadleafcommerce.common.locale.domain.Locale locale : locales) {
+            List<com.ultracommerce.common.locale.domain.Locale> locales = localeService.findAllLocales();
+            for (com.ultracommerce.common.locale.domain.Locale locale : locales) {
                 if (!locale.getLocaleCode().equals(currentLocaleCode) && currentLocaleCode.equals(locale.getLocaleCode().substring(0,2))) {
                     filterValues.add(locale.getLocaleCode());
                 }
@@ -1500,7 +1500,7 @@ public class BasicPersistenceModule implements PersistenceModule, RecordHelper, 
     /**
      * Generate LIKE or EQUALS restrictions for any filter property specified on the root entity (not the collection field in the @Embeddable object)
      *
-     * @see #getSpecialCaseQueryBuilder(org.broadleafcommerce.openadmin.server.service.persistence.module.criteria.FieldPath, java.util.List, String)
+     * @see #getSpecialCaseQueryBuilder(com.ultracommerce.openadmin.server.service.persistence.module.criteria.FieldPath, java.util.List, String)
      * @param embeddedCollectionPath the path for the collection field in the @Embeddable object - this is what caused the whole thing
      * @param filterMappings all the fetch restrictions for this request
      * @return the list of restrictions on the root entity
@@ -1542,7 +1542,7 @@ public class BasicPersistenceModule implements PersistenceModule, RecordHelper, 
     /**
      * Generate EQUALS restrictions for any filter property specified on the entity member of the collection field in the @Embeddable object
      *
-     * @see #getSpecialCaseQueryBuilder(org.broadleafcommerce.openadmin.server.service.persistence.module.criteria.FieldPath, java.util.List, String)
+     * @see #getSpecialCaseQueryBuilder(com.ultracommerce.openadmin.server.service.persistence.module.criteria.FieldPath, java.util.List, String)
      * @param specialExpression the String representation of the path for the collection field in the @Embeddable object
      * @param filterMappings all the fetch restrictions for this request
      * @return the list of restrictions on the collection in the @Embeddable object

@@ -1,31 +1,31 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.pricing.service;
+package com.ultracommerce.core.pricing.service;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.money.Money;
-import org.broadleafcommerce.common.vendor.service.exception.FulfillmentPriceException;
-import org.broadleafcommerce.core.order.domain.FulfillmentGroup;
-import org.broadleafcommerce.core.order.domain.FulfillmentOption;
-import org.broadleafcommerce.core.order.service.FulfillmentGroupService;
-import org.broadleafcommerce.core.pricing.service.fulfillment.provider.FulfillmentEstimationResponse;
-import org.broadleafcommerce.core.pricing.service.fulfillment.provider.FulfillmentPricingProvider;
+import com.ultracommerce.common.money.Money;
+import com.ultracommerce.common.vendor.service.exception.FulfillmentPriceException;
+import com.ultracommerce.core.order.domain.FulfillmentGroup;
+import com.ultracommerce.core.order.domain.FulfillmentOption;
+import com.ultracommerce.core.order.service.FulfillmentGroupService;
+import com.ultracommerce.core.pricing.service.fulfillment.provider.FulfillmentEstimationResponse;
+import com.ultracommerce.core.pricing.service.fulfillment.provider.FulfillmentPricingProvider;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -33,15 +33,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
-@Service("blFulfillmentPricingService")
+@Service("ucFulfillmentPricingService")
 public class FulfillmentPricingServiceImpl implements FulfillmentPricingService {
     
     protected static final Log LOG  = LogFactory.getLog(FulfillmentPricingServiceImpl.class);
 
-    @Resource(name = "blFulfillmentPricingProviders")
+    @Resource(name = "ucFulfillmentPricingProviders")
     protected List<FulfillmentPricingProvider> providers;
     
-    @Resource(name = "blFulfillmentGroupService")
+    @Resource(name = "ucFulfillmentGroupService")
     protected FulfillmentGroupService fulfillmentGroupService;
 
     @Override

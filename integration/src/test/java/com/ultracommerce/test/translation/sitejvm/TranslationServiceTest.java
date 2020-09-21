@@ -1,30 +1,30 @@
 /*
  * #%L
- * BroadleafCommerce Integration
+ * UltraCommerce Integration
  * %%
- * Copyright (C) 2009 - 2017 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.test.translation.sitejvm;
+package com.ultracommerce.test.translation.sitejvm;
 
-import org.broadleafcommerce.common.i18n.domain.TranslatedEntity;
-import org.broadleafcommerce.common.i18n.service.TranslationService;
-import org.broadleafcommerce.common.locale.domain.LocaleImpl;
-import org.broadleafcommerce.common.locale.service.LocaleService;
-import org.broadleafcommerce.core.catalog.domain.Category;
-import org.broadleafcommerce.core.catalog.domain.CategoryImpl;
-import org.broadleafcommerce.core.catalog.service.CatalogService;
-import org.broadleafcommerce.test.TestNGSiteIntegrationSetup;
+import com.ultracommerce.common.i18n.domain.TranslatedEntity;
+import com.ultracommerce.common.i18n.service.TranslationService;
+import com.ultracommerce.common.locale.domain.LocaleImpl;
+import com.ultracommerce.common.locale.service.LocaleService;
+import com.ultracommerce.core.catalog.domain.Category;
+import com.ultracommerce.core.catalog.domain.CategoryImpl;
+import com.ultracommerce.core.catalog.service.CatalogService;
+import com.ultracommerce.test.TestNGSiteIntegrationSetup;
 import org.springframework.transaction.annotation.Transactional;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -56,11 +56,11 @@ public class TranslationServiceTest extends TestNGSiteIntegrationSetup {
         category.setName("Translation");
         category = catalogService.saveCategory(category);
 
-        org.broadleafcommerce.common.locale.domain.Locale esLocale = new LocaleImpl();
+        com.ultracommerce.common.locale.domain.Locale esLocale = new LocaleImpl();
         esLocale.setLocaleCode("es");
         localeService.save(esLocale);
 
-        org.broadleafcommerce.common.locale.domain.Locale esMxLocale = new LocaleImpl();
+        com.ultracommerce.common.locale.domain.Locale esMxLocale = new LocaleImpl();
         esMxLocale.setLocaleCode("es_MX");
         localeService.save(esMxLocale);
 

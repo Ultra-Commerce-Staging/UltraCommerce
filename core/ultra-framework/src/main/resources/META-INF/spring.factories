@@ -1,1 +1,1 @@
-org.broadleafcommerce.common.config.FrameworkCommonClasspathPropertySource=org.broadleafcommerce.core.config.FrameworkConfig.FrameworkPropertySource
+com.ultracommerce.common.config.FrameworkCommonClasspathPropertySource=com.ultracommerce.core.config.FrameworkConfig.FrameworkPropertySource

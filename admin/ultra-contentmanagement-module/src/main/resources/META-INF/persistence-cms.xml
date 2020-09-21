@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
   #%L
-  BroadleafCommerce CMS Module
+  UltraCommerce CMS Module
   %%
-  Copyright (C) 2009 - 2016 Broadleaf Commerce
+  Copyright (C) 2009 - 2016 Ultra Commerce
   %%
-  Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
-  (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
-  unless the restrictions on use therein are violated and require payment to Broadleaf in which case
-  the Broadleaf End User License Agreement (EULA), Version 1.1
-  (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+  Licensed under the Ultra Fair Use License Agreement, Version 1.0
+  (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+  unless the restrictions on use therein are violated and require payment to Ultra in which case
+  the Ultra End User License Agreement (EULA), Version 1.1
+  (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
   shall apply.
   
   Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
-  between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+  between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
   #L%
   -->
 
@@ -21,48 +21,48 @@
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
              version="2.0">
-    <persistence-unit name="blPU" transaction-type="RESOURCE_LOCAL">
+    <persistence-unit name="ucPU" transaction-type="RESOURCE_LOCAL">
         <mapping-file>config/bc/jpa/domain/Page.orm.xml</mapping-file>
         <mapping-file>config/bc/jpa/domain/StructuredContent.orm.xml</mapping-file>
         <mapping-file>config/bc/jpa/domain/URLHandler.orm.xml</mapping-file>
-        <class>org.broadleafcommerce.common.locale.domain.LocaleImpl</class>
-        <class>org.broadleafcommerce.cms.field.domain.FieldDefinitionImpl</class>
-        <class>org.broadleafcommerce.cms.field.domain.FieldGroupImpl</class>
-        <class>org.broadleafcommerce.cms.page.domain.PageImpl</class>
-        <class>org.broadleafcommerce.cms.page.domain.PageAttributeImpl</class>
-        <class>org.broadleafcommerce.cms.page.domain.PageFieldImpl</class>
-        <class>org.broadleafcommerce.cms.page.domain.PageTemplateImpl</class>
-        <class>org.broadleafcommerce.cms.page.domain.PageTemplateFieldGroupXrefImpl</class>
-        <class>org.broadleafcommerce.cms.page.domain.PageRuleImpl</class>
-        <class>org.broadleafcommerce.cms.page.domain.PageItemCriteriaImpl</class>
-        <class>org.broadleafcommerce.cms.file.domain.StaticAssetImpl</class>
-        <class>org.broadleafcommerce.cms.file.domain.ImageStaticAssetImpl</class>
-        <class>org.broadleafcommerce.cms.file.domain.StaticAssetDescriptionImpl</class>
-        <class>org.broadleafcommerce.cms.structure.domain.StructuredContentTypeImpl</class>
-        <class>org.broadleafcommerce.cms.structure.domain.StructuredContentFieldTemplateImpl</class>
-        <class>org.broadleafcommerce.cms.structure.domain.StructuredContentFieldGroupXrefImpl</class>
-        <class>org.broadleafcommerce.cms.structure.domain.StructuredContentFieldImpl</class>
-        <class>org.broadleafcommerce.cms.structure.domain.StructuredContentImpl</class>
-        <class>org.broadleafcommerce.cms.structure.domain.StructuredContentRuleImpl</class>        
-        <class>org.broadleafcommerce.cms.structure.domain.StructuredContentFieldXrefImpl</class>
-        <class>org.broadleafcommerce.cms.structure.domain.StructuredContentItemCriteriaImpl</class>
-        <class>org.broadleafcommerce.cms.field.domain.FieldEnumerationImpl</class>
-        <class>org.broadleafcommerce.cms.field.domain.FieldEnumerationItemImpl</class>
-        <class>org.broadleafcommerce.cms.url.domain.URLHandlerImpl</class>
+        <class>com.ultracommerce.common.locale.domain.LocaleImpl</class>
+        <class>com.ultracommerce.cms.field.domain.FieldDefinitionImpl</class>
+        <class>com.ultracommerce.cms.field.domain.FieldGroupImpl</class>
+        <class>com.ultracommerce.cms.page.domain.PageImpl</class>
+        <class>com.ultracommerce.cms.page.domain.PageAttributeImpl</class>
+        <class>com.ultracommerce.cms.page.domain.PageFieldImpl</class>
+        <class>com.ultracommerce.cms.page.domain.PageTemplateImpl</class>
+        <class>com.ultracommerce.cms.page.domain.PageTemplateFieldGroupXrefImpl</class>
+        <class>com.ultracommerce.cms.page.domain.PageRuleImpl</class>
+        <class>com.ultracommerce.cms.page.domain.PageItemCriteriaImpl</class>
+        <class>com.ultracommerce.cms.file.domain.StaticAssetImpl</class>
+        <class>com.ultracommerce.cms.file.domain.ImageStaticAssetImpl</class>
+        <class>com.ultracommerce.cms.file.domain.StaticAssetDescriptionImpl</class>
+        <class>com.ultracommerce.cms.structure.domain.StructuredContentTypeImpl</class>
+        <class>com.ultracommerce.cms.structure.domain.StructuredContentFieldTemplateImpl</class>
+        <class>com.ultracommerce.cms.structure.domain.StructuredContentFieldGroupXrefImpl</class>
+        <class>com.ultracommerce.cms.structure.domain.StructuredContentFieldImpl</class>
+        <class>com.ultracommerce.cms.structure.domain.StructuredContentImpl</class>
+        <class>com.ultracommerce.cms.structure.domain.StructuredContentRuleImpl</class>        
+        <class>com.ultracommerce.cms.structure.domain.StructuredContentFieldXrefImpl</class>
+        <class>com.ultracommerce.cms.structure.domain.StructuredContentItemCriteriaImpl</class>
+        <class>com.ultracommerce.cms.field.domain.FieldEnumerationImpl</class>
+        <class>com.ultracommerce.cms.field.domain.FieldEnumerationItemImpl</class>
+        <class>com.ultracommerce.cms.url.domain.URLHandlerImpl</class>
         <exclude-unlisted-classes/>
         <!-- Inherits JPA properties from persistence-common.xml -->
     </persistence-unit>
 
-    <persistence-unit name="blCMSStorage" transaction-type="RESOURCE_LOCAL">
+    <persistence-unit name="ucCMSStorage" transaction-type="RESOURCE_LOCAL">
         <mapping-file>config/bc/jpa/domain/StaticAssetStorage.orm.xml</mapping-file>
-        <class>org.broadleafcommerce.cms.file.domain.StaticAssetStorageImpl</class>
+        <class>com.ultracommerce.cms.file.domain.StaticAssetStorageImpl</class>
         <exclude-unlisted-classes/>
         <properties>
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.transaction.flush_before_completion" value="false"/>
             <property name="hibernate.cache.region.factory_class" value="org.hibernate.cache.jcache.JCacheRegionFactory"/>
             <property name="hibernate.javax.cache.provider" value="org.ehcache.jsr107.EhcacheCachingProvider"/>
-            <!-- See org.broadleafcommerce.common.extensibility.jpa.JCachePersistenceUnitPostProcessor for more information on the jcache.xml location -->
+            <!-- See com.ultracommerce.common.extensibility.jpa.JCachePersistenceUnitPostProcessor for more information on the jcache.xml location -->
             <property name="hibernate.cache.use_second_level_cache" value="false"/>
             <property name="hibernate.cache.use_query_cache" value="false"/>
             <property name="hibernate.generate_statistics" value="false" />

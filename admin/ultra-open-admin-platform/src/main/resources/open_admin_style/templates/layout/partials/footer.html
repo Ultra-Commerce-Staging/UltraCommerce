@@ -4,7 +4,7 @@
 
     <script src="/admin/js/admin/vendor/jquery-3.5.1.js" type="text/javascript"></script>
 
-    <blc_admin:admin_user resultVar="adminUser" ></blc_admin:admin_user>
+    <uc_admin:admin_user resultVar="adminUser" ></uc_admin:admin_user>
     <blc:form id="js-error-handling" method="POST" ></blc:form>
 
     <input type="hidden" th:with="adminUser=${adminUser}" id="adminUser" name="adminUser" value="${adminUser.flatAdditionalFields}">
@@ -37,8 +37,8 @@
                        admin/lib/plugins/selectize-silent-remove.js,
 
                        admin/lib/plugins/query-builder.en.js,
-                       admin/lib/plugins/blc-admin-query-builder.js,
-                       admin/lib/plugins/blc-admin-filter-builder.js,
+                       admin/lib/plugins/uc-admin-query-builder.js,
+                       admin/lib/plugins/uc-admin-filter-builder.js,
 
                        admin/lib/plugins/jquery.cookie.js,
                        admin/lib/plugins/jquery.event.move.js,
@@ -58,13 +58,13 @@
 
     <blc:bundle name="admin.js"
                 mapping-prefix="/js/"
-                files="BLC.js,
-                       BLC-system-property.js,
-                       blc-dates.js,
+                files="UC.js,
+                       UC-system-property.js,
+                       uc-dates.js,
                        admin/new-admin.js,
-                       admin/blc-admin.js,
-                       admin/blc-admin-history.js,
-                       admin/blc-admin-breadcrumb.js,
+                       admin/uc-admin.js,
+                       admin/uc-admin-history.js,
+                       admin/uc-admin-breadcrumb.js,
 
                        admin/ui/dates.js,
                        admin/ui/messages.js,
@@ -94,7 +94,7 @@
 
     <blc:bundle name="admin-init.js"
                 mapping-prefix="/js/"
-                files="admin/blc-admin-init.js" ></blc:bundle>
+                files="admin/uc-admin-init.js" ></blc:bundle>
 
 
     <div th:replace="layout/partials/postFooterContent" ></div>

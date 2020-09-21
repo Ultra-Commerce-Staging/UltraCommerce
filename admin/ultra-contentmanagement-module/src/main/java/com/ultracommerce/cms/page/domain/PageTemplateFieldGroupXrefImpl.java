@@ -1,33 +1,33 @@
 /*
  * #%L
- * BroadleafCommerce CMS Module
+ * UltraCommerce CMS Module
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.cms.page.domain;
+package com.ultracommerce.cms.page.domain;
 
-import org.broadleafcommerce.cms.field.domain.FieldGroup;
-import org.broadleafcommerce.cms.field.domain.FieldGroupImpl;
-import org.broadleafcommerce.common.copy.CreateResponse;
-import org.broadleafcommerce.common.copy.MultiTenantCopyContext;
-import org.broadleafcommerce.common.extensibility.jpa.clone.ClonePolicy;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransform;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformMember;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformTypes;
-import org.broadleafcommerce.common.extensibility.jpa.copy.ProfileEntity;
-import org.broadleafcommerce.common.presentation.AdminPresentation;
-import org.broadleafcommerce.common.presentation.client.VisibilityEnum;
+import com.ultracommerce.cms.field.domain.FieldGroup;
+import com.ultracommerce.cms.field.domain.FieldGroupImpl;
+import com.ultracommerce.common.copy.CreateResponse;
+import com.ultracommerce.common.copy.MultiTenantCopyContext;
+import com.ultracommerce.common.extensibility.jpa.clone.ClonePolicy;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransform;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransformMember;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransformTypes;
+import com.ultracommerce.common.extensibility.jpa.copy.ProfileEntity;
+import com.ultracommerce.common.presentation.AdminPresentation;
+import com.ultracommerce.common.presentation.client.VisibilityEnum;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
@@ -50,8 +50,8 @@ import javax.persistence.Table;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "BLC_PGTMPLT_FLDGRP_XREF")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "blCMSElements")
+@Table(name = "UC_PGTMPLT_FLDGRP_XREF")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "ucCMSElements")
 @DirectCopyTransform({
         @DirectCopyTransformMember(templateTokens = DirectCopyTransformTypes.SANDBOX, skipOverlaps = true),
         @DirectCopyTransformMember(templateTokens = DirectCopyTransformTypes.MULTITENANT_SITE)
@@ -64,10 +64,10 @@ public class PageTemplateFieldGroupXrefImpl implements PageTemplateFieldGroupXre
     @GeneratedValue(generator = "PageTemplateFieldGroupXrefId")
     @GenericGenerator(
             name = "PageTemplateFieldGroupXrefId",
-            strategy = "org.broadleafcommerce.common.persistence.IdOverrideTableGenerator",
+            strategy = "com.ultracommerce.common.persistence.IdOverrideTableGenerator",
             parameters = {
                     @Parameter(name = "segment_value", value = "PageTemplateFieldGroupXrefImpl"),
-                    @Parameter(name = "entity_name", value = "org.broadleafcommerce.cms.page.domain.PageTemplateFieldGroupXrefImpl")
+                    @Parameter(name = "entity_name", value = "com.ultracommerce.cms.page.domain.PageTemplateFieldGroupXrefImpl")
             })
     @Column(name = "PG_TMPLT_FLD_GRP_ID")
     protected Long id;

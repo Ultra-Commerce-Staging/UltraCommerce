@@ -1,41 +1,41 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.web;
+package com.ultracommerce.common.web;
 
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.RequestDTO;
-import org.broadleafcommerce.common.classloader.release.ThreadLocalManager;
-import org.broadleafcommerce.common.currency.domain.BroadleafCurrency;
-import org.broadleafcommerce.common.currency.domain.BroadleafCurrencyImpl;
-import org.broadleafcommerce.common.exception.ExceptionHelper;
-import org.broadleafcommerce.common.locale.domain.Locale;
-import org.broadleafcommerce.common.locale.domain.LocaleImpl;
-import org.broadleafcommerce.common.sandbox.domain.SandBox;
-import org.broadleafcommerce.common.sandbox.domain.SandBoxImpl;
-import org.broadleafcommerce.common.sandbox.domain.SandBoxType;
-import org.broadleafcommerce.common.site.domain.Catalog;
-import org.broadleafcommerce.common.site.domain.CatalogImpl;
-import org.broadleafcommerce.common.site.domain.Site;
-import org.broadleafcommerce.common.site.domain.SiteImpl;
-import org.broadleafcommerce.common.site.domain.Theme;
-import org.broadleafcommerce.common.util.BLCRequestUtils;
+import com.ultracommerce.common.RequestDTO;
+import com.ultracommerce.common.classloader.release.ThreadLocalManager;
+import com.ultracommerce.common.currency.domain.UltraCurrency;
+import com.ultracommerce.common.currency.domain.UltraCurrencyImpl;
+import com.ultracommerce.common.exception.ExceptionHelper;
+import com.ultracommerce.common.locale.domain.Locale;
+import com.ultracommerce.common.locale.domain.LocaleImpl;
+import com.ultracommerce.common.sandbox.domain.SandBox;
+import com.ultracommerce.common.sandbox.domain.SandBoxImpl;
+import com.ultracommerce.common.sandbox.domain.SandBoxType;
+import com.ultracommerce.common.site.domain.Catalog;
+import com.ultracommerce.common.site.domain.CatalogImpl;
+import com.ultracommerce.common.site.domain.Site;
+import com.ultracommerce.common.site.domain.SiteImpl;
+import com.ultracommerce.common.site.domain.Theme;
+import com.ultracommerce.common.util.UCRequestUtils;
 import org.springframework.context.MessageSource;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
@@ -61,67 +61,67 @@ import javax.servlet.http.HttpServletResponse;
  * Convenient holder class for various objects to be automatically available on thread local without invoking the various
  * services yourself
  * 
- * @see {@link BroadleafRequestProcessor}
+ * @see {@link UltraRequestProcessor}
  */
-public class BroadleafRequestContext {
+public class UltraRequestContext {
     
-    protected static final Log LOG = LogFactory.getLog(BroadleafRequestContext.class);
+    protected static final Log LOG = LogFactory.getLog(UltraRequestContext.class);
     
-    private static final ThreadLocal<BroadleafRequestContext> BROADLEAF_REQUEST_CONTEXT = ThreadLocalManager.createThreadLocal(BroadleafRequestContext.class, false);
+    private static final ThreadLocal<UltraRequestContext> ULTRA_REQUEST_CONTEXT = ThreadLocalManager.createThreadLocal(UltraRequestContext.class, false);
     
     /**
-     * Returns the current, thread-bound {@link BroadleafRequestContext}.  This creates and binds one if it does not exist.
+     * Returns the current, thread-bound {@link UltraRequestContext}.  This creates and binds one if it does not exist.
      * 
-     * This is the same as calling {@link BroadleafRequestContext#getBroadleafRequestContext(boolean)} with the value true.
+     * This is the same as calling {@link UltraRequestContext#getUltraRequestContext(boolean)} with the value true.
      * 
      * @return
      */
-    public static BroadleafRequestContext getBroadleafRequestContext() {
-        return getBroadleafRequestContext(true);
+    public static UltraRequestContext getUltraRequestContext() {
+        return getUltraRequestContext(true);
     }
     
     /**
-     * Returns the current, thread-bound {@link BroadleafRequestContext}, or null if one does not exist.  
+     * Returns the current, thread-bound {@link UltraRequestContext}, or null if one does not exist.  
      * However, this creates and binds one and returns the newly created context if it does not exist and the createIfAbsent parameter is true.
      * 
      * @param createIfAbsent
      * @return
      */
-    public static BroadleafRequestContext getBroadleafRequestContext(boolean createIfAbsent) {
-        BroadleafRequestContext ctx = BROADLEAF_REQUEST_CONTEXT.get();
+    public static UltraRequestContext getUltraRequestContext(boolean createIfAbsent) {
+        UltraRequestContext ctx = ULTRA_REQUEST_CONTEXT.get();
         if (ctx == null && createIfAbsent) {
-            ctx = new BroadleafRequestContext();
-            BROADLEAF_REQUEST_CONTEXT.set(ctx);
+            ctx = new UltraRequestContext();
+            ULTRA_REQUEST_CONTEXT.set(ctx);
         }
         return ctx;
     }
     
     /**
-     * Initializes or sets the {@link BroadleafRequestContext} on the current thread.  If the provided parameter is null, this removes the 
+     * Initializes or sets the {@link UltraRequestContext} on the current thread.  If the provided parameter is null, this removes the 
      * thread-bound context.
      * 
-     * @param broadleafRequestContext
+     * @param ultraRequestContext
      */
-    public static void setBroadleafRequestContext(BroadleafRequestContext broadleafRequestContext) {
-        if (broadleafRequestContext == null) {
-            BROADLEAF_REQUEST_CONTEXT.remove();
+    public static void setUltraRequestContext(UltraRequestContext ultraRequestContext) {
+        if (ultraRequestContext == null) {
+            ULTRA_REQUEST_CONTEXT.remove();
         } else {
-            BROADLEAF_REQUEST_CONTEXT.set(broadleafRequestContext);
+            ULTRA_REQUEST_CONTEXT.set(ultraRequestContext);
         }
     }
     
     /**
-     * Checks to see if there is a {@link BroadleafRequestContext} already bound to the current thread.
+     * Checks to see if there is a {@link UltraRequestContext} already bound to the current thread.
      * 
      * @return
      */
     public static boolean isContextInitialized() {
-        return getBroadleafRequestContext(false) != null;
+        return getUltraRequestContext(false) != null;
     }
 
     public static boolean hasLocale(){
         if (isContextInitialized()) {
-            if(getBroadleafRequestContext().getLocale() != null){
+            if(getUltraRequestContext().getLocale() != null){
                 return true;
             }
         }
@@ -130,22 +130,22 @@ public class BroadleafRequestContext {
     
     public static boolean hasCurrency() {
         if (isContextInitialized()) {
-            if (getBroadleafRequestContext().getBroadleafCurrency() != null) {
+            if (getUltraRequestContext().getUltraCurrency() != null) {
                 return true;
             }
         }
         return false;
     }
 
-    public static BroadleafCurrency getCurrency() {
-        BroadleafCurrency returnCurrency = null;
+    public static UltraCurrency getCurrency() {
+        UltraCurrency returnCurrency = null;
         if (isContextInitialized()) {
-            returnCurrency = getBroadleafRequestContext().getBroadleafCurrency();
+            returnCurrency = getUltraRequestContext().getUltraCurrency();
         }
 
         if (returnCurrency == null) {
             if (LOG.isWarnEnabled()) {
-                LOG.warn("BroadleafRequestContext.getCurrency() called but returned null");
+                LOG.warn("UltraRequestContext.getCurrency() called but returned null");
             }
         }
         return returnCurrency;
@@ -157,8 +157,8 @@ public class BroadleafRequestContext {
     protected SandBox sandBox;
     protected Locale locale;
     protected TimeZone timeZone;
-    protected BroadleafCurrency broadleafCurrency;
-    protected BroadleafCurrency requestedCurrency;
+    protected UltraCurrency ultraCurrency;
+    protected UltraCurrency requestedCurrency;
     protected Site site;
     protected Theme theme;
     protected java.util.Locale javaLocale;
@@ -320,7 +320,7 @@ public class BroadleafRequestContext {
     }
 
     /**
-     * Returns the java.util.Locale constructed from the org.broadleafcommerce.common.locale.domain.Locale.
+     * Returns the java.util.Locale constructed from the com.ultracommerce.common.locale.domain.Locale.
      * @return
      */
     public java.util.Locale getJavaLocale() {
@@ -331,16 +331,16 @@ public class BroadleafRequestContext {
     }
 
     /**
-     * Returns the java.util.Currency constructed from the org.broadleafcommerce.common.currency.domain.BroadleafCurrency.
-     * If there is no BroadleafCurrency specified this will return the currency based on the JVM locale
+     * Returns the java.util.Currency constructed from the com.ultracommerce.common.currency.domain.UltraCurrency.
+     * If there is no UltraCurrency specified this will return the currency based on the JVM locale
      * 
      * @return
      */
     public Currency getJavaCurrency() {
         if (javaCurrency == null) {
             try {
-                if (getBroadleafCurrency() != null && getBroadleafCurrency().getCurrencyCode() != null) {
-                    javaCurrency = getBroadleafCurrency().getJavaCurrency();
+                if (getUltraCurrency() != null && getUltraCurrency().getCurrencyCode() != null) {
+                    javaCurrency = getUltraCurrency().getJavaCurrency();
                 } else {
                     javaCurrency = Currency.getInstance(getJavaLocale());
                 }
@@ -349,8 +349,8 @@ public class BroadleafRequestContext {
                 		" locale is set to something like 'en' (which is NOT apart of ISO 3166 and does not have a currency" +
                 		" associated with it) instead of 'en_US' (which IS apart of ISO 3166 and has a currency associated" +
                 		" with it). Because of this, the currency is now set to the default locale of the JVM");
-                LOG.warn("To fully resolve this, update the default entry in the BLC_LOCALE table to take into account the" +
-                		" country code as well as the language. Alternatively, you could also update the BLC_CURRENCY table" +
+                LOG.warn("To fully resolve this, update the default entry in the UC_LOCALE table to take into account the" +
+                		" country code as well as the language. Alternatively, you could also update the UC_CURRENCY table" +
                 		" to contain a default currency.");
                 javaCurrency = Currency.getInstance(java.util.Locale.getDefault());
             }
@@ -364,20 +364,20 @@ public class BroadleafRequestContext {
     }
 
     public String getRequestURIWithoutContext() {
-        return BLCRequestUtils.getRequestURIWithoutContext(request);
+        return UCRequestUtils.getRequestURIWithoutContext(request);
     }
     
     protected java.util.Locale convertLocaleToJavaLocale() {      
         if (locale == null || locale.getLocaleCode() == null) {
             return java.util.Locale.getDefault();
         } else {
-            return BroadleafRequestContext.convertLocaleToJavaLocale(locale);
+            return UltraRequestContext.convertLocaleToJavaLocale(locale);
         }
     }
     
-    public static java.util.Locale convertLocaleToJavaLocale(Locale broadleafLocale) {
-        if (broadleafLocale != null) {
-            return broadleafLocale.getJavaLocale();
+    public static java.util.Locale convertLocaleToJavaLocale(Locale ultraLocale) {
+        if (ultraLocale != null) {
+            return ultraLocale.getJavaLocale();
         }
         return null;
     }
@@ -398,19 +398,19 @@ public class BroadleafRequestContext {
         this.theme = theme;
     }
 
-    public BroadleafCurrency getBroadleafCurrency() {
-        return broadleafCurrency;
+    public UltraCurrency getUltraCurrency() {
+        return ultraCurrency;
     }
 
-    public void setBroadleafCurrency(BroadleafCurrency broadleafCurrency) {
-        this.broadleafCurrency = broadleafCurrency;
+    public void setUltraCurrency(UltraCurrency ultraCurrency) {
+        this.ultraCurrency = ultraCurrency;
     }
 
-    public BroadleafCurrency getRequestedBroadleafCurrency() {
+    public UltraCurrency getRequestedUltraCurrency() {
         return requestedCurrency;
     }
 
-    public void setRequestedBroadleafCurrency(BroadleafCurrency requestedCurrency) {
+    public void setRequestedUltraCurrency(UltraCurrency requestedCurrency) {
         this.requestedCurrency = requestedCurrency;
     }
 
@@ -439,7 +439,7 @@ public class BroadleafRequestContext {
     }
 
     public static Map<String, String[]> getRequestParameterMap() {
-        return getBroadleafRequestContext().getRequest().getParameterMap();
+        return getUltraRequestContext().getRequest().getParameterMap();
     }
 
     public Boolean getIgnoreSite() {
@@ -506,7 +506,7 @@ public class BroadleafRequestContext {
     }
 
     /**
-     * Used to ignore all of the underlying automatic Hibernate filters applied by Broadleaf (e.g. for sandboxing, multi-tenant and archiving filters).
+     * Used to ignore all of the underlying automatic Hibernate filters applied by Ultra (e.g. for sandboxing, multi-tenant and archiving filters).
      */
     public void setInternalIgnoreFilters(Boolean internalIgnoreFilters) {
         this.internalIgnoreFilters = internalIgnoreFilters;
@@ -555,7 +555,7 @@ public class BroadleafRequestContext {
     }
 
     /**
-     * Defines the state in which sandboxable collections in the Enterprise module should adhere to Broadleaf defined behavior.
+     * Defines the state in which sandboxable collections in the Enterprise module should adhere to Ultra defined behavior.
      * When FALSE, {@link org.hibernate.collection.spi.PersistentCollection} extensions in the Enterprise module will delegate
      * to the standard Hibernate behavior. This is useful when the desire is to build and persist entity object structures (that
      * the Enterprise module would otherwise interpret as sandboxable) without interference from the Enterprise module
@@ -568,7 +568,7 @@ public class BroadleafRequestContext {
     }
 
     /**
-     * Returns the state in which sandboxable collections in the Enterprise module should adhere to Broadleaf defined behavior.
+     * Returns the state in which sandboxable collections in the Enterprise module should adhere to Ultra defined behavior.
      * When FALSE, {@link org.hibernate.collection.spi.PersistentCollection} extensions in the Enterprise module will delegate
      * to the standard Hibernate behavior. This is useful when the desire is to build and persist entity object structures (that
      * the Enterprise module would otherwise interpret as sandboxable) without interference from the Enterprise module
@@ -589,15 +589,15 @@ public class BroadleafRequestContext {
      *
      * @return The instance without the container request and response
      */
-    public BroadleafRequestContext createLightWeightClone() {
-        BroadleafRequestContext context = new BroadleafRequestContext();
+    public UltraRequestContext createLightWeightClone() {
+        UltraRequestContext context = new UltraRequestContext();
         context.setIgnoreSite(ignoreSite);
         context.setSandBox(sandBox);
         context.setNonPersistentSite(site);
         context.setEnforceEnterpriseCollectionBehaviorState(enforceEnterpriseCollectionBehaviorState);
         context.setAdmin(isAdmin);
         context.setAdminUserId(adminUserId);
-        context.setBroadleafCurrency(broadleafCurrency);
+        context.setUltraCurrency(ultraCurrency);
         context.setCurrentCatalog(currentCatalog);
         context.setCurrentProfile(currentProfile);
         context.setDeployBehavior(deployBehavior);
@@ -615,7 +615,7 @@ public class BroadleafRequestContext {
 
     /**
      * In some cases, it is useful to create a JSON representation of the context that does not include the actual container
-     * request and response information. This can be used subsequently to resurrect the BroadleafRequestContext state, presumably
+     * request and response information. This can be used subsequently to resurrect the UltraRequestContext state, presumably
      * on a new thread.
      *
      * @return
@@ -634,8 +634,8 @@ public class BroadleafRequestContext {
         sb.append(isAdmin==null?null:isAdmin.toString());
         sb.append("\",\"adminUserId\":\"");
         sb.append(adminUserId==null?null:adminUserId);
-        sb.append("\",\"broadleafCurrency\":\"");
-        sb.append(broadleafCurrency==null?null:broadleafCurrency.getCurrencyCode());
+        sb.append("\",\"ultraCurrency\":\"");
+        sb.append(ultraCurrency==null?null:ultraCurrency.getCurrencyCode());
         sb.append("\",\"currentCatalog\":\"");
         sb.append(currentCatalog==null?null:currentCatalog.getId());
         sb.append("\",\"currentProfile\":\"");
@@ -657,14 +657,14 @@ public class BroadleafRequestContext {
     }
 
     /**
-     * Resurrect the BroadleafRequestContext state based on a JSON representation.
+     * Resurrect the UltraRequestContext state based on a JSON representation.
      *
      * @param Json
      * @param em
      * @return
      */
-    public static BroadleafRequestContext createLightWeightCloneFromJson(String Json, EntityManager em) {
-        BroadleafRequestContext context = new BroadleafRequestContext();
+    public static UltraRequestContext createLightWeightCloneFromJson(String Json, EntityManager em) {
+        UltraRequestContext context = new UltraRequestContext();
         JsonFactory factory = new JsonFactory();
         ObjectMapper mapper = new ObjectMapper(factory);
         TypeReference<HashMap<String,String>> typeRef = new TypeReference<HashMap<String,String>>() {};
@@ -693,8 +693,8 @@ public class BroadleafRequestContext {
         if (!json.get("adminUserId").equals("null")) {
             context.setAdminUserId(Long.parseLong(json.get("adminUserId")));
         }
-        if (!json.get("broadleafCurrency").equals("null")) {
-            context.setBroadleafCurrency(em.find(BroadleafCurrencyImpl.class, json.get("broadleafCurrency")));
+        if (!json.get("ultraCurrency").equals("null")) {
+            context.setUltraCurrency(em.find(UltraCurrencyImpl.class, json.get("ultraCurrency")));
         }
         if (!json.get("currentCatalog").equals("null")) {
             context.setCurrentCatalog(em.find(CatalogImpl.class, Long.parseLong(json.get("currentCatalog"))));

@@ -1,4 +1,4 @@
-<th:block th:if="${field instanceof T(org.broadleafcommerce.openadmin.web.form.entity.ComboField)}">
+<th:block th:if="${field instanceof T(com.ultracommerce.openadmin.web.form.entity.ComboField)}">
     <label th:for="*{fields['__${field.name}__'].value}" th:classappend="${field.required ? 'required' : ''}" >
         <span th:utext="#{${field.friendlyName}}"></span>
 <span th:replace="components/fieldTooltip" ></span>
@@ -19,7 +19,7 @@
 
 </th:block>
 
-<div th:unless="${field instanceof T(org.broadleafcommerce.openadmin.web.form.entity.ComboField)}"
+<div th:unless="${field instanceof T(com.ultracommerce.openadmin.web.form.entity.ComboField)}"
     class="additional-foreign-key-container twelve">
     <input type="hidden" class="display-value-property" th:value="*{fields['__${field.name}__'].foreignKeyDisplayValueProperty}"  />
     <input type="hidden" class="value" th:field="*{fields['__${field.name}__'].value}" th:attr="data-onchangetrigger=${field.onChangeTrigger}" />
@@ -56,7 +56,7 @@
                                  data-dynamic-field=${field.attributes['dynamicField']},
                                  data-confirm=${field.isConfirmEnabled},
                                  data-confirm-text=${field.confirmEnabledText}">
-                        <i class="blc-icon-search"></i>
+                        <i class="uc-icon-search"></i>
                     </button>
                 </span>
             </div>

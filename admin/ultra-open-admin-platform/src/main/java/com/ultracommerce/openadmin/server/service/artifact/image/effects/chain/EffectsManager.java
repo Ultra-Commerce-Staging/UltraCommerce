@@ -1,35 +1,35 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.openadmin.server.service.artifact.image.effects.chain;
+package com.ultracommerce.openadmin.server.service.artifact.image.effects.chain;
 
-import org.broadleafcommerce.openadmin.server.service.artifact.OperationBuilder;
-import org.broadleafcommerce.openadmin.server.service.artifact.image.Operation;
-import org.broadleafcommerce.openadmin.server.service.artifact.image.effects.chain.conversion.ConversionManager;
-import org.broadleafcommerce.openadmin.server.service.artifact.image.effects.chain.conversion.Parameter;
-import org.broadleafcommerce.openadmin.server.service.artifact.image.effects.chain.filter.AlterHSB;
-import org.broadleafcommerce.openadmin.server.service.artifact.image.effects.chain.filter.AlterRGB;
-import org.broadleafcommerce.openadmin.server.service.artifact.image.effects.chain.filter.AutoLevelsRGB;
-import org.broadleafcommerce.openadmin.server.service.artifact.image.effects.chain.filter.Crop;
-import org.broadleafcommerce.openadmin.server.service.artifact.image.effects.chain.filter.FilterTypeEnum;
-import org.broadleafcommerce.openadmin.server.service.artifact.image.effects.chain.filter.GaussianBlur;
-import org.broadleafcommerce.openadmin.server.service.artifact.image.effects.chain.filter.Resize;
-import org.broadleafcommerce.openadmin.server.service.artifact.image.effects.chain.filter.Rotate;
-import org.broadleafcommerce.openadmin.server.service.artifact.image.effects.chain.filter.UnsharpMask;
+import com.ultracommerce.openadmin.server.service.artifact.OperationBuilder;
+import com.ultracommerce.openadmin.server.service.artifact.image.Operation;
+import com.ultracommerce.openadmin.server.service.artifact.image.effects.chain.conversion.ConversionManager;
+import com.ultracommerce.openadmin.server.service.artifact.image.effects.chain.conversion.Parameter;
+import com.ultracommerce.openadmin.server.service.artifact.image.effects.chain.filter.AlterHSB;
+import com.ultracommerce.openadmin.server.service.artifact.image.effects.chain.filter.AlterRGB;
+import com.ultracommerce.openadmin.server.service.artifact.image.effects.chain.filter.AutoLevelsRGB;
+import com.ultracommerce.openadmin.server.service.artifact.image.effects.chain.filter.Crop;
+import com.ultracommerce.openadmin.server.service.artifact.image.effects.chain.filter.FilterTypeEnum;
+import com.ultracommerce.openadmin.server.service.artifact.image.effects.chain.filter.GaussianBlur;
+import com.ultracommerce.openadmin.server.service.artifact.image.effects.chain.filter.Resize;
+import com.ultracommerce.openadmin.server.service.artifact.image.effects.chain.filter.Rotate;
+import com.ultracommerce.openadmin.server.service.artifact.image.effects.chain.filter.UnsharpMask;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -43,10 +43,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Service("blImageEffectsManager")
+@Service("ucImageEffectsManager")
 public class EffectsManager {
 
-    @Resource(name="blImageConversionManager")
+    @Resource(name="ucImageConversionManager")
     protected ConversionManager conversionManager;
     protected Map<String, OperationBuilder> filters = new HashMap<String, OperationBuilder>();
 

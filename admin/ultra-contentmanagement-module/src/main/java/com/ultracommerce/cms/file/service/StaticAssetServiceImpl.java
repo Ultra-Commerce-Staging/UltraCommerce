@@ -1,37 +1,37 @@
 /*
  * #%L
- * BroadleafCommerce CMS Module
+ * UltraCommerce CMS Module
  * %%
- * Copyright (C) 2009 - 2018 Broadleaf Commerce
+ * Copyright (C) 2009 - 2018 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
 /*
- * BroadleafCommerce CMS Module
+ * UltraCommerce CMS Module
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  *
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.cms.file.service;
+package com.ultracommerce.cms.file.service;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.logging.Log;
@@ -40,19 +40,19 @@ import org.apache.tika.Tika;
 import org.apache.tika.mime.MimeType;
 import org.apache.tika.mime.MimeTypeException;
 import org.apache.tika.mime.MimeTypes;
-import org.broadleafcommerce.cms.field.type.StorageType;
-import org.broadleafcommerce.cms.file.StaticAssetMultiTenantExtensionManager;
-import org.broadleafcommerce.cms.file.dao.StaticAssetDao;
-import org.broadleafcommerce.cms.file.domain.ImageStaticAsset;
-import org.broadleafcommerce.cms.file.domain.ImageStaticAssetImpl;
-import org.broadleafcommerce.cms.file.domain.StaticAsset;
-import org.broadleafcommerce.cms.file.domain.StaticAssetImpl;
-import org.broadleafcommerce.common.extension.ExtensionResultStatusType;
-import org.broadleafcommerce.common.file.service.StaticAssetPathService;
-import org.broadleafcommerce.common.util.StringUtil;
-import org.broadleafcommerce.common.util.TransactionUtils;
-import org.broadleafcommerce.openadmin.server.service.artifact.image.ImageArtifactProcessor;
-import org.broadleafcommerce.openadmin.server.service.artifact.image.ImageMetadata;
+import com.ultracommerce.cms.field.type.StorageType;
+import com.ultracommerce.cms.file.StaticAssetMultiTenantExtensionManager;
+import com.ultracommerce.cms.file.dao.StaticAssetDao;
+import com.ultracommerce.cms.file.domain.ImageStaticAsset;
+import com.ultracommerce.cms.file.domain.ImageStaticAssetImpl;
+import com.ultracommerce.cms.file.domain.StaticAsset;
+import com.ultracommerce.cms.file.domain.StaticAssetImpl;
+import com.ultracommerce.common.extension.ExtensionResultStatusType;
+import com.ultracommerce.common.file.service.StaticAssetPathService;
+import com.ultracommerce.common.util.StringUtil;
+import com.ultracommerce.common.util.TransactionUtils;
+import com.ultracommerce.openadmin.server.service.artifact.image.ImageArtifactProcessor;
+import com.ultracommerce.openadmin.server.service.artifact.image.ImageMetadata;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -73,28 +73,28 @@ import javax.annotation.Resource;
 /**
  * Created by bpolster.
  */
-@Service("blStaticAssetService")
+@Service("ucStaticAssetService")
 public class StaticAssetServiceImpl implements StaticAssetService {
 
     private static final Log LOG = LogFactory.getLog(StaticAssetServiceImpl.class);
     private static final String UPLOAD_FILE_EXTENSION_EXCEPTION = "java.io.IOException: Invalid extension type of file.";
 
-    @Resource(name = "blImageArtifactProcessor")
+    @Resource(name = "ucImageArtifactProcessor")
     protected ImageArtifactProcessor imageArtifactProcessor;
 
     @Value("${asset.use.filesystem.storage}")
     protected boolean storeAssetsOnFileSystem = false;
 
-    @Resource(name = "blStaticAssetDao")
+    @Resource(name = "ucStaticAssetDao")
     protected StaticAssetDao staticAssetDao;
 
-    @Resource(name = "blStaticAssetStorageService")
+    @Resource(name = "ucStaticAssetStorageService")
     protected StaticAssetStorageService staticAssetStorageService;
 
-    @Resource(name = "blStaticAssetPathService")
+    @Resource(name = "ucStaticAssetPathService")
     protected StaticAssetPathService staticAssetPathService;
 
-    @Resource(name = "blStaticAssetMultiTenantExtensionManager")
+    @Resource(name = "ucStaticAssetMultiTenantExtensionManager")
     protected StaticAssetMultiTenantExtensionManager staticAssetExtensionManager;
 
     @Value("${should.accept.non.image.asset:true}")

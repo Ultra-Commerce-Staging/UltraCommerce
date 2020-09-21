@@ -1,56 +1,56 @@
 /*
  * #%L
- * BroadleafCommerce Integration
+ * UltraCommerce Integration
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.offer.service;
+package com.ultracommerce.core.offer.service;
 
-import org.broadleafcommerce.common.i18n.domain.ISOCountry;
-import org.broadleafcommerce.common.i18n.domain.ISOCountryImpl;
-import org.broadleafcommerce.common.money.Money;
-import org.broadleafcommerce.core.catalog.domain.Sku;
-import org.broadleafcommerce.core.catalog.domain.SkuImpl;
-import org.broadleafcommerce.core.catalog.service.CatalogService;
-import org.broadleafcommerce.core.offer.domain.Offer;
-import org.broadleafcommerce.core.offer.service.type.OfferDiscountType;
-import org.broadleafcommerce.core.order.domain.DiscreteOrderItem;
-import org.broadleafcommerce.core.order.domain.DiscreteOrderItemImpl;
-import org.broadleafcommerce.core.order.domain.FulfillmentGroup;
-import org.broadleafcommerce.core.order.domain.FulfillmentGroupImpl;
-import org.broadleafcommerce.core.order.domain.FulfillmentGroupItem;
-import org.broadleafcommerce.core.order.domain.FulfillmentGroupItemImpl;
-import org.broadleafcommerce.core.order.domain.GiftWrapOrderItem;
-import org.broadleafcommerce.core.order.domain.GiftWrapOrderItemImpl;
-import org.broadleafcommerce.core.order.domain.Order;
-import org.broadleafcommerce.core.order.domain.OrderItem;
-import org.broadleafcommerce.core.order.domain.OrderMultishipOption;
-import org.broadleafcommerce.core.order.domain.OrderMultishipOptionImpl;
-import org.broadleafcommerce.core.order.fulfillment.domain.FixedPriceFulfillmentOption;
-import org.broadleafcommerce.core.order.fulfillment.domain.FixedPriceFulfillmentOptionImpl;
-import org.broadleafcommerce.core.order.service.FulfillmentGroupService;
-import org.broadleafcommerce.core.order.service.OrderItemService;
-import org.broadleafcommerce.core.order.service.OrderMultishipOptionService;
-import org.broadleafcommerce.core.order.service.OrderService;
-import org.broadleafcommerce.core.order.service.type.FulfillmentType;
-import org.broadleafcommerce.core.order.service.type.OrderItemType;
-import org.broadleafcommerce.core.pricing.service.exception.PricingException;
-import org.broadleafcommerce.profile.core.domain.Address;
-import org.broadleafcommerce.profile.core.domain.AddressImpl;
-import org.broadleafcommerce.profile.core.domain.Customer;
-import org.broadleafcommerce.profile.core.service.CustomerService;
-import org.broadleafcommerce.test.CommonSetupBaseTest;
+import com.ultracommerce.common.i18n.domain.ISOCountry;
+import com.ultracommerce.common.i18n.domain.ISOCountryImpl;
+import com.ultracommerce.common.money.Money;
+import com.ultracommerce.core.catalog.domain.Sku;
+import com.ultracommerce.core.catalog.domain.SkuImpl;
+import com.ultracommerce.core.catalog.service.CatalogService;
+import com.ultracommerce.core.offer.domain.Offer;
+import com.ultracommerce.core.offer.service.type.OfferDiscountType;
+import com.ultracommerce.core.order.domain.DiscreteOrderItem;
+import com.ultracommerce.core.order.domain.DiscreteOrderItemImpl;
+import com.ultracommerce.core.order.domain.FulfillmentGroup;
+import com.ultracommerce.core.order.domain.FulfillmentGroupImpl;
+import com.ultracommerce.core.order.domain.FulfillmentGroupItem;
+import com.ultracommerce.core.order.domain.FulfillmentGroupItemImpl;
+import com.ultracommerce.core.order.domain.GiftWrapOrderItem;
+import com.ultracommerce.core.order.domain.GiftWrapOrderItemImpl;
+import com.ultracommerce.core.order.domain.Order;
+import com.ultracommerce.core.order.domain.OrderItem;
+import com.ultracommerce.core.order.domain.OrderMultishipOption;
+import com.ultracommerce.core.order.domain.OrderMultishipOptionImpl;
+import com.ultracommerce.core.order.fulfillment.domain.FixedPriceFulfillmentOption;
+import com.ultracommerce.core.order.fulfillment.domain.FixedPriceFulfillmentOptionImpl;
+import com.ultracommerce.core.order.service.FulfillmentGroupService;
+import com.ultracommerce.core.order.service.OrderItemService;
+import com.ultracommerce.core.order.service.OrderMultishipOptionService;
+import com.ultracommerce.core.order.service.OrderService;
+import com.ultracommerce.core.order.service.type.FulfillmentType;
+import com.ultracommerce.core.order.service.type.OrderItemType;
+import com.ultracommerce.core.pricing.service.exception.PricingException;
+import com.ultracommerce.profile.core.domain.Address;
+import com.ultracommerce.profile.core.domain.AddressImpl;
+import com.ultracommerce.profile.core.domain.Customer;
+import com.ultracommerce.profile.core.service.CustomerService;
+import com.ultracommerce.test.CommonSetupBaseTest;
 import org.springframework.transaction.annotation.Transactional;
 import org.testng.annotations.Test;
 
@@ -65,7 +65,7 @@ public class OfferServiceTest extends CommonSetupBaseTest {
     @Resource
     protected OfferService offerService;
 
-    @Resource(name = "blOrderService")
+    @Resource(name = "ucOrderService")
     protected OrderService orderService;
 
     @Resource
@@ -74,13 +74,13 @@ public class OfferServiceTest extends CommonSetupBaseTest {
     @Resource
     protected CatalogService catalogService;
 
-    @Resource(name = "blOrderItemService")
+    @Resource(name = "ucOrderItemService")
     protected OrderItemService orderItemService;
 
-    @Resource(name="blOrderMultishipOptionService")
+    @Resource(name="ucOrderMultishipOptionService")
     protected OrderMultishipOptionService orderMultishipOptionService;
 
-    @Resource(name="blFulfillmentGroupService")
+    @Resource(name="ucFulfillmentGroupService")
     protected FulfillmentGroupService fulfillmentGroupService;
 
     private Order createTestOrderWithOfferAndGiftWrap() throws PricingException {

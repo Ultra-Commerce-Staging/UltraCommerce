@@ -1,48 +1,48 @@
 /*
  * #%L
- * BroadleafCommerce Advanced CMS
+ * UltraCommerce Advanced CMS
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.admin.server.service.handler;
+package com.ultracommerce.admin.server.service.handler;
 
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.exception.ServiceException;
-import org.broadleafcommerce.common.payment.PaymentAdditionalFieldType;
-import org.broadleafcommerce.common.presentation.client.OperationType;
-import org.broadleafcommerce.common.presentation.client.SupportedFieldType;
-import org.broadleafcommerce.common.presentation.client.VisibilityEnum;
-import org.broadleafcommerce.openadmin.dto.BasicFieldMetadata;
-import org.broadleafcommerce.openadmin.dto.ClassMetadata;
-import org.broadleafcommerce.openadmin.dto.CriteriaTransferObject;
-import org.broadleafcommerce.openadmin.dto.DynamicResultSet;
-import org.broadleafcommerce.openadmin.dto.Entity;
-import org.broadleafcommerce.openadmin.dto.FieldMetadata;
-import org.broadleafcommerce.openadmin.dto.MergedPropertyType;
-import org.broadleafcommerce.openadmin.dto.PersistencePackage;
-import org.broadleafcommerce.openadmin.dto.PersistencePerspective;
-import org.broadleafcommerce.openadmin.dto.Property;
-import org.broadleafcommerce.openadmin.server.dao.DynamicEntityDao;
-import org.broadleafcommerce.openadmin.server.service.handler.ClassCustomPersistenceHandlerAdapter;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.InspectHelper;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.PersistenceModule;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.RecordHelper;
-import org.broadleafcommerce.profile.core.domain.CustomerPayment;
-import org.broadleafcommerce.profile.core.domain.CustomerPaymentImpl;
-import org.broadleafcommerce.profile.core.service.CustomerPaymentService;
+import com.ultracommerce.common.exception.ServiceException;
+import com.ultracommerce.common.payment.PaymentAdditionalFieldType;
+import com.ultracommerce.common.presentation.client.OperationType;
+import com.ultracommerce.common.presentation.client.SupportedFieldType;
+import com.ultracommerce.common.presentation.client.VisibilityEnum;
+import com.ultracommerce.openadmin.dto.BasicFieldMetadata;
+import com.ultracommerce.openadmin.dto.ClassMetadata;
+import com.ultracommerce.openadmin.dto.CriteriaTransferObject;
+import com.ultracommerce.openadmin.dto.DynamicResultSet;
+import com.ultracommerce.openadmin.dto.Entity;
+import com.ultracommerce.openadmin.dto.FieldMetadata;
+import com.ultracommerce.openadmin.dto.MergedPropertyType;
+import com.ultracommerce.openadmin.dto.PersistencePackage;
+import com.ultracommerce.openadmin.dto.PersistencePerspective;
+import com.ultracommerce.openadmin.dto.Property;
+import com.ultracommerce.openadmin.server.dao.DynamicEntityDao;
+import com.ultracommerce.openadmin.server.service.handler.ClassCustomPersistenceHandlerAdapter;
+import com.ultracommerce.openadmin.server.service.persistence.module.InspectHelper;
+import com.ultracommerce.openadmin.server.service.persistence.module.PersistenceModule;
+import com.ultracommerce.openadmin.server.service.persistence.module.RecordHelper;
+import com.ultracommerce.profile.core.domain.CustomerPayment;
+import com.ultracommerce.profile.core.domain.CustomerPaymentImpl;
+import com.ultracommerce.profile.core.service.CustomerPaymentService;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -56,7 +56,7 @@ import javax.persistence.PersistenceContext;
  * 
  * @author Chris Kittrell (ckittrell)
  */
-@Component("blCustomerPaymentCustomPersistenceHandler")
+@Component("ucCustomerPaymentCustomPersistenceHandler")
 public class CustomerPaymentCustomPersistenceHandler extends ClassCustomPersistenceHandlerAdapter {
 
     private static final Log LOG = LogFactory.getLog(CustomerPaymentCustomPersistenceHandler.class);
@@ -64,10 +64,10 @@ public class CustomerPaymentCustomPersistenceHandler extends ClassCustomPersiste
     protected static final String SAVED_PAYMENT_INFO = "savedPaymentInfo";
     protected static final String NULL_LAST_FOUR = "****null";
 
-    @PersistenceContext(unitName = "blPU")
+    @PersistenceContext(unitName = "ucPU")
     protected EntityManager em;
 
-    @Resource(name = "blCustomerPaymentService")
+    @Resource(name = "ucCustomerPaymentService")
     protected CustomerPaymentService customerPaymentService;
 
     public CustomerPaymentCustomPersistenceHandler() {

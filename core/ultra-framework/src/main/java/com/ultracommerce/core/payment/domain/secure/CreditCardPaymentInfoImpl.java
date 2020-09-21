@@ -1,24 +1,24 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.payment.domain.secure;
+package com.ultracommerce.core.payment.domain.secure;
 
-import org.broadleafcommerce.common.encryption.EncryptionModule;
-import org.broadleafcommerce.core.payment.service.SecureOrderPaymentService;
+import com.ultracommerce.common.encryption.EncryptionModule;
+import com.ultracommerce.core.payment.service.SecureOrderPaymentService;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Index;
 import org.hibernate.annotations.Parameter;
@@ -39,13 +39,13 @@ import javax.persistence.Transient;
  */
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "BLC_CREDIT_CARD_PAYMENT")
+@Table(name = "UC_CREDIT_CARD_PAYMENT")
 public class CreditCardPaymentInfoImpl implements CreditCardPayment {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * Rather than constructing directly, use {@link SecureOrderPaymentService#create(org.broadleafcommerce.core.payment.service.type.PaymentType)}
+     * Rather than constructing directly, use {@link SecureOrderPaymentService#create(com.ultracommerce.core.payment.service.type.PaymentType)}
      * so that the appropriate {@link EncryptionModule} can be hooked up to this entity
      */
     protected CreditCardPaymentInfoImpl() {
@@ -60,10 +60,10 @@ public class CreditCardPaymentInfoImpl implements CreditCardPayment {
     @GeneratedValue(generator = "CreditCardPaymentId")
     @GenericGenerator(
             name="CreditCardPaymentId",
-            strategy="org.broadleafcommerce.common.persistence.IdOverrideTableGenerator",
+            strategy="com.ultracommerce.common.persistence.IdOverrideTableGenerator",
             parameters = {
                 @Parameter(name="segment_value", value="CreditCardPaymentInfoImpl"),
-                @Parameter(name="entity_name", value="org.broadleafcommerce.core.payment.domain.CreditCardPaymentInfoImpl")
+                @Parameter(name="entity_name", value="com.ultracommerce.core.payment.domain.CreditCardPaymentInfoImpl")
             }
         )
     @Column(name = "PAYMENT_ID")
@@ -89,7 +89,7 @@ public class CreditCardPaymentInfoImpl implements CreditCardPayment {
     protected String cvvCode;
 
     /* (non-Javadoc)
-     * @see org.broadleafcommerce.profile.payment.secure.domain.CreditCardPaymentInfo#getId()
+     * @see com.ultracommerce.profile.payment.secure.domain.CreditCardPaymentInfo#getId()
      */
     @Override
     public Long getId() {
@@ -97,7 +97,7 @@ public class CreditCardPaymentInfoImpl implements CreditCardPayment {
     }
 
     /* (non-Javadoc)
-     * @see org.broadleafcommerce.profile.payment.secure.domain.CreditCardPaymentInfo#setId(long)
+     * @see com.ultracommerce.profile.payment.secure.domain.CreditCardPaymentInfo#setId(long)
      */
     @Override
     public void setId(Long id) {
@@ -105,7 +105,7 @@ public class CreditCardPaymentInfoImpl implements CreditCardPayment {
     }
 
     /* (non-Javadoc)
-     * @see org.broadleafcommerce.profile.payment.secure.domain.CreditCardPaymentInfo#getReferenceNumber()
+     * @see com.ultracommerce.profile.payment.secure.domain.CreditCardPaymentInfo#getReferenceNumber()
      */
     @Override
     public String getReferenceNumber() {
@@ -113,7 +113,7 @@ public class CreditCardPaymentInfoImpl implements CreditCardPayment {
     }
 
     /* (non-Javadoc)
-     * @see org.broadleafcommerce.profile.payment.secure.domain.CreditCardPaymentInfo#setReferenceNumber(java.lang.String)
+     * @see com.ultracommerce.profile.payment.secure.domain.CreditCardPaymentInfo#setReferenceNumber(java.lang.String)
      */
     @Override
     public void setReferenceNumber(String referenceNumber) {
@@ -121,7 +121,7 @@ public class CreditCardPaymentInfoImpl implements CreditCardPayment {
     }
 
     /* (non-Javadoc)
-     * @see org.broadleafcommerce.profile.payment.secure.domain.CreditCardPaymentInfo#getPan()
+     * @see com.ultracommerce.profile.payment.secure.domain.CreditCardPaymentInfo#getPan()
      */
     @Override
     public String getPan() {
@@ -129,7 +129,7 @@ public class CreditCardPaymentInfoImpl implements CreditCardPayment {
     }
 
     /* (non-Javadoc)
-     * @see org.broadleafcommerce.profile.payment.secure.domain.CreditCardPaymentInfo#setPan(java.lang.Long)
+     * @see com.ultracommerce.profile.payment.secure.domain.CreditCardPaymentInfo#setPan(java.lang.Long)
      */
     @Override
     public void setPan(String pan) {
@@ -137,7 +137,7 @@ public class CreditCardPaymentInfoImpl implements CreditCardPayment {
     }
 
     /* (non-Javadoc)
-     * @see org.broadleafcommerce.profile.payment.secure.domain.CreditCardPaymentInfo#getExpirationMonth()
+     * @see com.ultracommerce.profile.payment.secure.domain.CreditCardPaymentInfo#getExpirationMonth()
      */
     @Override
     public Integer getExpirationMonth() {
@@ -145,7 +145,7 @@ public class CreditCardPaymentInfoImpl implements CreditCardPayment {
     }
 
     /* (non-Javadoc)
-     * @see org.broadleafcommerce.profile.payment.secure.domain.CreditCardPaymentInfo#setExpirationMonth(java.lang.Integer)
+     * @see com.ultracommerce.profile.payment.secure.domain.CreditCardPaymentInfo#setExpirationMonth(java.lang.Integer)
      */
     @Override
     public void setExpirationMonth(Integer expirationMonth) {
@@ -153,7 +153,7 @@ public class CreditCardPaymentInfoImpl implements CreditCardPayment {
     }
 
     /* (non-Javadoc)
-     * @see org.broadleafcommerce.profile.payment.secure.domain.CreditCardPaymentInfo#getExpirationYear()
+     * @see com.ultracommerce.profile.payment.secure.domain.CreditCardPaymentInfo#getExpirationYear()
      */
     @Override
     public Integer getExpirationYear() {
@@ -161,7 +161,7 @@ public class CreditCardPaymentInfoImpl implements CreditCardPayment {
     }
 
     /* (non-Javadoc)
-     * @see org.broadleafcommerce.profile.payment.secure.domain.CreditCardPaymentInfo#setExpirationYear(java.lang.Integer)
+     * @see com.ultracommerce.profile.payment.secure.domain.CreditCardPaymentInfo#setExpirationYear(java.lang.Integer)
      */
     @Override
     public void setExpirationYear(Integer expirationYear) {
@@ -169,7 +169,7 @@ public class CreditCardPaymentInfoImpl implements CreditCardPayment {
     }
 
     /* (non-Javadoc)
-    * @see org.broadleafcommerce.profile.payment.secure.domain.CreditCardPaymentInfo#getNameOnCard()
+    * @see com.ultracommerce.profile.payment.secure.domain.CreditCardPaymentInfo#getNameOnCard()
     */
     @Override
     public String getNameOnCard() {
@@ -177,7 +177,7 @@ public class CreditCardPaymentInfoImpl implements CreditCardPayment {
     }
 
     /* (non-Javadoc)
-    * @see org.broadleafcommerce.profile.payment.secure.domain.CreditCardPaymentInfo#setNameOnCard(java.lang.String)
+    * @see com.ultracommerce.profile.payment.secure.domain.CreditCardPaymentInfo#setNameOnCard(java.lang.String)
     */
     @Override
     public void setNameOnCard(String nameOnCard) {

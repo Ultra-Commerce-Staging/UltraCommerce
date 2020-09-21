@@ -1,30 +1,30 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.sandbox.dao;
+package com.ultracommerce.common.sandbox.dao;
 
 import org.apache.commons.lang.StringUtils;
-import org.broadleafcommerce.common.sandbox.domain.SandBox;
-import org.broadleafcommerce.common.sandbox.domain.SandBoxImpl;
-import org.broadleafcommerce.common.sandbox.domain.SandBoxManagement;
-import org.broadleafcommerce.common.sandbox.domain.SandBoxManagementImpl;
-import org.broadleafcommerce.common.sandbox.domain.SandBoxType;
-import org.broadleafcommerce.common.util.TransactionUtils;
-import org.broadleafcommerce.common.util.dao.TypedQueryBuilder;
+import com.ultracommerce.common.sandbox.domain.SandBox;
+import com.ultracommerce.common.sandbox.domain.SandBoxImpl;
+import com.ultracommerce.common.sandbox.domain.SandBoxManagement;
+import com.ultracommerce.common.sandbox.domain.SandBoxManagementImpl;
+import com.ultracommerce.common.sandbox.domain.SandBoxType;
+import com.ultracommerce.common.util.TransactionUtils;
+import com.ultracommerce.common.util.dao.TypedQueryBuilder;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.TransactionDefinition;
@@ -46,19 +46,19 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-@Repository("blSandBoxDao")
+@Repository("ucSandBoxDao")
 public class SandBoxDaoImpl implements SandBoxDao {
 
-    @PersistenceContext(unitName = "blPU")
+    @PersistenceContext(unitName = "ucPU")
     protected EntityManager sandBoxEntityManager;
 
-    @Resource(name = "blTransactionManager")
+    @Resource(name = "ucTransactionManager")
     protected JpaTransactionManager transactionManager;
 
     @Override
     public SandBox retrieve(Long id) {
         //Need to not create a query through SandBoxManagement here. Otherwise, a Hibernate exception can occur
-        //(i.e. org.hibernate.HibernateException: Found two representations of same collection: org.broadleafcommerce.core.catalog.domain.ProductImpl.additionalSkus
+        //(i.e. org.hibernate.HibernateException: Found two representations of same collection: com.ultracommerce.core.catalog.domain.ProductImpl.additionalSkus
         //when saving a change to product).
         return sandBoxEntityManager.find(SandBoxImpl.class, id);
     }
@@ -231,8 +231,8 @@ public class SandBoxDaoImpl implements SandBoxDao {
     public Map<Long, String> retrieveAuthorNamesForSandBoxes(Set<Long> sandBoxIds) {
         Query query = sandBoxEntityManager.createQuery(
                 "SELECT sb.sandBox.id, au.name " +
-                "FROM org.broadleafcommerce.common.sandbox.domain.SandBoxManagementImpl sb, " +
-                    "org.broadleafcommerce.openadmin.server.security.domain.AdminUserImpl au " +
+                "FROM com.ultracommerce.common.sandbox.domain.SandBoxManagementImpl sb, " +
+                    "com.ultracommerce.openadmin.server.security.domain.AdminUserImpl au " +
                 "WHERE sb.sandBox.author = au.id " +
                 "AND sb.sandBox.id IN :sandBoxIds " +
                 "AND (sb.sandBox.archiveStatus.archived IS NULL OR sb.sandBox.archiveStatus.archived = 'N')");

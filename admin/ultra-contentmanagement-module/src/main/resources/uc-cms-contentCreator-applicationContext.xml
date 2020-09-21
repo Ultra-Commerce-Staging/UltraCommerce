@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
   #%L
-  BroadleafCommerce CMS Module
+  UltraCommerce CMS Module
   %%
-  Copyright (C) 2009 - 2016 Broadleaf Commerce
+  Copyright (C) 2009 - 2016 Ultra Commerce
   %%
-  Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
-  (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
-  unless the restrictions on use therein are violated and require payment to Broadleaf in which case
-  the Broadleaf End User License Agreement (EULA), Version 1.1
-  (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+  Licensed under the Ultra Fair Use License Agreement, Version 1.0
+  (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+  unless the restrictions on use therein are violated and require payment to Ultra in which case
+  the Ultra End User License Agreement (EULA), Version 1.1
+  (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
   shall apply.
   
   Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
-  between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+  between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
   #L%
   -->
 
@@ -21,50 +21,50 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:aop="http://www.springframework.org/schema/aop"
-       xmlns:mo="http://schema.broadleafcommerce.org/mo"
+       xmlns:mo="http://schema.ultracommerce.org/mo"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
             http://www.springframework.org/schema/beans/spring-beans.xsd
             http://www.springframework.org/schema/context
             http://www.springframework.org/schema/context/spring-context.xsd
             http://www.springframework.org/schema/aop
             http://www.springframework.org/schema/aop/spring-aop.xsd
-            http://schema.broadleafcommerce.org/mo
-            http://schema.broadleafcommerce.org/mo/mo-3.0.xsd">
+            http://schema.ultracommerce.org/mo
+            http://schema.ultracommerce.org/mo/mo-3.0.xsd">
 
-    <context:component-scan base-package="org.broadleafcommerce.cms">
-        <context:exclude-filter type="regex" expression="org.broadleafcommerce.cms.admin.web.controller.*"/>
+    <context:component-scan base-package="com.ultracommerce.cms">
+        <context:exclude-filter type="regex" expression="com.ultracommerce.cms.admin.web.controller.*"/>
     </context:component-scan>
     
-    <bean id="blCustomPersistenceHandlers-cms" class="org.springframework.beans.factory.config.ListFactoryBean" scope="prototype">
+    <bean id="ucCustomPersistenceHandlers-cms" class="org.springframework.beans.factory.config.ListFactoryBean" scope="prototype">
         <property name="sourceList">
             <list>
-                <ref bean="blPageTemplateCustomPersistenceHandler" />
-                <ref bean="blStructuredContentTypeCustomPersistenceHandler"/>
-                <ref bean="blTimeDTOCustomPersistenceHandler"/>
-                <ref bean="blRequestDTOCustomPersistenceHandler"/>
+                <ref bean="ucPageTemplateCustomPersistenceHandler" />
+                <ref bean="ucStructuredContentTypeCustomPersistenceHandler"/>
+                <ref bean="ucTimeDTOCustomPersistenceHandler"/>
+                <ref bean="ucRequestDTOCustomPersistenceHandler"/>
             </list>
         </property>
     </bean>
 
-    <bean class="org.broadleafcommerce.common.extensibility.context.merge.LateStageMergeBeanPostProcessor">
-        <property name="collectionRef" value="blCustomPersistenceHandlers-cms"/>
-        <property name="targetRef" value="blCustomPersistenceHandlers"/>
+    <bean class="com.ultracommerce.common.extensibility.context.merge.LateStageMergeBeanPostProcessor">
+        <property name="collectionRef" value="ucCustomPersistenceHandlers-cms"/>
+        <property name="targetRef" value="ucCustomPersistenceHandlers"/>
     </bean>
     
-    <bean id="blCMSPersistenceProviders" class="org.broadleafcommerce.common.util.SortedListFactoryBean" scope="prototype">
+    <bean id="ucCMSPersistenceProviders" class="com.ultracommerce.common.util.SortedListFactoryBean" scope="prototype">
         <property name="sourceList">
             <list>
-                <ref bean="blHTMLFieldPersistenceProvider"/>
+                <ref bean="ucHTMLFieldPersistenceProvider"/>
             </list>
         </property>
     </bean>
 
-    <bean class="org.broadleafcommerce.common.extensibility.context.merge.EarlyStageMergeBeanPostProcessor">
-        <property name="collectionRef" value="blCMSPersistenceProviders" />
-        <property name="targetRef" value="blPersistenceProviders" />
+    <bean class="com.ultracommerce.common.extensibility.context.merge.EarlyStageMergeBeanPostProcessor">
+        <property name="collectionRef" value="ucCMSPersistenceProviders" />
+        <property name="targetRef" value="ucPersistenceProviders" />
     </bean>
 
-   <mo:override id="blMetadataOverrides">
+   <mo:override id="ucMetadataOverrides">
         <mo:overrideItem configurationKey="targetProduct">
             <mo:field name="defaultCategory">
                 <mo:property name="excluded" value="false"/>
@@ -102,7 +102,7 @@
         </mo:overrideItem>
     </mo:override>
 
-    <bean id="blMessageSourceBaseNames-cms" class="org.springframework.beans.factory.config.ListFactoryBean">
+    <bean id="ucMessageSourceBaseNames-cms" class="org.springframework.beans.factory.config.ListFactoryBean">
         <property name="sourceList">
             <list>
                 <value>classpath:/messages/ContentManagementMessages</value>
@@ -111,9 +111,9 @@
         </property>
     </bean>
 
-    <bean class="org.broadleafcommerce.common.extensibility.context.merge.LateStageMergeBeanPostProcessor">
-        <property name="collectionRef" value="blMessageSourceBaseNames-cms" />
-        <property name="targetRef" value="blMessageSourceBaseNames" />
+    <bean class="com.ultracommerce.common.extensibility.context.merge.LateStageMergeBeanPostProcessor">
+        <property name="collectionRef" value="ucMessageSourceBaseNames-cms" />
+        <property name="targetRef" value="ucMessageSourceBaseNames" />
     </bean>
 
 </beans>

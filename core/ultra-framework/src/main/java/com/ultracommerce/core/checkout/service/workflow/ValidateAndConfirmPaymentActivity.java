@@ -1,43 +1,43 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
 
-package org.broadleafcommerce.core.checkout.service.workflow;
+package com.ultracommerce.core.checkout.service.workflow;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.money.Money;
-import org.broadleafcommerce.common.payment.PaymentTransactionType;
-import org.broadleafcommerce.common.payment.dto.PaymentResponseDTO;
-import org.broadleafcommerce.common.payment.service.PaymentGatewayCheckoutService;
-import org.broadleafcommerce.common.payment.service.PaymentGatewayConfigurationServiceProvider;
-import org.broadleafcommerce.core.checkout.service.exception.CheckoutException;
-import org.broadleafcommerce.core.checkout.service.strategy.OrderPaymentConfirmationStrategy;
-import org.broadleafcommerce.core.order.domain.Order;
-import org.broadleafcommerce.core.payment.domain.OrderPayment;
-import org.broadleafcommerce.core.payment.domain.PaymentTransaction;
-import org.broadleafcommerce.core.payment.service.OrderPaymentService;
-import org.broadleafcommerce.core.payment.service.OrderPaymentStatusService;
-import org.broadleafcommerce.core.payment.service.OrderToPaymentRequestDTOService;
-import org.broadleafcommerce.core.payment.service.type.OrderPaymentStatus;
-import org.broadleafcommerce.core.workflow.BaseActivity;
-import org.broadleafcommerce.core.workflow.ProcessContext;
-import org.broadleafcommerce.core.workflow.state.ActivityStateManagerImpl;
-import org.broadleafcommerce.profile.core.domain.CustomerPayment;
+import com.ultracommerce.common.money.Money;
+import com.ultracommerce.common.payment.PaymentTransactionType;
+import com.ultracommerce.common.payment.dto.PaymentResponseDTO;
+import com.ultracommerce.common.payment.service.PaymentGatewayCheckoutService;
+import com.ultracommerce.common.payment.service.PaymentGatewayConfigurationServiceProvider;
+import com.ultracommerce.core.checkout.service.exception.CheckoutException;
+import com.ultracommerce.core.checkout.service.strategy.OrderPaymentConfirmationStrategy;
+import com.ultracommerce.core.order.domain.Order;
+import com.ultracommerce.core.payment.domain.OrderPayment;
+import com.ultracommerce.core.payment.domain.PaymentTransaction;
+import com.ultracommerce.core.payment.service.OrderPaymentService;
+import com.ultracommerce.core.payment.service.OrderPaymentStatusService;
+import com.ultracommerce.core.payment.service.OrderToPaymentRequestDTOService;
+import com.ultracommerce.core.payment.service.type.OrderPaymentStatus;
+import com.ultracommerce.core.workflow.BaseActivity;
+import com.ultracommerce.core.workflow.ProcessContext;
+import com.ultracommerce.core.workflow.state.ActivityStateManagerImpl;
+import com.ultracommerce.profile.core.domain.CustomerPayment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -60,9 +60,9 @@ import javax.annotation.Resource;
  * {@link PaymentTransactionType.AUTHORIZE_AND_CAPTURE} and {@link PaymentTransactionType.PENDING} transactions.</li>
  *
  * <li>"Confirm" any {@link PaymentTransactionType.UNCONFIRMED} transactions that exist on an {@link OrderPayment}. This can
- * mean different things depending on the type of Order Payment and is handled by the {@link org.broadleafcommerce.core.checkout.service.strategy.OrderPaymentConfirmationStrategy}</li>
+ * mean different things depending on the type of Order Payment and is handled by the {@link com.ultracommerce.core.checkout.service.strategy.OrderPaymentConfirmationStrategy}</li>
  * <li>If there is an exception (either in this activity or later downstream) the confirmed payments are rolled back via
- * {@link org.broadleafcommerce.core.checkout.service.workflow.ConfirmPaymentsRollbackHandler}. It will also by default
+ * {@link com.ultracommerce.core.checkout.service.workflow.ConfirmPaymentsRollbackHandler}. It will also by default
  * attempt to mark the payment as "ARCHIVED" so that the user may attempt to re-enter their payment details.</li>
  * </ul>
  *
@@ -71,7 +71,7 @@ import javax.annotation.Resource;
  * @author Phillip Verheyden (phillipuniverse)
  * @author Elbert Bautista (elbertbautista)
  */
-@Component("blValidateAndConfirmPaymentActivity")
+@Component("ucValidateAndConfirmPaymentActivity")
 public class ValidateAndConfirmPaymentActivity extends BaseActivity<ProcessContext<CheckoutSeed>> {
     
     public static final int ORDER = 3000;
@@ -80,7 +80,7 @@ public class ValidateAndConfirmPaymentActivity extends BaseActivity<ProcessConte
     
     /**
      * <p>
-     * Used by the {@link org.broadleafcommerce.core.checkout.service.workflow.ConfirmPaymentsRollbackHandler}
+     * Used by the {@link com.ultracommerce.core.checkout.service.workflow.ConfirmPaymentsRollbackHandler}
      * to roll back transactions that this activity confirms.
      * 
      * <p>
@@ -92,26 +92,26 @@ public class ValidateAndConfirmPaymentActivity extends BaseActivity<ProcessConte
     
 
     @Autowired(required = false)
-    @Qualifier("blPaymentGatewayConfigurationServiceProvider")
+    @Qualifier("ucPaymentGatewayConfigurationServiceProvider")
     protected PaymentGatewayConfigurationServiceProvider paymentConfigurationServiceProvider;
     
-    @Resource(name = "blOrderToPaymentRequestDTOService")
+    @Resource(name = "ucOrderToPaymentRequestDTOService")
     protected OrderToPaymentRequestDTOService orderToPaymentRequestService;
 
-    @Resource(name = "blOrderPaymentService")
+    @Resource(name = "ucOrderPaymentService")
     protected OrderPaymentService orderPaymentService;
 
-    @Resource(name = "blPaymentGatewayCheckoutService")
+    @Resource(name = "ucPaymentGatewayCheckoutService")
     protected PaymentGatewayCheckoutService paymentGatewayCheckoutService;
 
-    @Resource(name = "blOrderPaymentConfirmationStrategy")
+    @Resource(name = "ucOrderPaymentConfirmationStrategy")
     protected OrderPaymentConfirmationStrategy orderPaymentConfirmationStrategy;
 
-    @Resource(name = "blOrderPaymentStatusService")
+    @Resource(name = "ucOrderPaymentStatusService")
     protected OrderPaymentStatusService orderPaymentStatusService;
     
     @Autowired
-    public ValidateAndConfirmPaymentActivity(@Qualifier("blConfirmPaymentsRollbackHandler") ConfirmPaymentsRollbackHandler rollbackHandler) {
+    public ValidateAndConfirmPaymentActivity(@Qualifier("ucConfirmPaymentsRollbackHandler") ConfirmPaymentsRollbackHandler rollbackHandler) {
         setOrder(ORDER);
         setRollbackHandler(rollbackHandler);
     }
@@ -133,7 +133,7 @@ public class ValidateAndConfirmPaymentActivity extends BaseActivity<ProcessConte
         
         /**
          * This list contains the additional transactions that were created to confirm previously unconfirmed transactions
-         * which can occur if you send credit card data directly to Broadleaf and rely on this activity to confirm
+         * which can occur if you send credit card data directly to Ultra and rely on this activity to confirm
          * that transaction
          */
         Map<OrderPayment, PaymentTransaction> additionalTransactions = new HashMap<>();

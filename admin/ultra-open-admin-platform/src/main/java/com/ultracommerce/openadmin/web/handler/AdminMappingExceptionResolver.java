@@ -1,26 +1,26 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.openadmin.web.handler;
+package com.ultracommerce.openadmin.web.handler;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.web.controller.BroadleafControllerUtility;
-import org.broadleafcommerce.openadmin.exception.EntityNotFoundException;
+import com.ultracommerce.common.web.controller.UltraControllerUtility;
+import com.ultracommerce.openadmin.exception.EntityNotFoundException;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 import org.springframework.web.util.UrlPathHelper;
@@ -39,10 +39,10 @@ public class AdminMappingExceptionResolver extends SimpleMappingExceptionResolve
     @Override
     public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, 
             Exception ex) {
-        if (BroadleafControllerUtility.isAjaxRequest(request)) {
+        if (UltraControllerUtility.isAjaxRequest(request)) {
             // Set up some basic response attributes
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            ModelAndView mav = new ModelAndView("utility/blcException");
+            ModelAndView mav = new ModelAndView("utility/ucException");
             
             // Friendly message
             mav.addObject("exceptionMessage", ex.getMessage());

@@ -1,41 +1,41 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.order.domain;
+package com.ultracommerce.core.order.domain;
 
-import org.broadleafcommerce.common.audit.Auditable;
-import org.broadleafcommerce.common.copy.MultiTenantCloneable;
-import org.broadleafcommerce.common.currency.domain.BroadleafCurrency;
-import org.broadleafcommerce.common.locale.domain.Locale;
-import org.broadleafcommerce.common.money.Money;
-import org.broadleafcommerce.core.catalog.domain.Category;
-import org.broadleafcommerce.core.catalog.domain.Sku;
-import org.broadleafcommerce.core.offer.domain.Adjustment;
-import org.broadleafcommerce.core.offer.domain.CandidateOrderOffer;
-import org.broadleafcommerce.core.offer.domain.Offer;
-import org.broadleafcommerce.core.offer.domain.OfferCode;
-import org.broadleafcommerce.core.offer.domain.OfferInfo;
-import org.broadleafcommerce.core.offer.domain.OrderAdjustment;
-import org.broadleafcommerce.core.order.service.call.ActivityMessageDTO;
-import org.broadleafcommerce.core.order.service.type.OrderStatus;
-import org.broadleafcommerce.core.payment.domain.OrderPayment;
-import org.broadleafcommerce.core.pricing.service.workflow.FulfillmentGroupPricingActivity;
-import org.broadleafcommerce.core.pricing.service.workflow.TotalActivity;
-import org.broadleafcommerce.profile.core.domain.Customer;
+import com.ultracommerce.common.audit.Auditable;
+import com.ultracommerce.common.copy.MultiTenantCloneable;
+import com.ultracommerce.common.currency.domain.UltraCurrency;
+import com.ultracommerce.common.locale.domain.Locale;
+import com.ultracommerce.common.money.Money;
+import com.ultracommerce.core.catalog.domain.Category;
+import com.ultracommerce.core.catalog.domain.Sku;
+import com.ultracommerce.core.offer.domain.Adjustment;
+import com.ultracommerce.core.offer.domain.CandidateOrderOffer;
+import com.ultracommerce.core.offer.domain.Offer;
+import com.ultracommerce.core.offer.domain.OfferCode;
+import com.ultracommerce.core.offer.domain.OfferInfo;
+import com.ultracommerce.core.offer.domain.OrderAdjustment;
+import com.ultracommerce.core.order.service.call.ActivityMessageDTO;
+import com.ultracommerce.core.order.service.type.OrderStatus;
+import com.ultracommerce.core.payment.domain.OrderPayment;
+import com.ultracommerce.core.pricing.service.workflow.FulfillmentGroupPricingActivity;
+import com.ultracommerce.core.pricing.service.workflow.TotalActivity;
+import com.ultracommerce.profile.core.domain.Customer;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -43,7 +43,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Defines an order in Broadleaf.    There are several key items to be aware of with the BLC Order.
+ * Defines an order in Ultra.    There are several key items to be aware of with the UC Order.
  * 
  * 1.  Carts are also Orders that are in a Pending status
  * 
@@ -133,7 +133,7 @@ public interface Order extends Serializable, MultiTenantCloneable<Order> {
      * In this implementation, THIRD_PARTY_ACCOUNT and CREDIT_CARD type payments
      * must be sent to the gateway as the last step in the checkout process and will NOT be considered an applied payment.
      * Since, these types have to be the last payment applied,
-     * {@link org.broadleafcommerce.core.pricing.service.workflow.AdjustOrderPaymentsActivity} will adjust the value of the payment
+     * {@link com.ultracommerce.core.pricing.service.workflow.AdjustOrderPaymentsActivity} will adjust the value of the payment
      * based on what has already been applied to the order.
      *
      * For example, Gift Cards and Account Credit can be applied BEFORE
@@ -237,7 +237,7 @@ public interface Order extends Serializable, MultiTenantCloneable<Order> {
     Date getSubmitDate();
 
     /**
-     * Set the date that this {@link Order} was submitted. Used in the blCheckoutWorkflow as the last step after everything
+     * Set the date that this {@link Order} was submitted. Used in the ucCheckoutWorkflow as the last step after everything
      * else has been completed (payments charged, integration systems notified, etc).
      * 
      * @param submitDate the date that this {@link Order} was submitted.
@@ -326,7 +326,7 @@ public interface Order extends Serializable, MultiTenantCloneable<Order> {
     /**
      * Returns a List of OrderAdjustment originating from FUTURE_CREDIT Offers.
      * 
-     * See {@link org.broadleafcommerce.core.offer.domain.Offer#getAdjustmentType()} for more info on future credit
+     * See {@link com.ultracommerce.core.offer.domain.Offer#getAdjustmentType()} for more info on future credit
      *
      * @return a List of OrderItemAdjustment
      */
@@ -336,7 +336,7 @@ public interface Order extends Serializable, MultiTenantCloneable<Order> {
      * Returns a List of Adjustment originating from FUTURE_CREDIT Offers. This is obtained from the Order, OrderItem, 
      * and FulfillmentGroup levels. 
      * 
-     * See {@link org.broadleafcommerce.core.offer.domain.Offer#getAdjustmentType()} for more info on future credit
+     * See {@link com.ultracommerce.core.offer.domain.Offer#getAdjustmentType()} for more info on future credit
      *
      * @return a List of OrderItemAdjustment
      */
@@ -407,7 +407,7 @@ public interface Order extends Serializable, MultiTenantCloneable<Order> {
     /**
      * Returns the discount value of the applied future credit item offers for this order.
      * 
-     * See {@link org.broadleafcommerce.core.offer.domain.Offer#getAdjustmentType()} for more info on future credit
+     * See {@link com.ultracommerce.core.offer.domain.Offer#getAdjustmentType()} for more info on future credit
      *
      * @return the discount value of the applied item offers for this order
      */
@@ -425,7 +425,7 @@ public interface Order extends Serializable, MultiTenantCloneable<Order> {
     /**
      * Returns the discount value of the applied future credit order offers originating.
      * 
-     * See {@link org.broadleafcommerce.core.offer.domain.Offer#getAdjustmentType()} for more info on future credit
+     * See {@link com.ultracommerce.core.offer.domain.Offer#getAdjustmentType()} for more info on future credit
      *
      * @return the discount value of applied order offers.
      */
@@ -444,7 +444,7 @@ public interface Order extends Serializable, MultiTenantCloneable<Order> {
      * Returns the total discount value for applied item, order, and fulfillment offers in the order originating from 
      * FUTURE_CREDIT Offers.  This should be used to credit the customer after the order has been placed.
      * 
-     * See {@link org.broadleafcommerce.core.offer.domain.Offer#getAdjustmentType()} for more info on future credit
+     * See {@link com.ultracommerce.core.offer.domain.Offer#getAdjustmentType()} for more info on future credit
      *
      * @return the total discount of applied item, order, and fulfillment offers
      */
@@ -469,7 +469,7 @@ public interface Order extends Serializable, MultiTenantCloneable<Order> {
     /**
      * Returns the discount value of the applied future credit fulfillment offers for this order.
      * 
-     * See {@link org.broadleafcommerce.core.offer.domain.Offer#getAdjustmentType()} for more info on future credit
+     * See {@link com.ultracommerce.core.offer.domain.Offer#getAdjustmentType()} for more info on future credit
      *
      * @return the discount value of the applied future credit fulfillment offers for this order.
      */
@@ -508,14 +508,14 @@ public interface Order extends Serializable, MultiTenantCloneable<Order> {
      * 
      * @return
      */
-    BroadleafCurrency getCurrency();
+    UltraCurrency getCurrency();
 
     /**
      * Set the currency that the {@link Order} is priced in.
      * 
      * @param currency
      */
-    void setCurrency(BroadleafCurrency currency);
+    void setCurrency(UltraCurrency currency);
 
     Locale getLocale();
 
@@ -549,15 +549,15 @@ public interface Order extends Serializable, MultiTenantCloneable<Order> {
     public void setTaxOverride(Boolean taxOverride);
 
     /**
-     * This method returns null from the default implementation.   The Broadleaf
+     * This method returns null from the default implementation.   The Ultra
      * Account module weaves in an implementation that returns the account id associated
      * with the order.   
      * 
-     * This method is used by the Broadleaf Offer engine to allow offers to be 
+     * This method is used by the Ultra Offer engine to allow offers to be 
      * restricted so that a given account can only use the offer a max number of times. 
      * 
      * @see Offer.getMaxUsesStrategyType()
      * 
      */
-    Long getBroadleafAccountId();
+    Long getUltraAccountId();
 }

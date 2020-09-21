@@ -1,27 +1,27 @@
 /*
  * #%L
- * BroadleafCommerce Admin Module
+ * UltraCommerce Admin Module
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.admin.web.controller.entity;
+package com.ultracommerce.admin.web.controller.entity;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.broadleafcommerce.common.exception.ServiceException;
-import org.broadleafcommerce.openadmin.web.controller.entity.AdminBasicEntityController;
-import org.broadleafcommerce.openadmin.web.form.component.ListGrid;
-import org.broadleafcommerce.openadmin.web.form.entity.EntityForm;
+import com.ultracommerce.common.exception.ServiceException;
+import com.ultracommerce.openadmin.web.controller.entity.AdminBasicEntityController;
+import com.ultracommerce.openadmin.web.form.component.ListGrid;
+import com.ultracommerce.openadmin.web.form.entity.EntityForm;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,7 +35,7 @@ import javax.servlet.http.HttpServletRequest;
  * 
  * @author Andre Azzolini (apazzolini)
  */
-@Controller("blAdminOrderController")
+@Controller("ucAdminOrderController")
 @RequestMapping("/" + AdminOrderController.SECTION_KEY)
 public class AdminOrderController extends AdminBasicEntityController {
     

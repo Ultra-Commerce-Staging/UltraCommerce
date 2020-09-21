@@ -19,7 +19,7 @@
     <!--</div>-->
 
     <div class="account-info dropdown">
-        <blc_admin:admin_user resultVar="adminUser" ></blc_admin:admin_user>
+        <uc_admin:admin_user resultVar="adminUser" ></uc_admin:admin_user>
         <div class="dropdown-toggle" id="accountdrop" data-toggle="dropdown" aria-expanded="true">
             <span th:text="'Welcome ' + ${adminUser.name} + '!'"></span>
             <span class="caret"></span>
@@ -32,11 +32,11 @@
     
     <div class="language-selector dropdown">
         <div class="dropdown-toggle" id="languagedrop" data-toggle="dropdown" aria-expanded="true">
-            <span th:text="${session.blLocale.friendlyName}"></span>
+            <span th:text="${session.ucLocale.friendlyName}"></span>
         </div>
         <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="languagedrop">
-            <li th:each="locale : ${@blLocaleService.findAllLocales()}">
-                <a class="add-url-param-click" th:attr="data-param=${locale.localeCode},data-prop=blLocaleCode" href="#"
+            <li th:each="locale : ${@ucLocaleService.findAllLocales()}">
+                <a class="add-url-param-click" th:attr="data-param=${locale.localeCode},data-prop=ucLocaleCode" href="#"
                    th:text="#{${locale.friendlyName}}"></a>
             </li>
         </ul>
@@ -44,11 +44,11 @@
 
     <div class="timezone-selector dropdown">
         <div class="dropdown-toggle" id="timezonedrop" data-toggle="dropdown" aria-expanded="true">
-            <span th:text="${session.blTimeZone.displayName} + ' (' + ${T(java.time.format.DateTimeFormatter).ofPattern('OOOO').format(T(java.time.ZonedDateTime).now(session.blTimeZone.toZoneId()))} + ')'"></span>
+            <span th:text="${session.ucTimeZone.displayName} + ' (' + ${T(java.time.format.DateTimeFormatter).ofPattern('OOOO').format(T(java.time.ZonedDateTime).now(session.ucTimeZone.toZoneId()))} + ')'"></span>
         </div>
         <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="timezonedrop">
             <li th:each="timezone : ${@environment.getProperty('admin.available.timezone.codes', T(java.util.List))}">
-                <a class="add-url-param-click" th:attr="data-param=${timezone},data-prop=blTimeZoneCode" href="#"
+                <a class="add-url-param-click" th:attr="data-param=${timezone},data-prop=ucTimeZoneCode" href="#"
                    th:text="#{${timezone}}"></a>
             </li>
         </ul>

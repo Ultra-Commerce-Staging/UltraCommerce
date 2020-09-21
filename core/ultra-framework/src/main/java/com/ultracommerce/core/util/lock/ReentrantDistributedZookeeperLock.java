@@ -1,22 +1,22 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2019 Broadleaf Commerce
+ * Copyright (C) 2009 - 2019 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
 
-package org.broadleafcommerce.core.util.lock;
+package com.ultracommerce.core.util.lock;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -26,9 +26,9 @@ import org.apache.zookeeper.Watcher;
 import org.apache.zookeeper.ZooDefs;
 import org.apache.zookeeper.ZooKeeper;
 import org.apache.zookeeper.data.ACL;
-import org.broadleafcommerce.common.util.GenericOperation;
-import org.broadleafcommerce.common.util.GenericOperationUtil;
-import org.broadleafcommerce.core.util.ZookeeperUtil;
+import com.ultracommerce.common.util.GenericOperation;
+import com.ultracommerce.common.util.GenericOperationUtil;
+import com.ultracommerce.core.util.ZookeeperUtil;
 import org.springframework.core.env.Environment;
 import org.springframework.util.Assert;
 
@@ -88,7 +88,7 @@ public class ReentrantDistributedZookeeperLock implements DistributedLock {
      * This is the base folder that all locks will be written to in Zookeeper.  The constructors require a lock path, which will be appended 
      * to this path.
      */
-    public static final String DEFAULT_BASE_FOLDER = "/broadleaf/app/distributed-locks";
+    public static final String DEFAULT_BASE_FOLDER = "/ultra/app/distributed-locks";
     
     /**
      * This is the prefix of any lock entry.  It is dzlck-.  A lock file (node) will be dzlck-mylock, for example.
@@ -142,19 +142,19 @@ public class ReentrantDistributedZookeeperLock implements DistributedLock {
     private final String fullLockName;
     
     /*
-     * Path to the lock folder.  Typically, /broadleaf/app/distributed-locks/path/to/my/lock-folder
+     * Path to the lock folder.  Typically, /ultra/app/distributed-locks/path/to/my/lock-folder
      */
     private final String lockFolderPath;
     
     /*
      * Property name, whose value should be null or boolean, to determine if this lock can be obtained by this environment.
-     * E.g. org.broadleafcommerce.core.util.lock.DistributedLock.${getLockName()}.canParticipate=true
+     * E.g. com.ultracommerce.core.util.lock.DistributedLock.${getLockName()}.canParticipate=true
      */
     private final String lockAccessPropertyName;
     
     /*
      * This is the full path to the ephemeral node in Zookeeper that represents the lock.
-     * E.g. /broadleaf/app/distributed-locks/path/to/my/lock-folder/dzlck-myLock00000000001
+     * E.g. /ultra/app/distributed-locks/path/to/my/lock-folder/dzlck-myLock00000000001
      * 
      */
     private String currentlockPath;
@@ -170,7 +170,7 @@ public class ReentrantDistributedZookeeperLock implements DistributedLock {
      * 
      * This {@link Lock} will, by default, participate in or be allowed to acquire a lock.
      * 
-     * The lockPath will be prepended with '/broadleaf/app/distributed-locks'.
+     * The lockPath will be prepended with '/ultra/app/distributed-locks'.
      * 
      * @param zk
      * @param lockPath
@@ -188,7 +188,7 @@ public class ReentrantDistributedZookeeperLock implements DistributedLock {
      * 
      * This {@link Lock} will, by default, participate in or be allowed to acquire a lock.
      * 
-     * If use defaultBasePath is true, then the lockPath will be prepended with '/broadleaf/app/distributed-locks'.
+     * If use defaultBasePath is true, then the lockPath will be prepended with '/ultra/app/distributed-locks'.
      * 
      * @param zk
      * @param lockPath
@@ -206,9 +206,9 @@ public class ReentrantDistributedZookeeperLock implements DistributedLock {
      * an {@link Environment} object, which can be null.
      * 
      * This {@link Lock} will, by default, participate in or be allowed to acquire a lock if the {@link Environment} argument is null or 
-     * if the 'org.broadleafcommerce.core.util.lock.DistributedLock.${lockName}.canParticipate' property is not set or is set to false.
+     * if the 'com.ultracommerce.core.util.lock.DistributedLock.${lockName}.canParticipate' property is not set or is set to false.
      * 
-     * The lockPath will be prepended with '/broadleaf/app/distributed-locks'.
+     * The lockPath will be prepended with '/ultra/app/distributed-locks'.
      * 
      * @param zk
      * @param lockPath
@@ -227,9 +227,9 @@ public class ReentrantDistributedZookeeperLock implements DistributedLock {
      * an {@link Environment} object, which can be null.
      * 
      * This {@link Lock} will, by default, participate in or be allowed to acquire a lock if the {@link Environment} argument is null or 
-     * if the 'org.broadleafcommerce.core.util.lock.DistributedLock.${lockName}.canParticipate' property is not set or is set to false.
+     * if the 'com.ultracommerce.core.util.lock.DistributedLock.${lockName}.canParticipate' property is not set or is set to false.
      * 
-     * If use defaultBasePath is true, then the lockPath will be prepended with '/broadleaf/app/distributed-locks'.
+     * If use defaultBasePath is true, then the lockPath will be prepended with '/ultra/app/distributed-locks'.
      * 
      * @param zk
      * @param lockPath
@@ -404,7 +404,7 @@ public class ReentrantDistributedZookeeperLock implements DistributedLock {
         }
         
         try {
-            //Create a lock reference in Zookeeper.  It looks something like /broadleaf/app/distributed-locks/path/to/my/locks/myLock000000000015
+            //Create a lock reference in Zookeeper.  It looks something like /ultra/app/distributed-locks/path/to/my/locks/myLock000000000015
             //The sequential part of this guaranteed by Zookeeper to be unique.  Creating this file does not guarantee that a lock has been acquired.
             final String localLockPath = GenericOperationUtil.executeRetryableOperation(new GenericOperation<String>() {
 
@@ -558,12 +558,12 @@ public class ReentrantDistributedZookeeperLock implements DistributedLock {
     }
     
     /**
-     * Allows one to disable this locking mechanism via the 'org.broadleafcommerce.core.util.lock.DistributedLock.canParticipate' (globally) or the 
-     * 'org.broadleafcommerce.core.util.lock.DistributedLock.${lockName}.canParticipate' property.  Both are true by default. 
+     * Allows one to disable this locking mechanism via the 'com.ultracommerce.core.util.lock.DistributedLock.canParticipate' (globally) or the 
+     * 'com.ultracommerce.core.util.lock.DistributedLock.${lockName}.canParticipate' property.  Both are true by default. 
      * If either of these properties are set to false, then this lock will never be obtained.  This allows only certain environments or certain nodes (JVMs) to obtain the lock 
      * while preventing others.  Assuming the {@link Environment} is not null, this first checks the more specific 
-     * 'org.broadleafcommerce.core.util.lock.DistributedLock.${lockName}.canParticipate' property.  If that is true or 
-     * null, then it checks the more global 'org.broadleafcommerce.core.util.lock.DistributedLock.canParticipate'.  If that is true or null then it returns true.
+     * 'com.ultracommerce.core.util.lock.DistributedLock.${lockName}.canParticipate' property.  If that is true or 
+     * null, then it checks the more global 'com.ultracommerce.core.util.lock.DistributedLock.canParticipate'.  If that is true or null then it returns true.
      * 
      * By default, this method returns true if the {@link Environment} is null or if both properties are null.
      * 

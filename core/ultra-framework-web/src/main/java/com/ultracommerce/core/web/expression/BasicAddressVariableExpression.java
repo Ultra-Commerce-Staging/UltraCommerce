@@ -1,31 +1,31 @@
 /*
  * #%L
- * BroadleafCommerce Framework Web
+ * UltraCommerce Framework Web
  * %%
- * Copyright (C) 2009 - 2017 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.web.expression;
+package com.ultracommerce.core.web.expression;
 
-import org.broadleafcommerce.common.i18n.domain.ISOCountry;
-import org.broadleafcommerce.common.web.expression.BroadleafVariableExpression;
-import org.broadleafcommerce.presentation.condition.ConditionalOnTemplating;
-import org.broadleafcommerce.profile.core.domain.Country;
-import org.broadleafcommerce.profile.core.domain.CountrySubdivision;
-import org.broadleafcommerce.profile.core.domain.State;
-import org.broadleafcommerce.profile.core.service.CountryService;
-import org.broadleafcommerce.profile.core.service.CountrySubdivisionService;
-import org.broadleafcommerce.profile.core.service.StateService;
+import com.ultracommerce.common.i18n.domain.ISOCountry;
+import com.ultracommerce.common.web.expression.UltraVariableExpression;
+import com.ultracommerce.presentation.condition.ConditionalOnTemplating;
+import com.ultracommerce.profile.core.domain.Country;
+import com.ultracommerce.profile.core.domain.CountrySubdivision;
+import com.ultracommerce.profile.core.domain.State;
+import com.ultracommerce.profile.core.service.CountryService;
+import com.ultracommerce.profile.core.service.CountrySubdivisionService;
+import com.ultracommerce.profile.core.service.StateService;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -36,17 +36,17 @@ import javax.annotation.Resource;
 /**
  * @author Chris Kittrell (ckittrell)
  */
-@Component("blBasicAddressVariableExpression")
+@Component("ucBasicAddressVariableExpression")
 @ConditionalOnTemplating
-public class BasicAddressVariableExpression implements BroadleafVariableExpression {
+public class BasicAddressVariableExpression implements UltraVariableExpression {
 
-    @Resource(name = "blStateService")
+    @Resource(name = "ucStateService")
     protected StateService stateService;
 
-    @Resource(name = "blCountrySubdivisionService")
+    @Resource(name = "ucCountrySubdivisionService")
     protected CountrySubdivisionService countrySubdivisionService;
 
-    @Resource(name = "blCountryService")
+    @Resource(name = "ucCountryService")
     protected CountryService countryService;
 
     @Override

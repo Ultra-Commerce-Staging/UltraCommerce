@@ -1,23 +1,23 @@
 /*
  * #%L
- * BroadleafCommerce CMS Module
+ * UltraCommerce CMS Module
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.cms.structure.service.type;
+package com.ultracommerce.cms.structure.service.type;
 
-import org.broadleafcommerce.common.BroadleafEnumerationType;
+import com.ultracommerce.common.UltraEnumerationType;
 
 import java.io.Serializable;
 import java.util.LinkedHashMap;
@@ -26,11 +26,11 @@ import java.util.Map;
 /**
  * An extendible enumeration of offer rule types.<BR>
  * REQUEST - indicates a rule based on the incoming http request.<BR>
- * TIME - indicates a rule based on {@link org.broadleafcommerce.common.TimeDTO time}<br>
- * PRODUCT - indicates a rule based on {@link org.broadleafcommerce.core.catalog.domain.Product product}
- * CUSTOMER - indicates a rule based on {@link org.broadleafcommerce.profile.core.domain}
+ * TIME - indicates a rule based on {@link com.ultracommerce.common.TimeDTO time}<br>
+ * PRODUCT - indicates a rule based on {@link com.ultracommerce.core.catalog.domain.Product product}
+ * CUSTOMER - indicates a rule based on {@link com.ultracommerce.profile.core.domain}
  */
-public class StructuredContentRuleType implements Serializable, BroadleafEnumerationType {
+public class StructuredContentRuleType implements Serializable, UltraEnumerationType {
 
     private static final long serialVersionUID = 1L;
 

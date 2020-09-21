@@ -1,30 +1,30 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.openadmin.server.security.service.user;
+package com.ultracommerce.openadmin.server.security.service.user;
 
 import org.apache.commons.lang.StringUtils;
-import org.broadleafcommerce.common.security.BroadleafExternalAuthenticationUserDetails;
-import org.broadleafcommerce.openadmin.server.security.domain.AdminRole;
-import org.broadleafcommerce.openadmin.server.security.domain.AdminUser;
-import org.broadleafcommerce.openadmin.server.security.domain.AdminUserImpl;
-import org.broadleafcommerce.openadmin.server.security.external.AdminExternalLoginUserExtensionManager;
-import org.broadleafcommerce.openadmin.server.security.service.AdminSecurityHelper;
-import org.broadleafcommerce.openadmin.server.security.service.AdminSecurityService;
+import com.ultracommerce.common.security.UltraExternalAuthenticationUserDetails;
+import com.ultracommerce.openadmin.server.security.domain.AdminRole;
+import com.ultracommerce.openadmin.server.security.domain.AdminUser;
+import com.ultracommerce.openadmin.server.security.domain.AdminUserImpl;
+import com.ultracommerce.openadmin.server.security.external.AdminExternalLoginUserExtensionManager;
+import com.ultracommerce.openadmin.server.security.service.AdminSecurityHelper;
+import com.ultracommerce.openadmin.server.security.service.AdminSecurityService;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -38,29 +38,29 @@ import java.util.Set;
 import javax.annotation.Resource;
 
 /**
- * This component allows for the default provisioning of an AdminUser and roles in the Broadleaf database, based on the 
+ * This component allows for the default provisioning of an AdminUser and roles in the Ultra database, based on the 
  * external authentication of a user (e.g. LDAP or custom external authentication provider).
  * 
  * @author Kelly Tisdell
  *
  */
-@Service("blAdminUserProvisioningService")
+@Service("ucAdminUserProvisioningService")
 public class AdminUserProvisioningServiceImpl implements AdminUserProvisioningService {
 
-    @Resource(name = "blAdminSecurityService")
+    @Resource(name = "ucAdminSecurityService")
     protected AdminSecurityService securityService;
 
-    @Resource(name = "blAdminExternalLoginExtensionManager")
+    @Resource(name = "ucAdminExternalLoginExtensionManager")
     protected AdminExternalLoginUserExtensionManager adminExternalLoginExtensionManager;
 
-    @Resource(name="blAdminSecurityHelper")
+    @Resource(name="ucAdminSecurityHelper")
     protected AdminSecurityHelper adminSecurityHelper;
 
     protected Map<String, String[]> roleNameSubstitutions;
 
     @Override
     public AdminUserDetails provisionAdminUser(
-            final BroadleafExternalAuthenticationUserDetails details) {
+            final UltraExternalAuthenticationUserDetails details) {
         final HashSet<AdminRole> parsedRoles = parseAdminRoles(details);
         final Set<SimpleGrantedAuthority> adminUserAuthorities = 
                 extractAdminUserAuthorities(parsedRoles);
@@ -70,7 +70,7 @@ public class AdminUserProvisioningServiceImpl implements AdminUserProvisioningSe
     }
     
     protected HashSet<AdminRole> parseAdminRoles(
-            final BroadleafExternalAuthenticationUserDetails details) {
+            final UltraExternalAuthenticationUserDetails details) {
         final HashSet<String> parsedRoleNames = parseRolesFromUserDetails(details);
         final HashSet<AdminRole> parsedRoles = new HashSet<>();
         final List<AdminRole> adminRoles = securityService.readAllAdminRoles();
@@ -137,7 +137,7 @@ public class AdminUserProvisioningServiceImpl implements AdminUserProvisioningSe
         }
     }
     
-    protected AdminUser getAdminUser(final BroadleafExternalAuthenticationUserDetails details,
+    protected AdminUser getAdminUser(final UltraExternalAuthenticationUserDetails details,
             final HashSet<AdminRole> parsedRoles) {
         AdminUser adminUser = securityService.readAdminUserByUserName(details.getUsername());
         if (adminUser == null) {
@@ -176,19 +176,19 @@ public class AdminUserProvisioningServiceImpl implements AdminUserProvisioningSe
     }
     
     protected AdminUserDetails createDetails(final AdminUser adminUser, 
-            final BroadleafExternalAuthenticationUserDetails details,
+            final UltraExternalAuthenticationUserDetails details,
             final Set<SimpleGrantedAuthority> adminUserAuthorities) {
         return new AdminUserDetails(adminUser.getId(), details.getUsername(), "", true, true, true,
                 true, adminUserAuthorities);
     } 
 
     /**
-     * Uses the provided role name substitutions to map the LDAP roles to Broadleaf roles.
+     * Uses the provided role name substitutions to map the LDAP roles to Ultra roles.
      *
      * @param details the auth details
-     * @return a Set of unique Broadleaf role names
+     * @return a Set of unique Ultra role names
      */
-    protected HashSet<String> parseRolesFromUserDetails(BroadleafExternalAuthenticationUserDetails details) {
+    protected HashSet<String> parseRolesFromUserDetails(UltraExternalAuthenticationUserDetails details) {
         HashSet<String> newRoles = new HashSet<>();
 
         if (roleNameSubstitutions != null && !roleNameSubstitutions.isEmpty()) {
@@ -211,11 +211,11 @@ public class AdminUserProvisioningServiceImpl implements AdminUserProvisioningSe
     }
 
     /**
-     * This allows you to declaratively set a map containing values that will substitute role names from LDAP to Broadleaf roles names in cases that they might be different.
+     * This allows you to declaratively set a map containing values that will substitute role names from LDAP to Ultra roles names in cases that they might be different.
      * For example, if you have a role specified in LDAP under "memberOf" with a DN of "Marketing Administrator", you might want to
      * map that to the role "ADMIN".  By default the prefix "ROLE_" will be pre-pended to this name. So to configure this, you would specify:
      *
-     * <bean class="org.broadleaf.loadtest.web.security.ActiveDirectoryUserDetailsContextMapper">
+     * <bean class="org.ultra.loadtest.web.security.ActiveDirectoryUserDetailsContextMapper">
      *     <property name="roleMappings">
      *         <map>
      *             <entry key="Marketing_Administrator" value="ROLE_CATALOG_ADMIN"/>

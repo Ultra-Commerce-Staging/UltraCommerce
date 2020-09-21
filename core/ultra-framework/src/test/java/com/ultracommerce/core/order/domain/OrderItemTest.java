@@ -1,43 +1,43 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.order.domain;
+package com.ultracommerce.core.order.domain;
 
 import junit.framework.TestCase;
-import org.broadleafcommerce.common.money.Money;
-import org.broadleafcommerce.core.offer.domain.Offer;
-import org.broadleafcommerce.core.offer.domain.OfferImpl;
-import org.broadleafcommerce.core.offer.service.OfferDataItemProvider;
-import org.broadleafcommerce.core.offer.service.discount.PromotionDiscount;
-import org.broadleafcommerce.core.offer.service.discount.PromotionQualifier;
-import org.broadleafcommerce.core.offer.service.discount.domain.PromotableCandidateItemOffer;
-import org.broadleafcommerce.core.offer.service.discount.domain.PromotableCandidateItemOfferImpl;
-import org.broadleafcommerce.core.offer.service.discount.domain.PromotableItemFactoryImpl;
-import org.broadleafcommerce.core.offer.service.discount.domain.PromotableOfferUtility;
-import org.broadleafcommerce.core.offer.service.discount.domain.PromotableOfferUtilityImpl;
-import org.broadleafcommerce.core.offer.service.discount.domain.PromotableOrder;
-import org.broadleafcommerce.core.offer.service.discount.domain.PromotableOrderImpl;
-import org.broadleafcommerce.core.offer.service.discount.domain.PromotableOrderItem;
-import org.broadleafcommerce.core.offer.service.discount.domain.PromotableOrderItemImpl;
-import org.broadleafcommerce.core.offer.service.discount.domain.PromotableOrderItemPriceDetail;
-import org.broadleafcommerce.core.offer.service.discount.domain.PromotableOrderItemPriceDetailImpl;
-import org.broadleafcommerce.core.offer.service.type.OfferDiscountType;
-import org.broadleafcommerce.core.offer.service.type.OfferItemRestrictionRuleType;
-import org.broadleafcommerce.core.order.service.type.OrderItemType;
+import com.ultracommerce.common.money.Money;
+import com.ultracommerce.core.offer.domain.Offer;
+import com.ultracommerce.core.offer.domain.OfferImpl;
+import com.ultracommerce.core.offer.service.OfferDataItemProvider;
+import com.ultracommerce.core.offer.service.discount.PromotionDiscount;
+import com.ultracommerce.core.offer.service.discount.PromotionQualifier;
+import com.ultracommerce.core.offer.service.discount.domain.PromotableCandidateItemOffer;
+import com.ultracommerce.core.offer.service.discount.domain.PromotableCandidateItemOfferImpl;
+import com.ultracommerce.core.offer.service.discount.domain.PromotableItemFactoryImpl;
+import com.ultracommerce.core.offer.service.discount.domain.PromotableOfferUtility;
+import com.ultracommerce.core.offer.service.discount.domain.PromotableOfferUtilityImpl;
+import com.ultracommerce.core.offer.service.discount.domain.PromotableOrder;
+import com.ultracommerce.core.offer.service.discount.domain.PromotableOrderImpl;
+import com.ultracommerce.core.offer.service.discount.domain.PromotableOrderItem;
+import com.ultracommerce.core.offer.service.discount.domain.PromotableOrderItemImpl;
+import com.ultracommerce.core.offer.service.discount.domain.PromotableOrderItemPriceDetail;
+import com.ultracommerce.core.offer.service.discount.domain.PromotableOrderItemPriceDetailImpl;
+import com.ultracommerce.core.offer.service.type.OfferDiscountType;
+import com.ultracommerce.core.offer.service.type.OfferItemRestrictionRuleType;
+import com.ultracommerce.core.order.service.type.OrderItemType;
 
 /**
  * 

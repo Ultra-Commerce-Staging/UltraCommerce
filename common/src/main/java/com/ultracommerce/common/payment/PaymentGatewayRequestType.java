@@ -1,23 +1,23 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.payment;
+package com.ultracommerce.common.payment;
 
-import org.broadleafcommerce.common.BroadleafEnumerationType;
+import com.ultracommerce.common.UltraEnumerationType;
 import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -32,24 +32,24 @@ import java.util.Map;
  * For example:
  * 1. Certain gateways support the idea of a "Transparent Redirect" request.
  *    Within that set, only certain ones support the idea of a transparent redirect tokenization only request.
- *    In order to utilize the same {@link org.broadleafcommerce.common.payment.service.PaymentGatewayTransparentRedirectService},
+ *    In order to utilize the same {@link com.ultracommerce.common.payment.service.PaymentGatewayTransparentRedirectService},
  *    a particular request type, (e.g. {@link #CREATE_CUSTOMER_PAYMENT_TR} can be put on the
- *    {@link org.broadleafcommerce.common.payment.dto.PaymentRequestDTO} to distinguish which request to construct.
+ *    {@link com.ultracommerce.common.payment.dto.PaymentRequestDTO} to distinguish which request to construct.
  * 2. Certain gateways support the idea of a "Detached Credit" also referred to as a "blind credit"
  *    In some cases, the gateways implementation utilizes the same "refund" api as a normal credit.
  *    {@link #DETACHED_CREDIT_REFUND} can be passed to an implementation's
- *    {@link org.broadleafcommerce.common.payment.service.PaymentGatewayTransactionService#refund(org.broadleafcommerce.common.payment.dto.PaymentRequestDTO)}
+ *    {@link com.ultracommerce.common.payment.service.PaymentGatewayTransactionService#refund(com.ultracommerce.common.payment.dto.PaymentRequestDTO)}
  *    method to distinguish what type of refund to construct.
  * 3. Some gateway implementations allow you to pass a manual authorization code received from the bank.
  *    For example, a customer service representative can take orders over the phone and call the bank directly
  *    to get an authorization code for the customer's card. In this scenario, if your gateway supports
  *    this, {@link #MANUAL_AUTHORIZATION} can be passed into an implementation's
- *    {@link org.broadleafcommerce.common.payment.service.PaymentGatewayTransactionService#authorize(org.broadleafcommerce.common.payment.dto.PaymentRequestDTO)}
+ *    {@link com.ultracommerce.common.payment.service.PaymentGatewayTransactionService#authorize(com.ultracommerce.common.payment.dto.PaymentRequestDTO)}
  *    method to distinguish what type of authorization to construct.
  *
  * @author Elbert Bautista (elbertbautista)
  */
-public class PaymentGatewayRequestType implements Serializable, BroadleafEnumerationType {
+public class PaymentGatewayRequestType implements Serializable, UltraEnumerationType {
 
     private static final long serialVersionUID = 1L;
 

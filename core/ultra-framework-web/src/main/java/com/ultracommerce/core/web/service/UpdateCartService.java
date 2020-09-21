@@ -1,26 +1,26 @@
 /*
  * #%L
- * BroadleafCommerce Framework Web
+ * UltraCommerce Framework Web
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.web.service;
+package com.ultracommerce.core.web.service;
 
-import org.broadleafcommerce.common.currency.domain.BroadleafCurrency;
-import org.broadleafcommerce.core.order.domain.Order;
-import org.broadleafcommerce.core.order.service.call.OrderItemRequestDTO;
-import org.broadleafcommerce.core.order.service.call.UpdateCartResponse;
+import com.ultracommerce.common.currency.domain.UltraCurrency;
+import com.ultracommerce.core.order.domain.Order;
+import com.ultracommerce.core.order.service.call.OrderItemRequestDTO;
+import com.ultracommerce.core.order.service.call.UpdateCartResponse;
 
 /**
  * Provides methods to facilitate order repricing.
@@ -35,17 +35,17 @@ public interface UpdateCartService {
      *
      * @param savedCurrency
      */
-    public void setSavedCurrency(BroadleafCurrency savedCurrency);
+    public void setSavedCurrency(UltraCurrency savedCurrency);
 
     /**
      * Gets the currency that was set as active on last pass through.
      *
      * @return
      */
-    public BroadleafCurrency getSavedCurrency();
+    public UltraCurrency getSavedCurrency();
 
     /**
-     *  Compares the currency set in the BroadleafRequestContext with the savedCurrency.
+     *  Compares the currency set in the UltraRequestContext with the savedCurrency.
      *  If different, returns TRUE
      *
      * @return

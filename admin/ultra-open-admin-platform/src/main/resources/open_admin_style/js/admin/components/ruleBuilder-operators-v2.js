@@ -1,22 +1,22 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
 
-var blcOperators = [
+var ucOperators = [
     {type: "IS_NULL", nb_inputs: 0, multiple: false, apply_to: ['string']},
     {type: "EQUALS", nb_inputs: 1, multiple: false, apply_to: ['boolean', 'string', 'number', 'datetime']},
     {type: "IEQUALS", nb_inputs: 1, multiple: false, apply_to: ['string']},
@@ -46,17 +46,17 @@ var blcOperators = [
     {type: "WITHIN_DAYS", nb_inputs: 1, multiple: false, apply_to: ['number']}
 ];
 
-var blcOperators_Boolean = [
+var ucOperators_Boolean = [
     "EQUALS",
     "NOT_EQUAL"
 ];
 
-var blcOperators_Selectize = [
+var ucOperators_Selectize = [
     "COLLECTION_IN",
     "COLLECTION_NOT_IN"
 ];
 
-var blcOperators_Date = [
+var ucOperators_Date = [
     "EQUALS",
     "NOT_EQUAL",
     "GREATER_THAN",
@@ -68,7 +68,7 @@ var blcOperators_Date = [
     "WITHIN_DAYS"
 ];
 
-var blcOperators_Numeric = [
+var ucOperators_Numeric = [
     "EQUALS",
     "NOT_EQUAL",
     "GREATER_THAN",
@@ -79,7 +79,7 @@ var blcOperators_Numeric = [
     "BETWEEN_INCLUSIVE"
 ];
 
-var blcOperators_Text = [
+var ucOperators_Text = [
     "IS_NULL",
     "EQUALS",
     "IEQUALS",
@@ -92,17 +92,17 @@ var blcOperators_Text = [
     "IENDS_WITH",
     "INOT_ENDS_WITH"];
 
-var blcOperators_Enumeration = [
+var ucOperators_Enumeration = [
     "EQUALS",
     "NOT_EQUAL"
 ];
 
-var blcOperators_Selectize_Enumeration = [
+var ucOperators_Selectize_Enumeration = [
     "COLLECTION_IN",
     "COLLECTION_NOT_IN"
 ];
 
-var blcOperators_Text_List = [
+var ucOperators_Text_List = [
     "COLLECTION_IN",
     "COLLECTION_NOT_IN",
     "CONTAINS",
@@ -114,28 +114,28 @@ var blcOperators_Text_List = [
     "COUNT_EQUALS"
 ];
 
-var blcFilterOperators_Text = [
+var ucFilterOperators_Text = [
     "CONTAINS"
 ];
 
-var blcFilterOperators_Numeric = [
+var ucFilterOperators_Numeric = [
     "EQUALS",
     "BETWEEN"
 ];
 
-var blcFilterOperators_Date = [
+var ucFilterOperators_Date = [
     "EQUALS",
     "BETWEEN"
 ];
 
-var blcFilterOperators_Boolean = [
+var ucFilterOperators_Boolean = [
     "EQUALS"
 ];
 
-var blcFilterOperators_Enumeration = [
+var ucFilterOperators_Enumeration = [
     "EQUALS"
 ];
 
-var blcFilterOperators_Selectize = [
+var ucFilterOperators_Selectize = [
     "COLLECTION_IN"
 ];

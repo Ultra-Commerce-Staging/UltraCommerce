@@ -1,25 +1,25 @@
 /*
  * #%L
- * BroadleafCommerce CMS Module
+ * UltraCommerce CMS Module
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.cms.file.dao;
+package com.ultracommerce.cms.file.dao;
 
-import org.broadleafcommerce.cms.file.domain.StaticAssetStorage;
-import org.broadleafcommerce.cms.file.domain.StaticAssetStorageImpl;
-import org.broadleafcommerce.common.persistence.EntityConfiguration;
+import com.ultracommerce.cms.file.domain.StaticAssetStorage;
+import com.ultracommerce.cms.file.domain.StaticAssetStorageImpl;
+import com.ultracommerce.common.persistence.EntityConfiguration;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
@@ -40,18 +40,18 @@ import javax.persistence.Query;
  * Time: 7:31 PM
  * To change this template use File | Settings | File Templates.
  */
-@Repository("blStaticAssetStorageDao")
+@Repository("ucStaticAssetStorageDao")
 public class StaticAssetStorageDaoImpl implements StaticAssetStorageDao {
 
-    @PersistenceContext(unitName = "blCMSStorage")
+    @PersistenceContext(unitName = "ucCMSStorage")
     protected EntityManager em;
 
-    @Resource(name="blEntityConfiguration")
+    @Resource(name="ucEntityConfiguration")
     protected EntityConfiguration entityConfiguration;
 
     @Override
     public StaticAssetStorage create() {
-        return (StaticAssetStorage) entityConfiguration.createEntityInstance("org.broadleafcommerce.cms.file.domain.StaticAssetStorage");
+        return (StaticAssetStorage) entityConfiguration.createEntityInstance("com.ultracommerce.cms.file.domain.StaticAssetStorage");
     }
 
     @Override
@@ -73,7 +73,7 @@ public class StaticAssetStorageDaoImpl implements StaticAssetStorageDao {
 
     @Override
     public StaticAssetStorage readStaticAssetStorageByStaticAssetId(Long id) {
-        Query query = em.createNamedQuery("BC_READ_STATIC_ASSET_STORAGE_BY_STATIC_ASSET_ID");
+        Query query = em.createNamedQuery("UC_READ_STATIC_ASSET_STORAGE_BY_STATIC_ASSET_ID");
         query.setParameter("id", id);
 
         return (StaticAssetStorage) query.getSingleResult();

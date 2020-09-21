@@ -1,38 +1,38 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.openadmin.server.service;
+package com.ultracommerce.openadmin.server.service;
 
-import org.broadleafcommerce.common.admin.domain.AdminMainEntity;
-import org.broadleafcommerce.common.exception.ServiceException;
-import org.broadleafcommerce.common.presentation.client.SupportedFieldType;
-import org.broadleafcommerce.openadmin.dto.ClassMetadata;
-import org.broadleafcommerce.openadmin.dto.CriteriaTransferObject;
-import org.broadleafcommerce.openadmin.dto.DynamicResultSet;
-import org.broadleafcommerce.openadmin.dto.Entity;
-import org.broadleafcommerce.openadmin.dto.FilterAndSortCriteria;
-import org.broadleafcommerce.openadmin.dto.PersistencePackage;
-import org.broadleafcommerce.openadmin.dto.Property;
-import org.broadleafcommerce.openadmin.dto.SectionCrumb;
-import org.broadleafcommerce.openadmin.server.domain.FetchPageRequest;
-import org.broadleafcommerce.openadmin.server.domain.PersistencePackageRequest;
-import org.broadleafcommerce.openadmin.server.service.persistence.PersistenceResponse;
-import org.broadleafcommerce.openadmin.server.service.type.FetchType;
-import org.broadleafcommerce.openadmin.web.form.entity.EntityForm;
+import com.ultracommerce.common.admin.domain.AdminMainEntity;
+import com.ultracommerce.common.exception.ServiceException;
+import com.ultracommerce.common.presentation.client.SupportedFieldType;
+import com.ultracommerce.openadmin.dto.ClassMetadata;
+import com.ultracommerce.openadmin.dto.CriteriaTransferObject;
+import com.ultracommerce.openadmin.dto.DynamicResultSet;
+import com.ultracommerce.openadmin.dto.Entity;
+import com.ultracommerce.openadmin.dto.FilterAndSortCriteria;
+import com.ultracommerce.openadmin.dto.PersistencePackage;
+import com.ultracommerce.openadmin.dto.Property;
+import com.ultracommerce.openadmin.dto.SectionCrumb;
+import com.ultracommerce.openadmin.server.domain.FetchPageRequest;
+import com.ultracommerce.openadmin.server.domain.PersistencePackageRequest;
+import com.ultracommerce.openadmin.server.service.persistence.PersistenceResponse;
+import com.ultracommerce.openadmin.server.service.type.FetchType;
+import com.ultracommerce.openadmin.web.form.entity.EntityForm;
 
 import java.util.List;
 import java.util.Map;
@@ -117,7 +117,7 @@ public interface AdminEntityService {
     public PersistencePackageRequest getRequestForEntityForm(EntityForm entityForm, String[] customCriteria, List<SectionCrumb> sectionCrumbs);
 
     /**
-     * Thin layer on top of {@link DynamicEntityService#add(org.broadleafcommerce.openadmin.dto.PersistencePackage)} that
+     * Thin layer on top of {@link DynamicEntityService#add(com.ultracommerce.openadmin.dto.PersistencePackage)} that
      * swallows all {@link ValidationException}s that could be thrown and still just returns a {@link PersistenceResponse}
      * with the {@link Entity} that failed validation.
      *
@@ -130,7 +130,7 @@ public interface AdminEntityService {
     
     /**
      * Works the same as {@link #add(PersistencePackageRequest)} but you can optionally invoke the transactional version
-     * of {@link DynamicEntityRemoteService#add(org.broadleafcommerce.openadmin.dto.PersistencePackage)} in situations
+     * of {@link DynamicEntityRemoteService#add(com.ultracommerce.openadmin.dto.PersistencePackage)} in situations
      * where you want to manage the transactions in a parent component
      * 
      * @param request
@@ -141,7 +141,7 @@ public interface AdminEntityService {
     public PersistenceResponse add(PersistencePackageRequest request, boolean transactional) throws ServiceException;
     
     /**
-     * Thin layer on top of {@link DynamicEntityService#update(org.broadleafcommerce.openadmin.dto.PersistencePackage)}
+     * Thin layer on top of {@link DynamicEntityService#update(com.ultracommerce.openadmin.dto.PersistencePackage)}
      * @param request
      * @return
      * @throws ServiceException if there were exceptions other than a {@link ValidationException} that was thrown as a
@@ -151,7 +151,7 @@ public interface AdminEntityService {
     
     /**
      * Works the same as {@link #update(PersistencePackageRequest)} but you can optionally invoke the transactional version
-     * of {@link DynamicEntityRemoteService#update(org.broadleafcommerce.openadmin.dto.PersistencePackage)} in situations
+     * of {@link DynamicEntityRemoteService#update(com.ultracommerce.openadmin.dto.PersistencePackage)} in situations
      * where you want to manage the transactions in a parent component
      * 
      * @param request
@@ -162,7 +162,7 @@ public interface AdminEntityService {
     public PersistenceResponse update(PersistencePackageRequest request, boolean transactional) throws ServiceException;
 
     /**
-     * Thin layer on top of {@link DynamicEntityService#inspect(org.broadleafcommerce.openadmin.dto.PersistencePackage)}
+     * Thin layer on top of {@link DynamicEntityService#inspect(com.ultracommerce.openadmin.dto.PersistencePackage)}
      * @param request
      * @return
      * @throws ServiceException
@@ -170,7 +170,7 @@ public interface AdminEntityService {
     public PersistenceResponse inspect(PersistencePackageRequest request) throws ServiceException;
 
     /**
-     * Thin layer on top of {@link DynamicEntityService#remove(org.broadleafcommerce.openadmin.dto.PersistencePackage)}
+     * Thin layer on top of {@link DynamicEntityService#remove(com.ultracommerce.openadmin.dto.PersistencePackage)}
      * @param request
      * @return
      * @throws ServiceException
@@ -179,7 +179,7 @@ public interface AdminEntityService {
     
     /**
      * Works the same as {@link #remove(PersistencePackageRequest)} but you can optionally invoke the transactional version
-     * of {@link DynamicEntityRemoteService#remove(org.broadleafcommerce.openadmin.dto.PersistencePackage)} in situations
+     * of {@link DynamicEntityRemoteService#remove(com.ultracommerce.openadmin.dto.PersistencePackage)} in situations
      * where you want to manage the transactions in a parent component
      * 
      * @param request
@@ -190,7 +190,7 @@ public interface AdminEntityService {
     public PersistenceResponse remove(PersistencePackageRequest request, boolean transactional) throws ServiceException;
 
     /**
-     * Thin layer on top of {@link DynamicEntityService#fetch(org.broadleafcommerce.openadmin.dto.PersistencePackage, org.broadleafcommerce.openadmin.dto.CriteriaTransferObject)}.
+     * Thin layer on top of {@link DynamicEntityService#fetch(com.ultracommerce.openadmin.dto.PersistencePackage, com.ultracommerce.openadmin.dto.CriteriaTransferObject)}.
      * This will glean and create a {@link CriteriaTransferObject} from {@link PersistencePackageRequest#getFilterAndSortCriteria()}
      * to pass to {@link DynamicEntityService}.
      * 

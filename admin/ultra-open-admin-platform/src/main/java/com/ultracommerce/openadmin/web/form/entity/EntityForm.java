@@ -1,35 +1,35 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
 
-package org.broadleafcommerce.openadmin.web.form.entity;
+package com.ultracommerce.openadmin.web.form.entity;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.presentation.client.SupportedFieldType;
-import org.broadleafcommerce.common.util.BLCMessageUtils;
-import org.broadleafcommerce.common.util.StringUtil;
-import org.broadleafcommerce.openadmin.dto.ClassMetadata;
-import org.broadleafcommerce.openadmin.dto.GroupMetadata;
-import org.broadleafcommerce.openadmin.dto.SectionCrumb;
-import org.broadleafcommerce.openadmin.dto.TabMetadata;
-import org.broadleafcommerce.openadmin.web.form.component.ListGrid;
+import com.ultracommerce.common.presentation.client.SupportedFieldType;
+import com.ultracommerce.common.util.UCMessageUtils;
+import com.ultracommerce.common.util.StringUtil;
+import com.ultracommerce.openadmin.dto.ClassMetadata;
+import com.ultracommerce.openadmin.dto.GroupMetadata;
+import com.ultracommerce.openadmin.dto.SectionCrumb;
+import com.ultracommerce.openadmin.dto.TabMetadata;
+import com.ultracommerce.openadmin.web.form.component.ListGrid;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -393,7 +393,7 @@ public class EntityForm {
             if (tab == null) {
                 tab = new Tab();
                 tab.setKey(tabName);
-                tab.setTitle(BLCMessageUtils.getMessage(tabName));
+                tab.setTitle(UCMessageUtils.getMessage(tabName));
                 tab.setOrder(tabOrder);
                 tabs.add(tab);
             }
@@ -402,7 +402,7 @@ public class EntityForm {
             // If group exists, this code will not run
             fieldGroup = new FieldGroup();
             fieldGroup.setKey(groupName);
-            fieldGroup.setTitle(BLCMessageUtils.getMessage(groupName));
+            fieldGroup.setTitle(UCMessageUtils.getMessage(groupName));
             fieldGroup.setOrder(groupOrder);
             tab.getFieldGroups().add(fieldGroup);
         }
@@ -452,7 +452,7 @@ public class EntityForm {
         } else {
             tab = new Tab();
             tab.setKey(tabName);
-            tab.setTitle(BLCMessageUtils.getMessage(tabName));
+            tab.setTitle(UCMessageUtils.getMessage(tabName));
             tab.setOrder(tabOrder);
             tab.setTabsPresent(isTabPresent);
             tabs.add(tab);
@@ -741,7 +741,7 @@ public class EntityForm {
         Tab newTab = new Tab();
         newTab.setKey(tabMetadata.getTabName());
         if (tabMetadata.getTabName() != null) {
-            newTab.setTitle(BLCMessageUtils.getMessage(tabMetadata.getTabName()));
+            newTab.setTitle(UCMessageUtils.getMessage(tabMetadata.getTabName()));
         }
         newTab.setOrder(tabMetadata.getTabOrder());
         tabs.add(newTab);
@@ -751,7 +751,7 @@ public class EntityForm {
     public void addGroupFromGroupMetadata(GroupMetadata groupMetadata, String unprocessedTabName) {
         FieldGroup newGroup = new FieldGroup();
         newGroup.setKey(groupMetadata.getGroupName());
-        newGroup.setTitle(BLCMessageUtils.getMessage(groupMetadata.getGroupName()));
+        newGroup.setTitle(UCMessageUtils.getMessage(groupMetadata.getGroupName()));
         newGroup.setOrder(groupMetadata.getGroupOrder());
         newGroup.setColumn(groupMetadata.getColumn());
         newGroup.setIsUntitled(groupMetadata.getUntitled());

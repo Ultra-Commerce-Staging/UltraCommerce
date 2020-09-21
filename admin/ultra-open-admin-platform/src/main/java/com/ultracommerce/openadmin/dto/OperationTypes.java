@@ -1,23 +1,23 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.openadmin.dto;
+package com.ultracommerce.openadmin.dto;
 
-import org.broadleafcommerce.common.presentation.client.OperationType;
+import com.ultracommerce.common.presentation.client.OperationType;
 
 import java.io.Serializable;
 
@@ -53,7 +53,7 @@ public class OperationTypes implements Serializable {
      * OperationType NONDESTRUCTIVEREMOVE will result in the item being removed from the containing list in the containing entity. This
      * is useful when you don't want the item to actually be deleted, but simply removed from the parent collection.
      * OperationType ADORNEDTARGETLIST will result in a join structure being deleted (not either of the associated entities).
-     * org.broadleafcommerce.core.catalog.domain.CategoryProductXrefImpl is an example of a join structure entity.
+     * com.ultracommerce.core.catalog.domain.CategoryProductXrefImpl is an example of a join structure entity.
      * OperationType MAP will result in the item being removed from the requisite map in the containing entity.
      *
      * @return the type of remove operation
@@ -69,7 +69,7 @@ public class OperationTypes implements Serializable {
      * OperationType NONDESTRUCTIVEREMOVE will result in the item being removed from the containing list in the containing entity. This
      * is useful when you don't want the item to be removed to actually be deleted, but simply removed from the parent collection.
      * OperationType ADORNEDTARGETLIST will result in a join structure being deleted (not either of the associated entities).
-     * org.broadleafcommerce.core.catalog.domain.CategoryProductXrefImpl is an example of a join structure entity.
+     * com.ultracommerce.core.catalog.domain.CategoryProductXrefImpl is an example of a join structure entity.
      * OperationType MAP will result in the item being removed from the requisite map in the containing entity.
      *
      * @param removeType
@@ -85,7 +85,7 @@ public class OperationTypes implements Serializable {
      * OperationType NONDESTRUCTIVEREMOVE is not supported and will result in the same behavior as BASIC. Note, any foreign key associations in the
      * persistence perspective (@see PersistencePerspective) will be honored during the BASIC based add.
      * OperationType ADORNEDTARGETLIST will result in a join structure entity being added (not either of the associated entities).
-     * org.broadleafcommerce.core.catalog.domain.CategoryProductXrefImpl is an example of a join structure entity.
+     * com.ultracommerce.core.catalog.domain.CategoryProductXrefImpl is an example of a join structure entity.
      * OperationType MAP will result in the item being added to the requisite map in the containing entity.
      *
      * @return the type of the add operation
@@ -101,7 +101,7 @@ public class OperationTypes implements Serializable {
      * OperationType NONDESTRUCTIVEREMOVE is not supported and will result in the same behavior as BASIC. Note, any foreign key associations in the
      * persistence perspective (@see PersistencePerspective) will be honored during the BASIC based add.
      * OperationType ADORNEDTARGETLIST will result in a join structure entity being added (not either of the associated entities).
-     * org.broadleafcommerce.core.catalog.domain.CategoryProductXrefImpl is an example of a join structure entity.
+     * com.ultracommerce.core.catalog.domain.CategoryProductXrefImpl is an example of a join structure entity.
      * OperationType MAP will result in the item being added to the requisite map in the containing entity.
      *
      * @param addType
@@ -117,7 +117,7 @@ public class OperationTypes implements Serializable {
      * OperationType NONDESTRUCTIVEREMOVE is not supported and will result in the same behavior as BASIC. Note, any foreign key associations in the
      * persistence perspective (@see PersistencePerspective) will be honored during the BASIC based update.
      * OperationType ADORNEDTARGETLIST will result in a join structure entity being updated (not either of the associated entities).
-     * org.broadleafcommerce.core.catalog.domain.CategoryProductXrefImpl is an example of a join structure entity.
+     * com.ultracommerce.core.catalog.domain.CategoryProductXrefImpl is an example of a join structure entity.
      * OperationType MAP will result in the item being updated to the requisite map in the containing entity.
      *
      * @return the type of the update operation
@@ -133,7 +133,7 @@ public class OperationTypes implements Serializable {
      * OperationType NONDESTRUCTIVEREMOVE is not supported and will result in the same behavior as BASIC. Note, any foreign key associations in the
      * persistence perspective (@see PersistencePerspective) will be honored during the BASIC based update.
      * OperationType ADORNEDTARGETLIST will result in a join structure entity being updated (not either of the associated entities).
-     * org.broadleafcommerce.core.catalog.domain.CategoryProductXrefImpl is an example of a join structure entity.
+     * com.ultracommerce.core.catalog.domain.CategoryProductXrefImpl is an example of a join structure entity.
      * OperationType MAP will result in the item being updated to the requisite map in the containing entity.
      *
      * @param updateType

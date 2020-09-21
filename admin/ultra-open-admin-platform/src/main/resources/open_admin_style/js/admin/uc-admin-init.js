@@ -1,18 +1,18 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
 (function ($, window, undefined) {
@@ -31,19 +31,19 @@
         $.fn.foundationTabs             ? $doc.foundationTabs({
             deep_linking: false,
             callback: function() {
-                BLCAdmin.initializeFields(BLCAdmin.getActiveTab());
-                BLCAdmin.updateFields(BLCAdmin.getActiveTab());
+                UCAdmin.initializeFields(UCAdmin.getActiveTab());
+                UCAdmin.updateFields(UCAdmin.getActiveTab());
             }
         }) : null;
         $.fn.foundationTooltips         ? $doc.foundationTooltips() : null;
         $.fn.foundationMagellan         ? $doc.foundationMagellan() : null;
         $.fn.foundationClearing         ? $doc.foundationClearing() : null;
         $.fn.placeholder                ? $('input, textarea').placeholder() : null;
-        $.fn.broadleafAccordion         ? $doc.broadleafAccordion() : null;
-        $.fn.broadleafTabs              ? $doc.broadleafTabs() : null;
-        $.fn.broadleafListgrid          ? $doc.broadleafListgrid() : null;
+        $.fn.ultraAccordion         ? $doc.ultraAccordion() : null;
+        $.fn.ultraTabs              ? $doc.ultraTabs() : null;
+        $.fn.ultraListgrid          ? $doc.ultraListgrid() : null;
     
-        BLCAdmin.initializeFields();
+        UCAdmin.initializeFields();
 
     });
 
@@ -97,8 +97,8 @@
     $(document).ready(function() {
         // Send JavaScript errors to the server for logging.
         window.onerror = function(message, url, lineNumber) {
-            BLC.ajax({
-                url: BLC.servletContext + "/logJavaScriptError",
+            UC.ajax({
+                url: UC.servletContext + "/logJavaScriptError",
                 type: "POST",
                 data: {message: message, url: url, lineNumber: lineNumber},
                 cache: false
@@ -120,7 +120,7 @@
 
             window.onhashchange = function() {
                 // If any modals are open when this event is triggered, the modals should be closed.
-                BLCAdmin.hideAllModals();
+                UCAdmin.hideAllModals();
 
                 // if this was a session timeout, don't click a new tab
                 if (window.location.hash.indexOf('sessionTimeout') !== -1) {
@@ -133,7 +133,7 @@
                 $('.nav-tabs li > a[href="' + getCurrentHash() + '"]').click();
             };
             $(document).on('click', '.nav-tabs li > a', function () {
-                if (BLCAdmin.getModals().length == 0) {
+                if (UCAdmin.getModals().length == 0) {
                     window.location.hash = $(this).attr('href');
                 }
             });

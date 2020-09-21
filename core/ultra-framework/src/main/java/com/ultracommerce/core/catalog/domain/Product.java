@@ -1,29 +1,29 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
 
-package org.broadleafcommerce.core.catalog.domain;
+package com.ultracommerce.core.catalog.domain;
 
-import org.broadleafcommerce.common.copy.MultiTenantCloneable;
-import org.broadleafcommerce.common.media.domain.Media;
-import org.broadleafcommerce.common.money.Money;
-import org.broadleafcommerce.common.vendor.service.type.ContainerShapeType;
-import org.broadleafcommerce.common.vendor.service.type.ContainerSizeType;
-import org.broadleafcommerce.core.promotionMessage.domain.PromotionMessage;
+import com.ultracommerce.common.copy.MultiTenantCloneable;
+import com.ultracommerce.common.media.domain.Media;
+import com.ultracommerce.common.money.Money;
+import com.ultracommerce.common.vendor.service.type.ContainerShapeType;
+import com.ultracommerce.common.vendor.service.type.ContainerSizeType;
+import com.ultracommerce.core.promotionMessage.domain.PromotionMessage;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -356,14 +356,14 @@ public interface Product extends Serializable, MultiTenantCloneable<Product>, In
     public Map<String, Media> getAllSkuMedia();
 
     /**
-     * Return the {@link org.broadleafcommerce.core.catalog.domain.Category} that contains this product
+     * Return the {@link com.ultracommerce.core.catalog.domain.Category} that contains this product
      *
      * @return
      */
     public Category getCategory();
 
     /**
-     * Set the {@link org.broadleafcommerce.core.catalog.domain.Category} that contains this product
+     * Set the {@link com.ultracommerce.core.catalog.domain.Category} that contains this product
      *
      * @param category
      */
@@ -722,7 +722,7 @@ public interface Product extends Serializable, MultiTenantCloneable<Product>, In
      * Alternatively, most sites will rely on the {@link Product#getGeneratedUrl()} to define the
      * url for a product page.
      *
-     * @see org.broadleafcommerce.core.web.catalog.ProductHandlerMapping
+     * @see com.ultracommerce.core.web.catalog.ProductHandlerMapping
      * @return
      */
     public String getUrl();
@@ -850,7 +850,7 @@ public interface Product extends Serializable, MultiTenantCloneable<Product>, In
     public void setTaxCode(String taxCode);
 
     /**
-     * In most implementations, including the default Broadleaf demo store, if a product doesn't have a retail price,
+     * In most implementations, including the default Ultra demo store, if a product doesn't have a retail price,
      * it can't be sold.     This method returns true if in the current context, the product has a price.    The current
      * context may be different when accessed in an entperise context like one using PriceLists or MultiTentant.
      * @return

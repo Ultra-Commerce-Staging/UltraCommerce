@@ -1,28 +1,28 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.file.service;
+package com.ultracommerce.common.file.service;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang.StringUtils;
-import org.broadleafcommerce.common.site.domain.Site;
-import org.broadleafcommerce.common.site.domain.SiteImpl;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
+import com.ultracommerce.common.site.domain.Site;
+import com.ultracommerce.common.site.domain.SiteImpl;
+import com.ultracommerce.common.web.UltraRequestContext;
 
 import java.io.File;
 
@@ -35,7 +35,7 @@ public class FileSystemFileServiceProviderTest extends TestCase {
      * 35ec52a8dbd8cf3e2c650495001fe55f resulting in the following file on the filesystem
      * {assetFileSystemPath}/64/a7/myproductimage.jpg.
      * 
-     * If there is a "siteId" in the BroadleafRequestContext then the site is also distributed
+     * If there is a "siteId" in the UltraRequestContext then the site is also distributed
      * using a similar algorithm but the system attempts to keep images for sites in their own
      * directory resulting in an extra two folders required to reach any given product.   So, for
      * site with id 125, the system will MD5 "site125" in order to build the URL string.   "site125" has an md5
@@ -60,8 +60,8 @@ public class FileSystemFileServiceProviderTest extends TestCase {
         String resultPath = tmpdir + StringUtils.join(new String[] {"test", "35", "ec", "myproductimage.jpg"}, File.separator);
         assertEquals(file.getAbsolutePath(), FilenameUtils.normalize(resultPath));
 
-        BroadleafRequestContext brc = new BroadleafRequestContext();
-        BroadleafRequestContext.setBroadleafRequestContext(brc);
+        UltraRequestContext brc = new UltraRequestContext();
+        UltraRequestContext.setUltraRequestContext(brc);
 
         Site site = new SiteImpl();
         site.setId(125L);
@@ -79,7 +79,7 @@ public class FileSystemFileServiceProviderTest extends TestCase {
         assertEquals(file.getAbsolutePath(), resultPath);
         
         // Remove the request context from thread local so it doesn't get in the way of subsequent tests
-        BroadleafRequestContext.setBroadleafRequestContext(null);
+        UltraRequestContext.setUltraRequestContext(null);
     }
     
 }

@@ -1,208 +1,208 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
   #%L
-  BroadleafCommerce Open Admin Platform
+  UltraCommerce Open Admin Platform
   %%
-  Copyright (C) 2009 - 2016 Broadleaf Commerce
+  Copyright (C) 2009 - 2016 Ultra Commerce
   %%
-  Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
-  (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
-  unless the restrictions on use therein are violated and require payment to Broadleaf in which case
-  the Broadleaf End User License Agreement (EULA), Version 1.1
-  (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+  Licensed under the Ultra Fair Use License Agreement, Version 1.0
+  (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+  unless the restrictions on use therein are violated and require payment to Ultra in which case
+  the Ultra End User License Agreement (EULA), Version 1.1
+  (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
   shall apply.
   
   Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
-  between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+  between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
   #L%
   -->
 
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:mo="http://schema.broadleafcommerce.org/mo"
+       xmlns:mo="http://schema.ultracommerce.org/mo"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans.xsd
            http://www.springframework.org/schema/context
            http://www.springframework.org/schema/context/spring-context.xsd
-           http://schema.broadleafcommerce.org/mo
-           http://schema.broadleafcommerce.org/mo/mo-3.0.xsd">
+           http://schema.ultracommerce.org/mo
+           http://schema.ultracommerce.org/mo/mo-3.0.xsd">
 
-    <context:component-scan base-package="org.broadleafcommerce.openadmin">
-        <context:exclude-filter type="regex" expression="org.broadleafcommerce.openadmin.web.controller.*"/>
+    <context:component-scan base-package="com.ultracommerce.openadmin">
+        <context:exclude-filter type="regex" expression="com.ultracommerce.openadmin.web.controller.*"/>
     </context:component-scan>
     
-    <context:component-scan base-package="org.broadleafcommerce.openadmin.config"/>
+    <context:component-scan base-package="com.ultracommerce.openadmin.config"/>
     
 
-    <bean id="blPersistenceManagerEventHandlers" class="org.springframework.beans.factory.config.ListFactoryBean">
+    <bean id="ucPersistenceManagerEventHandlers" class="org.springframework.beans.factory.config.ListFactoryBean">
         <property name="sourceList">
             <list>
-                <ref bean="blArchiveStatusPersistenceEventHandler" />
-            </list>
-        </property>
-    </bean>
-    
-    <bean id="blPersistenceModules" class="org.springframework.beans.factory.config.ListFactoryBean" scope="prototype">
-        <property name="sourceList">
-            <list>
-                <ref bean="blBasicPersistenceModule"/>
-                <ref bean="blAdornedTargetListPersistenceModule"/>
-                <ref bean="blMapStructurePersistenceModule"/>
-            </list>
-        </property>
-    </bean>
-
-    <bean id="blCustomPersistenceHandlers" class="org.springframework.beans.factory.config.ListFactoryBean">
-        <property name="sourceList">
-            <list>
-                <ref bean="blAdminUserCustomPersistenceHandler" />
-                <ref bean="blAdminPermissionCustomPersistenceHandler" />
-                <ref bean="blSystemPropertyCustomPersistenceHandler" />
-                <ref bean="blTranslationCustomPersistenceHandler" />
+                <ref bean="ucArchiveStatusPersistenceEventHandler" />
             </list>
         </property>
     </bean>
     
-    <bean id="blCustomPersistenceHandlerFilterClassnames" class="org.springframework.beans.factory.config.ListFactoryBean">
+    <bean id="ucPersistenceModules" class="org.springframework.beans.factory.config.ListFactoryBean" scope="prototype">
+        <property name="sourceList">
+            <list>
+                <ref bean="ucBasicPersistenceModule"/>
+                <ref bean="ucAdornedTargetListPersistenceModule"/>
+                <ref bean="ucMapStructurePersistenceModule"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="ucCustomPersistenceHandlers" class="org.springframework.beans.factory.config.ListFactoryBean">
+        <property name="sourceList">
+            <list>
+                <ref bean="ucAdminUserCustomPersistenceHandler" />
+                <ref bean="ucAdminPermissionCustomPersistenceHandler" />
+                <ref bean="ucSystemPropertyCustomPersistenceHandler" />
+                <ref bean="ucTranslationCustomPersistenceHandler" />
+            </list>
+        </property>
+    </bean>
+    
+    <bean id="ucCustomPersistenceHandlerFilterClassnames" class="org.springframework.beans.factory.config.ListFactoryBean">
         <property name="sourceList">
             <list>
             </list>
         </property>
     </bean>
 
-    <bean id="blCustomPersistenceHandlerFilters" class="org.springframework.beans.factory.config.ListFactoryBean">
+    <bean id="ucCustomPersistenceHandlerFilters" class="org.springframework.beans.factory.config.ListFactoryBean">
         <property name="sourceList">
             <list>
-                <bean class="org.broadleafcommerce.openadmin.server.service.handler.DefaultCustomPersistenceHandlerFilter">
-                    <property name="filterCustomPersistenceHandlerClassnames" ref="blCustomPersistenceHandlerFilterClassnames" />
+                <bean class="com.ultracommerce.openadmin.server.service.handler.DefaultCustomPersistenceHandlerFilter">
+                    <property name="filterCustomPersistenceHandlerClassnames" ref="ucCustomPersistenceHandlerFilterClassnames" />
                 </bean>
             </list>
         </property>
     </bean>
 
-    <bean id="blStringLikeRestriction" class="org.broadleafcommerce.openadmin.server.service.persistence.module.criteria.Restriction">
-        <property name="filterValueConverter" ref="blStringLikeFilterValueConverter"/>
-        <property name="predicateProvider" ref="blLikePredicateProvider"/>
+    <bean id="ucStringLikeRestriction" class="com.ultracommerce.openadmin.server.service.persistence.module.criteria.Restriction">
+        <property name="filterValueConverter" ref="ucStringLikeFilterValueConverter"/>
+        <property name="predicateProvider" ref="ucLikePredicateProvider"/>
     </bean>
 
-    <bean id="blBooleanRestriction" class="org.broadleafcommerce.openadmin.server.service.persistence.module.criteria.Restriction">
-        <property name="filterValueConverter" ref="blBooleanFilterValueConverter"/>
-        <property name="predicateProvider" ref="blNullFalseEqPredicateProvider"/>
+    <bean id="ucBooleanRestriction" class="com.ultracommerce.openadmin.server.service.persistence.module.criteria.Restriction">
+        <property name="filterValueConverter" ref="ucBooleanFilterValueConverter"/>
+        <property name="predicateProvider" ref="ucNullFalseEqPredicateProvider"/>
     </bean>
 
-    <bean id="blCharacterRestriction" class="org.broadleafcommerce.openadmin.server.service.persistence.module.criteria.Restriction">
-        <property name="filterValueConverter" ref="blCharacterFilterValueConverter"/>
-        <property name="predicateProvider" ref="blNullFalseEqPredicateProvider"/>
+    <bean id="ucCharacterRestriction" class="com.ultracommerce.openadmin.server.service.persistence.module.criteria.Restriction">
+        <property name="filterValueConverter" ref="ucCharacterFilterValueConverter"/>
+        <property name="predicateProvider" ref="ucNullFalseEqPredicateProvider"/>
     </bean>
 
-    <bean id="blBetweenDateRestriction" class="org.broadleafcommerce.openadmin.server.service.persistence.module.criteria.Restriction">
-        <property name="filterValueConverter" ref="blNullAwareDateFilterValueConverter"/>
-        <property name="predicateProvider" ref="blBetweenDatePredicateProvider"/>
+    <bean id="ucBetweenDateRestriction" class="com.ultracommerce.openadmin.server.service.persistence.module.criteria.Restriction">
+        <property name="filterValueConverter" ref="ucNullAwareDateFilterValueConverter"/>
+        <property name="predicateProvider" ref="ucBetweenDatePredicateProvider"/>
     </bean>
 
-    <bean id="blBetweenDecimalRestriction" class="org.broadleafcommerce.openadmin.server.service.persistence.module.criteria.Restriction">
-        <property name="filterValueConverter" ref="blDecimalFilterValueConverter"/>
-        <property name="predicateProvider" ref="blBetweenPredicateProvider"/>
+    <bean id="ucBetweenDecimalRestriction" class="com.ultracommerce.openadmin.server.service.persistence.module.criteria.Restriction">
+        <property name="filterValueConverter" ref="ucDecimalFilterValueConverter"/>
+        <property name="predicateProvider" ref="ucBetweenPredicateProvider"/>
     </bean>
 
-    <bean id="blBetweenLongRestriction" class="org.broadleafcommerce.openadmin.server.service.persistence.module.criteria.Restriction">
-        <property name="filterValueConverter" ref="blLongFilterValueConverter"/>
-        <property name="predicateProvider" ref="blBetweenPredicateProvider"/>
+    <bean id="ucBetweenLongRestriction" class="com.ultracommerce.openadmin.server.service.persistence.module.criteria.Restriction">
+        <property name="filterValueConverter" ref="ucLongFilterValueConverter"/>
+        <property name="predicateProvider" ref="ucBetweenPredicateProvider"/>
     </bean>
 
-    <bean id="blCollectionSizeEqualRestriction" class="org.broadleafcommerce.openadmin.server.service.persistence.module.criteria.Restriction">
-        <property name="filterValueConverter" ref="blIntegerFilterValueConverter"/>
-        <property name="predicateProvider" ref="blCollectionSizeEqualPredicateProvider"/>
+    <bean id="ucCollectionSizeEqualRestriction" class="com.ultracommerce.openadmin.server.service.persistence.module.criteria.Restriction">
+        <property name="filterValueConverter" ref="ucIntegerFilterValueConverter"/>
+        <property name="predicateProvider" ref="ucCollectionSizeEqualPredicateProvider"/>
     </bean>
 
-    <bean id="blIsNullLongRestriction" class="org.broadleafcommerce.openadmin.server.service.persistence.module.criteria.Restriction">
-        <property name="predicateProvider" ref="blIsNullPredicateProvider"/>
+    <bean id="ucIsNullLongRestriction" class="com.ultracommerce.openadmin.server.service.persistence.module.criteria.Restriction">
+        <property name="predicateProvider" ref="ucIsNullPredicateProvider"/>
     </bean>
 
-    <bean id="blStringEqualRestriction" class="org.broadleafcommerce.openadmin.server.service.persistence.module.criteria.Restriction">
-        <property name="filterValueConverter" ref="blStringFilterValueConverter"/>
-        <property name="predicateProvider" ref="blEqPredicateProvider"/>
+    <bean id="ucStringEqualRestriction" class="com.ultracommerce.openadmin.server.service.persistence.module.criteria.Restriction">
+        <property name="filterValueConverter" ref="ucStringFilterValueConverter"/>
+        <property name="predicateProvider" ref="ucEqPredicateProvider"/>
     </bean>
 
-    <bean id="blLongEqualRestriction" class="org.broadleafcommerce.openadmin.server.service.persistence.module.criteria.Restriction">
-        <property name="filterValueConverter" ref="blLongFilterValueConverter"/>
-        <property name="predicateProvider" ref="blEqPredicateProvider"/>
+    <bean id="ucLongEqualRestriction" class="com.ultracommerce.openadmin.server.service.persistence.module.criteria.Restriction">
+        <property name="filterValueConverter" ref="ucLongFilterValueConverter"/>
+        <property name="predicateProvider" ref="ucEqPredicateProvider"/>
     </bean>
 
-    <bean id="blStringNotEqualRestriction" class="org.broadleafcommerce.openadmin.server.service.persistence.module.criteria.Restriction">
-        <property name="filterValueConverter" ref="blStringFilterValueConverter"/>
-        <property name="predicateProvider" ref="blNotEqPredicateProvider"/>
+    <bean id="ucStringNotEqualRestriction" class="com.ultracommerce.openadmin.server.service.persistence.module.criteria.Restriction">
+        <property name="filterValueConverter" ref="ucStringFilterValueConverter"/>
+        <property name="predicateProvider" ref="ucNotEqPredicateProvider"/>
     </bean>
 
-    <bean id="blLongNotEqualRestriction" class="org.broadleafcommerce.openadmin.server.service.persistence.module.criteria.Restriction">
-        <property name="filterValueConverter" ref="blLongFilterValueConverter"/>
-        <property name="predicateProvider" ref="blNotEqPredicateProvider"/>
+    <bean id="ucLongNotEqualRestriction" class="com.ultracommerce.openadmin.server.service.persistence.module.criteria.Restriction">
+        <property name="filterValueConverter" ref="ucLongFilterValueConverter"/>
+        <property name="predicateProvider" ref="ucNotEqPredicateProvider"/>
     </bean>
 
-    <bean id="blRestrictionFactoryMap" class="org.springframework.beans.factory.config.MapFactoryBean">
+    <bean id="ucRestrictionFactoryMap" class="org.springframework.beans.factory.config.MapFactoryBean">
         <property name="sourceMap">
             <map>
-                <entry key="STRING_LIKE" value-ref="blStringLikeRestriction"/>
-                <entry key="BOOLEAN" value-ref="blBooleanRestriction"/>
-                <entry key="CHARACTER" value-ref="blCharacterRestriction"/>
-                <entry key="DATE" value-ref="blBetweenDateRestriction"/>
-                <entry key="DECIMAL" value-ref="blBetweenDecimalRestriction"/>
-                <entry key="LONG" value-ref="blBetweenLongRestriction"/>
-                <entry key="COLLECTION_SIZE_EQUAL" value-ref="blCollectionSizeEqualRestriction"/>
-                <entry key="IS_NULL_LONG" value-ref="blIsNullLongRestriction"/>
-                <entry key="STRING_EQUAL" value-ref="blStringEqualRestriction"/>
-                <entry key="LONG_EQUAL" value-ref="blLongEqualRestriction"/>
-                <entry key="STRING_NOT_EQUAL" value-ref="blStringNotEqualRestriction"/>
-                <entry key="LONG_NOT_EQUAL" value-ref="blLongNotEqualRestriction"/>
+                <entry key="STRING_LIKE" value-ref="ucStringLikeRestriction"/>
+                <entry key="BOOLEAN" value-ref="ucBooleanRestriction"/>
+                <entry key="CHARACTER" value-ref="ucCharacterRestriction"/>
+                <entry key="DATE" value-ref="ucBetweenDateRestriction"/>
+                <entry key="DECIMAL" value-ref="ucBetweenDecimalRestriction"/>
+                <entry key="LONG" value-ref="ucBetweenLongRestriction"/>
+                <entry key="COLLECTION_SIZE_EQUAL" value-ref="ucCollectionSizeEqualRestriction"/>
+                <entry key="IS_NULL_LONG" value-ref="ucIsNullLongRestriction"/>
+                <entry key="STRING_EQUAL" value-ref="ucStringEqualRestriction"/>
+                <entry key="LONG_EQUAL" value-ref="ucLongEqualRestriction"/>
+                <entry key="STRING_NOT_EQUAL" value-ref="ucStringNotEqualRestriction"/>
+                <entry key="LONG_NOT_EQUAL" value-ref="ucLongNotEqualRestriction"/>
             </map>
         </property>
     </bean>
 
-    <bean id="blAdditionalSectionAuthorizations" class="org.springframework.beans.factory.config.ListFactoryBean">
+    <bean id="ucAdditionalSectionAuthorizations" class="org.springframework.beans.factory.config.ListFactoryBean">
         <property name="sourceList">
             <list>
-                <ref bean="blPolymorphicEntityCheckSectionAuthorization"/>
+                <ref bean="ucPolymorphicEntityCheckSectionAuthorization"/>
             </list>
         </property>
     </bean>
     
     <!-- Global validators, used by EntityValidationService. All entities that pass through the admin will be validated
      by the beans declared in this list -->
-    <bean id="blGlobalEntityPropertyValidators" class="org.springframework.beans.factory.config.ListFactoryBean">
+    <bean id="ucGlobalEntityPropertyValidators" class="org.springframework.beans.factory.config.ListFactoryBean">
         <property name="sourceList">
             <list>
-                <ref bean="blRequiredPropertyValidator"/>
-                <ref bean="blFieldLengthValidator"/>
-                <ref bean="blAdornedTargetMaintainedFieldPropertyValidator"/>
+                <ref bean="ucRequiredPropertyValidator"/>
+                <ref bean="ucFieldLengthValidator"/>
+                <ref bean="ucAdornedTargetMaintainedFieldPropertyValidator"/>
             </list>
         </property>
     </bean>
     
-    <bean id="blPopulateValueRequestValidators" class="org.springframework.beans.factory.config.ListFactoryBean">
+    <bean id="ucPopulateValueRequestValidators" class="org.springframework.beans.factory.config.ListFactoryBean">
         <property name="sourceList">
             <list>
-                <ref bean="blBasicFieldTypeValidator"/>
-                <ref bean="blRuleFieldValidator"/>
+                <ref bean="ucBasicFieldTypeValidator"/>
+                <ref bean="ucRuleFieldValidator"/>
             </list>
         </property>
     </bean>
     
-    <bean id="blRuleBuilderEnumOptionsExtensionListeners" class="org.springframework.beans.factory.config.ListFactoryBean">
+    <bean id="ucRuleBuilderEnumOptionsExtensionListeners" class="org.springframework.beans.factory.config.ListFactoryBean">
         <property name="sourceList">
             <list>
             </list>
         </property>
     </bean>
     
-    <bean id="blRuleBuilderFieldServices" class="org.springframework.beans.factory.config.ListFactoryBean">
+    <bean id="ucRuleBuilderFieldServices" class="org.springframework.beans.factory.config.ListFactoryBean">
         <property name="sourceList">
             <list>
             </list>
         </property>
     </bean>
 
-    <bean id="blOpenAdminCssLocations" class="org.springframework.beans.factory.config.ListFactoryBean" >
+    <bean id="ucOpenAdminCssLocations" class="org.springframework.beans.factory.config.ListFactoryBean" >
         <property name="sourceList">
             <list>
                 <value>classpath:/open_admin_style/css/</value>
@@ -210,24 +210,24 @@
         </property>
     </bean>
     
-    <bean class="org.broadleafcommerce.common.extensibility.context.merge.LateStageMergeBeanPostProcessor">
-        <property name="collectionRef" value="blOpenAdminCssLocations" />
-        <property name="targetRef" value="blCssLocations" />
+    <bean class="com.ultracommerce.common.extensibility.context.merge.LateStageMergeBeanPostProcessor">
+        <property name="collectionRef" value="ucOpenAdminCssLocations" />
+        <property name="targetRef" value="ucCssLocations" />
     </bean>
 
-    <bean id="blOpenAdminJsLocations" class="org.springframework.beans.factory.config.ListFactoryBean">
+    <bean id="ucOpenAdminJsLocations" class="org.springframework.beans.factory.config.ListFactoryBean">
         <property name="sourceList">
             <list>
                 <value>classpath:/open_admin_style/js/</value>
             </list>
         </property>
     </bean>
-    <bean class="org.broadleafcommerce.common.extensibility.context.merge.LateStageMergeBeanPostProcessor">
-        <property name="collectionRef" value="blOpenAdminJsLocations" />
-        <property name="targetRef" value="blJsLocations" />
+    <bean class="com.ultracommerce.common.extensibility.context.merge.LateStageMergeBeanPostProcessor">
+        <property name="collectionRef" value="ucOpenAdminJsLocations" />
+        <property name="targetRef" value="ucJsLocations" />
     </bean>
 
-    <bean id="blCriteriaTranslatorEventHandlers" class="org.springframework.beans.factory.config.ListFactoryBean">
+    <bean id="ucCriteriaTranslatorEventHandlers" class="org.springframework.beans.factory.config.ListFactoryBean">
         <property name="sourceList">
             <list>
             </list>
@@ -235,55 +235,55 @@
     </bean>
     
     <!--  Spring 4.1 Admin Resource Resolvers -->
-    <bean id="blAdminResourceResolvers" class="org.springframework.beans.factory.config.ListFactoryBean" >
+    <bean id="ucAdminResourceResolvers" class="org.springframework.beans.factory.config.ListFactoryBean" >
         <property name="sourceList">
             <list>
-                <ref bean="blBLCJSUrlPathResolver" />                         
-                <ref bean="blCacheResourceResolver" />                
-                <ref bean="blVersionResourceResolver" />
-                <ref bean="blBundleResourceResolver" />
-                <ref bean="blBLCJSResolver" />
-                <ref bean="blSystemPropertyJSResolver" />
-                <ref bean="blRuleBuilderOptionResourceResolver" />
-                <ref bean="blPathResourceResolver" />
-                <ref bean="blMessagesResourceResolver" />
+                <ref bean="ucUCJSUrlPathResolver" />                         
+                <ref bean="ucCacheResourceResolver" />                
+                <ref bean="ucVersionResourceResolver" />
+                <ref bean="ucBundleResourceResolver" />
+                <ref bean="ucUCJSResolver" />
+                <ref bean="ucSystemPropertyJSResolver" />
+                <ref bean="ucRuleBuilderOptionResourceResolver" />
+                <ref bean="ucPathResourceResolver" />
+                <ref bean="ucMessagesResourceResolver" />
             </list>
         </property>
     </bean>
     
-    <bean id="blAdminAdditionalBundleFiles" class="org.springframework.beans.factory.config.MapFactoryBean">
+    <bean id="ucAdminAdditionalBundleFiles" class="org.springframework.beans.factory.config.MapFactoryBean">
         <property name="sourceMap">
             <map value-type="java.util.List">
-                <entry key="adminlib.js" value-ref="blAdminJsLibFileList"/>
-                <entry key="admin.js" value-ref="blJsFileList"/>
-                <entry key="admin/admin.css" value-ref="blCssFileList"/>
+                <entry key="adminlib.js" value-ref="ucAdminJsLibFileList"/>
+                <entry key="admin.js" value-ref="ucJsFileList"/>
+                <entry key="admin/admin.css" value-ref="ucCssFileList"/>
             </map>
         </property>  
     </bean>
-    <bean class="org.broadleafcommerce.common.extensibility.context.merge.LateStageMergeBeanPostProcessor">
-        <property name="collectionRef" value="blAdminAdditionalBundleFiles" />
-        <property name="targetRef" value="blAdditionalBundleFiles" />
+    <bean class="com.ultracommerce.common.extensibility.context.merge.LateStageMergeBeanPostProcessor">
+        <property name="collectionRef" value="ucAdminAdditionalBundleFiles" />
+        <property name="targetRef" value="ucAdditionalBundleFiles" />
     </bean>
 
     <!--  Spring 4.1 Admin Resource Handling Base Classes -->
     <bean id="adminResourceHttpRequestHandlerBase" abstract="true"
-        class="org.broadleafcommerce.common.web.resource.BroadleafResourceHttpRequestHandler">   
+        class="com.ultracommerce.common.web.resource.UltraResourceHttpRequestHandler">   
         <!--  property name="themesBaseDirectory" value="/WEB-INF/" / -->
         <property name="cacheSeconds" value="${staticResourceBrowserCacheSeconds}" />    
-        <property name="resourceResolvers" ref="blAdminResourceResolvers" />
+        <property name="resourceResolvers" ref="ucAdminResourceResolvers" />
     </bean>
     
-    <bean id="blJsResources" parent="adminResourceHttpRequestHandlerBase">
-        <property name="locations" ref="blJsLocations"/>
-        <property name="resourceTransformers" ref="blJsResourceTransformers" />     
+    <bean id="ucJsResources" parent="adminResourceHttpRequestHandlerBase">
+        <property name="locations" ref="ucJsLocations"/>
+        <property name="resourceTransformers" ref="ucJsResourceTransformers" />     
     </bean>
     
-    <bean id="blCssResources" parent="adminResourceHttpRequestHandlerBase">
-        <property name="locations" ref="blCssLocations"/>
-        <property name="resourceTransformers" ref="blCssResourceTransformers" />             
+    <bean id="ucCssResources" parent="adminResourceHttpRequestHandlerBase">
+        <property name="locations" ref="ucCssLocations"/>
+        <property name="resourceTransformers" ref="ucCssResourceTransformers" />             
     </bean>
 
-    <bean id="blMessageSourceBaseNames-openadmin" class="org.springframework.beans.factory.config.ListFactoryBean">
+    <bean id="ucMessageSourceBaseNames-openadmin" class="org.springframework.beans.factory.config.ListFactoryBean">
         <property name="sourceList">
             <list>
                 <value>classpath:/messages/GeneratedMessagesEntityCommon</value>
@@ -295,51 +295,51 @@
             </list>
         </property>
     </bean>
-    <bean class="org.broadleafcommerce.common.extensibility.context.merge.LateStageMergeBeanPostProcessor">
-        <property name="collectionRef" value="blMessageSourceBaseNames-openadmin" />
-        <property name="targetRef" value="blMessageSourceBaseNames" />
+    <bean class="com.ultracommerce.common.extensibility.context.merge.LateStageMergeBeanPostProcessor">
+        <property name="collectionRef" value="ucMessageSourceBaseNames-openadmin" />
+        <property name="targetRef" value="ucMessageSourceBaseNames" />
     </bean>
 
-    <bean id="blSendAdminUsernameEmailInfo" class="org.broadleafcommerce.common.email.service.info.EmailInfo">
+    <bean id="ucSendAdminUsernameEmailInfo" class="com.ultracommerce.common.email.service.info.EmailInfo">
         <property name="fromAddress" value="${adminUserNameEmail.fromAddress}"/>
         <property name="emailTemplate" value="${adminUserNameEmail.emailTemplate}"/>
         <property name="subject" value="${adminUserNameEmail.subject}"/>
     </bean>
 
-    <bean id="blSendAdminResetPasswordEmail" class="org.broadleafcommerce.common.email.service.info.EmailInfo">
+    <bean id="ucSendAdminResetPasswordEmail" class="com.ultracommerce.common.email.service.info.EmailInfo">
         <property name="fromAddress" value="${adminResetPassword.fromAddress}"/>
         <property name="emailTemplate" value="${adminResetPassword.emailTemplate}"/>
         <property name="subject" value="${adminResetPassword.subject}"/>
     </bean>
 
-    <mo:override id="blMetadataOverrides"/>
+    <mo:override id="ucMetadataOverrides"/>
 
-    <bean id="blFieldMetadataProviders" class="org.broadleafcommerce.common.util.SortedListFactoryBean">
+    <bean id="ucFieldMetadataProviders" class="com.ultracommerce.common.util.SortedListFactoryBean">
         <property name="sourceList">
             <list>
-                <ref bean="blBasicFieldMetadataProvider"/>
-                <ref bean="blCollectionFieldMetadataProvider"/>
-                <ref bean="blAdornedTargetCollectionFieldMetadataProvider"/>
-                <ref bean="blMapFieldMetadataProvider"/>
-                <ref bean="blMapFieldsFieldMetadataProvider"/>
-                <ref bean="blPasswordFieldMetadataProvider"/>
+                <ref bean="ucBasicFieldMetadataProvider"/>
+                <ref bean="ucCollectionFieldMetadataProvider"/>
+                <ref bean="ucAdornedTargetCollectionFieldMetadataProvider"/>
+                <ref bean="ucMapFieldMetadataProvider"/>
+                <ref bean="ucMapFieldsFieldMetadataProvider"/>
+                <ref bean="ucPasswordFieldMetadataProvider"/>
             </list>
         </property>
     </bean>
 
-    <bean id="blPersistenceProviders" class="org.broadleafcommerce.common.util.SortedListFactoryBean">
+    <bean id="ucPersistenceProviders" class="com.ultracommerce.common.util.SortedListFactoryBean">
         <property name="sourceList">
             <list>
-                <ref bean="blBasicFieldPersistenceProvider"/>
-                <ref bean="blRuleFieldPersistenceProvider"/>
-                <ref bean="blMapFieldPersistenceProvider"/>
-                <ref bean="blMoneyFieldPersistenceProvider"/>
-                <ref bean="blMediaFieldPersistenceProvider"/>
+                <ref bean="ucBasicFieldPersistenceProvider"/>
+                <ref bean="ucRuleFieldPersistenceProvider"/>
+                <ref bean="ucMapFieldPersistenceProvider"/>
+                <ref bean="ucMoneyFieldPersistenceProvider"/>
+                <ref bean="ucMediaFieldPersistenceProvider"/>
             </list>
         </property>
     </bean>
 
-    <bean id="blAppConfigurationMap" class="org.springframework.beans.factory.config.MapFactoryBean">
+    <bean id="ucAppConfigurationMap" class="org.springframework.beans.factory.config.MapFactoryBean">
         <property name="sourceMap">
             <map>
                 <entry key="admin.showIfProperty.priceList" value="true"/>
@@ -348,14 +348,14 @@
         </property>
     </bean>
 
-    <bean id="blRowLevelSecurityProviders" class="org.springframework.beans.factory.config.ListFactoryBean">
+    <bean id="ucRowLevelSecurityProviders" class="org.springframework.beans.factory.config.ListFactoryBean">
         <property name="sourceList">
             <list>
             </list>
         </property>
     </bean>
 
-    <bean id="blAdminPasswordEncoder" class="org.broadleafcommerce.common.util.PropertyDrivenBeanFactory" factory-method="createInstance">
+    <bean id="ucAdminPasswordEncoder" class="com.ultracommerce.common.util.PropertyDrivenBeanFactory" factory-method="createInstance">
         <constructor-arg value="${password.admin.encoder}"/>
     </bean>
 

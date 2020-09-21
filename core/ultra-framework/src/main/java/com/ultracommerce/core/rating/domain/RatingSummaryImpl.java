@@ -1,28 +1,28 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.rating.domain;
+package com.ultracommerce.core.rating.domain;
 
-import org.broadleafcommerce.common.presentation.AdminPresentation;
-import org.broadleafcommerce.common.presentation.AdminPresentationClass;
-import org.broadleafcommerce.common.presentation.AdminPresentationCollection;
-import org.broadleafcommerce.common.presentation.PopulateToOneFieldsEnum;
-import org.broadleafcommerce.common.presentation.client.SupportedFieldType;
-import org.broadleafcommerce.core.rating.service.type.RatingType;
+import com.ultracommerce.common.presentation.AdminPresentation;
+import com.ultracommerce.common.presentation.AdminPresentationClass;
+import com.ultracommerce.common.presentation.AdminPresentationCollection;
+import com.ultracommerce.common.presentation.PopulateToOneFieldsEnum;
+import com.ultracommerce.common.presentation.client.SupportedFieldType;
+import com.ultracommerce.core.rating.service.type.RatingType;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Index;
 import org.hibernate.annotations.Parameter;
@@ -41,7 +41,7 @@ import javax.persistence.Table;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "BLC_RATING_SUMMARY")
+@Table(name = "UC_RATING_SUMMARY")
 @AdminPresentationClass(friendlyName = "RatingSummary", populateToOneFields = PopulateToOneFieldsEnum.TRUE)
 public class RatingSummaryImpl implements RatingSummary, Serializable {
 
@@ -51,10 +51,10 @@ public class RatingSummaryImpl implements RatingSummary, Serializable {
     @GeneratedValue(generator = "RatingSummaryId")
     @GenericGenerator(
         name="RatingSummaryId",
-        strategy="org.broadleafcommerce.common.persistence.IdOverrideTableGenerator",
+        strategy="com.ultracommerce.common.persistence.IdOverrideTableGenerator",
         parameters = {
             @Parameter(name="segment_value", value="RatingSummaryImpl"),
-            @Parameter(name="entity_name", value="org.broadleafcommerce.core.rating.domain.RatingSummaryImpl")
+            @Parameter(name="entity_name", value="com.ultracommerce.core.rating.domain.RatingSummaryImpl")
         }
     )
     @Column(name = "RATING_SUMMARY_ID")
@@ -69,8 +69,8 @@ public class RatingSummaryImpl implements RatingSummary, Serializable {
     @Index(name="RATINGSUMM_TYPE_INDEX", columnNames={"RATING_TYPE"})
     @AdminPresentation(friendlyName = "RatingSummary_ratingType",
         prominent = true,
-        fieldType = SupportedFieldType.BROADLEAF_ENUMERATION,
-        broadleafEnumeration = "org.broadleafcommerce.core.rating.service.type.RatingType")
+        fieldType = SupportedFieldType.ULTRA_ENUMERATION,
+        ultraEnumeration = "com.ultracommerce.core.rating.service.type.RatingType")
     protected String ratingTypeStr;
 
     @Column(name = "AVERAGE_RATING", nullable = false)

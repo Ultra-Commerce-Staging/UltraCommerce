@@ -1,38 +1,38 @@
 /*
  * #%L
- * BroadleafCommerce Framework Web
+ * UltraCommerce Framework Web
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.web.controller.catalog;
+package com.ultracommerce.core.web.controller.catalog;
 
 import org.apache.commons.lang3.StringUtils;
-import org.broadleafcommerce.common.extension.ExtensionResultHolder;
-import org.broadleafcommerce.common.extension.ExtensionResultStatusType;
-import org.broadleafcommerce.common.file.service.StaticAssetPathService;
-import org.broadleafcommerce.common.template.TemplateOverrideExtensionManager;
-import org.broadleafcommerce.common.template.TemplateType;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
-import org.broadleafcommerce.common.web.TemplateTypeAware;
-import org.broadleafcommerce.common.web.controller.BroadleafAbstractController;
-import org.broadleafcommerce.common.web.deeplink.DeepLinkService;
-import org.broadleafcommerce.core.catalog.domain.Product;
-import org.broadleafcommerce.core.order.domain.OrderItem;
-import org.broadleafcommerce.core.order.service.OrderItemService;
-import org.broadleafcommerce.core.order.service.call.ConfigurableOrderItemRequest;
-import org.broadleafcommerce.core.web.catalog.ProductHandlerMapping;
-import org.broadleafcommerce.profile.web.core.CustomerState;
+import com.ultracommerce.common.extension.ExtensionResultHolder;
+import com.ultracommerce.common.extension.ExtensionResultStatusType;
+import com.ultracommerce.common.file.service.StaticAssetPathService;
+import com.ultracommerce.common.template.TemplateOverrideExtensionManager;
+import com.ultracommerce.common.template.TemplateType;
+import com.ultracommerce.common.web.UltraRequestContext;
+import com.ultracommerce.common.web.TemplateTypeAware;
+import com.ultracommerce.common.web.controller.UltraAbstractController;
+import com.ultracommerce.common.web.deeplink.DeepLinkService;
+import com.ultracommerce.core.catalog.domain.Product;
+import com.ultracommerce.core.order.domain.OrderItem;
+import com.ultracommerce.core.order.service.OrderItemService;
+import com.ultracommerce.core.order.service.call.ConfigurableOrderItemRequest;
+import com.ultracommerce.core.web.catalog.ProductHandlerMapping;
+import com.ultracommerce.profile.web.core.CustomerState;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -50,25 +50,25 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author bpolster
  */
-public class BroadleafProductController extends BroadleafAbstractController implements Controller, TemplateTypeAware {
+public class UltraProductController extends UltraAbstractController implements Controller, TemplateTypeAware {
 
-    public static final String PAGE_TYPE_ATTRIBUTE_NAME = "BLC_PAGE_TYPE";
+    public static final String PAGE_TYPE_ATTRIBUTE_NAME = "UC_PAGE_TYPE";
     protected String defaultProductView = "catalog/product";
     protected static String MODEL_ATTRIBUTE_NAME = "product";
     protected static String CONFIGURATION_ATTRIBUTE_NAME = "configRequest";
-    protected static String ALL_PRODUCTS_ATTRIBUTE_NAME = "blcAllDisplayedProducts";
+    protected static String ALL_PRODUCTS_ATTRIBUTE_NAME = "ucAllDisplayedProducts";
     
     @Autowired(required = false)
-    @Qualifier("blProductDeepLinkService")
+    @Qualifier("ucProductDeepLinkService")
     protected DeepLinkService<Product> deepLinkService;
 
-    @Resource(name="blStaticAssetPathService")
+    @Resource(name="ucStaticAssetPathService")
     protected StaticAssetPathService staticAssetPathService;
 
-    @Resource(name = "blOrderItemService")
+    @Resource(name = "ucOrderItemService")
     protected OrderItemService orderItemService;
 
-    @Resource(name = "blTemplateOverrideExtensionManager")
+    @Resource(name = "ucTemplateOverrideExtensionManager")
     protected TemplateOverrideExtensionManager templateOverrideManager;
 
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
@@ -149,7 +149,7 @@ public class BroadleafProductController extends BroadleafAbstractController impl
     
     @Override
     public String getExpectedTemplateName(HttpServletRequest request) {
-        BroadleafRequestContext context = BroadleafRequestContext.getBroadleafRequestContext();
+        UltraRequestContext context = UltraRequestContext.getUltraRequestContext();
         if (context != null) {
             Product product = (Product) context.getRequest().getAttribute(ProductHandlerMapping.CURRENT_PRODUCT_ATTRIBUTE_NAME);
             if (product != null && product.getDisplayTemplate() != null) {

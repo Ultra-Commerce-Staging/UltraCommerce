@@ -1,49 +1,49 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.offer.service.processor;
+package com.ultracommerce.core.offer.service.processor;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.money.Money;
-import org.broadleafcommerce.core.offer.domain.Offer;
-import org.broadleafcommerce.core.offer.domain.OfferItemCriteria;
-import org.broadleafcommerce.core.offer.domain.OfferPriceData;
-import org.broadleafcommerce.core.offer.service.OfferServiceExtensionManager;
-import org.broadleafcommerce.core.offer.service.discount.CandidatePromotionItems;
-import org.broadleafcommerce.core.offer.service.discount.ItemOfferComparator;
-import org.broadleafcommerce.core.offer.service.discount.ItemOfferQtyOneComparator;
-import org.broadleafcommerce.core.offer.service.discount.ItemOfferWeightedPercentComparator;
-import org.broadleafcommerce.core.offer.service.discount.OrderOfferComparator;
-import org.broadleafcommerce.core.offer.service.discount.PromotionDiscount;
-import org.broadleafcommerce.core.offer.service.discount.PromotionQualifier;
-import org.broadleafcommerce.core.offer.service.discount.domain.PromotableCandidateItemOffer;
-import org.broadleafcommerce.core.offer.service.discount.domain.PromotableCandidateOrderOffer;
-import org.broadleafcommerce.core.offer.service.discount.domain.PromotableFulfillmentGroup;
-import org.broadleafcommerce.core.offer.service.discount.domain.PromotableOfferUtility;
-import org.broadleafcommerce.core.offer.service.discount.domain.PromotableOrder;
-import org.broadleafcommerce.core.offer.service.discount.domain.PromotableOrderItem;
-import org.broadleafcommerce.core.offer.service.discount.domain.PromotableOrderItemPriceDetail;
-import org.broadleafcommerce.core.offer.service.type.OfferDiscountType;
-import org.broadleafcommerce.core.offer.service.type.OfferItemRestrictionRuleType;
-import org.broadleafcommerce.core.offer.service.type.OfferType;
-import org.broadleafcommerce.core.order.domain.OrderItem;
-import org.broadleafcommerce.core.order.domain.dto.OrderItemHolder;
+import com.ultracommerce.common.money.Money;
+import com.ultracommerce.core.offer.domain.Offer;
+import com.ultracommerce.core.offer.domain.OfferItemCriteria;
+import com.ultracommerce.core.offer.domain.OfferPriceData;
+import com.ultracommerce.core.offer.service.OfferServiceExtensionManager;
+import com.ultracommerce.core.offer.service.discount.CandidatePromotionItems;
+import com.ultracommerce.core.offer.service.discount.ItemOfferComparator;
+import com.ultracommerce.core.offer.service.discount.ItemOfferQtyOneComparator;
+import com.ultracommerce.core.offer.service.discount.ItemOfferWeightedPercentComparator;
+import com.ultracommerce.core.offer.service.discount.OrderOfferComparator;
+import com.ultracommerce.core.offer.service.discount.PromotionDiscount;
+import com.ultracommerce.core.offer.service.discount.PromotionQualifier;
+import com.ultracommerce.core.offer.service.discount.domain.PromotableCandidateItemOffer;
+import com.ultracommerce.core.offer.service.discount.domain.PromotableCandidateOrderOffer;
+import com.ultracommerce.core.offer.service.discount.domain.PromotableFulfillmentGroup;
+import com.ultracommerce.core.offer.service.discount.domain.PromotableOfferUtility;
+import com.ultracommerce.core.offer.service.discount.domain.PromotableOrder;
+import com.ultracommerce.core.offer.service.discount.domain.PromotableOrderItem;
+import com.ultracommerce.core.offer.service.discount.domain.PromotableOrderItemPriceDetail;
+import com.ultracommerce.core.offer.service.type.OfferDiscountType;
+import com.ultracommerce.core.offer.service.type.OfferItemRestrictionRuleType;
+import com.ultracommerce.core.offer.service.type.OfferType;
+import com.ultracommerce.core.order.domain.OrderItem;
+import com.ultracommerce.core.order.domain.dto.OrderItemHolder;
 import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -64,7 +64,7 @@ import java.util.Set;
  * @author jfischer
  *
  */
-@Service("blItemOfferProcessor")
+@Service("ucItemOfferProcessor")
 public class ItemOfferProcessorImpl extends OrderOfferProcessorImpl implements ItemOfferProcessor, ItemOfferMarkTargets {
     
     protected static final Log LOG = LogFactory.getLog(ItemOfferProcessorImpl.class);
@@ -74,7 +74,7 @@ public class ItemOfferProcessorImpl extends OrderOfferProcessorImpl implements I
     }
 
     /* (non-Javadoc)
-     * @see org.broadleafcommerce.core.offer.service.processor.ItemOfferProcessor#filterItemLevelOffer(org.broadleafcommerce.core.order.domain.Order, java.util.List, java.util.List, org.broadleafcommerce.core.offer.domain.Offer)
+     * @see com.ultracommerce.core.offer.service.processor.ItemOfferProcessor#filterItemLevelOffer(com.ultracommerce.core.order.domain.Order, java.util.List, java.util.List, com.ultracommerce.core.offer.domain.Offer)
      */
     @Override
     public void filterItemLevelOffer(PromotableOrder order, List<PromotableCandidateItemOffer> qualifiedItemOffers, Offer offer) {
@@ -155,7 +155,7 @@ public class ItemOfferProcessorImpl extends OrderOfferProcessorImpl implements I
     
     
     /* (non-Javadoc)
-     * @see org.broadleafcommerce.core.offer.service.processor.ItemOfferProcessor#applyAllItemOffers(java.util.List, java.util.List)
+     * @see com.ultracommerce.core.offer.service.processor.ItemOfferProcessor#applyAllItemOffers(java.util.List, java.util.List)
      */
     @Override
     public void applyAllItemOffers(List<PromotableCandidateItemOffer> itemOffers, PromotableOrder order) {

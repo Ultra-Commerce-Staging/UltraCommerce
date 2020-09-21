@@ -1,33 +1,33 @@
 /*
  * #%L
- * BroadleafCommerce CMS Module
+ * UltraCommerce CMS Module
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.cms.web.file;
+package com.ultracommerce.cms.web.file;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.cms.common.AssetNotFoundException;
-import org.broadleafcommerce.cms.file.service.StaticAssetStorageService;
-import org.broadleafcommerce.cms.file.service.operation.NamedOperationComponent;
-import org.broadleafcommerce.cms.file.service.operation.NamedOperationManager;
-import org.broadleafcommerce.cms.file.service.operation.StaticMapNamedOperationComponent;
-import org.broadleafcommerce.common.classloader.release.ThreadLocalManager;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
-import org.broadleafcommerce.common.web.BroadleafSiteResolver;
+import com.ultracommerce.cms.common.AssetNotFoundException;
+import com.ultracommerce.cms.file.service.StaticAssetStorageService;
+import com.ultracommerce.cms.file.service.operation.NamedOperationComponent;
+import com.ultracommerce.cms.file.service.operation.NamedOperationManager;
+import com.ultracommerce.cms.file.service.operation.StaticMapNamedOperationComponent;
+import com.ultracommerce.common.classloader.release.ThreadLocalManager;
+import com.ultracommerce.common.web.UltraRequestContext;
+import com.ultracommerce.common.web.UltraSiteResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.env.Environment;
@@ -55,11 +55,11 @@ public class StaticAssetViewController extends AbstractController {
     protected String assetServerUrlPrefix;
     protected String viewResolverName;
 
-    @Resource(name="blStaticAssetStorageService")
+    @Resource(name="ucStaticAssetStorageService")
     protected StaticAssetStorageService staticAssetStorageService;
 
-    @Resource(name = "blSiteResolver")
-    protected BroadleafSiteResolver siteResolver;
+    @Resource(name = "ucSiteResolver")
+    protected UltraSiteResolver siteResolver;
 
     @Resource
     protected NamedOperationManager namedOperationManager;
@@ -76,8 +76,8 @@ public class StaticAssetViewController extends AbstractController {
             LOG.warn("Allowing image manipulation strictly through URL parameters that the application does not know about"
                     + " is not recommended and can be used maliciously for nefarious purposes. Instead, you should set up"
                     + " a map of known operations and the transformations associated with each operation. This behavior will"
-                    + " default to false starting with Broadleaf 3.2.0-GA. For more information"
-                    + " see the docs at http://www.broadleafcommerce.com/docs/core/current/broadleaf-concepts/additional-configuration/asset-server-configuration");
+                    + " default to false starting with Ultra 3.2.0-GA. For more information"
+                    + " see the docs at http://www.ultracommerce.com/docs/core/current/ultra-concepts/additional-configuration/asset-server-configuration");
         }
     }
 
@@ -125,7 +125,7 @@ public class StaticAssetViewController extends AbstractController {
      * Checks the current sandbox for a matching asset.   If not found, checks the
      * production sandbox.
      *
-     * The view portion will be handled by a component with the name "blStaticAssetView" This is
+     * The view portion will be handled by a component with the name "ucStaticAssetView" This is
      * intended to be the specific class StaticAssetView.
      *
      * @see StaticAssetView
@@ -138,7 +138,7 @@ public class StaticAssetViewController extends AbstractController {
 
         // Static Assets don't typically go through the Spring Security pipeline but they may need access
         // to the site
-        BroadleafRequestContext context = BroadleafRequestContext.getBroadleafRequestContext();
+        UltraRequestContext context = UltraRequestContext.getUltraRequestContext();
         context.setNonPersistentSite(siteResolver.resolveSite(new ServletWebRequest(request, response)));
         try {
             Map<String, String> model = staticAssetStorageService.getCacheFileModel(fullUrl, convertParameterMap(request.getParameterMap()));

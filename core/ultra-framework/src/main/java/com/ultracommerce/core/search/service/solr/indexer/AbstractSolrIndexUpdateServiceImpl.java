@@ -1,30 +1,30 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2019 Broadleaf Commerce
+ * Copyright (C) 2009 - 2019 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.search.service.solr.indexer;
+package com.ultracommerce.core.search.service.solr.indexer;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.solr.common.SolrInputDocument;
-import org.broadleafcommerce.common.exception.ServiceException;
-import org.broadleafcommerce.common.locale.domain.Locale;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
-import org.broadleafcommerce.core.catalog.domain.Indexable;
-import org.broadleafcommerce.core.search.domain.IndexField;
+import com.ultracommerce.common.exception.ServiceException;
+import com.ultracommerce.common.locale.domain.Locale;
+import com.ultracommerce.common.web.UltraRequestContext;
+import com.ultracommerce.core.catalog.domain.Indexable;
+import com.ultracommerce.core.search.domain.IndexField;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.util.Assert;
 
@@ -198,13 +198,13 @@ public abstract class AbstractSolrIndexUpdateServiceImpl implements SolrIndexUpd
                             
                             if (command != null) {
                                 try {
-                                    //We're running in a background thread, so let's just set up a new BroadleafRequestContext.
-                                    BroadleafRequestContext.setBroadleafRequestContext(new BroadleafRequestContext());
+                                    //We're running in a background thread, so let's just set up a new UltraRequestContext.
+                                    UltraRequestContext.setUltraRequestContext(new UltraRequestContext());
                                     commandHandler.executeCommand(command);
                                 } catch (Exception e) {
                                     LOG.error("Unexpected error occured attempting to update a Solr index.", e);
                                 } finally {
-                                    BroadleafRequestContext.setBroadleafRequestContext(null);
+                                    UltraRequestContext.setUltraRequestContext(null);
                                 }
                             }
                         }

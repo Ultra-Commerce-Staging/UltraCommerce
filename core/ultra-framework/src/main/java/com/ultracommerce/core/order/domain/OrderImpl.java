@@ -1,67 +1,67 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.order.domain;
+package com.ultracommerce.core.order.domain;
 
 import org.apache.commons.lang3.StringUtils;
-import org.broadleafcommerce.common.admin.domain.AdminMainEntity;
-import org.broadleafcommerce.common.audit.Auditable;
-import org.broadleafcommerce.common.audit.AuditableListener;
-import org.broadleafcommerce.common.copy.CreateResponse;
-import org.broadleafcommerce.common.copy.MultiTenantCopyContext;
-import org.broadleafcommerce.common.currency.domain.BroadleafCurrency;
-import org.broadleafcommerce.common.currency.domain.BroadleafCurrencyImpl;
-import org.broadleafcommerce.common.currency.util.BroadleafCurrencyUtils;
-import org.broadleafcommerce.common.currency.util.CurrencyCodeIdentifiable;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransform;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformMember;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformTypes;
-import org.broadleafcommerce.common.locale.domain.Locale;
-import org.broadleafcommerce.common.locale.domain.LocaleImpl;
-import org.broadleafcommerce.common.money.Money;
-import org.broadleafcommerce.common.persistence.PreviewStatus;
-import org.broadleafcommerce.common.persistence.Previewable;
-import org.broadleafcommerce.common.presentation.AdminPresentation;
-import org.broadleafcommerce.common.presentation.AdminPresentationCollection;
-import org.broadleafcommerce.common.presentation.AdminPresentationMap;
-import org.broadleafcommerce.common.presentation.AdminPresentationToOneLookup;
-import org.broadleafcommerce.common.presentation.client.SupportedFieldType;
-import org.broadleafcommerce.common.presentation.override.AdminPresentationMergeEntry;
-import org.broadleafcommerce.common.presentation.override.AdminPresentationMergeOverride;
-import org.broadleafcommerce.common.presentation.override.AdminPresentationMergeOverrides;
-import org.broadleafcommerce.common.presentation.override.PropertyType;
-import org.broadleafcommerce.core.catalog.domain.Sku;
-import org.broadleafcommerce.core.offer.domain.Adjustment;
-import org.broadleafcommerce.core.offer.domain.CandidateOrderOffer;
-import org.broadleafcommerce.core.offer.domain.CandidateOrderOfferImpl;
-import org.broadleafcommerce.core.offer.domain.Offer;
-import org.broadleafcommerce.core.offer.domain.OfferCode;
-import org.broadleafcommerce.core.offer.domain.OfferCodeImpl;
-import org.broadleafcommerce.core.offer.domain.OfferImpl;
-import org.broadleafcommerce.core.offer.domain.OfferInfo;
-import org.broadleafcommerce.core.offer.domain.OfferInfoImpl;
-import org.broadleafcommerce.core.offer.domain.OrderAdjustment;
-import org.broadleafcommerce.core.offer.domain.OrderAdjustmentImpl;
-import org.broadleafcommerce.core.order.service.call.ActivityMessageDTO;
-import org.broadleafcommerce.core.order.service.type.OrderStatus;
-import org.broadleafcommerce.core.payment.domain.OrderPayment;
-import org.broadleafcommerce.core.payment.domain.OrderPaymentImpl;
-import org.broadleafcommerce.profile.core.domain.Customer;
-import org.broadleafcommerce.profile.core.domain.CustomerImpl;
+import com.ultracommerce.common.admin.domain.AdminMainEntity;
+import com.ultracommerce.common.audit.Auditable;
+import com.ultracommerce.common.audit.AuditableListener;
+import com.ultracommerce.common.copy.CreateResponse;
+import com.ultracommerce.common.copy.MultiTenantCopyContext;
+import com.ultracommerce.common.currency.domain.UltraCurrency;
+import com.ultracommerce.common.currency.domain.UltraCurrencyImpl;
+import com.ultracommerce.common.currency.util.UltraCurrencyUtils;
+import com.ultracommerce.common.currency.util.CurrencyCodeIdentifiable;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransform;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransformMember;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransformTypes;
+import com.ultracommerce.common.locale.domain.Locale;
+import com.ultracommerce.common.locale.domain.LocaleImpl;
+import com.ultracommerce.common.money.Money;
+import com.ultracommerce.common.persistence.PreviewStatus;
+import com.ultracommerce.common.persistence.Previewable;
+import com.ultracommerce.common.presentation.AdminPresentation;
+import com.ultracommerce.common.presentation.AdminPresentationCollection;
+import com.ultracommerce.common.presentation.AdminPresentationMap;
+import com.ultracommerce.common.presentation.AdminPresentationToOneLookup;
+import com.ultracommerce.common.presentation.client.SupportedFieldType;
+import com.ultracommerce.common.presentation.override.AdminPresentationMergeEntry;
+import com.ultracommerce.common.presentation.override.AdminPresentationMergeOverride;
+import com.ultracommerce.common.presentation.override.AdminPresentationMergeOverrides;
+import com.ultracommerce.common.presentation.override.PropertyType;
+import com.ultracommerce.core.catalog.domain.Sku;
+import com.ultracommerce.core.offer.domain.Adjustment;
+import com.ultracommerce.core.offer.domain.CandidateOrderOffer;
+import com.ultracommerce.core.offer.domain.CandidateOrderOfferImpl;
+import com.ultracommerce.core.offer.domain.Offer;
+import com.ultracommerce.core.offer.domain.OfferCode;
+import com.ultracommerce.core.offer.domain.OfferCodeImpl;
+import com.ultracommerce.core.offer.domain.OfferImpl;
+import com.ultracommerce.core.offer.domain.OfferInfo;
+import com.ultracommerce.core.offer.domain.OfferInfoImpl;
+import com.ultracommerce.core.offer.domain.OrderAdjustment;
+import com.ultracommerce.core.offer.domain.OrderAdjustmentImpl;
+import com.ultracommerce.core.order.service.call.ActivityMessageDTO;
+import com.ultracommerce.core.order.service.type.OrderStatus;
+import com.ultracommerce.core.payment.domain.OrderPayment;
+import com.ultracommerce.core.payment.domain.OrderPaymentImpl;
+import com.ultracommerce.profile.core.domain.Customer;
+import com.ultracommerce.profile.core.domain.CustomerImpl;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -101,8 +101,8 @@ import javax.persistence.Transient;
 @Entity
 @EntityListeners(value = { AuditableListener.class, OrderPersistedEntityListener.class })
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "BLC_ORDER")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "blOrderElements")
+@Table(name = "UC_ORDER")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "ucOrderElements")
 @AdminPresentationMergeOverrides(
     {
         @AdminPresentationMergeOverride(name = "", mergeEntries =
@@ -122,10 +122,10 @@ public class OrderImpl implements Order, AdminMainEntity, CurrencyCodeIdentifiab
     @GeneratedValue(generator = "OrderId")
     @GenericGenerator(
         name="OrderId",
-        strategy="org.broadleafcommerce.common.persistence.IdOverrideTableGenerator",
+        strategy="com.ultracommerce.common.persistence.IdOverrideTableGenerator",
         parameters = {
             @Parameter(name="segment_value", value="OrderImpl"),
-            @Parameter(name="entity_name", value="org.broadleafcommerce.core.order.domain.OrderImpl")
+            @Parameter(name="entity_name", value="com.ultracommerce.core.order.domain.OrderImpl")
         }
     )
     @Column(name = "ORDER_ID")
@@ -154,8 +154,8 @@ public class OrderImpl implements Order, AdminMainEntity, CurrencyCodeIdentifiab
     @Column(name = "ORDER_STATUS")
     @Index(name="ORDER_STATUS_INDEX", columnNames={"ORDER_STATUS"})
     @AdminPresentation(friendlyName = "OrderImpl_Order_Status", group = GroupName.General,
-            order=FieldOrder.STATUS, prominent=true, fieldType=SupportedFieldType.BROADLEAF_ENUMERATION,
-            broadleafEnumeration="org.broadleafcommerce.core.order.service.type.OrderStatus",
+            order=FieldOrder.STATUS, prominent=true, fieldType=SupportedFieldType.ULTRA_ENUMERATION,
+            ultraEnumeration="com.ultracommerce.core.order.service.type.OrderStatus",
             gridOrder = 1000)
     protected String status;
 
@@ -204,30 +204,30 @@ public class OrderImpl implements Order, AdminMainEntity, CurrencyCodeIdentifiab
     protected String emailAddress;
 
     @OneToMany(mappedBy = "order", targetEntity = OrderItemImpl.class, cascade = {CascadeType.ALL})
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "blOrderElements")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "ucOrderElements")
     @AdminPresentationCollection(friendlyName="OrderImpl_Order_Items",
             tab = TabName.General)
     protected List<OrderItem> orderItems = new ArrayList<>();
 
     @OneToMany(mappedBy = "order", targetEntity = FulfillmentGroupImpl.class, cascade = {CascadeType.ALL})
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "blOrderElements")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "ucOrderElements")
     @AdminPresentationCollection(friendlyName="OrderImpl_Fulfillment_Groups",
                 tab = TabName.FulfillmentGroups)
     protected List<FulfillmentGroup> fulfillmentGroups = new ArrayList<>();
 
     @OneToMany(mappedBy = "order", targetEntity = OrderAdjustmentImpl.class, cascade = { CascadeType.ALL },
             orphanRemoval = true)
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "blOrderElements")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "ucOrderElements")
     @AdminPresentationCollection(friendlyName="OrderImpl_Adjustments",
                 group = GroupName.Advanced,
                 order = FieldOrder.ADJUSTMENTS)
     protected List<OrderAdjustment> orderAdjustments = new ArrayList<>();
 
     @ManyToMany(fetch = FetchType.LAZY, targetEntity = OfferCodeImpl.class, cascade = CascadeType.REFRESH)
-    @JoinTable(name = "BLC_ORDER_OFFER_CODE_XREF", joinColumns = @JoinColumn(name = "ORDER_ID",
+    @JoinTable(name = "UC_ORDER_OFFER_CODE_XREF", joinColumns = @JoinColumn(name = "ORDER_ID",
             referencedColumnName = "ORDER_ID"), inverseJoinColumns = @JoinColumn(name = "OFFER_CODE_ID",
             referencedColumnName = "OFFER_CODE_ID"))
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "blOrderElements")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "ucOrderElements")
     @AdminPresentationCollection(friendlyName="OrderImpl_Offer_Codes",
                 group = GroupName.Advanced,
                 manyToField = "orders", order = FieldOrder.OFFERCODES)
@@ -235,39 +235,39 @@ public class OrderImpl implements Order, AdminMainEntity, CurrencyCodeIdentifiab
 
     @OneToMany(mappedBy = "order", targetEntity = CandidateOrderOfferImpl.class, cascade = { CascadeType.ALL },
             orphanRemoval = true)
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "blOrderElements")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "ucOrderElements")
     protected List<CandidateOrderOffer> candidateOrderOffers = new ArrayList<>();
 
     @OneToMany(mappedBy = "order", targetEntity = OrderPaymentImpl.class, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "blOrderElements")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "ucOrderElements")
     @AdminPresentationCollection(friendlyName="OrderImpl_Payments",
                 tab = TabName.Payment)
     protected List<OrderPayment> payments = new ArrayList<>();
 
     @ManyToMany(targetEntity=OfferInfoImpl.class, cascade = CascadeType.REFRESH)
-    @JoinTable(name = "BLC_ADDITIONAL_OFFER_INFO", joinColumns = @JoinColumn(name = "BLC_ORDER_ORDER_ID",
+    @JoinTable(name = "UC_ADDITIONAL_OFFER_INFO", joinColumns = @JoinColumn(name = "UC_ORDER_ORDER_ID",
             referencedColumnName = "ORDER_ID"), inverseJoinColumns = @JoinColumn(name = "OFFER_INFO_ID",
             referencedColumnName = "OFFER_INFO_ID"))
     @MapKeyJoinColumn(name = "OFFER_ID")
     @MapKeyClass(OfferImpl.class)
     @Cascade(value={org.hibernate.annotations.CascadeType.ALL, org.hibernate.annotations.CascadeType.DELETE_ORPHAN})
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "blOrderElements")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "ucOrderElements")
     @BatchSize(size = 50)
     protected Map<Offer, OfferInfo> additionalOfferInformation = new HashMap<>();
 
     @OneToMany(mappedBy = "order", targetEntity = OrderAttributeImpl.class, cascade = { CascadeType.ALL },
             orphanRemoval = true)
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "blOrderElements")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "ucOrderElements")
     @MapKey(name="name")
     @AdminPresentationMap(friendlyName = "OrderImpl_Attributes",
         forceFreeFormKeys = true, keyPropertyFriendlyName = "OrderImpl_Attributes_Key_Name",
         group = GroupName.Advanced, order = FieldOrder.ATTRIBUTES)
     protected Map<String,OrderAttribute> orderAttributes = new HashMap<>();
     
-    @ManyToOne(targetEntity = BroadleafCurrencyImpl.class)
+    @ManyToOne(targetEntity = UltraCurrencyImpl.class)
     @JoinColumn(name = "CURRENCY_CODE")
     @AdminPresentation(excluded = true)
-    protected BroadleafCurrency currency;
+    protected UltraCurrency currency;
 
     @ManyToOne(targetEntity = LocaleImpl.class)
     @JoinColumn(name = "LOCALE_CODE")
@@ -302,7 +302,7 @@ public class OrderImpl implements Order, AdminMainEntity, CurrencyCodeIdentifiab
 
     @Override
     public Money getSubTotal() {
-        return subTotal == null ? null : BroadleafCurrencyUtils.getMoney(subTotal, getCurrency());
+        return subTotal == null ? null : UltraCurrencyUtils.getMoney(subTotal, getCurrency());
     }
 
     @Override
@@ -312,7 +312,7 @@ public class OrderImpl implements Order, AdminMainEntity, CurrencyCodeIdentifiab
 
     @Override
     public Money calculateSubTotal() {
-        Money calculatedSubTotal = BroadleafCurrencyUtils.getMoney(getCurrency());
+        Money calculatedSubTotal = UltraCurrencyUtils.getMoney(getCurrency());
         for (OrderItem orderItem : orderItems) {
             calculatedSubTotal = calculatedSubTotal.add(orderItem.getTotalPrice());
         }
@@ -328,7 +328,7 @@ public class OrderImpl implements Order, AdminMainEntity, CurrencyCodeIdentifiab
 
     @Override
     public Money getTotal() {
-        return total == null ? null : BroadleafCurrencyUtils.getMoney(total, getCurrency());
+        return total == null ? null : UltraCurrencyUtils.getMoney(total, getCurrency());
     }
 
     @Override
@@ -337,7 +337,7 @@ public class OrderImpl implements Order, AdminMainEntity, CurrencyCodeIdentifiab
         if (myTotal == null) {
             return null;
         }
-        Money totalPayments = BroadleafCurrencyUtils.getMoney(BigDecimal.ZERO, getCurrency());
+        Money totalPayments = UltraCurrencyUtils.getMoney(BigDecimal.ZERO, getCurrency());
         for (OrderPayment payment : getPayments()) {
             //add up all active payments that are not UNCONFIRMED Final Payments
             if (payment.isActive() && payment.getAmount() != null && 
@@ -446,7 +446,7 @@ public class OrderImpl implements Order, AdminMainEntity, CurrencyCodeIdentifiab
 
     @Override
     public Money getTotalTax() {
-        return totalTax == null ? null : BroadleafCurrencyUtils.getMoney(totalTax, getCurrency());
+        return totalTax == null ? null : UltraCurrencyUtils.getMoney(totalTax, getCurrency());
     }
 
     @Override
@@ -466,7 +466,7 @@ public class OrderImpl implements Order, AdminMainEntity, CurrencyCodeIdentifiab
 
     @Override
     public Money getTotalFulfillmentCharges() {
-        return totalFulfillmentCharges == null ? null : BroadleafCurrencyUtils.getMoney(totalFulfillmentCharges,
+        return totalFulfillmentCharges == null ? null : UltraCurrencyUtils.getMoney(totalFulfillmentCharges,
                 getCurrency());
     }
 
@@ -621,7 +621,7 @@ public class OrderImpl implements Order, AdminMainEntity, CurrencyCodeIdentifiab
 
     @Override
     public Money getItemAdjustmentsValue() {
-        Money itemAdjustmentsValue = BroadleafCurrencyUtils.getMoney(BigDecimal.ZERO, getCurrency());
+        Money itemAdjustmentsValue = UltraCurrencyUtils.getMoney(BigDecimal.ZERO, getCurrency());
         for (OrderItem orderItem : orderItems) {
             itemAdjustmentsValue = itemAdjustmentsValue.add(orderItem.getTotalAdjustmentValue());
         }
@@ -630,7 +630,7 @@ public class OrderImpl implements Order, AdminMainEntity, CurrencyCodeIdentifiab
 
     @Override
     public Money getFutureCreditItemAdjustmentsValue() {
-        Money itemAdjustmentsValue = BroadleafCurrencyUtils.getMoney(BigDecimal.ZERO, getCurrency());
+        Money itemAdjustmentsValue = UltraCurrencyUtils.getMoney(BigDecimal.ZERO, getCurrency());
         for (OrderItem orderItem : orderItems) {
             itemAdjustmentsValue = itemAdjustmentsValue.add(orderItem.getFutureCreditTotalAdjustmentValue());
         }
@@ -639,7 +639,7 @@ public class OrderImpl implements Order, AdminMainEntity, CurrencyCodeIdentifiab
     
     @Override
     public Money getFulfillmentGroupAdjustmentsValue() {
-        Money adjustmentValue = BroadleafCurrencyUtils.getMoney(BigDecimal.ZERO, getCurrency());
+        Money adjustmentValue = UltraCurrencyUtils.getMoney(BigDecimal.ZERO, getCurrency());
         for (FulfillmentGroup fulfillmentGroup : fulfillmentGroups) {
             adjustmentValue = adjustmentValue.add(fulfillmentGroup.getFulfillmentGroupAdjustmentsValue());
         }
@@ -648,7 +648,7 @@ public class OrderImpl implements Order, AdminMainEntity, CurrencyCodeIdentifiab
 
     @Override
     public Money getFutureCreditFulfillmentGroupAdjustmentsValue() {
-        Money adjustmentValue = BroadleafCurrencyUtils.getMoney(BigDecimal.ZERO, getCurrency());
+        Money adjustmentValue = UltraCurrencyUtils.getMoney(BigDecimal.ZERO, getCurrency());
         for (FulfillmentGroup fulfillmentGroup : fulfillmentGroups) {
             adjustmentValue = adjustmentValue.add(fulfillmentGroup.getFutureCreditFulfillmentGroupAdjustmentsValue());
         }
@@ -657,7 +657,7 @@ public class OrderImpl implements Order, AdminMainEntity, CurrencyCodeIdentifiab
 
     @Override
     public Money getOrderAdjustmentsValue() {
-        Money orderAdjustmentsValue = BroadleafCurrencyUtils.getMoney(BigDecimal.ZERO, getCurrency());
+        Money orderAdjustmentsValue = UltraCurrencyUtils.getMoney(BigDecimal.ZERO, getCurrency());
         for (OrderAdjustment orderAdjustment : orderAdjustments) {
             if (!orderAdjustment.isFutureCredit()) {
                 orderAdjustmentsValue = orderAdjustmentsValue.add(orderAdjustment.getValue());
@@ -668,7 +668,7 @@ public class OrderImpl implements Order, AdminMainEntity, CurrencyCodeIdentifiab
 
     @Override
     public Money getFutureCreditOrderAdjustmentsValue() {
-        Money orderAdjustmentsValue = BroadleafCurrencyUtils.getMoney(BigDecimal.ZERO, getCurrency());
+        Money orderAdjustmentsValue = UltraCurrencyUtils.getMoney(BigDecimal.ZERO, getCurrency());
         for (OrderAdjustment orderAdjustment : orderAdjustments) {
             if (orderAdjustment.isFutureCredit()) {
                 orderAdjustmentsValue = orderAdjustmentsValue.add(orderAdjustment.getValue());
@@ -735,11 +735,11 @@ public class OrderImpl implements Order, AdminMainEntity, CurrencyCodeIdentifiab
     }
     
     @Override
-    public BroadleafCurrency getCurrency() {
+    public UltraCurrency getCurrency() {
         return currency;
     }
     @Override
-    public void setCurrency(BroadleafCurrency currency) {
+    public void setCurrency(UltraCurrency currency) {
         this.currency = currency;
     }
 
@@ -930,8 +930,8 @@ public class OrderImpl implements Order, AdminMainEntity, CurrencyCodeIdentifiab
     }
 
     @Override
-    public Long getBroadleafAccountId() {
-        // This method has an implementation weaved in when using the Broadleaf Account module.
+    public Long getUltraAccountId() {
+        // This method has an implementation weaved in when using the Ultra Account module.
         return null;
     }
 

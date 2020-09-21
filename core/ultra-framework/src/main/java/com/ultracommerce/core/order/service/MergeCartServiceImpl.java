@@ -1,34 +1,34 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.order.service;
+package com.ultracommerce.core.order.service;
 
 import org.apache.commons.lang.StringUtils;
-import org.broadleafcommerce.core.order.domain.BundleOrderItem;
-import org.broadleafcommerce.core.order.domain.DiscreteOrderItem;
-import org.broadleafcommerce.core.order.domain.GiftWrapOrderItem;
-import org.broadleafcommerce.core.order.domain.Order;
-import org.broadleafcommerce.core.order.domain.OrderItem;
-import org.broadleafcommerce.core.order.service.call.MergeCartResponse;
-import org.broadleafcommerce.core.order.service.call.ReconstructCartResponse;
-import org.broadleafcommerce.core.order.service.exception.RemoveFromCartException;
-import org.broadleafcommerce.core.order.service.type.OrderStatus;
-import org.broadleafcommerce.core.pricing.service.exception.PricingException;
-import org.broadleafcommerce.profile.core.domain.Customer;
+import com.ultracommerce.core.order.domain.BundleOrderItem;
+import com.ultracommerce.core.order.domain.DiscreteOrderItem;
+import com.ultracommerce.core.order.domain.GiftWrapOrderItem;
+import com.ultracommerce.core.order.domain.Order;
+import com.ultracommerce.core.order.domain.OrderItem;
+import com.ultracommerce.core.order.service.call.MergeCartResponse;
+import com.ultracommerce.core.order.service.call.ReconstructCartResponse;
+import com.ultracommerce.core.order.service.exception.RemoveFromCartException;
+import com.ultracommerce.core.order.service.type.OrderStatus;
+import com.ultracommerce.core.pricing.service.exception.PricingException;
+import com.ultracommerce.profile.core.domain.Customer;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
@@ -44,19 +44,19 @@ import javax.annotation.Resource;
  * 
  * @author Andre Azzolini (apazzolini)
  */
-@Service("blMergeCartService")
+@Service("ucMergeCartService")
 public class MergeCartServiceImpl implements MergeCartService {
 
-    @Resource(name = "blOrderService")
+    @Resource(name = "ucOrderService")
     protected OrderService orderService;
 
-    @Resource(name = "blOrderItemService")
+    @Resource(name = "ucOrderItemService")
     protected OrderItemService orderItemService;
 
-    @Resource(name = "blFulfillmentGroupService")
+    @Resource(name = "ucFulfillmentGroupService")
     protected FulfillmentGroupService fulfillmentGroupService;
 
-    @Resource(name = "blMergeCartServiceExtensionManager")
+    @Resource(name = "ucMergeCartServiceExtensionManager")
     protected MergeCartServiceExtensionManager extensionManager;
 
     @Override
@@ -199,7 +199,7 @@ public class MergeCartServiceImpl implements MergeCartService {
     }
 
     /**
-     * By default, Broadleaf does not provide an inventory check. This is set up as an extension point if your
+     * By default, Ultra does not provide an inventory check. This is set up as an extension point if your
      * application needs it.
      * 
      * @param orderItem
@@ -210,7 +210,7 @@ public class MergeCartServiceImpl implements MergeCartService {
     }
 
     /**
-     * By default, Broadleaf does not provide additional validity checks. This is set up as an extension point if your
+     * By default, Ultra does not provide additional validity checks. This is set up as an extension point if your
      * application needs it.
      * 
      * @param orderItem

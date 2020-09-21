@@ -1,28 +1,28 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.site.service;
+package com.ultracommerce.common.site.service;
 
-import org.broadleafcommerce.common.site.dao.SiteDao;
-import org.broadleafcommerce.common.site.dao.SiteDaoImpl;
-import org.broadleafcommerce.common.site.domain.Catalog;
-import org.broadleafcommerce.common.site.domain.Site;
-import org.broadleafcommerce.common.site.domain.SiteCatalogXref;
-import org.broadleafcommerce.common.web.BroadleafSiteResolver;
+import com.ultracommerce.common.site.dao.SiteDao;
+import com.ultracommerce.common.site.dao.SiteDaoImpl;
+import com.ultracommerce.common.site.domain.Catalog;
+import com.ultracommerce.common.site.domain.Site;
+import com.ultracommerce.common.site.domain.SiteCatalogXref;
+import com.ultracommerce.common.web.UltraSiteResolver;
 
 import java.util.List;
 
@@ -34,7 +34,7 @@ import java.util.List;
  * look the entity back up from the database to refresh it.
  * 
  * <p>
- * Note also that when resolving sites (via the {@link BroadleafSiteResolver}) the usual case is to return a non-persistent
+ * Note also that when resolving sites (via the {@link UltraSiteResolver}) the usual case is to return a non-persistent
  * version not attached to a Hibernate session.
  * 
  * @author Phillip Verheyden (phillipuniverse)

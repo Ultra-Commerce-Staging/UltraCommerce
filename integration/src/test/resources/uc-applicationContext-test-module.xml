@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
   #%L
-  BroadleafCommerce Integration
+  UltraCommerce Integration
   %%
-  Copyright (C) 2009 - 2016 Broadleaf Commerce
+  Copyright (C) 2009 - 2016 Ultra Commerce
   %%
-  Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
-  (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
-  unless the restrictions on use therein are violated and require payment to Broadleaf in which case
-  the Broadleaf End User License Agreement (EULA), Version 1.1
-  (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+  Licensed under the Ultra Fair Use License Agreement, Version 1.0
+  (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+  unless the restrictions on use therein are violated and require payment to Ultra in which case
+  the Ultra End User License Agreement (EULA), Version 1.1
+  (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
   shall apply.
   
   Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
-  between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+  between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
   #L%
   -->
 
@@ -27,20 +27,20 @@
 
     <!-- This applicationContext is used to test an additional merge that comes from a 3rd party module (for instance,
         merging in an additional activity in a workflow along with any other additional ones added by
-        bl-applicationContext-test.xml -->
+        uc-applicationContext-test.xml -->
 
-    <bean id="blCheckoutWorkflowActivities-it-module" class="org.springframework.beans.factory.config.ListFactoryBean">
+    <bean id="ucCheckoutWorkflowActivities-it-module" class="org.springframework.beans.factory.config.ListFactoryBean">
         <property name="sourceList">
             <list>
                 <!-- Since no order is configured, this should be thrown at the very end of the list -->
-                <bean class="org.broadleafcommerce.core.workflow.state.test.TestExampleModuleActivity" />
+                <bean class="com.ultracommerce.core.workflow.state.test.TestExampleModuleActivity" />
             </list>
         </property>
     </bean>
 
-    <bean class="org.broadleafcommerce.common.extensibility.context.merge.LateStageMergeBeanPostProcessor">
-        <property name="collectionRef" value="blCheckoutWorkflowActivities-it-module"/>
-        <property name="targetRef" value="blCheckoutWorkflowActivities"/>
+    <bean class="com.ultracommerce.common.extensibility.context.merge.LateStageMergeBeanPostProcessor">
+        <property name="collectionRef" value="ucCheckoutWorkflowActivities-it-module"/>
+        <property name="targetRef" value="ucCheckoutWorkflowActivities"/>
     </bean>
     
 </beans>

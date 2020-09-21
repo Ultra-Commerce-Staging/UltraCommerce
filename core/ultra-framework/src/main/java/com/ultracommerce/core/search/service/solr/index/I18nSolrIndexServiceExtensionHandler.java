@@ -1,41 +1,41 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.search.service.solr.index;
+package com.ultracommerce.core.search.service.solr.index;
 
-import org.broadleafcommerce.common.extension.ExtensionResultStatusType;
-import org.broadleafcommerce.common.extension.ResultType;
-import org.broadleafcommerce.common.i18n.domain.TranslatedEntity;
-import org.broadleafcommerce.common.i18n.domain.Translation;
-import org.broadleafcommerce.common.i18n.service.TranslationBatchReadCache;
-import org.broadleafcommerce.common.i18n.service.TranslationConsiderationContext;
-import org.broadleafcommerce.common.i18n.service.TranslationService;
-import org.broadleafcommerce.common.locale.domain.Locale;
-import org.broadleafcommerce.common.locale.service.LocaleService;
-import org.broadleafcommerce.common.util.BLCSystemProperty;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
-import org.broadleafcommerce.core.catalog.domain.Indexable;
-import org.broadleafcommerce.core.catalog.domain.Product;
-import org.broadleafcommerce.core.catalog.domain.ProductAttribute;
-import org.broadleafcommerce.core.catalog.domain.Sku;
-import org.broadleafcommerce.core.catalog.domain.SkuAttribute;
-import org.broadleafcommerce.core.search.domain.Field;
-import org.broadleafcommerce.core.search.domain.solr.FieldType;
-import org.broadleafcommerce.core.search.service.solr.SolrHelperService;
+import com.ultracommerce.common.extension.ExtensionResultStatusType;
+import com.ultracommerce.common.extension.ResultType;
+import com.ultracommerce.common.i18n.domain.TranslatedEntity;
+import com.ultracommerce.common.i18n.domain.Translation;
+import com.ultracommerce.common.i18n.service.TranslationBatchReadCache;
+import com.ultracommerce.common.i18n.service.TranslationConsiderationContext;
+import com.ultracommerce.common.i18n.service.TranslationService;
+import com.ultracommerce.common.locale.domain.Locale;
+import com.ultracommerce.common.locale.service.LocaleService;
+import com.ultracommerce.common.util.UCSystemProperty;
+import com.ultracommerce.common.web.UltraRequestContext;
+import com.ultracommerce.core.catalog.domain.Indexable;
+import com.ultracommerce.core.catalog.domain.Product;
+import com.ultracommerce.core.catalog.domain.ProductAttribute;
+import com.ultracommerce.core.catalog.domain.Sku;
+import com.ultracommerce.core.catalog.domain.SkuAttribute;
+import com.ultracommerce.core.search.domain.Field;
+import com.ultracommerce.core.search.domain.solr.FieldType;
+import com.ultracommerce.core.search.service.solr.SolrHelperService;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.InvocationTargetException;
@@ -53,24 +53,24 @@ import javax.annotation.Resource;
  * 
  * @author bpolster
  */
-@Service("blI18nSolrIndexServiceExtensionHandler")
+@Service("ucI18nSolrIndexServiceExtensionHandler")
 public class I18nSolrIndexServiceExtensionHandler extends AbstractSolrIndexServiceExtensionHandler
         implements SolrIndexServiceExtensionHandler {
 
-    @Resource(name = "blSolrHelperService")
+    @Resource(name = "ucSolrHelperService")
     protected SolrHelperService shs;
 
-    @Resource(name = "blSolrIndexServiceExtensionManager")
+    @Resource(name = "ucSolrIndexServiceExtensionManager")
     protected SolrIndexServiceExtensionManager extensionManager;
 
-    @Resource(name = "blTranslationService")
+    @Resource(name = "ucTranslationService")
     protected TranslationService translationService;
 
-    @Resource(name = "blLocaleService")
+    @Resource(name = "ucLocaleService")
     protected LocaleService localeService;
 
     protected boolean getTranslationEnabled() {
-        return BLCSystemProperty.resolveBooleanSystemProperty("i18n.translation.enabled");
+        return UCSystemProperty.resolveBooleanSystemProperty("i18n.translation.enabled");
     }
 
     @PostConstruct
@@ -91,10 +91,10 @@ public class I18nSolrIndexServiceExtensionHandler extends AbstractSolrIndexServi
 
             TranslationConsiderationContext.setTranslationConsiderationContext(getTranslationEnabled());
             TranslationConsiderationContext.setTranslationService(translationService);
-            BroadleafRequestContext tempContext = BroadleafRequestContext.getBroadleafRequestContext();
+            UltraRequestContext tempContext = UltraRequestContext.getUltraRequestContext();
             if (tempContext == null) {
-                tempContext = new BroadleafRequestContext();
-                BroadleafRequestContext.setBroadleafRequestContext(tempContext);
+                tempContext = new UltraRequestContext();
+                UltraRequestContext.setUltraRequestContext(tempContext);
             }
 
             Locale originalLocale = tempContext.getLocale();
@@ -137,8 +137,8 @@ public class I18nSolrIndexServiceExtensionHandler extends AbstractSolrIndexServi
      */
     protected ExtensionResultStatusType getLocalePrefix(Field field, List<String> prefixList) {
         if (field.getTranslatable() && getTranslationEnabled()) {
-            if (BroadleafRequestContext.getBroadleafRequestContext() != null) {
-                Locale locale = BroadleafRequestContext.getBroadleafRequestContext().getLocale();
+            if (UltraRequestContext.getUltraRequestContext() != null) {
+                Locale locale = UltraRequestContext.getUltraRequestContext().getLocale();
                 if (locale != null) {
                     String localeCode = locale.getLocaleCode();
                     if (!Boolean.TRUE.equals(locale.getUseCountryInSearchIndex())) {

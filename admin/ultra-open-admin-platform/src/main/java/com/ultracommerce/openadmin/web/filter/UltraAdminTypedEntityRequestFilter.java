@@ -1,39 +1,39 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.openadmin.web.filter;
+package com.ultracommerce.openadmin.web.filter;
 
 import org.apache.commons.collections4.iterators.IteratorEnumeration;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.admin.domain.TypedEntity;
-import org.broadleafcommerce.common.service.GenericEntityService;
-import org.broadleafcommerce.common.web.BroadleafWebRequestProcessor;
-import org.broadleafcommerce.common.web.filter.FilterOrdered;
-import org.broadleafcommerce.openadmin.server.dao.DynamicEntityDao;
-import org.broadleafcommerce.openadmin.server.security.domain.AdminPermission;
-import org.broadleafcommerce.openadmin.server.security.domain.AdminRole;
-import org.broadleafcommerce.openadmin.server.security.domain.AdminSection;
-import org.broadleafcommerce.openadmin.server.security.domain.AdminUser;
-import org.broadleafcommerce.openadmin.server.security.remote.SecurityVerifier;
-import org.broadleafcommerce.openadmin.server.security.service.navigation.AdminNavigationService;
-import org.broadleafcommerce.openadmin.server.service.persistence.PersistenceManagerFactory;
+import com.ultracommerce.common.admin.domain.TypedEntity;
+import com.ultracommerce.common.service.GenericEntityService;
+import com.ultracommerce.common.web.UltraWebRequestProcessor;
+import com.ultracommerce.common.web.filter.FilterOrdered;
+import com.ultracommerce.openadmin.server.dao.DynamicEntityDao;
+import com.ultracommerce.openadmin.server.security.domain.AdminPermission;
+import com.ultracommerce.openadmin.server.security.domain.AdminRole;
+import com.ultracommerce.openadmin.server.security.domain.AdminSection;
+import com.ultracommerce.openadmin.server.security.domain.AdminUser;
+import com.ultracommerce.openadmin.server.security.remote.SecurityVerifier;
+import com.ultracommerce.openadmin.server.security.service.navigation.AdminNavigationService;
+import com.ultracommerce.openadmin.server.service.persistence.PersistenceManagerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -51,29 +51,29 @@ import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Responsible for setting the necessary attributes on the BroadleafRequestContext
+ * Responsible for setting the necessary attributes on the UltraRequestContext
  * 
  * @author Jon Fleschler (jfleschler)
  */
-@Component("blAdminTypedEntityRequestFilter")
-public class BroadleafAdminTypedEntityRequestFilter extends AbstractBroadleafAdminRequestFilter {
+@Component("ucAdminTypedEntityRequestFilter")
+public class UltraAdminTypedEntityRequestFilter extends AbstractUltraAdminRequestFilter {
 
-    private final Log LOG = LogFactory.getLog(BroadleafAdminTypedEntityRequestFilter.class);
-
-    @Autowired
-    @Qualifier("blAdminRequestProcessor")
-    protected BroadleafWebRequestProcessor requestProcessor;
+    private final Log LOG = LogFactory.getLog(UltraAdminTypedEntityRequestFilter.class);
 
     @Autowired
-    @Qualifier("blAdminNavigationService")
+    @Qualifier("ucAdminRequestProcessor")
+    protected UltraWebRequestProcessor requestProcessor;
+
+    @Autowired
+    @Qualifier("ucAdminNavigationService")
     protected AdminNavigationService adminNavigationService;
 
     @Autowired
-    @Qualifier("blAdminSecurityRemoteService")
+    @Qualifier("ucAdminSecurityRemoteService")
     protected SecurityVerifier adminRemoteSecurityService;
 
     @Autowired
-    @Qualifier("blGenericEntityService")
+    @Qualifier("ucGenericEntityService")
     GenericEntityService genericEntityService;
 
     @Override

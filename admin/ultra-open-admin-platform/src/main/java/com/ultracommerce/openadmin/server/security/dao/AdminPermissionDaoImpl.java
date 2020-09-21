@@ -1,29 +1,29 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.openadmin.server.security.dao;
+package com.ultracommerce.openadmin.server.security.dao;
 
 import org.apache.commons.lang.ClassUtils;
-import org.broadleafcommerce.common.persistence.EntityConfiguration;
-import org.broadleafcommerce.openadmin.server.security.domain.AdminPermission;
-import org.broadleafcommerce.openadmin.server.security.domain.AdminPermissionImpl;
-import org.broadleafcommerce.openadmin.server.security.domain.AdminUser;
-import org.broadleafcommerce.openadmin.server.security.service.AdminSecurityService;
-import org.broadleafcommerce.openadmin.server.security.service.type.PermissionType;
+import com.ultracommerce.common.persistence.EntityConfiguration;
+import com.ultracommerce.openadmin.server.security.domain.AdminPermission;
+import com.ultracommerce.openadmin.server.security.domain.AdminPermissionImpl;
+import com.ultracommerce.openadmin.server.security.domain.AdminUser;
+import com.ultracommerce.openadmin.server.security.service.AdminSecurityService;
+import com.ultracommerce.openadmin.server.security.service.type.PermissionType;
 import org.hibernate.jpa.QueryHints;
 import org.springframework.stereotype.Repository;
 
@@ -46,13 +46,13 @@ import javax.persistence.criteria.Root;
  * @author jfischer
  *
  */
-@Repository("blAdminPermissionDao")
+@Repository("ucAdminPermissionDao")
 public class AdminPermissionDaoImpl implements AdminPermissionDao {
     
-    @PersistenceContext(unitName = "blPU")
+    @PersistenceContext(unitName = "ucPU")
     protected EntityManager em;
 
-    @Resource(name="blEntityConfiguration")
+    @Resource(name="ucEntityConfiguration")
     protected EntityConfiguration entityConfiguration;
 
     public void deleteAdminPermission(AdminPermission permission) {
@@ -63,7 +63,7 @@ public class AdminPermissionDaoImpl implements AdminPermissionDao {
     }
 
     public AdminPermission readAdminPermissionById(Long id) {
-        return (AdminPermission) em.find(entityConfiguration.lookupEntityClass("org.broadleafcommerce.openadmin.server.security.domain.AdminPermission"), id);
+        return (AdminPermission) em.find(entityConfiguration.lookupEntityClass("com.ultracommerce.openadmin.server.security.domain.AdminPermission"), id);
     }
 
     @Override
@@ -81,7 +81,7 @@ public class AdminPermissionDaoImpl implements AdminPermissionDao {
         criteria.where(restrictions.toArray(new Predicate[restrictions.size()]));
         TypedQuery<AdminPermission> query = em.createQuery(criteria);
         query.setHint(QueryHints.HINT_CACHEABLE, true);
-        query.setHint(QueryHints.HINT_CACHE_REGION, "blAdminSecurityQuery");
+        query.setHint(QueryHints.HINT_CACHE_REGION, "ucAdminSecurityQuery");
         List<AdminPermission> results = query.getResultList();
         if (results == null || results.size() == 0) {
             return null;
@@ -104,7 +104,7 @@ public class AdminPermissionDaoImpl implements AdminPermissionDao {
         criteria.where(restrictions.toArray(new Predicate[restrictions.size()]));
         TypedQuery<AdminPermission> query = em.createQuery(criteria);
         query.setHint(QueryHints.HINT_CACHEABLE, true);
-        query.setHint(QueryHints.HINT_CACHE_REGION, "blAdminSecurityQuery");
+        query.setHint(QueryHints.HINT_CACHE_REGION, "ucAdminSecurityQuery");
         List<AdminPermission> results = query.getResultList();
         if (results == null || results.size() == 0) {
             return null;
@@ -119,9 +119,9 @@ public class AdminPermissionDaoImpl implements AdminPermissionDao {
 
     @SuppressWarnings("unchecked")
     public List<AdminPermission> readAllAdminPermissions() {
-        Query query = em.createNamedQuery("BC_READ_ALL_ADMIN_PERMISSIONS");
+        Query query = em.createNamedQuery("UC_READ_ALL_ADMIN_PERMISSIONS");
         query.setHint(QueryHints.HINT_CACHEABLE, true);
-        query.setHint(QueryHints.HINT_CACHE_REGION, "blAdminSecurityQuery");
+        query.setHint(QueryHints.HINT_CACHE_REGION, "ucAdminSecurityQuery");
         List<AdminPermission> permissions = query.getResultList();
         return permissions;
     }
@@ -140,12 +140,12 @@ public class AdminPermissionDaoImpl implements AdminPermissionDao {
         }
 
         for (String testClass : testClasses) {
-            Query query = em.createNamedQuery("BC_COUNT_PERMISSIONS_FOR_USER_BY_TYPE_AND_CEILING_ENTITY");
+            Query query = em.createNamedQuery("UC_COUNT_PERMISSIONS_FOR_USER_BY_TYPE_AND_CEILING_ENTITY");
             query.setParameter("adminUser", adminUser);
             query.setParameter("type", permissionType.getType());
             query.setParameter("ceilingEntity", testClass);
             query.setHint(QueryHints.HINT_CACHEABLE, true);
-            query.setHint(QueryHints.HINT_CACHE_REGION, "blAdminSecurityQuery");
+            query.setHint(QueryHints.HINT_CACHE_REGION, "ucAdminSecurityQuery");
 
             Long count = (Long) query.getSingleResult();
             if (count > 0) {
@@ -169,11 +169,11 @@ public class AdminPermissionDaoImpl implements AdminPermissionDao {
         }
 
         for (String testClass : testClasses) {
-            Query query = em.createNamedQuery("BC_COUNT_BY_PERMISSION_AND_CEILING_ENTITY");
+            Query query = em.createNamedQuery("UC_COUNT_BY_PERMISSION_AND_CEILING_ENTITY");
             query.setParameter("permissionNames", Arrays.asList(AdminSecurityService.DEFAULT_PERMISSIONS));
             query.setParameter("ceilingEntity", testClass);
             query.setHint(QueryHints.HINT_CACHEABLE, true);
-            query.setHint(QueryHints.HINT_CACHE_REGION, "blAdminSecurityQuery");
+            query.setHint(QueryHints.HINT_CACHE_REGION, "ucAdminSecurityQuery");
 
             Long count = (Long) query.getSingleResult();
             if (count > 0) {
@@ -197,11 +197,11 @@ public class AdminPermissionDaoImpl implements AdminPermissionDao {
         }
 
         for (String testClass : testClasses) {
-            Query query = em.createNamedQuery("BC_COUNT_PERMISSIONS_BY_TYPE_AND_CEILING_ENTITY");
+            Query query = em.createNamedQuery("UC_COUNT_PERMISSIONS_BY_TYPE_AND_CEILING_ENTITY");
             query.setParameter("type", permissionType.getType());
             query.setParameter("ceilingEntity", testClass);
             query.setHint(QueryHints.HINT_CACHEABLE, true);
-            query.setHint(QueryHints.HINT_CACHE_REGION, "blAdminSecurityQuery");
+            query.setHint(QueryHints.HINT_CACHE_REGION, "ucAdminSecurityQuery");
 
             Long count = (Long) query.getSingleResult();
             if (count > 0) {

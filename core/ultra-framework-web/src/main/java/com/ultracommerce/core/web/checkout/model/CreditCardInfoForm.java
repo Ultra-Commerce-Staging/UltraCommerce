@@ -1,23 +1,23 @@
 /*
  * #%L
- * BroadleafCommerce Framework Web
+ * UltraCommerce Framework Web
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
 
 
-package org.broadleafcommerce.core.web.checkout.model;
+package com.ultracommerce.core.web.checkout.model;
 
 import java.io.Serializable;
 
@@ -25,7 +25,7 @@ import java.io.Serializable;
  * <p>Typically, clients will utilize 3rd party payment integrations as the final
  * checkout step. See documentation specific to the integration(s) you are using
  * (e.g. PayPal, Braintree, Cybersource). With some of these integrations, Credit Card
- * information is passed directly to the gateway, bypassing the Broadleaf Servers to ease
+ * information is passed directly to the gateway, bypassing the Ultra Servers to ease
  * on PCI compliance. In that case, this form will NOT be used.</p>
  *
  * <p>This form can also be used for simple payment methods where only a paymentMethod and

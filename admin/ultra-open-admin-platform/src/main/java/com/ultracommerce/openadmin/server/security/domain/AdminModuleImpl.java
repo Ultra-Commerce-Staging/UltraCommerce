@@ -1,25 +1,25 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.openadmin.server.security.domain;
+package com.ultracommerce.openadmin.server.security.domain;
 
-import org.broadleafcommerce.common.presentation.AdminPresentation;
-import org.broadleafcommerce.common.presentation.AdminPresentationClass;
-import org.broadleafcommerce.common.presentation.client.VisibilityEnum;
+import com.ultracommerce.common.presentation.AdminPresentation;
+import com.ultracommerce.common.presentation.AdminPresentationClass;
+import com.ultracommerce.common.presentation.client.VisibilityEnum;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -46,8 +46,8 @@ import javax.persistence.Table;
  */
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "BLC_ADMIN_MODULE")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region="blAdminSecurity")
+@Table(name = "UC_ADMIN_MODULE")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region="ucAdminSecurity")
 @AdminPresentationClass(friendlyName = "AdminModuleImpl_baseAdminModule")
 public class AdminModuleImpl implements AdminModule {
 
@@ -57,10 +57,10 @@ public class AdminModuleImpl implements AdminModule {
     @GeneratedValue(generator = "AdminModuleId")
     @GenericGenerator(
         name="AdminModuleId",
-        strategy="org.broadleafcommerce.common.persistence.IdOverrideTableGenerator",
+        strategy="com.ultracommerce.common.persistence.IdOverrideTableGenerator",
         parameters = {
             @Parameter(name="segment_value", value="AdminModuleImpl"),
-            @Parameter(name="entity_name", value="org.broadleafcommerce.openadmin.server.security.domain.AdminModuleImpl")
+            @Parameter(name="entity_name", value="com.ultracommerce.openadmin.server.security.domain.AdminModuleImpl")
         }
     )
     @Column(name = "ADMIN_MODULE_ID")
@@ -81,7 +81,7 @@ public class AdminModuleImpl implements AdminModule {
     protected String icon;
 
     @OneToMany(mappedBy = "module", targetEntity = AdminSectionImpl.class)
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region="blAdminSecurity")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region="ucAdminSecurity")
     @BatchSize(size = 50)
     protected List<AdminSection> sections = new ArrayList<AdminSection>();
 

@@ -1,39 +1,39 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.search.service;
+package com.ultracommerce.core.search.service;
 
 import org.apache.commons.lang.StringUtils;
-import org.broadleafcommerce.common.exception.ServiceException;
-import org.broadleafcommerce.core.catalog.domain.Category;
-import org.broadleafcommerce.core.catalog.domain.Product;
-import org.broadleafcommerce.core.catalog.service.CatalogService;
-import org.broadleafcommerce.core.search.dao.FieldDao;
-import org.broadleafcommerce.core.search.dao.SearchFacetDao;
-import org.broadleafcommerce.core.search.domain.CategorySearchFacet;
-import org.broadleafcommerce.core.search.domain.Field;
-import org.broadleafcommerce.core.search.domain.FieldEntity;
-import org.broadleafcommerce.core.search.domain.SearchCriteria;
-import org.broadleafcommerce.core.search.domain.SearchFacet;
-import org.broadleafcommerce.core.search.domain.SearchFacetDTO;
-import org.broadleafcommerce.core.search.domain.SearchFacetRange;
-import org.broadleafcommerce.core.search.domain.SearchFacetResultDTO;
-import org.broadleafcommerce.core.search.domain.SearchResult;
-import org.broadleafcommerce.core.search.service.solr.SolrSearchServiceImpl;
+import com.ultracommerce.common.exception.ServiceException;
+import com.ultracommerce.core.catalog.domain.Category;
+import com.ultracommerce.core.catalog.domain.Product;
+import com.ultracommerce.core.catalog.service.CatalogService;
+import com.ultracommerce.core.search.dao.FieldDao;
+import com.ultracommerce.core.search.dao.SearchFacetDao;
+import com.ultracommerce.core.search.domain.CategorySearchFacet;
+import com.ultracommerce.core.search.domain.Field;
+import com.ultracommerce.core.search.domain.FieldEntity;
+import com.ultracommerce.core.search.domain.SearchCriteria;
+import com.ultracommerce.core.search.domain.SearchFacet;
+import com.ultracommerce.core.search.domain.SearchFacetDTO;
+import com.ultracommerce.core.search.domain.SearchFacetRange;
+import com.ultracommerce.core.search.domain.SearchFacetResultDTO;
+import com.ultracommerce.core.search.domain.SearchResult;
+import com.ultracommerce.core.search.service.solr.SolrSearchServiceImpl;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -52,22 +52,22 @@ import javax.cache.CacheManager;
  * @deprecated Use {@link SolrSearchServiceImpl} 
  */
 @Deprecated
-@Service("blSearchService")
+@Service("ucSearchService")
 public class DatabaseSearchServiceImpl implements SearchService {
 
-    @Resource(name = "blCatalogService")
+    @Resource(name = "ucCatalogService")
     protected CatalogService catalogService;
     
-    @Resource(name = "blSearchFacetDao")
+    @Resource(name = "ucSearchFacetDao")
     protected SearchFacetDao searchFacetDao;
     
-    @Resource(name = "blFieldDao")
+    @Resource(name = "ucFieldDao")
     protected FieldDao fieldDao;
     
-    @Resource(name = "blCacheManager")
+    @Resource(name = "ucCacheManager")
     protected CacheManager cacheManager;
     
-    protected static String CACHE_NAME = "blStandardElements";
+    protected static String CACHE_NAME = "ucStandardElements";
     protected static String CACHE_KEY_PREFIX = "facet:";
     protected Cache<String, List<SearchFacetDTO>> cache;
     
@@ -118,7 +118,7 @@ public class DatabaseSearchServiceImpl implements SearchService {
 
     @Override
     public List<SearchFacetDTO> getSearchFacets() {
-        String cacheKey = CACHE_KEY_PREFIX + "blc-search";
+        String cacheKey = CACHE_KEY_PREFIX + "uc-search";
         List<SearchFacetDTO> facets = getCache().get(cacheKey);
         
         if (facets == null) {

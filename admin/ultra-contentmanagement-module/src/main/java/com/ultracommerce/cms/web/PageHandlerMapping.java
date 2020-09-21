@@ -1,31 +1,31 @@
 /*
  * #%L
- * BroadleafCommerce CMS Module
+ * UltraCommerce CMS Module
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.cms.web;
+package com.ultracommerce.cms.web;
 
-import org.broadleafcommerce.cms.page.service.PageService;
-import org.broadleafcommerce.cms.web.controller.BroadleafPageController;
-import org.broadleafcommerce.common.RequestDTO;
-import org.broadleafcommerce.common.TimeDTO;
-import org.broadleafcommerce.common.page.dto.NullPageDTO;
-import org.broadleafcommerce.common.page.dto.PageDTO;
-import org.broadleafcommerce.common.time.SystemTime;
-import org.broadleafcommerce.common.web.BLCAbstractHandlerMapping;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
+import com.ultracommerce.cms.page.service.PageService;
+import com.ultracommerce.cms.web.controller.UltraPageController;
+import com.ultracommerce.common.RequestDTO;
+import com.ultracommerce.common.TimeDTO;
+import com.ultracommerce.common.page.dto.NullPageDTO;
+import com.ultracommerce.common.page.dto.PageDTO;
+import com.ultracommerce.common.time.SystemTime;
+import com.ultracommerce.common.web.UCAbstractHandlerMapping;
+import com.ultracommerce.common.web.UltraRequestContext;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.net.URLDecoder;
@@ -45,28 +45,28 @@ import javax.servlet.http.HttpServletRequest;
  *
  * @author bpolster
  * @since 2.0
- * @see org.broadleafcommerce.cms.page.domain.Page
- * @see BroadleafPageController
+ * @see com.ultracommerce.cms.page.domain.Page
+ * @see UltraPageController
  */
-public class PageHandlerMapping extends BLCAbstractHandlerMapping {
+public class PageHandlerMapping extends UCAbstractHandlerMapping {
     
-    private final String controllerName="blPageController";
-    public static final String BLC_RULE_MAP_PARAM = "blRuleMap";
+    private final String controllerName="ucPageController";
+    public static final String UC_RULE_MAP_PARAM = "ucRuleMap";
 
-    // The following attribute is set in BroadleafProcessURLFilter
-    public static final String REQUEST_DTO = "blRequestDTO";
+    // The following attribute is set in UltraProcessURLFilter
+    public static final String REQUEST_DTO = "ucRequestDTO";
     
-    @Resource(name = "blPageService")
+    @Resource(name = "ucPageService")
     private PageService pageService;
     
-    public static final String PAGE_ATTRIBUTE_NAME = "BLC_PAGE";
+    public static final String PAGE_ATTRIBUTE_NAME = "UC_PAGE";
 
     @Value("${request.uri.encoding}")
     public String charEncoding;
 
     @Override
     protected Object getHandlerInternal(HttpServletRequest request) throws Exception {
-        BroadleafRequestContext context = BroadleafRequestContext.getBroadleafRequestContext();
+        UltraRequestContext context = UltraRequestContext.getUltraRequestContext();
         if (context != null && context.getRequestURIWithoutContext() != null) {
             String requestUri = URLDecoder.decode(context.getRequestURIWithoutContext(), charEncoding);
             
@@ -74,15 +74,15 @@ public class PageHandlerMapping extends BLCAbstractHandlerMapping {
             PageDTO page;
             
             try {
-                if (!BroadleafRequestContext.getBroadleafRequestContext().getInternalValidateFind()) {
-                    BroadleafRequestContext.getBroadleafRequestContext().setInternalValidateFind(true);
+                if (!UltraRequestContext.getUltraRequestContext().getInternalValidateFind()) {
+                    UltraRequestContext.getUltraRequestContext().setInternalValidateFind(true);
                     internalValidateFindPreviouslySet = true;
                 }
                 page = pageService.findPageByURI(context.getLocale(), requestUri, buildMvelParameters(request), context.isSecure());
 
             } finally {
                 if (internalValidateFindPreviouslySet) {
-                    BroadleafRequestContext.getBroadleafRequestContext().setInternalValidateFind(false);
+                    UltraRequestContext.getUltraRequestContext().setInternalValidateFind(false);
                 }
             }
 
@@ -109,10 +109,10 @@ public class PageHandlerMapping extends BLCAbstractHandlerMapping {
         mvelParameters.put("time", timeDto);
         mvelParameters.put("request", requestDto);
 
-        Map<String,Object> blcRuleMap = (Map<String,Object>) request.getAttribute(BLC_RULE_MAP_PARAM);
-        if (blcRuleMap != null) {
-            for (String mapKey : blcRuleMap.keySet()) {
-                mvelParameters.put(mapKey, blcRuleMap.get(mapKey));
+        Map<String,Object> ucRuleMap = (Map<String,Object>) request.getAttribute(UC_RULE_MAP_PARAM);
+        if (ucRuleMap != null) {
+            for (String mapKey : ucRuleMap.keySet()) {
+                mvelParameters.put(mapKey, ucRuleMap.get(mapKey));
             }
         }
 

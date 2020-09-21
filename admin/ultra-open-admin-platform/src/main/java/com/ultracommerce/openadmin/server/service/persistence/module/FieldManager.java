@@ -1,34 +1,34 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.openadmin.server.service.persistence.module;
+package com.ultracommerce.openadmin.server.service.persistence.module;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.persistence.EntityConfiguration;
-import org.broadleafcommerce.common.util.BLCFieldUtils;
-import org.broadleafcommerce.common.util.HibernateUtils;
-import org.broadleafcommerce.common.value.ValueAssignable;
-import org.broadleafcommerce.openadmin.server.dao.DynamicEntityDao;
-import org.broadleafcommerce.openadmin.server.service.persistence.PersistenceManager;
-import org.broadleafcommerce.openadmin.server.service.persistence.PersistenceManagerFactory;
+import com.ultracommerce.common.persistence.EntityConfiguration;
+import com.ultracommerce.common.util.UCFieldUtils;
+import com.ultracommerce.common.util.HibernateUtils;
+import com.ultracommerce.common.value.ValueAssignable;
+import com.ultracommerce.openadmin.server.dao.DynamicEntityDao;
+import com.ultracommerce.openadmin.server.service.persistence.PersistenceManager;
+import com.ultracommerce.openadmin.server.service.persistence.PersistenceManagerFactory;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
@@ -66,12 +66,12 @@ public class FieldManager {
     }
 
     public static Field getSingleField(Class<?> clazz, String fieldName) throws IllegalStateException {
-        return BLCFieldUtils.getSingleField(clazz, fieldName);
+        return UCFieldUtils.getSingleField(clazz, fieldName);
     }
 
     public Field getField(Class<?> clazz, String fieldName) throws IllegalStateException {
         DynamicEntityDao dynamicEntityDao = getPersistenceManager(clazz).getDynamicEntityDao();
-        BLCFieldUtils fieldUtils = new BLCFieldUtils(true, dynamicEntityDao.useCache(),
+        UCFieldUtils fieldUtils = new UCFieldUtils(true, dynamicEntityDao.useCache(),
                 entityConfiguration, dynamicEntityDao.getDynamicDaoHelper());
         return fieldUtils.getField(clazz, fieldName);
     }

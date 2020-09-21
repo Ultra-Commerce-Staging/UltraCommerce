@@ -1,21 +1,21 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.crossapp.service;
+package com.ultracommerce.common.crossapp.service;
 
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -31,8 +31,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
  */
 public interface CrossAppAuthService {
 
-    public static String AUTH_FROM_ADMIN_URL_PARAM = "blAuthToken";
-    public static String AUTH_FROM_ADMIN_SESSION_VAR = "blAuthedFromAdmin";
+    public static String AUTH_FROM_ADMIN_URL_PARAM = "ucAuthToken";
+    public static String AUTH_FROM_ADMIN_SESSION_VAR = "ucAuthedFromAdmin";
 
     /**
      * Consumes an authentication token for the given user id and token. This method will additionally register the

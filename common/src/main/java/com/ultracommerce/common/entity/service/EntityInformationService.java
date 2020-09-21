@@ -1,25 +1,25 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.entity.service;
+package com.ultracommerce.common.entity.service;
 
-import org.broadleafcommerce.common.entity.dto.EntityInformationDto;
-import org.broadleafcommerce.common.site.domain.Catalog;
-import org.broadleafcommerce.common.site.domain.Site;
+import com.ultracommerce.common.entity.dto.EntityInformationDto;
+import com.ultracommerce.common.site.domain.Catalog;
+import com.ultracommerce.common.site.domain.Site;
 import java.util.List;
 import java.util.Set;
 
@@ -47,7 +47,7 @@ public interface EntityInformationService {
 
     /**
      * Given a Site object, returns the Base Profile Id if one exists.    This method provides a hook
-     * for Broadleaf MultiTenant functionality
+     * for Ultra MultiTenant functionality
      * 
      * @param site
      * @return
@@ -60,7 +60,7 @@ public interface EntityInformationService {
 
     /**
      * Given a profile {@link Site} object, returns the parent site, if one exists. This method provides a hook
-     * for Broadleaf MultiTenant functionality.
+     * for Ultra MultiTenant functionality.
      *
      * @param profile
      * @return
@@ -83,7 +83,7 @@ public interface EntityInformationService {
     List<Catalog> findAllCatalogs();
 
     /**
-     * Given a Site object, returns the default catalog id. This method provides a hook for Broadleaf MultiTenant functionality
+     * Given a Site object, returns the default catalog id. This method provides a hook for Ultra MultiTenant functionality
      *
      * @param site
      * @return the default Catalog id

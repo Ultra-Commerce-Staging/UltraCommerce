@@ -1,35 +1,35 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.order.service.workflow;
+package com.ultracommerce.core.order.service.workflow;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.broadleafcommerce.core.order.dao.FulfillmentGroupItemDao;
-import org.broadleafcommerce.core.order.domain.BundleOrderItem;
-import org.broadleafcommerce.core.order.domain.DiscreteOrderItem;
-import org.broadleafcommerce.core.order.domain.FulfillmentGroup;
-import org.broadleafcommerce.core.order.domain.FulfillmentGroupItem;
-import org.broadleafcommerce.core.order.domain.Order;
-import org.broadleafcommerce.core.order.domain.OrderItem;
-import org.broadleafcommerce.core.order.service.OrderItemService;
-import org.broadleafcommerce.core.order.service.OrderMultishipOptionService;
-import org.broadleafcommerce.core.order.service.OrderService;
-import org.broadleafcommerce.core.workflow.BaseActivity;
-import org.broadleafcommerce.core.workflow.ProcessContext;
+import com.ultracommerce.core.order.dao.FulfillmentGroupItemDao;
+import com.ultracommerce.core.order.domain.BundleOrderItem;
+import com.ultracommerce.core.order.domain.DiscreteOrderItem;
+import com.ultracommerce.core.order.domain.FulfillmentGroup;
+import com.ultracommerce.core.order.domain.FulfillmentGroupItem;
+import com.ultracommerce.core.order.domain.Order;
+import com.ultracommerce.core.order.domain.OrderItem;
+import com.ultracommerce.core.order.service.OrderItemService;
+import com.ultracommerce.core.order.service.OrderMultishipOptionService;
+import com.ultracommerce.core.order.service.OrderService;
+import com.ultracommerce.core.workflow.BaseActivity;
+import com.ultracommerce.core.workflow.ProcessContext;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -42,7 +42,7 @@ import java.util.Map.Entry;
 import javax.annotation.Resource;
 
 /**
- * As of Broadleaf version 3.1.0, saves of individual aspects of an Order (such as OrderItems and FulfillmentGroupItems) no
+ * As of Ultra version 3.1.0, saves of individual aspects of an Order (such as OrderItems and FulfillmentGroupItems) no
  * longer happen in their respective activities. Instead, we will now handle these saves in this activity exclusively.
  *
  * This provides the ability for an implementation to not require a transactional wrapper around the entire workflow and
@@ -51,21 +51,21 @@ import javax.annotation.Resource;
  *
  * @author Andre Azzolini (apazzolini)
  */
-@Component("blAddWorkflowPriceOrderIfNecessaryActivity")
+@Component("ucAddWorkflowPriceOrderIfNecessaryActivity")
 public class AddWorkflowPriceOrderIfNecessaryActivity extends BaseActivity<ProcessContext<CartOperationRequest>> {
 
     public static final int ORDER = 5000;
 
-    @Resource(name = "blOrderService")
+    @Resource(name = "ucOrderService")
     protected OrderService orderService;
 
-    @Resource(name = "blOrderItemService")
+    @Resource(name = "ucOrderItemService")
     protected OrderItemService orderItemService;
 
-    @Resource(name = "blFulfillmentGroupItemDao")
+    @Resource(name = "ucFulfillmentGroupItemDao")
     protected FulfillmentGroupItemDao fgItemDao;
 
-    @Resource(name = "blOrderMultishipOptionService")
+    @Resource(name = "ucOrderMultishipOptionService")
     protected OrderMultishipOptionService orderMultishipOptionService;
 
     public AddWorkflowPriceOrderIfNecessaryActivity() {
@@ -262,7 +262,7 @@ public class AddWorkflowPriceOrderIfNecessaryActivity extends BaseActivity<Proce
      * @param request
      */
     protected void preSaveOperation(CartOperationRequest request) {
-        // Broadleaf implementation does nothing here
+        // Ultra implementation does nothing here
     }
 
 }

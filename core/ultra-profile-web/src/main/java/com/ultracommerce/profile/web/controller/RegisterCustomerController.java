@@ -1,29 +1,29 @@
 /*
  * #%L
- * BroadleafCommerce Profile Web
+ * UltraCommerce Profile Web
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.profile.web.controller;
+package com.ultracommerce.profile.web.controller;
 
-import org.broadleafcommerce.profile.core.domain.ChallengeQuestion;
-import org.broadleafcommerce.profile.core.domain.Customer;
-import org.broadleafcommerce.profile.core.service.ChallengeQuestionService;
-import org.broadleafcommerce.profile.core.service.CustomerService;
-import org.broadleafcommerce.profile.web.controller.validator.RegisterCustomerValidator;
-import org.broadleafcommerce.profile.web.core.form.RegisterCustomerForm;
-import org.broadleafcommerce.profile.web.core.service.login.LoginService;
+import com.ultracommerce.profile.core.domain.ChallengeQuestion;
+import com.ultracommerce.profile.core.domain.Customer;
+import com.ultracommerce.profile.core.service.ChallengeQuestionService;
+import com.ultracommerce.profile.core.service.CustomerService;
+import com.ultracommerce.profile.web.controller.validator.RegisterCustomerValidator;
+import com.ultracommerce.profile.web.core.form.RegisterCustomerForm;
+import com.ultracommerce.profile.web.core.service.login.LoginService;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -39,10 +39,10 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@Controller("blRegisterCustomerController")
+@Controller("ucRegisterCustomerController")
 @RequestMapping("/registerCustomer")
 /**
- * @Deprecated - Use BroadleafRegisterController instead
+ * @Deprecated - Use UltraRegisterController instead
  * RegisterCustomerController is used to register a customer.
  *
  * This controller simply calls the RegistrationCustomerValidator which can be extended for custom validation and
@@ -55,16 +55,16 @@ public class RegisterCustomerController {
     protected String registrationErrorView = displayRegistrationFormView;
     protected String registrationSuccessView = "redirect:/registerCustomer/registerCustomerSuccess.htm";
 
-    @Resource(name="blCustomerService")
+    @Resource(name="ucCustomerService")
     protected CustomerService customerService;
 
-    @Resource(name="blRegisterCustomerValidator")
+    @Resource(name="ucRegisterCustomerValidator")
     protected RegisterCustomerValidator registerCustomerValidator;
     
-    @Resource(name="blChallengeQuestionService")
+    @Resource(name="ucChallengeQuestionService")
     protected ChallengeQuestionService challengeQuestionService;
 
-    @Resource(name="blLoginService")
+    @Resource(name="ucLoginService")
     protected LoginService loginService;
 
     @RequestMapping(value="registerCustomer", method = { RequestMethod.GET })

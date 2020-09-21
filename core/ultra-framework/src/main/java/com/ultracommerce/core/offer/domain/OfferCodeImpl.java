@@ -1,42 +1,42 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.offer.domain;
+package com.ultracommerce.core.offer.domain;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.broadleafcommerce.common.copy.CreateResponse;
-import org.broadleafcommerce.common.copy.MultiTenantCopyContext;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransform;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformMember;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformTypes;
-import org.broadleafcommerce.common.persistence.ArchiveStatus;
-import org.broadleafcommerce.common.persistence.DefaultPostLoaderDao;
-import org.broadleafcommerce.common.persistence.PostLoaderDao;
-import org.broadleafcommerce.common.presentation.AdminPresentation;
-import org.broadleafcommerce.common.presentation.AdminPresentationClass;
-import org.broadleafcommerce.common.presentation.AdminPresentationToOneLookup;
-import org.broadleafcommerce.common.presentation.ConfigurationItem;
-import org.broadleafcommerce.common.presentation.PopulateToOneFieldsEnum;
-import org.broadleafcommerce.common.presentation.ValidationConfiguration;
-import org.broadleafcommerce.common.util.DateUtil;
-import org.broadleafcommerce.common.util.HibernateUtils;
-import org.broadleafcommerce.core.order.domain.Order;
-import org.broadleafcommerce.core.order.domain.OrderImpl;
+import com.ultracommerce.common.copy.CreateResponse;
+import com.ultracommerce.common.copy.MultiTenantCopyContext;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransform;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransformMember;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransformTypes;
+import com.ultracommerce.common.persistence.ArchiveStatus;
+import com.ultracommerce.common.persistence.DefaultPostLoaderDao;
+import com.ultracommerce.common.persistence.PostLoaderDao;
+import com.ultracommerce.common.presentation.AdminPresentation;
+import com.ultracommerce.common.presentation.AdminPresentationClass;
+import com.ultracommerce.common.presentation.AdminPresentationToOneLookup;
+import com.ultracommerce.common.presentation.ConfigurationItem;
+import com.ultracommerce.common.presentation.PopulateToOneFieldsEnum;
+import com.ultracommerce.common.presentation.ValidationConfiguration;
+import com.ultracommerce.common.util.DateUtil;
+import com.ultracommerce.common.util.HibernateUtils;
+import com.ultracommerce.core.order.domain.Order;
+import com.ultracommerce.core.order.domain.OrderImpl;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
@@ -65,11 +65,11 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Entity
-@Table(name = "BLC_OFFER_CODE")
+@Table(name = "UC_OFFER_CODE")
 @Inheritance(strategy=InheritanceType.JOINED)
-@Cache(usage=CacheConcurrencyStrategy.NONSTRICT_READ_WRITE, region="blOrderElements")
+@Cache(usage=CacheConcurrencyStrategy.NONSTRICT_READ_WRITE, region="ucOrderElements")
 @AdminPresentationClass(populateToOneFields = PopulateToOneFieldsEnum.FALSE, friendlyName = "OfferCodeImpl_baseOfferCode")
-@SQLDelete(sql="UPDATE BLC_OFFER_CODE SET ARCHIVED = 'Y' WHERE OFFER_CODE_ID = ?")
+@SQLDelete(sql="UPDATE UC_OFFER_CODE SET ARCHIVED = 'Y' WHERE OFFER_CODE_ID = ?")
 @DirectCopyTransform({
         @DirectCopyTransformMember(templateTokens = DirectCopyTransformTypes.SANDBOX, skipOverlaps = true),
         @DirectCopyTransformMember(templateTokens = DirectCopyTransformTypes.MULTITENANT_CATALOG)
@@ -82,10 +82,10 @@ public class OfferCodeImpl implements OfferCode {
     @GeneratedValue(generator= "OfferCodeId")
     @GenericGenerator(
         name="OfferCodeId",
-        strategy="org.broadleafcommerce.common.persistence.IdOverrideTableGenerator",
+        strategy="com.ultracommerce.common.persistence.IdOverrideTableGenerator",
         parameters = {
             @Parameter(name="segment_value", value="OfferCodeImpl"),
-            @Parameter(name="entity_name", value="org.broadleafcommerce.core.offer.domain.OfferCodeImpl")
+            @Parameter(name="entity_name", value="com.ultracommerce.core.offer.domain.OfferCodeImpl")
         }
     )
     @Column(name = "OFFER_CODE_ID")
@@ -103,7 +103,7 @@ public class OfferCodeImpl implements OfferCode {
     @Column(name = "OFFER_CODE", nullable=false)
     @Index(name="OFFERCODE_CODE_INDEX", columnNames={"OFFER_CODE"})
     @AdminPresentation(friendlyName = "OfferCodeImpl_Offer_Code", order = 1000, prominent = true, gridOrder = 1000,
-            validationConfigurations = { @ValidationConfiguration(validationImplementation = "blRegexPropertyValidator",
+            validationConfigurations = { @ValidationConfiguration(validationImplementation = "ucRegexPropertyValidator",
                     configurationItems = {
                             @ConfigurationItem(itemName = ConfigurationItem.ERROR_MESSAGE, itemValue = "The name can contain alphanumeric or \"()-=*.?;,+/:&_\" symbols with a maximum length of 255"),
                             @ConfigurationItem(itemName = "regularExpression", itemValue = "^[a-zA-Z0-9()\\-=\\*\\.\\?;,+\\/:&_ ]{1,255}$")})})
@@ -118,7 +118,7 @@ public class OfferCodeImpl implements OfferCode {
     @AdminPresentation(friendlyName = "OfferCodeImpl_Code_End_Date", order = 4000,
         validationConfigurations = {
             @ValidationConfiguration(
-                validationImplementation = "blAfterStartDateValidator",
+                validationImplementation = "ucAfterStartDateValidator",
                 configurationItems = {
                     @ConfigurationItem(itemName = "otherField", itemValue = "offerCodeStartDate")
                     }) 
@@ -143,7 +143,7 @@ public class OfferCodeImpl implements OfferCode {
     protected ArchiveStatus archiveStatus = new ArchiveStatus();
     
     @ManyToMany(fetch = FetchType.LAZY, mappedBy="addedOfferCodes", targetEntity = OrderImpl.class)
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region="blOrderElements")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region="ucOrderElements")
     protected List<Order> orders = new ArrayList<>();
 
     @Transient

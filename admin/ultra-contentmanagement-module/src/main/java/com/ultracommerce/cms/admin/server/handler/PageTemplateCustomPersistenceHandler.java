@@ -1,55 +1,55 @@
 /*
  * #%L
- * BroadleafCommerce CMS Module
+ * UltraCommerce CMS Module
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.cms.admin.server.handler;
+package com.ultracommerce.cms.admin.server.handler;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.cms.field.domain.FieldDefinition;
-import org.broadleafcommerce.cms.field.domain.FieldGroup;
-import org.broadleafcommerce.cms.page.domain.Page;
-import org.broadleafcommerce.cms.page.domain.PageField;
-import org.broadleafcommerce.cms.page.domain.PageFieldImpl;
-import org.broadleafcommerce.cms.page.domain.PageTemplate;
-import org.broadleafcommerce.cms.page.domain.PageTemplateFieldGroupXref;
-import org.broadleafcommerce.cms.page.domain.PageTemplateImpl;
-import org.broadleafcommerce.cms.page.service.PageService;
-import org.broadleafcommerce.common.admin.domain.AdminMainEntity;
-import org.broadleafcommerce.common.exception.ServiceException;
-import org.broadleafcommerce.common.sandbox.domain.SandBox;
-import org.broadleafcommerce.common.sandbox.service.SandBoxService;
-import org.broadleafcommerce.common.web.SandBoxContext;
-import org.broadleafcommerce.openadmin.dto.ClassMetadata;
-import org.broadleafcommerce.openadmin.dto.ClassTree;
-import org.broadleafcommerce.openadmin.dto.CriteriaTransferObject;
-import org.broadleafcommerce.openadmin.dto.DynamicResultSet;
-import org.broadleafcommerce.openadmin.dto.Entity;
-import org.broadleafcommerce.openadmin.dto.FieldMetadata;
-import org.broadleafcommerce.openadmin.dto.PersistencePackage;
-import org.broadleafcommerce.openadmin.dto.Property;
-import org.broadleafcommerce.openadmin.server.dao.DynamicEntityDao;
-import org.broadleafcommerce.openadmin.server.service.ValidationException;
-import org.broadleafcommerce.openadmin.server.service.handler.CustomPersistenceHandlerAdapter;
-import org.broadleafcommerce.openadmin.server.service.handler.DynamicEntityRetriever;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.InspectHelper;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.RecordHelper;
+import com.ultracommerce.cms.field.domain.FieldDefinition;
+import com.ultracommerce.cms.field.domain.FieldGroup;
+import com.ultracommerce.cms.page.domain.Page;
+import com.ultracommerce.cms.page.domain.PageField;
+import com.ultracommerce.cms.page.domain.PageFieldImpl;
+import com.ultracommerce.cms.page.domain.PageTemplate;
+import com.ultracommerce.cms.page.domain.PageTemplateFieldGroupXref;
+import com.ultracommerce.cms.page.domain.PageTemplateImpl;
+import com.ultracommerce.cms.page.service.PageService;
+import com.ultracommerce.common.admin.domain.AdminMainEntity;
+import com.ultracommerce.common.exception.ServiceException;
+import com.ultracommerce.common.sandbox.domain.SandBox;
+import com.ultracommerce.common.sandbox.service.SandBoxService;
+import com.ultracommerce.common.web.SandBoxContext;
+import com.ultracommerce.openadmin.dto.ClassMetadata;
+import com.ultracommerce.openadmin.dto.ClassTree;
+import com.ultracommerce.openadmin.dto.CriteriaTransferObject;
+import com.ultracommerce.openadmin.dto.DynamicResultSet;
+import com.ultracommerce.openadmin.dto.Entity;
+import com.ultracommerce.openadmin.dto.FieldMetadata;
+import com.ultracommerce.openadmin.dto.PersistencePackage;
+import com.ultracommerce.openadmin.dto.Property;
+import com.ultracommerce.openadmin.server.dao.DynamicEntityDao;
+import com.ultracommerce.openadmin.server.service.ValidationException;
+import com.ultracommerce.openadmin.server.service.handler.CustomPersistenceHandlerAdapter;
+import com.ultracommerce.openadmin.server.service.handler.DynamicEntityRetriever;
+import com.ultracommerce.openadmin.server.service.persistence.module.InspectHelper;
+import com.ultracommerce.openadmin.server.service.persistence.module.RecordHelper;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
@@ -66,21 +66,21 @@ import javax.persistence.PersistenceContext;
 /**
  * Created by jfischer
  */
-@Component("blPageTemplateCustomPersistenceHandler")
+@Component("ucPageTemplateCustomPersistenceHandler")
 public class PageTemplateCustomPersistenceHandler extends CustomPersistenceHandlerAdapter implements DynamicEntityRetriever {
 
     private final Log LOG = LogFactory.getLog(PageTemplateCustomPersistenceHandler.class);
 
-    @Resource(name="blPageService")
+    @Resource(name="ucPageService")
     protected PageService pageService;
 
-    @Resource(name="blSandBoxService")
+    @Resource(name="ucSandBoxService")
     protected SandBoxService sandBoxService;
 
-    @Resource(name = "blDynamicFieldPersistenceHandlerHelper")
+    @Resource(name = "ucDynamicFieldPersistenceHandlerHelper")
     protected DynamicFieldPersistenceHandlerHelper dynamicFieldUtil;
 
-    @PersistenceContext(unitName="blPU")
+    @PersistenceContext(unitName="ucPU")
     protected EntityManager em;
 
     @Override

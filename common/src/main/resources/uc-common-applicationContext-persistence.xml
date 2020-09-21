@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
   #%L
-  BroadleafCommerce Common Libraries
+  UltraCommerce Common Libraries
   %%
-  Copyright (C) 2009 - 2016 Broadleaf Commerce
+  Copyright (C) 2009 - 2016 Ultra Commerce
   %%
-  Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
-  (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
-  unless the restrictions on use therein are violated and require payment to Broadleaf in which case
-  the Broadleaf End User License Agreement (EULA), Version 1.1
-  (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+  Licensed under the Ultra Fair Use License Agreement, Version 1.0
+  (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+  unless the restrictions on use therein are violated and require payment to Ultra in which case
+  the Ultra End User License Agreement (EULA), Version 1.1
+  (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
   shall apply.
   
   Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
-  between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+  between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
   #L%
   -->
 
@@ -30,23 +30,23 @@
 
     <tx:annotation-driven/>
 
-    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean" depends-on="blCacheManager" primary="true">
-        <property name="jpaVendorAdapter" ref="blJpaVendorAdapter"/>
-        <property name="persistenceUnitManager" ref="blPersistenceUnitManager"/>
-        <property name="persistenceUnitName" value="blPU"/>
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean" depends-on="ucCacheManager" primary="true">
+        <property name="jpaVendorAdapter" ref="ucJpaVendorAdapter"/>
+        <property name="persistenceUnitManager" ref="ucPersistenceUnitManager"/>
+        <property name="persistenceUnitName" value="ucPU"/>
     </bean>
 
     <bean id="prodEntityManager" class="org.springframework.orm.jpa.support.SharedEntityManagerBean">
         <property name="entityManagerFactory" ref="entityManagerFactory"/>
     </bean>
 
-    <bean id="blTransactionManager" primary="true" class="org.broadleafcommerce.common.persistence.transaction.LifecycleAwareJpaTransactionManager">
+    <bean id="ucTransactionManager" primary="true" class="com.ultracommerce.common.persistence.transaction.LifecycleAwareJpaTransactionManager">
         <property name="entityManagerFactory" ref="entityManagerFactory" />
     </bean>
     <!-- Allows the use if @Transactional without any qualifiers -->
-    <alias alias="transactionManager" name="blTransactionManager"/>
+    <alias alias="transactionManager" name="ucTransactionManager"/>
 
-    <tx:advice id="blTxAdvice" transaction-manager="blTransactionManager">
+    <tx:advice id="ucTxAdvice" transaction-manager="ucTransactionManager">
         <tx:attributes>
             <tx:method name="*" propagation="REQUIRED"/>
             <tx:method name="findNextId" propagation="REQUIRES_NEW"/>
@@ -54,50 +54,50 @@
     </tx:advice>
 
     <!-- EntityManager,TransactionManager sets -->
-    <bean id="blDefaultTargetModeMap" class="org.springframework.beans.factory.config.MapFactoryBean">
+    <bean id="ucDefaultTargetModeMap" class="org.springframework.beans.factory.config.MapFactoryBean">
         <property name="sourceMap">
             <map>
                 <entry key="sandbox">
                     <map>
                         <entry key="entityManager" value-ref="prodEntityManager"/>
-                        <entry key="transactionManager" value-ref="blTransactionManager"/>
+                        <entry key="transactionManager" value-ref="ucTransactionManager"/>
                     </map>
                 </entry>
                 <entry key="stage">
                     <map>
                         <entry key="entityManager" value-ref="prodEntityManager"/>
-                        <entry key="transactionManager" value-ref="blTransactionManager"/>
+                        <entry key="transactionManager" value-ref="ucTransactionManager"/>
                     </map>
                 </entry>
                 <entry key="production">
                     <map>
                         <entry key="entityManager" value-ref="prodEntityManager"/>
-                        <entry key="transactionManager" value-ref="blTransactionManager"/>
+                        <entry key="transactionManager" value-ref="ucTransactionManager"/>
                     </map>
                 </entry>
             </map>
         </property>
     </bean>
 
-    <bean id="blTargetModeMaps" class="org.springframework.beans.factory.config.ListFactoryBean">
+    <bean id="ucTargetModeMaps" class="org.springframework.beans.factory.config.ListFactoryBean">
         <property name="sourceList">
             <list>
-                <ref bean="blDefaultTargetModeMap"/>
+                <ref bean="ucDefaultTargetModeMap"/>
             </list>
         </property>
     </bean>
     
-    <bean id="blCacheManager" class="org.broadleafcommerce.common.extensibility.cache.jcache.MergeJCacheManagerFactoryBean"/>
+    <bean id="ucCacheManager" class="com.ultracommerce.common.extensibility.cache.jcache.MergeJCacheManagerFactoryBean"/>
     
-    <bean id="blMergedCacheConfigLocations" class="org.springframework.beans.factory.config.ListFactoryBean">
+    <bean id="ucMergedCacheConfigLocations" class="org.springframework.beans.factory.config.ListFactoryBean">
         <property name="sourceList">
             <list>
-                <value>classpath:bl-common-ehcache.xml</value>
+                <value>classpath:uc-common-ehcache.xml</value>
             </list>
         </property>
     </bean>
 
-    <bean id="blMergedPersistenceXmlLocations" class="org.springframework.beans.factory.config.ListFactoryBean">
+    <bean id="ucMergedPersistenceXmlLocations" class="org.springframework.beans.factory.config.ListFactoryBean">
         <property name="sourceList">
             <list>
                 <value>classpath*:/META-INF/persistence-common.xml</value>
@@ -105,31 +105,31 @@
         </property>
     </bean>
 
-    <bean id="blMergedEntityContexts" class="org.springframework.beans.factory.config.ListFactoryBean">
+    <bean id="ucMergedEntityContexts" class="org.springframework.beans.factory.config.ListFactoryBean">
         <property name="sourceList">
             <list>
-                <value>classpath:bl-common-applicationContext-entity.xml</value>
+                <value>classpath:uc-common-applicationContext-entity.xml</value>
             </list>
         </property>
     </bean>
     
-    <bean id="blPersistenceUnitManager" class="org.broadleafcommerce.common.extensibility.jpa.MergePersistenceUnitManager">
-        <property name="persistenceUnitPostProcessors" ref="blPersistenceUnitPostProcessors"/>
+    <bean id="ucPersistenceUnitManager" class="com.ultracommerce.common.extensibility.jpa.MergePersistenceUnitManager">
+        <property name="persistenceUnitPostProcessors" ref="ucPersistenceUnitPostProcessors"/>
     </bean>
 
 
-    <bean id="blPersistenceUnitPostProcessors" class="org.springframework.beans.factory.config.ListFactoryBean">
+    <bean id="ucPersistenceUnitPostProcessors" class="org.springframework.beans.factory.config.ListFactoryBean">
         <property name="sourceList">
             <list>
-                <bean class="org.broadleafcommerce.common.extensibility.jpa.JPAPropertiesPersistenceUnitPostProcessor"/>
-                <bean class="org.broadleafcommerce.common.extensibility.jpa.ORMConfigPersistenceUnitPostProcessor"/>
-                <bean class="org.broadleafcommerce.common.extensibility.jpa.JCachePersistenceUnitPostProcessor"/>
+                <bean class="com.ultracommerce.common.extensibility.jpa.JPAPropertiesPersistenceUnitPostProcessor"/>
+                <bean class="com.ultracommerce.common.extensibility.jpa.ORMConfigPersistenceUnitPostProcessor"/>
+                <bean class="com.ultracommerce.common.extensibility.jpa.JCachePersistenceUnitPostProcessor"/>
             </list>
         </property>
     </bean>
     
-    <bean id="blEntityConfiguration" class="org.broadleafcommerce.common.persistence.EntityConfiguration"/>
+    <bean id="ucEntityConfiguration" class="com.ultracommerce.common.persistence.EntityConfiguration"/>
     
-    <import resource="bl-common-applicationContext-mbeans.xml" />
+    <import resource="uc-common-applicationContext-mbeans.xml" />
     
 </beans>

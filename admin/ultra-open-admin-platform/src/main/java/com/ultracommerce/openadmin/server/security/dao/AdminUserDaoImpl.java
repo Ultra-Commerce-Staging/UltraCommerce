@@ -1,26 +1,26 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.openadmin.server.security.dao;
+package com.ultracommerce.openadmin.server.security.dao;
 
-import org.broadleafcommerce.common.persistence.EntityConfiguration;
-import org.broadleafcommerce.common.persistence.Status;
-import org.broadleafcommerce.common.util.dao.TypedQueryBuilder;
-import org.broadleafcommerce.openadmin.server.security.domain.AdminUser;
+import com.ultracommerce.common.persistence.EntityConfiguration;
+import com.ultracommerce.common.persistence.Status;
+import com.ultracommerce.common.util.dao.TypedQueryBuilder;
+import com.ultracommerce.openadmin.server.security.domain.AdminUser;
 import org.hibernate.jpa.QueryHints;
 import org.springframework.stereotype.Repository;
 
@@ -38,24 +38,24 @@ import javax.persistence.TypedQuery;
  * @author jfischer
  *
  */
-@Repository("blAdminUserDao")
+@Repository("ucAdminUserDao")
 public class AdminUserDaoImpl implements AdminUserDao {
 
-    @PersistenceContext(unitName = "blPU")
+    @PersistenceContext(unitName = "ucPU")
     protected EntityManager em;
 
-    @Resource(name="blEntityConfiguration")
+    @Resource(name="ucEntityConfiguration")
     protected EntityConfiguration entityConfiguration;
 
     public void deleteAdminUser(AdminUser user) {
         if (!em.contains(user)) {
-            user = em.find(entityConfiguration.lookupEntityClass("org.broadleafcommerce.openadmin.server.security.domain.AdminUser", AdminUser.class), user.getId());
+            user = em.find(entityConfiguration.lookupEntityClass("com.ultracommerce.openadmin.server.security.domain.AdminUser", AdminUser.class), user.getId());
         }
         em.remove(user);
     }
 
     public AdminUser readAdminUserById(Long id) {
-        return em.find(entityConfiguration.lookupEntityClass("org.broadleafcommerce.openadmin.server.security.domain.AdminUser", AdminUser.class), id);
+        return em.find(entityConfiguration.lookupEntityClass("com.ultracommerce.openadmin.server.security.domain.AdminUser", AdminUser.class), id);
     }
     
     @Override
@@ -80,9 +80,9 @@ public class AdminUserDaoImpl implements AdminUserDao {
     }
 
     public AdminUser readAdminUserByUserName(String userName) {
-        TypedQuery<AdminUser> query = em.createNamedQuery("BC_READ_ADMIN_USER_BY_USERNAME", AdminUser.class);
+        TypedQuery<AdminUser> query = em.createNamedQuery("UC_READ_ADMIN_USER_BY_USERNAME", AdminUser.class);
         query.setHint(QueryHints.HINT_CACHEABLE, true);
-        query.setHint(QueryHints.HINT_CACHE_REGION, "blAdminSecurityVolatileQuery");
+        query.setHint(QueryHints.HINT_CACHE_REGION, "ucAdminSecurityVolatileQuery");
         query.setParameter("userName", userName);
         List<AdminUser> users = query.getResultList();
         //TODO rewrite on streams when upgraded to java 8
@@ -102,15 +102,15 @@ public class AdminUserDaoImpl implements AdminUserDao {
     }
 
     public List<AdminUser> readAllAdminUsers() {
-        TypedQuery<AdminUser> query = em.createNamedQuery("BC_READ_ALL_ADMIN_USERS", AdminUser.class);
+        TypedQuery<AdminUser> query = em.createNamedQuery("UC_READ_ALL_ADMIN_USERS", AdminUser.class);
         query.setHint(QueryHints.HINT_CACHEABLE, true);
-        query.setHint(QueryHints.HINT_CACHE_REGION, "blAdminSecurityVolatileQuery");
+        query.setHint(QueryHints.HINT_CACHE_REGION, "ucAdminSecurityVolatileQuery");
         return query.getResultList();
     }
 
     @Override
     public List<AdminUser> readAdminUserByEmail(String emailAddress) {
-        TypedQuery<AdminUser> query = em.createNamedQuery("BC_READ_ADMIN_USER_BY_EMAIL", AdminUser.class);
+        TypedQuery<AdminUser> query = em.createNamedQuery("UC_READ_ADMIN_USER_BY_EMAIL", AdminUser.class);
         query.setParameter("email", emailAddress);
         return query.getResultList();
     }

@@ -1,36 +1,36 @@
 /*
  * #%L
- * BroadleafCommerce Framework Web
+ * UltraCommerce Framework Web
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.web.controller.account;
+package com.ultracommerce.core.web.controller.account;
 
 import org.apache.commons.lang.StringUtils;
-import org.broadleafcommerce.common.exception.ServiceException;
-import org.broadleafcommerce.common.web.controller.BroadleafAbstractController;
-import org.broadleafcommerce.core.order.domain.NullOrderImpl;
-import org.broadleafcommerce.core.order.domain.Order;
-import org.broadleafcommerce.core.order.service.OrderService;
-import org.broadleafcommerce.core.pricing.service.exception.PricingException;
-import org.broadleafcommerce.core.web.order.CartState;
-import org.broadleafcommerce.profile.core.domain.Customer;
-import org.broadleafcommerce.profile.core.service.CustomerService;
-import org.broadleafcommerce.profile.web.controller.validator.RegisterCustomerValidator;
-import org.broadleafcommerce.profile.web.core.form.RegisterCustomerForm;
-import org.broadleafcommerce.profile.web.core.service.login.LoginService;
-import org.broadleafcommerce.profile.web.core.service.register.RegistrationService;
+import com.ultracommerce.common.exception.ServiceException;
+import com.ultracommerce.common.web.controller.UltraAbstractController;
+import com.ultracommerce.core.order.domain.NullOrderImpl;
+import com.ultracommerce.core.order.domain.Order;
+import com.ultracommerce.core.order.service.OrderService;
+import com.ultracommerce.core.pricing.service.exception.PricingException;
+import com.ultracommerce.core.web.order.CartState;
+import com.ultracommerce.profile.core.domain.Customer;
+import com.ultracommerce.profile.core.service.CustomerService;
+import com.ultracommerce.profile.web.controller.validator.RegisterCustomerValidator;
+import com.ultracommerce.profile.web.core.form.RegisterCustomerForm;
+import com.ultracommerce.profile.web.core.service.login.LoginService;
+import com.ultracommerce.profile.web.core.service.register.RegistrationService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -42,7 +42,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * The controller responsible for registering a customer.
  * 
- * Uses a component registered with the name blCustomerValidator to perform validation of the
+ * Uses a component registered with the name ucCustomerValidator to perform validation of the
  * submitted customer.
  * 
  * Uses the property "useEmailForLogin" to determine if the username should be defaulted to the
@@ -52,7 +52,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author apazzolini
  * @author bpolster
  */
-public class BroadleafRegisterController extends BroadleafAbstractController {
+public class UltraRegisterController extends UltraAbstractController {
 
     @Value("${use.email.for.site.login:true}")
     protected boolean useEmailForLogin;
@@ -60,19 +60,19 @@ public class BroadleafRegisterController extends BroadleafAbstractController {
     protected static String registerSuccessView = "ajaxredirect:";
     protected static String registerView = "authentication/register";
     
-    @Resource(name="blRegistrationService")
+    @Resource(name="ucRegistrationService")
     protected RegistrationService registrationService;
 
-    @Resource(name="blCustomerService")
+    @Resource(name="ucCustomerService")
     protected CustomerService customerService;
 
-    @Resource(name="blRegisterCustomerValidator")
+    @Resource(name="ucRegisterCustomerValidator")
     protected RegisterCustomerValidator registerCustomerValidator;
 
-    @Resource(name="blLoginService")
+    @Resource(name="ucLoginService")
     protected LoginService loginService;
 
-    @Resource(name = "blOrderService")
+    @Resource(name = "ucOrderService")
     protected OrderService orderService;
     
     public String register(RegisterCustomerForm registerCustomerForm, HttpServletRequest request, 

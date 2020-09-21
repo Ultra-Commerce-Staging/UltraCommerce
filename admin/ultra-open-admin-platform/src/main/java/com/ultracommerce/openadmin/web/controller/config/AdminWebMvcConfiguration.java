@@ -1,27 +1,27 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2017 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.openadmin.web.controller.config;
+package com.ultracommerce.openadmin.web.controller.config;
 
-import org.broadleafcommerce.common.admin.condition.ConditionalOnAdmin;
-import org.broadleafcommerce.common.config.PostAutoConfigurationImport;
-import org.broadleafcommerce.common.web.BroadleafCookieLocaleResolver;
-import org.broadleafcommerce.openadmin.web.compatibility.JSFieldNameCompatibilityInterceptor;
-import org.broadleafcommerce.openadmin.web.controller.AdminRequestMappingHandlerMapping;
+import com.ultracommerce.common.admin.condition.ConditionalOnAdmin;
+import com.ultracommerce.common.config.PostAutoConfigurationImport;
+import com.ultracommerce.common.web.UltraCookieLocaleResolver;
+import com.ultracommerce.openadmin.web.compatibility.JSFieldNameCompatibilityInterceptor;
+import com.ultracommerce.openadmin.web.controller.AdminRequestMappingHandlerMapping;
 import org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration;
 import org.springframework.boot.autoconfigure.web.servlet.WebMvcRegistrations;
 import org.springframework.context.annotation.Bean;
@@ -66,20 +66,20 @@ public class AdminWebMvcConfiguration {
          * interceptors to _only_ the default RequestMappingHandlerMapping.
          */
         @Bean
-        public MappedInterceptor blJsFieldNameCompatibilityInterceptor() {
+        public MappedInterceptor ucJsFieldNameCompatibilityInterceptor() {
             return new MappedInterceptor(null, new JSFieldNameCompatibilityInterceptor());
         }
 
         @Bean
-        public MappedInterceptor blLocaleChangeInterceptor() {
+        public MappedInterceptor ucLocaleChangeInterceptor() {
             LocaleChangeInterceptor localeInterceptor = new LocaleChangeInterceptor();
-            localeInterceptor.setParamName("blLocaleCode");
+            localeInterceptor.setParamName("ucLocaleCode");
             return new MappedInterceptor(null, localeInterceptor);
         }
 
         @Bean
         public LocaleResolver localeResolver() {
-            CookieLocaleResolver resolver = new BroadleafCookieLocaleResolver();
+            CookieLocaleResolver resolver = new UltraCookieLocaleResolver();
             resolver.setCookieHttpOnly(true);
             resolver.setDefaultLocale(Locale.ENGLISH);
             return resolver;
@@ -92,7 +92,7 @@ public class AdminWebMvcConfiguration {
          * SPRING-UPGRADE-CHECK
          */
         @Bean
-        public WebMvcRegistrations blAdminMvcRegistrations() {
+        public WebMvcRegistrations ucAdminMvcRegistrations() {
             return new WebMvcRegistrations() {
                 @Override
                 public RequestMappingHandlerMapping getRequestMappingHandlerMapping() {

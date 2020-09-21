@@ -1,21 +1,21 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.openadmin.web.service;
+package com.ultracommerce.openadmin.web.service;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -24,81 +24,81 @@ import org.apache.commons.lang.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.admin.domain.AdminMainEntity;
-import org.broadleafcommerce.common.exception.ExceptionHelper;
-import org.broadleafcommerce.common.exception.SecurityServiceException;
-import org.broadleafcommerce.common.exception.ServiceException;
-import org.broadleafcommerce.common.extension.ExtensionResultStatusType;
-import org.broadleafcommerce.common.i18n.domain.TranslatedEntity;
-import org.broadleafcommerce.common.i18n.service.TranslationService;
-import org.broadleafcommerce.common.locale.service.LocaleService;
-import org.broadleafcommerce.common.media.domain.MediaDto;
-import org.broadleafcommerce.common.persistence.EntityConfiguration;
-import org.broadleafcommerce.common.persistence.EntityDuplicator;
-import org.broadleafcommerce.common.presentation.client.AddMethodType;
-import org.broadleafcommerce.common.presentation.client.AdornedTargetAddMethodType;
-import org.broadleafcommerce.common.presentation.client.LookupType;
-import org.broadleafcommerce.common.presentation.client.PersistencePerspectiveItemType;
-import org.broadleafcommerce.common.presentation.client.SupportedFieldType;
-import org.broadleafcommerce.common.presentation.client.VisibilityEnum;
-import org.broadleafcommerce.common.util.BLCMessageUtils;
-import org.broadleafcommerce.common.util.FormatUtil;
-import org.broadleafcommerce.common.util.StringUtil;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
-import org.broadleafcommerce.openadmin.dto.AdornedTargetCollectionMetadata;
-import org.broadleafcommerce.openadmin.dto.AdornedTargetList;
-import org.broadleafcommerce.openadmin.dto.BasicCollectionMetadata;
-import org.broadleafcommerce.openadmin.dto.BasicFieldMetadata;
-import org.broadleafcommerce.openadmin.dto.ClassMetadata;
-import org.broadleafcommerce.openadmin.dto.ClassTree;
-import org.broadleafcommerce.openadmin.dto.CollectionMetadata;
-import org.broadleafcommerce.openadmin.dto.DynamicResultSet;
-import org.broadleafcommerce.openadmin.dto.Entity;
-import org.broadleafcommerce.openadmin.dto.FieldMetadata;
-import org.broadleafcommerce.openadmin.dto.ForeignKey;
-import org.broadleafcommerce.openadmin.dto.MapMetadata;
-import org.broadleafcommerce.openadmin.dto.MapStructure;
-import org.broadleafcommerce.openadmin.dto.Property;
-import org.broadleafcommerce.openadmin.dto.SectionCrumb;
-import org.broadleafcommerce.openadmin.dto.TabMetadata;
-import org.broadleafcommerce.openadmin.server.dao.DynamicEntityDao;
-import org.broadleafcommerce.openadmin.server.domain.PersistencePackageRequest;
-import org.broadleafcommerce.openadmin.server.security.domain.AdminSection;
-import org.broadleafcommerce.openadmin.server.security.domain.AdminUser;
-import org.broadleafcommerce.openadmin.server.security.remote.EntityOperationType;
-import org.broadleafcommerce.openadmin.server.security.remote.SecurityVerifier;
-import org.broadleafcommerce.openadmin.server.security.service.EntityFormModifier;
-import org.broadleafcommerce.openadmin.server.security.service.EntityFormModifierConfiguration;
-import org.broadleafcommerce.openadmin.server.security.service.EntityFormModifierData;
-import org.broadleafcommerce.openadmin.server.security.service.EntityFormModifierDataPoint;
-import org.broadleafcommerce.openadmin.server.security.service.EntityFormModifierRequest;
-import org.broadleafcommerce.openadmin.server.security.service.ExceptionAwareRowLevelSecurityProvider;
-import org.broadleafcommerce.openadmin.server.security.service.RowLevelSecurityService;
-import org.broadleafcommerce.openadmin.server.security.service.navigation.AdminNavigationService;
-import org.broadleafcommerce.openadmin.server.service.AdminEntityService;
-import org.broadleafcommerce.openadmin.server.service.persistence.PersistenceManager;
-import org.broadleafcommerce.openadmin.server.service.persistence.PersistenceManagerFactory;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.BasicPersistenceModule;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.FieldManager;
-import org.broadleafcommerce.openadmin.web.form.component.DefaultListGridActions;
-import org.broadleafcommerce.openadmin.web.form.component.ListGrid;
-import org.broadleafcommerce.openadmin.web.form.component.ListGridAction;
-import org.broadleafcommerce.openadmin.web.form.component.ListGridActionGroup;
-import org.broadleafcommerce.openadmin.web.form.component.ListGridRecord;
-import org.broadleafcommerce.openadmin.web.form.component.MediaField;
-import org.broadleafcommerce.openadmin.web.form.component.RuleBuilderField;
-import org.broadleafcommerce.openadmin.web.form.entity.CodeField;
-import org.broadleafcommerce.openadmin.web.form.entity.ComboField;
-import org.broadleafcommerce.openadmin.web.form.entity.DefaultAdornedEntityFormActions;
-import org.broadleafcommerce.openadmin.web.form.entity.DefaultEntityFormActions;
-import org.broadleafcommerce.openadmin.web.form.entity.DynamicEntityFormInfo;
-import org.broadleafcommerce.openadmin.web.form.entity.EntityForm;
-import org.broadleafcommerce.openadmin.web.form.entity.Field;
-import org.broadleafcommerce.openadmin.web.rulebuilder.DataDTODeserializer;
-import org.broadleafcommerce.openadmin.web.rulebuilder.dto.DataDTO;
-import org.broadleafcommerce.openadmin.web.rulebuilder.dto.DataWrapper;
-import org.broadleafcommerce.openadmin.web.rulebuilder.dto.FieldDTO;
-import org.broadleafcommerce.openadmin.web.rulebuilder.dto.FieldWrapper;
+import com.ultracommerce.common.admin.domain.AdminMainEntity;
+import com.ultracommerce.common.exception.ExceptionHelper;
+import com.ultracommerce.common.exception.SecurityServiceException;
+import com.ultracommerce.common.exception.ServiceException;
+import com.ultracommerce.common.extension.ExtensionResultStatusType;
+import com.ultracommerce.common.i18n.domain.TranslatedEntity;
+import com.ultracommerce.common.i18n.service.TranslationService;
+import com.ultracommerce.common.locale.service.LocaleService;
+import com.ultracommerce.common.media.domain.MediaDto;
+import com.ultracommerce.common.persistence.EntityConfiguration;
+import com.ultracommerce.common.persistence.EntityDuplicator;
+import com.ultracommerce.common.presentation.client.AddMethodType;
+import com.ultracommerce.common.presentation.client.AdornedTargetAddMethodType;
+import com.ultracommerce.common.presentation.client.LookupType;
+import com.ultracommerce.common.presentation.client.PersistencePerspectiveItemType;
+import com.ultracommerce.common.presentation.client.SupportedFieldType;
+import com.ultracommerce.common.presentation.client.VisibilityEnum;
+import com.ultracommerce.common.util.UCMessageUtils;
+import com.ultracommerce.common.util.FormatUtil;
+import com.ultracommerce.common.util.StringUtil;
+import com.ultracommerce.common.web.UltraRequestContext;
+import com.ultracommerce.openadmin.dto.AdornedTargetCollectionMetadata;
+import com.ultracommerce.openadmin.dto.AdornedTargetList;
+import com.ultracommerce.openadmin.dto.BasicCollectionMetadata;
+import com.ultracommerce.openadmin.dto.BasicFieldMetadata;
+import com.ultracommerce.openadmin.dto.ClassMetadata;
+import com.ultracommerce.openadmin.dto.ClassTree;
+import com.ultracommerce.openadmin.dto.CollectionMetadata;
+import com.ultracommerce.openadmin.dto.DynamicResultSet;
+import com.ultracommerce.openadmin.dto.Entity;
+import com.ultracommerce.openadmin.dto.FieldMetadata;
+import com.ultracommerce.openadmin.dto.ForeignKey;
+import com.ultracommerce.openadmin.dto.MapMetadata;
+import com.ultracommerce.openadmin.dto.MapStructure;
+import com.ultracommerce.openadmin.dto.Property;
+import com.ultracommerce.openadmin.dto.SectionCrumb;
+import com.ultracommerce.openadmin.dto.TabMetadata;
+import com.ultracommerce.openadmin.server.dao.DynamicEntityDao;
+import com.ultracommerce.openadmin.server.domain.PersistencePackageRequest;
+import com.ultracommerce.openadmin.server.security.domain.AdminSection;
+import com.ultracommerce.openadmin.server.security.domain.AdminUser;
+import com.ultracommerce.openadmin.server.security.remote.EntityOperationType;
+import com.ultracommerce.openadmin.server.security.remote.SecurityVerifier;
+import com.ultracommerce.openadmin.server.security.service.EntityFormModifier;
+import com.ultracommerce.openadmin.server.security.service.EntityFormModifierConfiguration;
+import com.ultracommerce.openadmin.server.security.service.EntityFormModifierData;
+import com.ultracommerce.openadmin.server.security.service.EntityFormModifierDataPoint;
+import com.ultracommerce.openadmin.server.security.service.EntityFormModifierRequest;
+import com.ultracommerce.openadmin.server.security.service.ExceptionAwareRowLevelSecurityProvider;
+import com.ultracommerce.openadmin.server.security.service.RowLevelSecurityService;
+import com.ultracommerce.openadmin.server.security.service.navigation.AdminNavigationService;
+import com.ultracommerce.openadmin.server.service.AdminEntityService;
+import com.ultracommerce.openadmin.server.service.persistence.PersistenceManager;
+import com.ultracommerce.openadmin.server.service.persistence.PersistenceManagerFactory;
+import com.ultracommerce.openadmin.server.service.persistence.module.BasicPersistenceModule;
+import com.ultracommerce.openadmin.server.service.persistence.module.FieldManager;
+import com.ultracommerce.openadmin.web.form.component.DefaultListGridActions;
+import com.ultracommerce.openadmin.web.form.component.ListGrid;
+import com.ultracommerce.openadmin.web.form.component.ListGridAction;
+import com.ultracommerce.openadmin.web.form.component.ListGridActionGroup;
+import com.ultracommerce.openadmin.web.form.component.ListGridRecord;
+import com.ultracommerce.openadmin.web.form.component.MediaField;
+import com.ultracommerce.openadmin.web.form.component.RuleBuilderField;
+import com.ultracommerce.openadmin.web.form.entity.CodeField;
+import com.ultracommerce.openadmin.web.form.entity.ComboField;
+import com.ultracommerce.openadmin.web.form.entity.DefaultAdornedEntityFormActions;
+import com.ultracommerce.openadmin.web.form.entity.DefaultEntityFormActions;
+import com.ultracommerce.openadmin.web.form.entity.DynamicEntityFormInfo;
+import com.ultracommerce.openadmin.web.form.entity.EntityForm;
+import com.ultracommerce.openadmin.web.form.entity.Field;
+import com.ultracommerce.openadmin.web.rulebuilder.DataDTODeserializer;
+import com.ultracommerce.openadmin.web.rulebuilder.dto.DataDTO;
+import com.ultracommerce.openadmin.web.rulebuilder.dto.DataWrapper;
+import com.ultracommerce.openadmin.web.rulebuilder.dto.FieldDTO;
+import com.ultracommerce.openadmin.web.rulebuilder.dto.FieldWrapper;
 import org.codehaus.jettison.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
@@ -135,50 +135,50 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Andre Azzolini (apazzolini)
  */
-@Service("blFormBuilderService")
+@Service("ucFormBuilderService")
 public class FormBuilderServiceImpl implements FormBuilderService {
 
     private static final Log LOG = LogFactory.getLog(FormBuilderServiceImpl.class);
 
     public static final String ALTERNATE_ID_PROPERTY = "ALTERNATE_ID";
 
-    @Resource(name = "blAdminEntityService")
+    @Resource(name = "ucAdminEntityService")
     protected AdminEntityService adminEntityService;
     
-    @Resource (name = "blAdminNavigationService")
+    @Resource (name = "ucAdminNavigationService")
     protected AdminNavigationService navigationService;
     
-    @Resource(name = "blFormBuilderExtensionManager")
+    @Resource(name = "ucFormBuilderExtensionManager")
     protected FormBuilderExtensionManager extensionManager;
     
-    @Resource(name="blEntityConfiguration")
+    @Resource(name="ucEntityConfiguration")
     protected EntityConfiguration entityConfiguration;
 
-    @Resource(name="blAdminSecurityRemoteService")
+    @Resource(name="ucAdminSecurityRemoteService")
     protected SecurityVerifier adminRemoteSecurityService;
     
-    @Resource(name = "blRowLevelSecurityService")
+    @Resource(name = "ucRowLevelSecurityService")
     protected RowLevelSecurityService rowLevelSecurityService;
 
-    @Resource(name = "blMediaBuilderService")
+    @Resource(name = "ucMediaBuilderService")
     protected MediaBuilderService mediaBuilderService;
     
-    @Resource(name = "blListGridErrorMessageExtensionManager")
+    @Resource(name = "ucListGridErrorMessageExtensionManager")
     protected ListGridErrorMessageExtensionManager listGridErrorExtensionManager;
 
-    @Resource(name = "blAdminNavigationService")
+    @Resource(name = "ucAdminNavigationService")
     protected AdminNavigationService adminNavigationService;
 
-    @Resource(name = "blEntityDuplicator")
+    @Resource(name = "ucEntityDuplicator")
     protected EntityDuplicator duplicator;
 
-    @Resource(name = "blDynamicEntityDao")
+    @Resource(name = "ucDynamicEntityDao")
     protected DynamicEntityDao dynamicEntityDao;
 
-    @Resource(name = "blLocaleService")
+    @Resource(name = "ucLocaleService")
     protected LocaleService localeService;
 
-    @Resource(name = "blTranslationService")
+    @Resource(name = "ucTranslationService")
     protected TranslationService translationService;
 
     @Value("${use.translation.search:false}")
@@ -276,14 +276,14 @@ public class FormBuilderServiceImpl implements FormBuilderService {
             FieldDTO localeField = new FieldDTO();
             localeField.setId("translationLocale");
             localeField.setLabel("Translation locale");
-            localeField.setOperators("blcFilterOperators_Enumeration");
+            localeField.setOperators("ucFilterOperators_Enumeration");
             localeField.setInput("select");
             localeField.setType("string");
 
-            List<org.broadleafcommerce.common.locale.domain.Locale> locales = localeService.findAllLocales();
+            List<com.ultracommerce.common.locale.domain.Locale> locales = localeService.findAllLocales();
 
             Map<String, String> localeMap = new HashMap<String, String>();
-            for (org.broadleafcommerce.common.locale.domain.Locale l : locales) {
+            for (com.ultracommerce.common.locale.domain.Locale l : locales) {
                 localeMap.put(l.getLocaleCode(), l.getFriendlyName());
             }
             localeField.setValues((new JSONObject(localeMap)).toString());
@@ -298,7 +298,7 @@ public class FormBuilderServiceImpl implements FormBuilderService {
         FieldDTO fieldDTO = new FieldDTO();
         //translate the label to display
         String label = field.getFriendlyName();
-        BroadleafRequestContext context = BroadleafRequestContext.getBroadleafRequestContext();
+        UltraRequestContext context = UltraRequestContext.getUltraRequestContext();
         MessageSource messages = context.getMessageSource();
         if (messages != null) {
             label = messages.getMessage(label, null, label, context.getJavaLocale());
@@ -307,15 +307,15 @@ public class FormBuilderServiceImpl implements FormBuilderService {
 
         fieldDTO.setId(field.getName());
         if (field.getFieldType().equals("STRING")) {
-            fieldDTO.setOperators("blcFilterOperators_Text");
+            fieldDTO.setOperators("ucFilterOperators_Text");
         } else if (field.getFieldType().equals("DATE")) {
-            fieldDTO.setOperators("blcFilterOperators_Date");
+            fieldDTO.setOperators("ucFilterOperators_Date");
         } else if (field.getFieldType().equals("NUMBER") || field.getFieldType().equals("MONEY") || field.getFieldType().equals("DECIMAL")) {
-            fieldDTO.setOperators("blcFilterOperators_Numeric");
+            fieldDTO.setOperators("ucFilterOperators_Numeric");
         } else if (field.getFieldType().equals("BOOLEAN")) {
-            fieldDTO.setOperators("blcFilterOperators_Boolean");
-        } else if (field.getFieldType().equals("BROADLEAF_ENUMERATION")) {
-            fieldDTO.setOperators("blcFilterOperators_Enumeration");
+            fieldDTO.setOperators("ucFilterOperators_Boolean");
+        } else if (field.getFieldType().equals("ULTRA_ENUMERATION")) {
+            fieldDTO.setOperators("ucFilterOperators_Enumeration");
             fieldDTO.setInput("select");
             fieldDTO.setType("string");
             String[][] enumerationValues = fmd.getEnumerationValues ();
@@ -326,7 +326,7 @@ public class FormBuilderServiceImpl implements FormBuilderService {
 
             fieldDTO.setValues(new JSONObject(enumMap).toString());
         } else if (field.getFieldType().equals("ADDITIONAL_FOREIGN_KEY")) {
-            fieldDTO.setOperators("blcFilterOperators_Selectize");
+            fieldDTO.setOperators("ucFilterOperators_Selectize");
             fieldDTO.setType("string");
 
             AdminSection section = adminNavigationService.findAdminSectionByClassAndSectionId(fmd.getForeignKeyClass(), null);
@@ -337,7 +337,7 @@ public class FormBuilderServiceImpl implements FormBuilderService {
                 fieldDTO.setSelectizeSectionKey(fmd.getForeignKeyClass());
             }
         } else {
-            fieldDTO.setOperators("blcFilterOperators_Text");
+            fieldDTO.setOperators("ucFilterOperators_Text");
         }
 
         return fieldDTO;
@@ -346,7 +346,7 @@ public class FormBuilderServiceImpl implements FormBuilderService {
     protected Field createHeaderField(Property p, BasicFieldMetadata fmd) {
         Field hf;
         if (fmd.getFieldType().equals(SupportedFieldType.EXPLICIT_ENUMERATION) ||
-                fmd.getFieldType().equals(SupportedFieldType.BROADLEAF_ENUMERATION) ||
+                fmd.getFieldType().equals(SupportedFieldType.ULTRA_ENUMERATION) ||
                 fmd.getFieldType().equals(SupportedFieldType.DATA_DRIVEN_ENUMERATION) ||
                 fmd.getFieldType().equals(SupportedFieldType.EMPTY_ENUMERATION)) {
             hf = new ComboField();
@@ -790,7 +790,7 @@ public class FormBuilderServiceImpl implements FormBuilderService {
     }
 
     protected String buildSelectizeUrl(ListGrid listGrid) {
-        HttpServletRequest request = BroadleafRequestContext.getBroadleafRequestContext().getRequest();
+        HttpServletRequest request = UltraRequestContext.getUltraRequestContext().getRequest();
         String url = request.getContextPath();
         url += url.endsWith("/") || listGrid.getSectionKey().startsWith("/") ? listGrid.getSectionKey() : "/" + listGrid.getSectionKey();
         url += "/" + listGrid.getContainingEntityId();
@@ -996,7 +996,7 @@ public class FormBuilderServiceImpl implements FormBuilderService {
                     // Create the field and set some basic attributes
                     Field f;
                     
-                    if (fieldType.equals(SupportedFieldType.BROADLEAF_ENUMERATION.toString())
+                    if (fieldType.equals(SupportedFieldType.ULTRA_ENUMERATION.toString())
                             || fieldType.equals(SupportedFieldType.EXPLICIT_ENUMERATION.toString())
                             || fieldType.equals(SupportedFieldType.DATA_DRIVEN_ENUMERATION.toString())
                             || fieldType.equals(SupportedFieldType.EMPTY_ENUMERATION.toString())) {
@@ -1237,7 +1237,7 @@ public class FormBuilderServiceImpl implements FormBuilderService {
 
     protected boolean processedTabKeyMatchesTabName(String tabName, String candidateTabKey) {
         try {
-            String processedCandidateTabKey = BLCMessageUtils.getMessage(candidateTabKey);
+            String processedCandidateTabKey = UCMessageUtils.getMessage(candidateTabKey);
             boolean candidateTabKeyWasProcessed = !StringUtils.equals(candidateTabKey, processedCandidateTabKey);
 
             return candidateTabKeyWasProcessed && StringUtils.equalsIgnoreCase(tabName, processedCandidateTabKey);
@@ -1362,7 +1362,7 @@ public class FormBuilderServiceImpl implements FormBuilderService {
     
     /**
      * This method is invoked when EntityForms are created and is meant to provide a hook to add
-     * additional entity form actions for implementors of Broadleaf. Broadleaf modules will typically
+     * additional entity form actions for implementors of Ultra. Ultra modules will typically
      * leverage {@link FormBuilderExtensionHandler#addAdditionalFormActions(EntityForm)} method.
      * @param ef
      */
@@ -1611,7 +1611,7 @@ public class FormBuilderServiceImpl implements FormBuilderService {
                                     .withActionTargetEntity(entityType.getFullyQualifiedClassname())
                                     .withUrlPostfix("/add")
                                     .withIconClass("fa fa-plus")
-                                    .withDisplayText(BLCMessageUtils.getMessage(entityType.getFriendlyName()));
+                                    .withDisplayText(UCMessageUtils.getMessage(entityType.getFriendlyName()));
                             actionGroup.getListGridActions().add(0, ADD);
                         }
                         listGrid.addToolbarActionGroup(actionGroup);

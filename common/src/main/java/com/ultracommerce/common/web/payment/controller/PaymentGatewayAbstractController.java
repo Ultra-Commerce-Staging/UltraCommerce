@@ -1,32 +1,32 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
 
-package org.broadleafcommerce.common.web.payment.controller;
+package com.ultracommerce.common.web.payment.controller;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.payment.dto.PaymentResponseDTO;
-import org.broadleafcommerce.common.payment.service.PaymentGatewayCheckoutService;
-import org.broadleafcommerce.common.payment.service.PaymentGatewayConfiguration;
-import org.broadleafcommerce.common.payment.service.PaymentGatewayWebResponsePrintService;
-import org.broadleafcommerce.common.payment.service.PaymentGatewayWebResponseService;
-import org.broadleafcommerce.common.vendor.service.exception.PaymentException;
-import org.broadleafcommerce.common.web.controller.BroadleafAbstractController;
+import com.ultracommerce.common.payment.dto.PaymentResponseDTO;
+import com.ultracommerce.common.payment.service.PaymentGatewayCheckoutService;
+import com.ultracommerce.common.payment.service.PaymentGatewayConfiguration;
+import com.ultracommerce.common.payment.service.PaymentGatewayWebResponsePrintService;
+import com.ultracommerce.common.payment.service.PaymentGatewayWebResponseService;
+import com.ultracommerce.common.vendor.service.exception.PaymentException;
+import com.ultracommerce.common.web.controller.UltraAbstractController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.ui.Model;
@@ -42,16 +42,16 @@ import javax.servlet.http.HttpServletRequest;
  * communication between the implementing module and the Spring injected checkout engine. This class provides
  * generic flows and operations that are common across payment gateway integration methods.
  * You may notice that this intentionally resides in "common" as this supports the use case where an implementing module
- * can be used outside the scope of Broadleaf's "core" commerce engine.</p>
+ * can be used outside the scope of Ultra's "core" commerce engine.</p>
  *
- * <p>If used in conjunction with the core framework, Broadleaf provides all the necessary spring resources, such as
- * "blPaymentGatewayCheckoutService" that are needed for this class. If you are using the common jars without the framework
- * dependency, you will either have to implement the blPaymentGatewayCheckoutService yourself, or override the
+ * <p>If used in conjunction with the core framework, Ultra provides all the necessary spring resources, such as
+ * "ucPaymentGatewayCheckoutService" that are needed for this class. If you are using the common jars without the framework
+ * dependency, you will either have to implement the ucPaymentGatewayCheckoutService yourself, or override the
  * "applyPaymentToOrder" and the "markPaymentAsInvalid" methods accordingly.</p>
  *
  * @author Elbert Bautista (elbertbautista)
  */
-public abstract class PaymentGatewayAbstractController extends BroadleafAbstractController {
+public abstract class PaymentGatewayAbstractController extends UltraAbstractController {
 
     protected static final Log LOG = LogFactory.getLog(PaymentGatewayAbstractController.class);
     public static final String PAYMENT_PROCESSING_ERROR = "PAYMENT_PROCESSING_ERROR";
@@ -67,10 +67,10 @@ public abstract class PaymentGatewayAbstractController extends BroadleafAbstract
     protected static String cartReqAttributeNotProvidedMessage = "cart.requiredAttributeNotProvided";
 
     @Autowired(required=false)
-    @Qualifier("blPaymentGatewayCheckoutService")
+    @Qualifier("ucPaymentGatewayCheckoutService")
     protected PaymentGatewayCheckoutService paymentGatewayCheckoutService;
 
-    @Resource(name = "blPaymentGatewayWebResponsePrintService")
+    @Resource(name = "ucPaymentGatewayWebResponsePrintService")
     protected PaymentGatewayWebResponsePrintService webResponsePrintService;
 
     public Long applyPaymentToOrder(PaymentResponseDTO responseDTO) throws IllegalArgumentException {
@@ -137,9 +137,9 @@ public abstract class PaymentGatewayAbstractController extends BroadleafAbstract
      * some sort of tokenization mechanism client-side.
      *
      * The assumption is that the implementing gateway's controller that extends this class
-     * will have implemented a {@link org.broadleafcommerce.common.payment.service.PaymentGatewayWebResponseService}
+     * will have implemented a {@link com.ultracommerce.common.payment.service.PaymentGatewayWebResponseService}
      * with the ability to translate an {@link javax.servlet.http.HttpServletRequest} into a
-     * {@link org.broadleafcommerce.common.payment.dto.PaymentResponseDTO} which will then be used by the framework
+     * {@link com.ultracommerce.common.payment.dto.PaymentResponseDTO} which will then be used by the framework
      * to create the appropriate order payments and transactions as well as invoke the checkout workflow
      * if configured to do so.
      *

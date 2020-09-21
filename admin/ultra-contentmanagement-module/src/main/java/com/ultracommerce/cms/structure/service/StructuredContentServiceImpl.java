@@ -1,21 +1,21 @@
 /*
  * #%L
- * BroadleafCommerce CMS Module
+ * UltraCommerce CMS Module
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.cms.structure.service;
+package com.ultracommerce.cms.structure.service;
 
 import org.apache.commons.collections4.ListUtils;
 import org.apache.commons.collections4.MapUtils;
@@ -23,33 +23,33 @@ import org.apache.commons.collections4.SetUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.cms.field.domain.FieldDefinition;
-import org.broadleafcommerce.cms.field.domain.FieldGroup;
-import org.broadleafcommerce.cms.file.service.StaticAssetService;
-import org.broadleafcommerce.cms.structure.dao.StructuredContentDao;
-import org.broadleafcommerce.cms.structure.domain.StructuredContent;
-import org.broadleafcommerce.cms.structure.domain.StructuredContentField;
-import org.broadleafcommerce.cms.structure.domain.StructuredContentFieldTemplate;
-import org.broadleafcommerce.cms.structure.domain.StructuredContentFieldXref;
-import org.broadleafcommerce.cms.structure.domain.StructuredContentItemCriteria;
-import org.broadleafcommerce.cms.structure.domain.StructuredContentRule;
-import org.broadleafcommerce.cms.structure.domain.StructuredContentType;
-import org.broadleafcommerce.common.cache.CacheStatType;
-import org.broadleafcommerce.common.cache.StatisticsService;
-import org.broadleafcommerce.common.extension.ExtensionResultHolder;
-import org.broadleafcommerce.common.file.service.StaticAssetPathService;
-import org.broadleafcommerce.common.locale.domain.Locale;
-import org.broadleafcommerce.common.locale.service.LocaleService;
-import org.broadleafcommerce.common.locale.util.LocaleUtil;
-import org.broadleafcommerce.common.money.Money;
-import org.broadleafcommerce.common.persistence.EntityConfiguration;
-import org.broadleafcommerce.common.rule.RuleProcessor;
-import org.broadleafcommerce.common.sandbox.domain.SandBox;
-import org.broadleafcommerce.common.site.domain.Site;
-import org.broadleafcommerce.common.structure.dto.ItemCriteriaDTO;
-import org.broadleafcommerce.common.structure.dto.StructuredContentDTO;
-import org.broadleafcommerce.common.util.FormatUtil;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
+import com.ultracommerce.cms.field.domain.FieldDefinition;
+import com.ultracommerce.cms.field.domain.FieldGroup;
+import com.ultracommerce.cms.file.service.StaticAssetService;
+import com.ultracommerce.cms.structure.dao.StructuredContentDao;
+import com.ultracommerce.cms.structure.domain.StructuredContent;
+import com.ultracommerce.cms.structure.domain.StructuredContentField;
+import com.ultracommerce.cms.structure.domain.StructuredContentFieldTemplate;
+import com.ultracommerce.cms.structure.domain.StructuredContentFieldXref;
+import com.ultracommerce.cms.structure.domain.StructuredContentItemCriteria;
+import com.ultracommerce.cms.structure.domain.StructuredContentRule;
+import com.ultracommerce.cms.structure.domain.StructuredContentType;
+import com.ultracommerce.common.cache.CacheStatType;
+import com.ultracommerce.common.cache.StatisticsService;
+import com.ultracommerce.common.extension.ExtensionResultHolder;
+import com.ultracommerce.common.file.service.StaticAssetPathService;
+import com.ultracommerce.common.locale.domain.Locale;
+import com.ultracommerce.common.locale.service.LocaleService;
+import com.ultracommerce.common.locale.util.LocaleUtil;
+import com.ultracommerce.common.money.Money;
+import com.ultracommerce.common.persistence.EntityConfiguration;
+import com.ultracommerce.common.rule.RuleProcessor;
+import com.ultracommerce.common.sandbox.domain.SandBox;
+import com.ultracommerce.common.site.domain.Site;
+import com.ultracommerce.common.structure.dto.ItemCriteriaDTO;
+import com.ultracommerce.common.structure.dto.StructuredContentDTO;
+import com.ultracommerce.common.util.FormatUtil;
+import com.ultracommerce.common.web.UltraRequestContext;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Projections;
 import org.springframework.stereotype.Service;
@@ -70,39 +70,39 @@ import javax.cache.CacheManager;
 /**
  * @author bpolster
  */
-@Service("blStructuredContentService")
+@Service("ucStructuredContentService")
 public class StructuredContentServiceImpl implements StructuredContentService {
 
     protected static final Log LOG = LogFactory.getLog(StructuredContentServiceImpl.class);
 
     protected static String AND = " && ";
-    protected static final String FOREIGN_LOOKUP = "BLC_FOREIGN_LOOKUP";
+    protected static final String FOREIGN_LOOKUP = "UC_FOREIGN_LOOKUP";
 
-    @Resource(name = "blStructuredContentDao")
+    @Resource(name = "ucStructuredContentDao")
     protected StructuredContentDao structuredContentDao;
 
-    @Resource(name = "blStaticAssetService")
+    @Resource(name = "ucStaticAssetService")
     protected StaticAssetService staticAssetService;
 
-    @Resource(name = "blStaticAssetPathService")
+    @Resource(name = "ucStaticAssetPathService")
     protected StaticAssetPathService staticAssetPathService;
 
-    @Resource(name = "blLocaleService")
+    @Resource(name = "ucLocaleService")
     protected LocaleService localeService;
 
-    @Resource(name = "blContentRuleProcessors")
+    @Resource(name = "ucContentRuleProcessors")
     protected List<RuleProcessor<StructuredContentDTO>> contentRuleProcessors;
 
-    @Resource(name = "blEntityConfiguration")
+    @Resource(name = "ucEntityConfiguration")
     protected EntityConfiguration entityConfiguration;
 
-    @Resource(name = "blStructuredContentServiceExtensionManager")
+    @Resource(name = "ucStructuredContentServiceExtensionManager")
     protected StructuredContentServiceExtensionManager extensionManager;
 
-    @Resource(name = "blStatisticsService")
+    @Resource(name = "ucStatisticsService")
     protected StatisticsService statisticsService;
     
-    @Resource(name = "blCacheManager")
+    @Resource(name = "ucCacheManager")
     protected CacheManager cacheManager;
 
     protected Cache structuredContentCache;
@@ -270,7 +270,7 @@ public class StructuredContentServiceImpl implements StructuredContentService {
                                                                          Integer count, Map<String, Object> ruleDTOs, boolean secure) {
         List<StructuredContentDTO> contentDTOList = null;
         Locale languageOnlyLocale = findLanguageOnlyLocale(locale);
-        BroadleafRequestContext context = BroadleafRequestContext.getBroadleafRequestContext();
+        UltraRequestContext context = UltraRequestContext.getUltraRequestContext();
         Long site = (context.getNonPersistentSite() != null) ? context.getNonPersistentSite().getId() : null;
         String cacheKey = buildTypeKeyWithSecure(context.getSandBox(), site, languageOnlyLocale, contentType.getName(), secure);
 
@@ -297,7 +297,7 @@ public class StructuredContentServiceImpl implements StructuredContentService {
                                                                          boolean secure) {
         List<StructuredContentDTO> contentDTOList = null;
         Locale languageOnlyLocale = findLanguageOnlyLocale(locale);
-        BroadleafRequestContext context = BroadleafRequestContext.getBroadleafRequestContext();
+        UltraRequestContext context = UltraRequestContext.getUltraRequestContext();
         Long site = (context.getNonPersistentSite() != null) ? context.getNonPersistentSite().getId() : null;
         String cacheKey = buildNameKey(context.getSandBox(), site, languageOnlyLocale, contentType.getName(), contentName, secure);
 
@@ -321,7 +321,7 @@ public class StructuredContentServiceImpl implements StructuredContentService {
     @Override
     public List<StructuredContentDTO> convertToDtos(List<StructuredContent> scs, boolean isSecure) {
         List<StructuredContentDTO> contentDTOList = new ArrayList<>();
-        BroadleafRequestContext context = BroadleafRequestContext.getBroadleafRequestContext();
+        UltraRequestContext context = UltraRequestContext.getUltraRequestContext();
         SandBox sandbox = context.getSandBox();
         boolean isProductionSandbox = context.isProductionSandBox();
         StructuredContentDTO dto;
@@ -576,7 +576,7 @@ public class StructuredContentServiceImpl implements StructuredContentService {
 
     /**
      * Converts a StructuredContent into a StructuredContentDTO.   If the item contains fields with
-     * broadleaf cms urls, the urls are converted to utilize the domain.
+     * ultra cms urls, the urls are converted to utilize the domain.
      * <p/>
      * The StructuredContentDTO is built via the {@link EntityConfiguration}. To override the actual type that is returned,
      * include an override in an applicationContext like any other entity override.
@@ -613,7 +613,7 @@ public class StructuredContentServiceImpl implements StructuredContentService {
     }
 
     protected String buildNameKey(SandBox sandBox, StructuredContent sc, Boolean secure) {
-        BroadleafRequestContext context = BroadleafRequestContext.getBroadleafRequestContext();
+        UltraRequestContext context = UltraRequestContext.getUltraRequestContext();
         Site site = (context != null) ? context.getNonPersistentSite() : null;
         Long siteId = (site != null) ? site.getId() : null;
         Locale locale = findLanguageOnlyLocale(sc.getLocale());
@@ -661,7 +661,7 @@ public class StructuredContentServiceImpl implements StructuredContentService {
     }
 
     protected String buildTypeKey(SandBox sandBox, StructuredContent sc) {
-        BroadleafRequestContext context = BroadleafRequestContext.getBroadleafRequestContext();
+        UltraRequestContext context = UltraRequestContext.getUltraRequestContext();
         Site site = (context != null) ? context.getNonPersistentSite() : null;
         Long siteId = (site != null) ? site.getId() : null;
         Locale locale = findLanguageOnlyLocale(sc.getLocale());
@@ -739,7 +739,7 @@ public class StructuredContentServiceImpl implements StructuredContentService {
     public List<StructuredContentDTO> getStructuredContentItemsByContentName(String contentName, Locale locale, boolean secure) {
         List<StructuredContentDTO> contentDTOList = null;
         Locale languageOnlyLocale = findLanguageOnlyLocale(locale);
-        BroadleafRequestContext context = BroadleafRequestContext.getBroadleafRequestContext();
+        UltraRequestContext context = UltraRequestContext.getUltraRequestContext();
         Long site = (context.getNonPersistentSite() != null) ? context.getNonPersistentSite().getId() : null;
         String cacheKey = buildNameKey(context.getSandBox(), site, languageOnlyLocale, "any", contentName, secure);
         cacheKey = cacheKey + "-" + secure;

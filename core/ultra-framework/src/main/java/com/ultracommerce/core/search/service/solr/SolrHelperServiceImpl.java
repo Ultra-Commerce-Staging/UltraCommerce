@@ -1,22 +1,22 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
 
-package org.broadleafcommerce.core.search.service.solr;
+package com.ultracommerce.core.search.service.solr;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.collections.CollectionUtils;
@@ -43,37 +43,37 @@ import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrInputDocument;
 import org.apache.solr.common.cloud.Aliases;
 import org.apache.solr.common.params.CoreAdminParams.CoreAdminAction;
-import org.broadleafcommerce.common.config.service.SystemPropertiesService;
-import org.broadleafcommerce.common.dao.GenericEntityDao;
-import org.broadleafcommerce.common.exception.ServiceException;
-import org.broadleafcommerce.common.extension.ExtensionResultHolder;
-import org.broadleafcommerce.common.extension.ExtensionResultStatusType;
-import org.broadleafcommerce.common.locale.domain.Locale;
-import org.broadleafcommerce.common.locale.service.LocaleService;
-import org.broadleafcommerce.common.money.Money;
-import org.broadleafcommerce.common.util.BLCMapUtils;
-import org.broadleafcommerce.common.util.StringUtil;
-import org.broadleafcommerce.common.util.TypedClosure;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
-import org.broadleafcommerce.core.catalog.domain.Category;
-import org.broadleafcommerce.core.catalog.domain.CategoryImpl;
-import org.broadleafcommerce.core.catalog.domain.Indexable;
-import org.broadleafcommerce.core.catalog.domain.Product;
-import org.broadleafcommerce.core.catalog.domain.Sku;
-import org.broadleafcommerce.core.search.dao.IndexFieldDao;
-import org.broadleafcommerce.core.search.dao.SearchFacetDao;
-import org.broadleafcommerce.core.search.domain.Field;
-import org.broadleafcommerce.core.search.domain.FieldEntity;
-import org.broadleafcommerce.core.search.domain.IndexField;
-import org.broadleafcommerce.core.search.domain.IndexFieldType;
-import org.broadleafcommerce.core.search.domain.RequiredFacet;
-import org.broadleafcommerce.core.search.domain.SearchCriteria;
-import org.broadleafcommerce.core.search.domain.SearchFacet;
-import org.broadleafcommerce.core.search.domain.SearchFacetDTO;
-import org.broadleafcommerce.core.search.domain.SearchFacetRange;
-import org.broadleafcommerce.core.search.domain.SearchFacetResultDTO;
-import org.broadleafcommerce.core.search.domain.solr.FieldType;
-import org.broadleafcommerce.core.search.service.solr.index.SolrIndexServiceExtensionManager;
+import com.ultracommerce.common.config.service.SystemPropertiesService;
+import com.ultracommerce.common.dao.GenericEntityDao;
+import com.ultracommerce.common.exception.ServiceException;
+import com.ultracommerce.common.extension.ExtensionResultHolder;
+import com.ultracommerce.common.extension.ExtensionResultStatusType;
+import com.ultracommerce.common.locale.domain.Locale;
+import com.ultracommerce.common.locale.service.LocaleService;
+import com.ultracommerce.common.money.Money;
+import com.ultracommerce.common.util.UCMapUtils;
+import com.ultracommerce.common.util.StringUtil;
+import com.ultracommerce.common.util.TypedClosure;
+import com.ultracommerce.common.web.UltraRequestContext;
+import com.ultracommerce.core.catalog.domain.Category;
+import com.ultracommerce.core.catalog.domain.CategoryImpl;
+import com.ultracommerce.core.catalog.domain.Indexable;
+import com.ultracommerce.core.catalog.domain.Product;
+import com.ultracommerce.core.catalog.domain.Sku;
+import com.ultracommerce.core.search.dao.IndexFieldDao;
+import com.ultracommerce.core.search.dao.SearchFacetDao;
+import com.ultracommerce.core.search.domain.Field;
+import com.ultracommerce.core.search.domain.FieldEntity;
+import com.ultracommerce.core.search.domain.IndexField;
+import com.ultracommerce.core.search.domain.IndexFieldType;
+import com.ultracommerce.core.search.domain.RequiredFacet;
+import com.ultracommerce.core.search.domain.SearchCriteria;
+import com.ultracommerce.core.search.domain.SearchFacet;
+import com.ultracommerce.core.search.domain.SearchFacetDTO;
+import com.ultracommerce.core.search.domain.SearchFacetRange;
+import com.ultracommerce.core.search.domain.SearchFacetResultDTO;
+import com.ultracommerce.core.search.domain.solr.FieldType;
+import com.ultracommerce.core.search.service.solr.index.SolrIndexServiceExtensionManager;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -101,7 +101,7 @@ import javax.jms.IllegalStateException;
  *
  * @author Andre Azzolini (apazzolini)
  */
-@Service("blSolrHelperService")
+@Service("ucSolrHelperService")
 public class SolrHelperServiceImpl implements SolrHelperService {
 
     private static final Log LOG = LogFactory.getLog(SolrHelperServiceImpl.class);
@@ -116,28 +116,28 @@ public class SolrHelperServiceImpl implements SolrHelperService {
 
     protected static Locale defaultLocale;
 
-    @Resource(name = "blSystemPropertiesService")
+    @Resource(name = "ucSystemPropertiesService")
     protected SystemPropertiesService systemPropertiesService;
 
-    @Resource(name = "blLocaleService")
+    @Resource(name = "ucLocaleService")
     protected LocaleService localeService;
 
-    @Resource(name = "blSolrSearchServiceExtensionManager")
+    @Resource(name = "ucSolrSearchServiceExtensionManager")
     protected SolrSearchServiceExtensionManager searchExtensionManager;
 
-    @Resource(name = "blSolrIndexServiceExtensionManager")
+    @Resource(name = "ucSolrIndexServiceExtensionManager")
     protected SolrIndexServiceExtensionManager indexExtensionManager;
 
-    @Resource(name = "blSearchFacetDao")
+    @Resource(name = "ucSearchFacetDao")
     protected SearchFacetDao searchFacetDao;
 
-    @Resource(name = "blIndexFieldDao")
+    @Resource(name = "ucIndexFieldDao")
     protected IndexFieldDao indexFieldDao;
 
     @Value(value = "${using.solr.server:true}")
     protected boolean isSolrConfigured;
 
-    @Resource(name = "blGenericEntityDao")
+    @Resource(name = "ucGenericEntityDao")
     protected GenericEntityDao genericEntityDao;
 
     @Value(value = "${enable.solr.optimize:true}")
@@ -396,8 +396,8 @@ public class SolrHelperServiceImpl implements SolrHelperService {
 
     @Override
     public String getLocalePrefix() {
-        if (BroadleafRequestContext.getBroadleafRequestContext() != null) {
-            Locale locale = BroadleafRequestContext.getBroadleafRequestContext().getLocale();
+        if (UltraRequestContext.getUltraRequestContext() != null) {
+            Locale locale = UltraRequestContext.getUltraRequestContext().getLocale();
             if (locale != null) {
                 return locale.getLocaleCode() + "_";
             }
@@ -474,7 +474,7 @@ public class SolrHelperServiceImpl implements SolrHelperService {
     @Override
     public List<SearchFacetDTO> buildSearchFacetDTOs(List<SearchFacet> searchFacets) {
         List<SearchFacetDTO> facets = new ArrayList<SearchFacetDTO>();
-        Map<String, String[]> requestParameters = BroadleafRequestContext.getRequestParameterMap();
+        Map<String, String[]> requestParameters = UltraRequestContext.getRequestParameterMap();
 
         for (SearchFacet facet : searchFacets) {
             if (isFacetAvailable(facet, requestParameters)) {
@@ -869,7 +869,7 @@ public class SolrHelperServiceImpl implements SolrHelperService {
     @Override
     public Map<String, SearchFacetDTO> getNamedFacetMap(List<SearchFacetDTO> facets,
             final SearchCriteria searchCriteria) {
-        return BLCMapUtils.keyedMap(facets, new TypedClosure<String, SearchFacetDTO>() {
+        return UCMapUtils.keyedMap(facets, new TypedClosure<String, SearchFacetDTO>() {
 
             @Override
             public String getKey(SearchFacetDTO facet) {

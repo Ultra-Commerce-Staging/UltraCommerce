@@ -1,53 +1,53 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.offer.domain;
+package com.ultracommerce.core.offer.domain;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.broadleafcommerce.common.admin.domain.AdminMainEntity;
-import org.broadleafcommerce.common.copy.CreateResponse;
-import org.broadleafcommerce.common.copy.MultiTenantCopyContext;
-import org.broadleafcommerce.common.currency.util.BroadleafCurrencyUtils;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransform;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformMember;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformTypes;
-import org.broadleafcommerce.common.i18n.service.DynamicTranslationProvider;
-import org.broadleafcommerce.common.money.Money;
-import org.broadleafcommerce.common.persistence.ArchiveStatus;
-import org.broadleafcommerce.common.presentation.AdminPresentation;
-import org.broadleafcommerce.common.presentation.AdminPresentationCollection;
-import org.broadleafcommerce.common.presentation.AdminPresentationMapField;
-import org.broadleafcommerce.common.presentation.AdminPresentationMapFields;
-import org.broadleafcommerce.common.presentation.ConfigurationItem;
-import org.broadleafcommerce.common.presentation.RequiredOverride;
-import org.broadleafcommerce.common.presentation.RuleIdentifier;
-import org.broadleafcommerce.common.presentation.ValidationConfiguration;
-import org.broadleafcommerce.common.presentation.client.AddMethodType;
-import org.broadleafcommerce.common.presentation.client.SupportedFieldType;
-import org.broadleafcommerce.common.presentation.client.VisibilityEnum;
-import org.broadleafcommerce.common.util.DateUtil;
-import org.broadleafcommerce.core.offer.service.type.CustomerMaxUsesStrategyType;
-import org.broadleafcommerce.core.offer.service.type.OfferAdjustmentType;
-import org.broadleafcommerce.core.offer.service.type.OfferDiscountType;
-import org.broadleafcommerce.core.offer.service.type.OfferItemRestrictionRuleType;
-import org.broadleafcommerce.core.offer.service.type.OfferType;
+import com.ultracommerce.common.admin.domain.AdminMainEntity;
+import com.ultracommerce.common.copy.CreateResponse;
+import com.ultracommerce.common.copy.MultiTenantCopyContext;
+import com.ultracommerce.common.currency.util.UltraCurrencyUtils;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransform;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransformMember;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransformTypes;
+import com.ultracommerce.common.i18n.service.DynamicTranslationProvider;
+import com.ultracommerce.common.money.Money;
+import com.ultracommerce.common.persistence.ArchiveStatus;
+import com.ultracommerce.common.presentation.AdminPresentation;
+import com.ultracommerce.common.presentation.AdminPresentationCollection;
+import com.ultracommerce.common.presentation.AdminPresentationMapField;
+import com.ultracommerce.common.presentation.AdminPresentationMapFields;
+import com.ultracommerce.common.presentation.ConfigurationItem;
+import com.ultracommerce.common.presentation.RequiredOverride;
+import com.ultracommerce.common.presentation.RuleIdentifier;
+import com.ultracommerce.common.presentation.ValidationConfiguration;
+import com.ultracommerce.common.presentation.client.AddMethodType;
+import com.ultracommerce.common.presentation.client.SupportedFieldType;
+import com.ultracommerce.common.presentation.client.VisibilityEnum;
+import com.ultracommerce.common.util.DateUtil;
+import com.ultracommerce.core.offer.service.type.CustomerMaxUsesStrategyType;
+import com.ultracommerce.core.offer.service.type.OfferAdjustmentType;
+import com.ultracommerce.core.offer.service.type.OfferDiscountType;
+import com.ultracommerce.core.offer.service.type.OfferItemRestrictionRuleType;
+import com.ultracommerce.core.offer.service.type.OfferType;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -83,10 +83,10 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Entity
-@Table(name = "BLC_OFFER")
+@Table(name = "UC_OFFER")
 @Inheritance(strategy=InheritanceType.JOINED)
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region="blOffers")
-@SQLDelete(sql="UPDATE BLC_OFFER SET ARCHIVED = 'Y' WHERE OFFER_ID = ?")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region="ucOffers")
+@SQLDelete(sql="UPDATE UC_OFFER SET ARCHIVED = 'Y' WHERE OFFER_ID = ?")
 @DirectCopyTransform({
         @DirectCopyTransformMember(templateTokens = DirectCopyTransformTypes.SANDBOX, skipOverlaps=true),
         @DirectCopyTransformMember(templateTokens = DirectCopyTransformTypes.MULTITENANT_CATALOG)
@@ -101,10 +101,10 @@ public class OfferImpl implements Offer, AdminMainEntity, OfferAdminPresentation
     @GeneratedValue(generator= "OfferId")
     @GenericGenerator(
         name="OfferId",
-        strategy="org.broadleafcommerce.common.persistence.IdOverrideTableGenerator",
+        strategy="com.ultracommerce.common.persistence.IdOverrideTableGenerator",
         parameters = {
             @Parameter(name="segment_value", value="OfferImpl"),
-            @Parameter(name="entity_name", value="org.broadleafcommerce.core.offer.domain.OfferImpl")
+            @Parameter(name="entity_name", value="com.ultracommerce.core.offer.domain.OfferImpl")
         }
     )
     @Column(name = "OFFER_ID")
@@ -112,7 +112,7 @@ public class OfferImpl implements Offer, AdminMainEntity, OfferAdminPresentation
     protected Long id;
 
     @OneToMany(mappedBy = "offer", targetEntity = OfferCodeImpl.class, cascade = { CascadeType.ALL })
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "blOffers")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "ucOffers")
     @BatchSize(size = 50)
     @AdminPresentationCollection(friendlyName = "offerCodeTitle",
         group = GroupName.Codes, order = FieldOrder.OfferCodes,
@@ -144,8 +144,8 @@ public class OfferImpl implements Offer, AdminMainEntity, OfferAdminPresentation
     @Index(name="OFFER_TYPE_INDEX", columnNames={"OFFER_TYPE"})
     @AdminPresentation(friendlyName = "OfferImpl_Offer_Type",
         group = GroupName.Description, order = FieldOrder.OfferType,
-        fieldType=SupportedFieldType.BROADLEAF_ENUMERATION, 
-        broadleafEnumeration="org.broadleafcommerce.core.offer.service.type.OfferType",
+        fieldType=SupportedFieldType.ULTRA_ENUMERATION, 
+        ultraEnumeration="com.ultracommerce.core.offer.service.type.OfferType",
         defaultValue = "ORDER")
     protected String type;
 
@@ -154,8 +154,8 @@ public class OfferImpl implements Offer, AdminMainEntity, OfferAdminPresentation
     @AdminPresentation(friendlyName = "OfferImpl_Offer_Discount_Type",
         group = GroupName.Description, order = FieldOrder.DiscountType,
         requiredOverride = RequiredOverride.REQUIRED,
-        fieldType=SupportedFieldType.BROADLEAF_ENUMERATION,
-        broadleafEnumeration="org.broadleafcommerce.core.offer.service.type.OfferDiscountType")
+        fieldType=SupportedFieldType.ULTRA_ENUMERATION,
+        ultraEnumeration="com.ultracommerce.core.offer.service.type.OfferDiscountType")
     protected String discountType;
 
     @Column(name = "OFFER_VALUE", nullable=false, precision=19, scale=5)
@@ -183,7 +183,7 @@ public class OfferImpl implements Offer, AdminMainEntity, OfferAdminPresentation
         group = GroupName.ActivityRange, order = FieldOrder.EndDate,
         validationConfigurations = { 
             @ValidationConfiguration(
-                validationImplementation = "blAfterStartDateValidator",
+                validationImplementation = "ucAfterStartDateValidator",
                 configurationItems = {
                         @ConfigurationItem(itemName = "otherField", itemValue = "startDate")
                 }) 
@@ -240,7 +240,7 @@ public class OfferImpl implements Offer, AdminMainEntity, OfferAdminPresentation
     protected Long maxUsesPerCustomer;
 
     @Column(name = "MAX_USES_STRATEGY")
-    @AdminPresentation(friendlyName = "OfferImpl_Max_Uses_Strategy", allowNoValueEnumOption = false, defaultValue = "CUSTOMER", group = GroupName.Restrictions, order = FieldOrder.MaxUsesStrategy, fieldType = SupportedFieldType.BROADLEAF_ENUMERATION, broadleafEnumeration = "org.broadleafcommerce.core.offer.service.type.CustomerMaxUsesStrategyType")
+    @AdminPresentation(friendlyName = "OfferImpl_Max_Uses_Strategy", allowNoValueEnumOption = false, defaultValue = "CUSTOMER", group = GroupName.Restrictions, order = FieldOrder.MaxUsesStrategy, fieldType = SupportedFieldType.ULTRA_ENUMERATION, ultraEnumeration = "com.ultracommerce.core.offer.service.type.CustomerMaxUsesStrategyType")
     protected String maxUsesStrategy;
 
     @Column(name = "MINIMUM_DAYS_PER_USAGE")
@@ -254,8 +254,8 @@ public class OfferImpl implements Offer, AdminMainEntity, OfferAdminPresentation
     @AdminPresentation(friendlyName = "OfferImpl_Item_Qualifier_Rule",
         group = GroupName.QualifierRuleRestriction,
         tooltip = "OfferItemRestrictionRuleType_tooltip",
-        fieldType = SupportedFieldType.BROADLEAF_ENUMERATION,
-        broadleafEnumeration = "org.broadleafcommerce.core.offer.service.type.OfferItemRestrictionRuleType",
+        fieldType = SupportedFieldType.ULTRA_ENUMERATION,
+        ultraEnumeration = "com.ultracommerce.core.offer.service.type.OfferItemRestrictionRuleType",
         defaultValue = "NONE",
         visibility = VisibilityEnum.HIDDEN_ALL)
     protected String offerItemQualifierRuleType;
@@ -284,14 +284,14 @@ public class OfferImpl implements Offer, AdminMainEntity, OfferAdminPresentation
     @AdminPresentation(friendlyName = "OfferImpl_Item_Target_Rule",
         group = GroupName.CombineStack,
         tooltip = "OfferItemRestrictionRuleType_tooltip",
-        fieldType = SupportedFieldType.BROADLEAF_ENUMERATION,
-        broadleafEnumeration = "org.broadleafcommerce.core.offer.service.type.OfferItemRestrictionRuleType",
+        fieldType = SupportedFieldType.ULTRA_ENUMERATION,
+        ultraEnumeration = "com.ultracommerce.core.offer.service.type.OfferItemRestrictionRuleType",
         defaultValue = "NONE",
         visibility = VisibilityEnum.HIDDEN_ALL)
     protected String offerItemTargetRuleType;
     
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "offer", targetEntity = OfferQualifyingCriteriaXrefImpl.class, cascade = CascadeType.ALL)
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region="blOffers")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region="ucOffers")
     @AdminPresentation(friendlyName = "OfferImpl_Qualifying_Item_Rule",
         tab = TabName.Qualifiers,
         fieldType = SupportedFieldType.RULE_WITH_QUANTITY,
@@ -302,12 +302,12 @@ public class OfferImpl implements Offer, AdminMainEntity, OfferAdminPresentation
     protected Set<OfferItemCriteria> legacyQualifyingItemCriteria = new HashSet<OfferItemCriteria>();
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "offer", targetEntity = OfferTargetCriteriaXrefImpl.class, cascade = CascadeType.ALL)
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region="blOffers")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region="ucOffers")
     @AdminPresentation(friendlyName = "OfferImpl_Target_Item_Rule",
         group = GroupName.RuleConfiguration,
         fieldType = SupportedFieldType.RULE_WITH_QUANTITY, 
         ruleIdentifier = RuleIdentifier.ORDERITEM,
-        validationConfigurations = @ValidationConfiguration(validationImplementation = "blOfferTargetCriteriaItemValidator"))
+        validationConfigurations = @ValidationConfiguration(validationImplementation = "ucOfferTargetCriteriaItemValidator"))
     protected Set<OfferTargetCriteriaXref> targetItemCriteria = new HashSet<OfferTargetCriteriaXref>();
 
     @Transient
@@ -328,7 +328,7 @@ public class OfferImpl implements Offer, AdminMainEntity, OfferAdminPresentation
 
     @OneToMany(mappedBy = "offer", targetEntity = OfferOfferRuleXrefImpl.class, cascade = { CascadeType.ALL })
     @MapKey(name = "key")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region="blOffers")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region="ucOffers")
     @AdminPresentationMapFields(
         toOneTargetProperty = "offerRule",
         toOneParentProperty = "offer",
@@ -364,8 +364,8 @@ public class OfferImpl implements Offer, AdminMainEntity, OfferAdminPresentation
     @Column(name = "OFFER_ADJUSTMENT_TYPE")
     @AdminPresentation(friendlyName = "OfferImpl_Offer_Adjustment_Type",
             group = GroupName.Description, order = FieldOrder.DiscountType + 1,
-            fieldType=SupportedFieldType.BROADLEAF_ENUMERATION,
-            broadleafEnumeration="org.broadleafcommerce.core.offer.service.type.OfferAdjustmentType",
+            fieldType=SupportedFieldType.ULTRA_ENUMERATION,
+            ultraEnumeration="com.ultracommerce.core.offer.service.type.OfferAdjustmentType",
             tooltip = "OfferImpl_Offer_Adjustment_Type_tooltip",
             showIfProperty="admin.showIfProperty.offerAdjustmentType")
     protected String adjustmentType;
@@ -377,7 +377,7 @@ public class OfferImpl implements Offer, AdminMainEntity, OfferAdminPresentation
     protected Boolean useListForDiscounts = false;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "offer", targetEntity = OfferPriceDataImpl.class, cascade = CascadeType.ALL)
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region="blOffers")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region="ucOffers")
     @AdminPresentationCollection(
             friendlyName = "OfferImpl_Offer_Price_Data",
             group = GroupName.Description, order = FieldOrder.OfferType + 10)
@@ -753,7 +753,7 @@ public class OfferImpl implements Offer, AdminMainEntity, OfferAdminPresentation
     
     @Override
     public Money getQualifyingItemSubTotal() {
-        return qualifyingItemSubTotal == null ? null : BroadleafCurrencyUtils.getMoney(qualifyingItemSubTotal, null);
+        return qualifyingItemSubTotal == null ? null : UltraCurrencyUtils.getMoney(qualifyingItemSubTotal, null);
     }
 
     @Override
@@ -763,7 +763,7 @@ public class OfferImpl implements Offer, AdminMainEntity, OfferAdminPresentation
 
     @Override
     public Money getOrderMinSubTotal() {
-        return orderMinSubTotal == null ? null : BroadleafCurrencyUtils.getMoney(orderMinSubTotal, null);
+        return orderMinSubTotal == null ? null : UltraCurrencyUtils.getMoney(orderMinSubTotal, null);
     }
 
     @Override
@@ -773,7 +773,7 @@ public class OfferImpl implements Offer, AdminMainEntity, OfferAdminPresentation
 
     @Override
     public Money getTargetMinSubTotal() {
-        return targetMinSubTotal == null ? null : BroadleafCurrencyUtils.getMoney(targetMinSubTotal, null);
+        return targetMinSubTotal == null ? null : UltraCurrencyUtils.getMoney(targetMinSubTotal, null);
     }
 
     @Override

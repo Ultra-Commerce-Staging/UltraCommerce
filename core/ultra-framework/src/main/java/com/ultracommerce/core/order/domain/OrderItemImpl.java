@@ -1,60 +1,60 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.order.domain;
+package com.ultracommerce.core.order.domain;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.admin.domain.AdminMainEntity;
-import org.broadleafcommerce.common.audit.Auditable;
-import org.broadleafcommerce.common.audit.AuditableListener;
-import org.broadleafcommerce.common.copy.CreateResponse;
-import org.broadleafcommerce.common.copy.MultiTenantCopyContext;
-import org.broadleafcommerce.common.currency.util.BroadleafCurrencyUtils;
-import org.broadleafcommerce.common.currency.util.CurrencyCodeIdentifiable;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransform;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformMember;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformTypes;
-import org.broadleafcommerce.common.money.Money;
-import org.broadleafcommerce.common.persistence.DefaultPostLoaderDao;
-import org.broadleafcommerce.common.persistence.PostLoaderDao;
-import org.broadleafcommerce.common.presentation.AdminPresentation;
-import org.broadleafcommerce.common.presentation.AdminPresentationClass;
-import org.broadleafcommerce.common.presentation.AdminPresentationCollection;
-import org.broadleafcommerce.common.presentation.AdminPresentationMap;
-import org.broadleafcommerce.common.presentation.AdminPresentationToOneLookup;
-import org.broadleafcommerce.common.presentation.PopulateToOneFieldsEnum;
-import org.broadleafcommerce.common.presentation.client.SupportedFieldType;
-import org.broadleafcommerce.common.presentation.client.VisibilityEnum;
-import org.broadleafcommerce.common.presentation.override.AdminPresentationMergeEntry;
-import org.broadleafcommerce.common.presentation.override.AdminPresentationMergeOverride;
-import org.broadleafcommerce.common.presentation.override.AdminPresentationMergeOverrides;
-import org.broadleafcommerce.common.presentation.override.PropertyType;
-import org.broadleafcommerce.common.util.HibernateUtils;
-import org.broadleafcommerce.core.catalog.domain.Category;
-import org.broadleafcommerce.core.catalog.domain.CategoryImpl;
-import org.broadleafcommerce.core.offer.domain.CandidateItemOffer;
-import org.broadleafcommerce.core.offer.domain.CandidateItemOfferImpl;
-import org.broadleafcommerce.core.offer.domain.OrderItemAdjustment;
-import org.broadleafcommerce.core.offer.domain.OrderItemAdjustmentImpl;
-import org.broadleafcommerce.core.offer.domain.ProratedOrderItemAdjustment;
-import org.broadleafcommerce.core.offer.domain.ProratedOrderItemAdjustmentImpl;
-import org.broadleafcommerce.core.order.service.type.OrderItemType;
+import com.ultracommerce.common.admin.domain.AdminMainEntity;
+import com.ultracommerce.common.audit.Auditable;
+import com.ultracommerce.common.audit.AuditableListener;
+import com.ultracommerce.common.copy.CreateResponse;
+import com.ultracommerce.common.copy.MultiTenantCopyContext;
+import com.ultracommerce.common.currency.util.UltraCurrencyUtils;
+import com.ultracommerce.common.currency.util.CurrencyCodeIdentifiable;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransform;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransformMember;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransformTypes;
+import com.ultracommerce.common.money.Money;
+import com.ultracommerce.common.persistence.DefaultPostLoaderDao;
+import com.ultracommerce.common.persistence.PostLoaderDao;
+import com.ultracommerce.common.presentation.AdminPresentation;
+import com.ultracommerce.common.presentation.AdminPresentationClass;
+import com.ultracommerce.common.presentation.AdminPresentationCollection;
+import com.ultracommerce.common.presentation.AdminPresentationMap;
+import com.ultracommerce.common.presentation.AdminPresentationToOneLookup;
+import com.ultracommerce.common.presentation.PopulateToOneFieldsEnum;
+import com.ultracommerce.common.presentation.client.SupportedFieldType;
+import com.ultracommerce.common.presentation.client.VisibilityEnum;
+import com.ultracommerce.common.presentation.override.AdminPresentationMergeEntry;
+import com.ultracommerce.common.presentation.override.AdminPresentationMergeOverride;
+import com.ultracommerce.common.presentation.override.AdminPresentationMergeOverrides;
+import com.ultracommerce.common.presentation.override.PropertyType;
+import com.ultracommerce.common.util.HibernateUtils;
+import com.ultracommerce.core.catalog.domain.Category;
+import com.ultracommerce.core.catalog.domain.CategoryImpl;
+import com.ultracommerce.core.offer.domain.CandidateItemOffer;
+import com.ultracommerce.core.offer.domain.CandidateItemOfferImpl;
+import com.ultracommerce.core.offer.domain.OrderItemAdjustment;
+import com.ultracommerce.core.offer.domain.OrderItemAdjustmentImpl;
+import com.ultracommerce.core.offer.domain.ProratedOrderItemAdjustment;
+import com.ultracommerce.core.offer.domain.ProratedOrderItemAdjustmentImpl;
+import com.ultracommerce.core.order.service.type.OrderItemType;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Cascade;
@@ -95,8 +95,8 @@ import javax.persistence.Transient;
 @Entity
 @EntityListeners(value = {AuditableListener.class})
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "BLC_ORDER_ITEM")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "blOrderElements")
+@Table(name = "UC_ORDER_ITEM")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "ucOrderElements")
 @AdminPresentationMergeOverrides(
     {
         @AdminPresentationMergeOverride(name = "", mergeEntries =
@@ -117,10 +117,10 @@ public class OrderItemImpl implements OrderItem, Cloneable, AdminMainEntity, Cur
     @GeneratedValue(generator = "OrderItemId")
     @GenericGenerator(
         name="OrderItemId",
-        strategy="org.broadleafcommerce.common.persistence.IdOverrideTableGenerator",
+        strategy="com.ultracommerce.common.persistence.IdOverrideTableGenerator",
         parameters = {
             @Parameter(name="segment_value", value="OrderItemImpl"),
-            @Parameter(name="entity_name", value="org.broadleafcommerce.core.order.domain.OrderItemImpl")
+            @Parameter(name="entity_name", value="com.ultracommerce.core.order.domain.OrderItemImpl")
         }
     )
     @Column(name = "ORDER_ITEM_ID")
@@ -178,44 +178,44 @@ public class OrderItemImpl implements OrderItem, Cloneable, AdminMainEntity, Cur
 
     @ManyToOne(targetEntity = PersonalMessageImpl.class, cascade = { CascadeType.ALL }, fetch = FetchType.LAZY)
     @JoinColumn(name = "PERSONAL_MESSAGE_ID")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "blOrderElements")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "ucOrderElements")
     @Index(name="ORDERITEM_MESSAGE_INDEX", columnNames={"PERSONAL_MESSAGE_ID"})
     protected PersonalMessage personalMessage;
 
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = GiftWrapOrderItemImpl.class, cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
     @JoinColumn(name = "GIFT_WRAP_ITEM_ID", nullable = true)
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "blOrderElements")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "ucOrderElements")
     @Index(name="ORDERITEM_GIFT_INDEX", columnNames={"GIFT_WRAP_ITEM_ID"})
     @AdminPresentation(excluded = true)
     protected GiftWrapOrderItem giftWrapOrderItem;
 
     @OneToMany(mappedBy = "orderItem", targetEntity = OrderItemAdjustmentImpl.class, cascade = { CascadeType.ALL },
             orphanRemoval = true)
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "blOrderElements")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "ucOrderElements")
     @AdminPresentationCollection(friendlyName="OrderItemImpl_Adjustments", order = Presentation.FieldOrder.ADJUSTMENTS,
                     tab = Presentation.Tab.Name.Advanced, tabOrder = Presentation.Tab.Order.Advanced)
     protected List<OrderItemAdjustment> orderItemAdjustments = new ArrayList<OrderItemAdjustment>();
 
     @OneToMany(mappedBy = "orderItem", targetEntity = ProratedOrderItemAdjustmentImpl.class, cascade = { CascadeType.ALL },
             orphanRemoval = true)
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "blOrderElements")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "ucOrderElements")
     @AdminPresentationCollection(friendlyName="OrderItemImpl_ProratedAdjustments", order = Presentation.FieldOrder.ADJUSTMENTS,
             tab = Presentation.Tab.Name.Advanced, tabOrder = Presentation.Tab.Order.Advanced)
     protected List<ProratedOrderItemAdjustment> proratedOrderItemAdjustments = new ArrayList<ProratedOrderItemAdjustment>();
 
     @OneToMany(mappedBy = "orderItem", targetEntity = OrderItemQualifierImpl.class, cascade = { CascadeType.ALL },
             orphanRemoval = true)
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "blOrderElements")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "ucOrderElements")
     protected List<OrderItemQualifier> orderItemQualifiers = new ArrayList<OrderItemQualifier>();
 
     @OneToMany(mappedBy = "orderItem", targetEntity = CandidateItemOfferImpl.class, cascade = { CascadeType.ALL },
             orphanRemoval = true)
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "blOrderElements")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "ucOrderElements")
     protected List<CandidateItemOffer> candidateItemOffers = new ArrayList<CandidateItemOffer>();
 
     @OneToMany(mappedBy = "orderItem", targetEntity = OrderItemPriceDetailImpl.class, cascade = { CascadeType.ALL },
             orphanRemoval = true)
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "blOrderElements")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "ucOrderElements")
     @AdminPresentationCollection(friendlyName="OrderItemImpl_Price_Details", order = Presentation.FieldOrder.PRICEDETAILS,
                     tab = Presentation.Tab.Name.Advanced, tabOrder = Presentation.Tab.Order.Advanced)
     protected List<OrderItemPriceDetail> orderItemPriceDetails = new ArrayList<OrderItemPriceDetail>();
@@ -239,7 +239,7 @@ public class OrderItemImpl implements OrderItem, Cloneable, AdminMainEntity, Cur
     protected Boolean discountsAllowed;
 
     @OneToMany(mappedBy = "orderItem", targetEntity = OrderItemAttributeImpl.class, cascade = { CascadeType.ALL }, orphanRemoval = true)
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "blOrderElements")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "ucOrderElements")
     @MapKey(name="name")
     @AdminPresentationMap(friendlyName = "OrderItemImpl_Attributes",
         tab = Presentation.Tab.Name.Advanced, tabOrder = Presentation.Tab.Order.Advanced,
@@ -255,7 +255,7 @@ public class OrderItemImpl implements OrderItem, Cloneable, AdminMainEntity, Cur
     protected BigDecimal totalTax;
 
     @OneToMany(mappedBy = "parentOrderItem", targetEntity = OrderItemImpl.class, cascade = CascadeType.REFRESH)
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "blOrderElements")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "ucOrderElements")
     protected List<OrderItem> childOrderItems = new ArrayList<OrderItem>();
 
     @ManyToOne(targetEntity = OrderItemImpl.class,fetch = FetchType.LAZY)
@@ -267,9 +267,9 @@ public class OrderItemImpl implements OrderItem, Cloneable, AdminMainEntity, Cur
     protected Boolean hasValidationError;
 
     @ElementCollection
-    @CollectionTable(name="BLC_ORDER_ITEM_CART_MESSAGE", joinColumns=@JoinColumn(name="ORDER_ITEM_ID"))
+    @CollectionTable(name="UC_ORDER_ITEM_CART_MESSAGE", joinColumns=@JoinColumn(name="ORDER_ITEM_ID"))
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "blOrderElements")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "ucOrderElements")
     @Column(name = "CART_MESSAGE")
     protected List<String> cartMessages;
 
@@ -330,7 +330,7 @@ public class OrderItemImpl implements OrderItem, Cloneable, AdminMainEntity, Cur
 
     @Override
     public Money getTaxablePrice() {
-        Money taxablePrice = BroadleafCurrencyUtils.getMoney(BigDecimal.ZERO, getOrder().getCurrency());
+        Money taxablePrice = UltraCurrencyUtils.getMoney(BigDecimal.ZERO, getOrder().getCurrency());
         if (isTaxable() == null || isTaxable()) {
             taxablePrice = getAveragePrice();
         }
@@ -654,7 +654,7 @@ public class OrderItemImpl implements OrderItem, Cloneable, AdminMainEntity, Cur
     @Override
     public Money getAveragePrice() {
         if (quantity == 0) {
-            return price == null ? null : BroadleafCurrencyUtils.getMoney(price, getOrder().getCurrency());
+            return price == null ? null : UltraCurrencyUtils.getMoney(price, getOrder().getCurrency());
         }
         return getTotalPrice().divide(quantity);
     }
@@ -674,7 +674,7 @@ public class OrderItemImpl implements OrderItem, Cloneable, AdminMainEntity, Cur
 
     @Override
     public Money getTotalAdjustmentValue(boolean includeChildren) {
-        Money totalAdjustmentValue = BroadleafCurrencyUtils.getMoney(getOrder().getCurrency());
+        Money totalAdjustmentValue = UltraCurrencyUtils.getMoney(getOrder().getCurrency());
         List<OrderItemPriceDetail> priceDetails = getOrderItemPriceDetails();
         if (priceDetails != null) {
             for (OrderItemPriceDetail priceDetail : getOrderItemPriceDetails()) {
@@ -698,7 +698,7 @@ public class OrderItemImpl implements OrderItem, Cloneable, AdminMainEntity, Cur
 
     @Override
     public Money getFutureCreditTotalAdjustmentValue(boolean includeChildren) {
-        Money totalAdjustmentValue = BroadleafCurrencyUtils.getMoney(getOrder().getCurrency());
+        Money totalAdjustmentValue = UltraCurrencyUtils.getMoney(getOrder().getCurrency());
         List<OrderItemPriceDetail> priceDetails = getOrderItemPriceDetails();
         if (priceDetails != null) {
             for (OrderItemPriceDetail priceDetail : getOrderItemPriceDetails()) {
@@ -869,8 +869,8 @@ public class OrderItemImpl implements OrderItem, Cloneable, AdminMainEntity, Cur
 
     public void checkCloneable(OrderItem orderItem) throws CloneNotSupportedException, SecurityException, NoSuchMethodException {
         Method cloneMethod = orderItem.getClass().getMethod("clone", new Class[]{});
-        if (cloneMethod.getDeclaringClass().getName().startsWith("org.broadleafcommerce") &&
-                !orderItem.getClass().getName().startsWith("org.broadleafcommerce")) {
+        if (cloneMethod.getDeclaringClass().getName().startsWith("com.ultracommerce") &&
+                !orderItem.getClass().getName().startsWith("com.ultracommerce")) {
             //subclass is not implementing the clone method
             throw new CloneNotSupportedException("Custom extensions and implementations should implement clone in " +
                     "order to guarantee split and merge operations are performed accurately");
@@ -878,7 +878,7 @@ public class OrderItemImpl implements OrderItem, Cloneable, AdminMainEntity, Cur
     }
 
     protected Money convertToMoney(BigDecimal amount) {
-        return amount == null ? null : BroadleafCurrencyUtils.getMoney(amount, getOrder().getCurrency());
+        return amount == null ? null : UltraCurrencyUtils.getMoney(amount, getOrder().getCurrency());
     }
 
     protected OrderItemType convertOrderItemType(String type) {
@@ -894,7 +894,7 @@ public class OrderItemImpl implements OrderItem, Cloneable, AdminMainEntity, Cur
             try {
                 checkCloneable(clonedOrderItem);
             } catch (CloneNotSupportedException e) {
-                LOG.warn("Clone implementation missing in inheritance hierarchy outside of Broadleaf: " +
+                LOG.warn("Clone implementation missing in inheritance hierarchy outside of Ultra: " +
                         clonedOrderItem.getClass().getName(), e);
             }
             if (candidateItemOffers != null) {

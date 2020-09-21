@@ -1,29 +1,29 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.catalog.domain.dto;
+package com.ultracommerce.core.catalog.domain.dto;
 
-import org.broadleafcommerce.core.catalog.domain.ProductOptionValue;
-import org.broadleafcommerce.core.catalog.domain.Sku;
+import com.ultracommerce.core.catalog.domain.ProductOptionValue;
+import com.ultracommerce.core.catalog.domain.Sku;
 
 /**
- * DTO used to carry back the found {@link org.broadleafcommerce.core.catalog.domain.ProductOptionValue#getId()} and
- * {@link org.broadleafcommerce.core.catalog.domain.ProductOption#getAttributeName()} on a given
- * {@link org.broadleafcommerce.core.catalog.domain.Product}
+ * DTO used to carry back the found {@link com.ultracommerce.core.catalog.domain.ProductOptionValue#getId()} and
+ * {@link com.ultracommerce.core.catalog.domain.ProductOption#getAttributeName()} on a given
+ * {@link com.ultracommerce.core.catalog.domain.Product}
  *
  * @author Jerry Ocanas (jocanas)
  */

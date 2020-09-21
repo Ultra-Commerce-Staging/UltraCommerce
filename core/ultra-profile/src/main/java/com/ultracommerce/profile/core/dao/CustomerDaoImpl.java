@@ -1,28 +1,28 @@
 /*
  * #%L
- * BroadleafCommerce Profile
+ * UltraCommerce Profile
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.profile.core.dao;
+package com.ultracommerce.profile.core.dao;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.persistence.EntityConfiguration;
-import org.broadleafcommerce.profile.core.domain.Customer;
-import org.broadleafcommerce.profile.core.domain.CustomerImpl;
+import com.ultracommerce.common.persistence.EntityConfiguration;
+import com.ultracommerce.profile.core.domain.Customer;
+import com.ultracommerce.profile.core.domain.CustomerImpl;
 import org.hibernate.jpa.QueryHints;
 import org.springframework.stereotype.Repository;
 
@@ -36,15 +36,15 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
-@Repository("blCustomerDao")
+@Repository("ucCustomerDao")
 public class CustomerDaoImpl implements CustomerDao {
 
     private static final Log LOG = LogFactory.getLog(CustomerDaoImpl.class);
 
-    @PersistenceContext(unitName="blPU")
+    @PersistenceContext(unitName="ucPU")
     protected EntityManager em;
 
-    @Resource(name="blEntityConfiguration")
+    @Resource(name="ucEntityConfiguration")
     protected EntityConfiguration entityConfiguration;
 
     @Override
@@ -110,7 +110,7 @@ public class CustomerDaoImpl implements CustomerDao {
 
     @Override
     public List<Customer> readCustomersByUsername(String username, Boolean cacheable) {
-        TypedQuery<Customer> query = em.createNamedQuery("BC_READ_CUSTOMER_BY_USER_NAME", Customer.class);
+        TypedQuery<Customer> query = em.createNamedQuery("UC_READ_CUSTOMER_BY_USER_NAME", Customer.class);
         query.setParameter("username", username);
         query.setHint(QueryHints.HINT_CACHEABLE, cacheable);
         query.setHint(QueryHints.HINT_CACHE_REGION, "query.Order");
@@ -125,7 +125,7 @@ public class CustomerDaoImpl implements CustomerDao {
 
     @Override
     public List<Customer> readCustomersByEmail(String emailAddress) {
-        TypedQuery<Customer> query = em.createNamedQuery("BC_READ_CUSTOMER_BY_EMAIL", Customer.class);
+        TypedQuery<Customer> query = em.createNamedQuery("UC_READ_CUSTOMER_BY_EMAIL", Customer.class);
         query.setParameter("email", emailAddress);
         query.setHint(QueryHints.HINT_CACHEABLE, true);
         query.setHint(QueryHints.HINT_CACHE_REGION, "query.Order");

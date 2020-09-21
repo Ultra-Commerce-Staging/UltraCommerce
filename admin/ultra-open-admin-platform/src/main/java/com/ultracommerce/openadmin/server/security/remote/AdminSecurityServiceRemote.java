@@ -1,45 +1,45 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.openadmin.server.security.remote;
+package com.ultracommerce.openadmin.server.security.remote;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.exception.SecurityServiceException;
-import org.broadleafcommerce.common.exception.ServiceException;
-import org.broadleafcommerce.common.extension.ExtensionResultStatusType;
-import org.broadleafcommerce.common.presentation.client.PersistencePerspectiveItemType;
-import org.broadleafcommerce.common.security.service.ExploitProtectionService;
-import org.broadleafcommerce.common.util.StringUtil;
-import org.broadleafcommerce.common.web.SandBoxContext;
-import org.broadleafcommerce.openadmin.dto.Entity;
-import org.broadleafcommerce.openadmin.dto.PersistencePackage;
-import org.broadleafcommerce.openadmin.dto.Property;
-import org.broadleafcommerce.openadmin.dto.SectionCrumb;
-import org.broadleafcommerce.openadmin.server.security.domain.AdminPermission;
-import org.broadleafcommerce.openadmin.server.security.domain.AdminRole;
-import org.broadleafcommerce.openadmin.server.security.domain.AdminUser;
-import org.broadleafcommerce.openadmin.server.security.extension.AdminSecurityCheckExtensionManager;
-import org.broadleafcommerce.openadmin.server.security.service.RowLevelSecurityService;
-import org.broadleafcommerce.openadmin.server.security.service.type.PermissionType;
-import org.broadleafcommerce.openadmin.server.service.ValidationException;
-import org.broadleafcommerce.openadmin.server.service.persistence.validation.GlobalValidationResult;
+import com.ultracommerce.common.exception.SecurityServiceException;
+import com.ultracommerce.common.exception.ServiceException;
+import com.ultracommerce.common.extension.ExtensionResultStatusType;
+import com.ultracommerce.common.presentation.client.PersistencePerspectiveItemType;
+import com.ultracommerce.common.security.service.ExploitProtectionService;
+import com.ultracommerce.common.util.StringUtil;
+import com.ultracommerce.common.web.SandBoxContext;
+import com.ultracommerce.openadmin.dto.Entity;
+import com.ultracommerce.openadmin.dto.PersistencePackage;
+import com.ultracommerce.openadmin.dto.Property;
+import com.ultracommerce.openadmin.dto.SectionCrumb;
+import com.ultracommerce.openadmin.server.security.domain.AdminPermission;
+import com.ultracommerce.openadmin.server.security.domain.AdminRole;
+import com.ultracommerce.openadmin.server.security.domain.AdminUser;
+import com.ultracommerce.openadmin.server.security.extension.AdminSecurityCheckExtensionManager;
+import com.ultracommerce.openadmin.server.security.service.RowLevelSecurityService;
+import com.ultracommerce.openadmin.server.security.service.type.PermissionType;
+import com.ultracommerce.openadmin.server.service.ValidationException;
+import com.ultracommerce.openadmin.server.service.persistence.validation.GlobalValidationResult;
 import org.springframework.cglib.core.CollectionUtils;
 import org.springframework.cglib.core.Transformer;
 import org.springframework.security.core.Authentication;
@@ -71,29 +71,29 @@ import javax.annotation.Resource;
  * @author jfischer
  *
  */
-@Service("blAdminSecurityRemoteService")
+@Service("ucAdminSecurityRemoteService")
 public class AdminSecurityServiceRemote implements AdminSecurityService, SecurityVerifier {
     
     private static final String ANONYMOUS_USER_NAME = "anonymousUser";
     private static final Log LOG = LogFactory.getLog(AdminSecurityServiceRemote.class);
     
-    @Resource(name="blAdminSecurityService")
-    protected org.broadleafcommerce.openadmin.server.security.service.AdminSecurityService securityService;
+    @Resource(name="ucAdminSecurityService")
+    protected com.ultracommerce.openadmin.server.security.service.AdminSecurityService securityService;
 
-    @Resource(name="blExploitProtectionService")
+    @Resource(name="ucExploitProtectionService")
     protected ExploitProtectionService exploitProtectionService;
     
-    @Resource(name = "blRowLevelSecurityService")
+    @Resource(name = "ucRowLevelSecurityService")
     protected RowLevelSecurityService rowLevelSecurityService;
 
     @Resource
     protected AdminSecurityCheckExtensionManager securityCheckExtensionManager;
     
     @Override
-    public org.broadleafcommerce.openadmin.server.security.remote.AdminUser getAdminUser() throws ServiceException {
+    public com.ultracommerce.openadmin.server.security.remote.AdminUser getAdminUser() throws ServiceException {
         AdminUser persistentAdminUser = getPersistentAdminUser();
         if (persistentAdminUser != null) {
-            org.broadleafcommerce.openadmin.server.security.remote.AdminUser response = new org.broadleafcommerce.openadmin.server.security.remote.AdminUser();
+            com.ultracommerce.openadmin.server.security.remote.AdminUser response = new com.ultracommerce.openadmin.server.security.remote.AdminUser();
             for (AdminRole role : persistentAdminUser.getAllRoles()) {
                 response.getRoles().add(role.getName());
                 for (AdminPermission permission : role.getAllPermissions()) {
@@ -239,8 +239,8 @@ public class AdminSecurityServiceRemote implements AdminSecurityService, Securit
                     LOG.warn("Detected security request for an unregistered ceiling entity (" + StringUtil.sanitize(ceilingNames[0]) + "). " +
                         "As a result, the request failed. Please make sure to configure security for any ceiling entities " +
                         "referenced via the admin. This is usually accomplished by adding records in the " +
-                        "BLC_ADMIN_PERMISSION_ENTITY table. Note, depending on how the entity in question is used, you " +
-                        "may need to add to BLC_ADMIN_PERMISSION, BLC_ADMIN_ROLE_PERMISSION_XREF and BLC_ADMIN_SEC_PERM_XREF.", primaryException);
+                        "UC_ADMIN_PERMISSION_ENTITY table. Note, depending on how the entity in question is used, you " +
+                        "may need to add to UC_ADMIN_PERMISSION, UC_ADMIN_ROLE_PERMISSION_XREF and UC_ADMIN_SEC_PERM_XREF.", primaryException);
                 }
             }
             throw primaryException;

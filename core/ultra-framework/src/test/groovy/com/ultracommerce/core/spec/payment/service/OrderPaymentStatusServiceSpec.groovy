@@ -1,35 +1,35 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.spec.payment.service
+package com.ultracommerce.core.spec.payment.service
 
-import org.broadleafcommerce.common.currency.domain.BroadleafCurrency
-import org.broadleafcommerce.common.currency.domain.BroadleafCurrencyImpl
-import org.broadleafcommerce.common.money.Money
-import org.broadleafcommerce.common.payment.PaymentTransactionType
-import org.broadleafcommerce.core.order.domain.Order
-import org.broadleafcommerce.core.order.domain.OrderImpl
-import org.broadleafcommerce.core.payment.domain.OrderPayment
-import org.broadleafcommerce.core.payment.domain.OrderPaymentImpl
-import org.broadleafcommerce.core.payment.domain.PaymentTransaction
-import org.broadleafcommerce.core.payment.domain.PaymentTransactionImpl
-import org.broadleafcommerce.core.payment.service.OrderPaymentStatusService
-import org.broadleafcommerce.core.payment.service.OrderPaymentStatusServiceImpl
-import org.broadleafcommerce.core.payment.service.type.OrderPaymentStatus
+import com.ultracommerce.common.currency.domain.UltraCurrency
+import com.ultracommerce.common.currency.domain.UltraCurrencyImpl
+import com.ultracommerce.common.money.Money
+import com.ultracommerce.common.payment.PaymentTransactionType
+import com.ultracommerce.core.order.domain.Order
+import com.ultracommerce.core.order.domain.OrderImpl
+import com.ultracommerce.core.payment.domain.OrderPayment
+import com.ultracommerce.core.payment.domain.OrderPaymentImpl
+import com.ultracommerce.core.payment.domain.PaymentTransaction
+import com.ultracommerce.core.payment.domain.PaymentTransactionImpl
+import com.ultracommerce.core.payment.service.OrderPaymentStatusService
+import com.ultracommerce.core.payment.service.OrderPaymentStatusServiceImpl
+import com.ultracommerce.core.payment.service.type.OrderPaymentStatus
 import spock.lang.Specification
 
 /**
@@ -60,7 +60,7 @@ class OrderPaymentStatusServiceSpec extends Specification {
     def setup() {
         statusService = new OrderPaymentStatusServiceImpl()
 
-        BroadleafCurrency usd = new BroadleafCurrencyImpl()
+        UltraCurrency usd = new UltraCurrencyImpl()
         usd.currencyCode = "USD";
         order = new OrderImpl()
         order.currency = usd

@@ -1,27 +1,27 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.module;
+package com.ultracommerce.common.module;
 
 import org.apache.commons.lang3.StringUtils;
-import org.broadleafcommerce.common.condition.ConditionalOnBroadleafModule;
-import org.broadleafcommerce.common.condition.OnBroadleafModuleCondition;
-import org.broadleafcommerce.common.logging.ModuleLifecycleLoggingBean;
-import org.broadleafcommerce.common.module.BroadleafModuleRegistration.BroadleafModuleEnum;
+import com.ultracommerce.common.condition.ConditionalOnUltraModule;
+import com.ultracommerce.common.condition.OnUltraModuleCondition;
+import com.ultracommerce.common.logging.ModuleLifecycleLoggingBean;
+import com.ultracommerce.common.module.UltraModuleRegistration.UltraModuleEnum;
 import org.springframework.core.io.support.SpringFactoriesLoader;
 
 import java.util.List;
@@ -30,17 +30,17 @@ import javax.annotation.Nonnull;
 
 /**
  * <p>
- * Utility class that checks for the presence of registered Broadleaf modules.
+ * Utility class that checks for the presence of registered Ultra modules.
  *
- * @see {@link ConditionalOnBroadleafModule}
- * @see {@link OnBroadleafModuleCondition}
+ * @see {@link ConditionalOnUltraModule}
+ * @see {@link OnUltraModuleCondition}
  * @author Nathan Moore (nathanmoore).
  * @author Phillip Verheyden (phillipuniverse)
  * @author Philip Baggett (pbaggett)
  */
 public class ModulePresentUtil {
 
-    public static final List<BroadleafModuleRegistration> MODULE_REGISTRATIONS = SpringFactoriesLoader.loadFactories(BroadleafModuleRegistration.class, null);
+    public static final List<UltraModuleRegistration> MODULE_REGISTRATIONS = SpringFactoriesLoader.loadFactories(UltraModuleRegistration.class, null);
     
     /**
      * Checks if the given module is registered
@@ -49,7 +49,7 @@ public class ModulePresentUtil {
      * @return whether the module in question has registered itself at runtime
      * @see {@link #isPresent(String)}
      */
-    public static boolean isPresent(@Nonnull final BroadleafModuleEnum moduleInQuestion) {
+    public static boolean isPresent(@Nonnull final UltraModuleEnum moduleInQuestion) {
         return isPresent(moduleInQuestion.getName());
     }
 
@@ -70,13 +70,13 @@ public class ModulePresentUtil {
     }
 
     /**
-     * This version takes a String instead of a {@link BroadleafModuleEnum} but operates in the same way by checking to see if
-     * a particular Broadleaf module has registered itself
+     * This version takes a String instead of a {@link UltraModuleEnum} but operates in the same way by checking to see if
+     * a particular Ultra module has registered itself
      *
      * @param moduleInQuestion a String that maps to {@link ModuleLifecycleLoggingBean#getModuleName()}
      */
     public static boolean isPresent(@Nonnull final String moduleInQuestion) {
-        for (BroadleafModuleRegistration registration : MODULE_REGISTRATIONS) {
+        for (UltraModuleRegistration registration : MODULE_REGISTRATIONS) {
             String moduleName = registration.getModuleName();
             if (moduleInQuestion.equals(moduleName)) {
                 return true;

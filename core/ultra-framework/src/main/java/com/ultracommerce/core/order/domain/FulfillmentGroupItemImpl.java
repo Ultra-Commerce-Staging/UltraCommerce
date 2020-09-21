@@ -1,37 +1,37 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.order.domain;
+package com.ultracommerce.core.order.domain;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.copy.CreateResponse;
-import org.broadleafcommerce.common.copy.MultiTenantCopyContext;
-import org.broadleafcommerce.common.currency.util.BroadleafCurrencyUtils;
-import org.broadleafcommerce.common.currency.util.CurrencyCodeIdentifiable;
-import org.broadleafcommerce.common.money.Money;
-import org.broadleafcommerce.common.presentation.AdminPresentation;
-import org.broadleafcommerce.common.presentation.AdminPresentationToOneLookup;
-import org.broadleafcommerce.common.presentation.client.SupportedFieldType;
-import org.broadleafcommerce.common.presentation.override.AdminPresentationMergeEntry;
-import org.broadleafcommerce.common.presentation.override.AdminPresentationMergeOverride;
-import org.broadleafcommerce.common.presentation.override.AdminPresentationMergeOverrides;
-import org.broadleafcommerce.common.presentation.override.PropertyType;
-import org.broadleafcommerce.core.order.service.type.FulfillmentGroupStatusType;
+import com.ultracommerce.common.copy.CreateResponse;
+import com.ultracommerce.common.copy.MultiTenantCopyContext;
+import com.ultracommerce.common.currency.util.UltraCurrencyUtils;
+import com.ultracommerce.common.currency.util.CurrencyCodeIdentifiable;
+import com.ultracommerce.common.money.Money;
+import com.ultracommerce.common.presentation.AdminPresentation;
+import com.ultracommerce.common.presentation.AdminPresentationToOneLookup;
+import com.ultracommerce.common.presentation.client.SupportedFieldType;
+import com.ultracommerce.common.presentation.override.AdminPresentationMergeEntry;
+import com.ultracommerce.common.presentation.override.AdminPresentationMergeOverride;
+import com.ultracommerce.common.presentation.override.AdminPresentationMergeOverrides;
+import com.ultracommerce.common.presentation.override.PropertyType;
+import com.ultracommerce.core.order.service.type.FulfillmentGroupStatusType;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
@@ -59,8 +59,8 @@ import javax.persistence.Table;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "BLC_FULFILLMENT_GROUP_ITEM")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "blOrderElements")
+@Table(name = "UC_FULFILLMENT_GROUP_ITEM")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "ucOrderElements")
 @AdminPresentationMergeOverrides(
     {
         @AdminPresentationMergeOverride(name = "", mergeEntries =
@@ -77,10 +77,10 @@ public class FulfillmentGroupItemImpl implements FulfillmentGroupItem, Cloneable
     @GeneratedValue(generator = "FulfillmentGroupItemId")
     @GenericGenerator(
         name="FulfillmentGroupItemId",
-        strategy="org.broadleafcommerce.common.persistence.IdOverrideTableGenerator",
+        strategy="com.ultracommerce.common.persistence.IdOverrideTableGenerator",
         parameters = {
             @Parameter(name="segment_value", value="FulfillmentGroupItemImpl"),
-            @Parameter(name="entity_name", value="org.broadleafcommerce.core.order.domain.FulfillmentGroupItemImpl")
+            @Parameter(name="entity_name", value="com.ultracommerce.core.order.domain.FulfillmentGroupItemImpl")
         }
     )
     @Column(name = "FULFILLMENT_GROUP_ITEM_ID")
@@ -108,8 +108,8 @@ public class FulfillmentGroupItemImpl implements FulfillmentGroupItem, Cloneable
     private String status;
     
     @OneToMany(fetch = FetchType.LAZY, targetEntity = TaxDetailImpl.class, cascade = { CascadeType.ALL }, orphanRemoval = true)
-    @JoinTable(name = "BLC_FG_ITEM_TAX_XREF", joinColumns = @JoinColumn(name = "FULFILLMENT_GROUP_ITEM_ID"), inverseJoinColumns = @JoinColumn(name = "TAX_DETAIL_ID"))
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "blOrderElements")
+    @JoinTable(name = "UC_FG_ITEM_TAX_XREF", joinColumns = @JoinColumn(name = "FULFILLMENT_GROUP_ITEM_ID"), inverseJoinColumns = @JoinColumn(name = "TAX_DETAIL_ID"))
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "ucOrderElements")
     protected List<TaxDetail> taxes = new ArrayList<TaxDetail>();
     
     @Column(name = "TOTAL_ITEM_TAX", precision=19, scale=5)
@@ -184,7 +184,7 @@ public class FulfillmentGroupItemImpl implements FulfillmentGroupItem, Cloneable
     }
 
     protected Money convertToMoney(BigDecimal amount) {
-        return amount == null ? null : BroadleafCurrencyUtils.getMoney(amount, orderItem.getOrder().getCurrency());
+        return amount == null ? null : UltraCurrencyUtils.getMoney(amount, orderItem.getOrder().getCurrency());
     }
 
     @Override
@@ -249,7 +249,7 @@ public class FulfillmentGroupItemImpl implements FulfillmentGroupItem, Cloneable
     
     @Override
     public Money getTotalTax() {
-        return totalTax == null ? null : BroadleafCurrencyUtils.getMoney(totalTax, getFulfillmentGroup().getOrder().getCurrency());
+        return totalTax == null ? null : UltraCurrencyUtils.getMoney(totalTax, getFulfillmentGroup().getOrder().getCurrency());
     }
 
     @Override
@@ -264,7 +264,7 @@ public class FulfillmentGroupItemImpl implements FulfillmentGroupItem, Cloneable
 
     public void checkCloneable(FulfillmentGroupItem fulfillmentGroupItem) throws CloneNotSupportedException, SecurityException, NoSuchMethodException {
         Method cloneMethod = fulfillmentGroupItem.getClass().getMethod("clone", new Class[]{});
-        if (cloneMethod.getDeclaringClass().getName().startsWith("org.broadleafcommerce") && !orderItem.getClass().getName().startsWith("org.broadleafcommerce")) {
+        if (cloneMethod.getDeclaringClass().getName().startsWith("com.ultracommerce") && !orderItem.getClass().getName().startsWith("com.ultracommerce")) {
             //subclass is not implementing the clone method
             throw new CloneNotSupportedException("Custom extensions and implementations should implement clone in order to guarantee split and merge operations are performed accurately");
         }
@@ -279,7 +279,7 @@ public class FulfillmentGroupItemImpl implements FulfillmentGroupItem, Cloneable
             try {
                 checkCloneable(clonedFulfillmentGroupItem);
             } catch (CloneNotSupportedException e) {
-                LOG.warn("Clone implementation missing in inheritance hierarchy outside of Broadleaf: " + clonedFulfillmentGroupItem.getClass().getName(), e);
+                LOG.warn("Clone implementation missing in inheritance hierarchy outside of Ultra: " + clonedFulfillmentGroupItem.getClass().getName(), e);
             }
 
             clonedFulfillmentGroupItem.setFulfillmentGroup(getFulfillmentGroup());

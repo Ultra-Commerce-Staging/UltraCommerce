@@ -1,21 +1,21 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.web.controller;
+package com.ultracommerce.common.web.controller;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -26,29 +26,29 @@ import javax.servlet.http.HttpServletRequest;
 
 
 /**
- * Commonly used Broadleaf Controller operations.
+ * Commonly used Ultra Controller operations.
  * - ajaxRedirects
  * - isAjaxRequest
  * - ajaxRender   
  * 
- * BroadleafAbstractController provides convenience methods for this functionality.
+ * UltraAbstractController provides convenience methods for this functionality.
  * Implementors who are not able (or willing) to have their Controllers extend
- * BroadleafAbstractController can utilize this utility class to achieve some of
+ * UltraAbstractController can utilize this utility class to achieve some of
  * the same benefits.
  * 
  * 
  * @author bpolster
  */
-public class BroadleafControllerUtility {
-    protected static final Log LOG = LogFactory.getLog(BroadleafControllerUtility.class);
+public class UltraControllerUtility {
+    protected static final Log LOG = LogFactory.getLog(UltraControllerUtility.class);
     
-    public static final String BLC_REDIRECT_ATTRIBUTE = "blc_redirect";
-    public static final String BLC_AJAX_PARAMETER = "blcAjax";
+    public static final String UC_REDIRECT_ATTRIBUTE = "uc_redirect";
+    public static final String UC_AJAX_PARAMETER = "ucAjax";
     
     /**
      * A helper method that returns whether or not the given request was invoked via an AJAX call
      * 
-     * Returns true if the request contains the XMLHttpRequest header or a blcAjax=true parameter.
+     * Returns true if the request contains the XMLHttpRequest header or a ucAjax=true parameter.
      * 
      * @param request
      * @return - whether or not it was an AJAX request
@@ -58,7 +58,7 @@ public class BroadleafControllerUtility {
     }
     
     public static boolean isAjaxRequest(WebRequest request) {
-        String ajaxParameter = request.getParameter(BLC_AJAX_PARAMETER);
+        String ajaxParameter = request.getParameter(UC_AJAX_PARAMETER);
         String requestedWithHeader = request.getHeader("X-Requested-With");
         boolean result = (ajaxParameter != null && "true".equals(ajaxParameter))
                 || "XMLHttpRequest".equals(requestedWithHeader);

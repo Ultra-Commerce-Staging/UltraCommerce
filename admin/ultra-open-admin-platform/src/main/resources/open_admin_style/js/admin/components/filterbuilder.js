@@ -1,28 +1,28 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
 /**
- * Broadleaf Commerce Filter Builder
+ * Ultra Commerce Filter Builder
  * This component initializes any Filter Builder JSON data on the page and converts
  * it into a jQuery Query Builder Component
  *
  * @author: jfleschler
  */
-(function($, BLCAdmin) {
+(function($, UCAdmin) {
 
     /**
      * An Admin page may contain multiple filter builders of various different types.
@@ -50,7 +50,7 @@
      */
     var postApplyFilterHandlers = [];
 
-    BLCAdmin.filterBuilders = {
+    UCAdmin.filterBuilders = {
 
         /**
          * Handlers designed to execute on a field before initializing the query builder
@@ -98,7 +98,7 @@
         /**
          * Add a {ruleBuilder} to the ruleBuildersArray
          * A single Admin RuleBuilder may contain more than one QueryBuilder - such as in the case of complex
-         * item rules (i.e. org.broadleafcommerce.common.presentation.client.SupportedFieldType.RULE_WITH_QUANTITY)
+         * item rules (i.e. com.ultracommerce.common.presentation.client.SupportedFieldType.RULE_WITH_QUANTITY)
          *
          * @param hiddenId - the ID of the hidden JSON input element where the constructed value is stored
          * @param containerId - the ID of the container <div> element where the query builders are rendered
@@ -242,7 +242,7 @@
             builder.queryBuilder(this.initializeQueryBuilderConfig(ruleData, fields, false));
 
             //run any post-construct handlers
-            //BLCAdmin.ruleBuilders.runPostConstructQueryBuilderFieldHandler(builder);
+            //UCAdmin.ruleBuilders.runPostConstructQueryBuilderFieldHandler(builder);
 
             filterBuilder.addQueryBuilder($(builder));
 
@@ -288,7 +288,7 @@
          * Set the appropriate JSON value on the "hiddenId" input element for the corresponding rule builder.
          *
          * Performs the appropriate data transformations in order to properly bind with the backing
-         * org.broadleafcommerce.openadmin.web.rulebuilder.dto.DataWrapper
+         * com.ultracommerce.openadmin.web.rulebuilder.dto.DataWrapper
          *
          * NOTE: this will not collect and set every rule builder passed in. It determines whether or not
          * to collect the data based on its state (i.e. if there is a RADIO and it is off, it will not collect data)
@@ -426,7 +426,7 @@
         initBooleanRadioPreInitFieldHandler : function(field) {
             var opRef = field.operators;
 
-            if (opRef && typeof opRef === 'string' && ("blcFilterOperators_Boolean" === opRef)) {
+            if (opRef && typeof opRef === 'string' && ("ucFilterOperators_Boolean" === opRef)) {
                 field.input = 'radio';
                 field.values = {
                     'true': 'true',
@@ -450,7 +450,7 @@
                 $selectize.$input.closest('.rule-value-container').height(inputHeight);
             }
 
-            if (opRef && typeof opRef === 'string' && "blcFilterOperators_Selectize" === opRef) {
+            if (opRef && typeof opRef === 'string' && "ucFilterOperators_Selectize" === opRef) {
                 var sectionKey = field.selectizeSectionKey;
 
                 field.multiple = true;
@@ -483,7 +483,7 @@
                             // (Values may contain multiple items and are sent back as a single String array)
                             var $selectize = this;
                             var data = $selectize.$input.attr("data-hydrate");
-                            var dataHydrate = BLCAdmin.stringToArray(data);
+                            var dataHydrate = UCAdmin.stringToArray(data);
                             for (var k=0; k<dataHydrate.length; k++) {
                                 if (!isNaN(dataHydrate[k])) {
                                     $selectize.addItem(Number(dataHydrate[k]), false);
@@ -500,8 +500,8 @@
                             var queryData = {};
                             queryData["name"] = query;
 
-                            BLC.ajax({
-                                url: BLC.servletContext + "/" + sectionKey + "/selectize",
+                            UC.ajax({
+                                url: UC.servletContext + "/" + sectionKey + "/selectize",
                                 type: 'GET',
                                 data: queryData
                             }, function(data) {
@@ -551,7 +551,7 @@
 
         /**
          * Initializes the configuration object necessary for the jQuery Query Builder
-         * to support the BLC Admin Rule Builder use cases (both RULE_WITH_QUANTITY and RULE_SIMPLE)
+         * to support the UC Admin Rule Builder use cases (both RULE_WITH_QUANTITY and RULE_SIMPLE)
          * by passing in the fields (filters) and ruleData (rules) for the passed in rule builder
          *
          * Plugin configurations is also performed in order to support third party components
@@ -561,8 +561,8 @@
          * @param fields
          * @returns {
          *  {plugins:
-         *      {blc-admin-query-builder: {pk: (null|blc-complex-query-builder.pk|*|jQuery),
-         *      quantity: (*|blc-complex-query-builder.quantity|ConditionsBuilder.collectDataFromNode.quantity|newField.quantity|jQuery|out.quantity)}},
+         *      {uc-admin-query-builder: {pk: (null|uc-complex-query-builder.pk|*|jQuery),
+         *      quantity: (*|uc-complex-query-builder.quantity|ConditionsBuilder.collectDataFromNode.quantity|newField.quantity|jQuery|out.quantity)}},
          *      icons: {add_rule: string, remove_rule: string},
          *      allow_groups: boolean,
          *      filters: *,
@@ -575,7 +575,7 @@
                 (function(){
 
                     //run any pre-initialization handlers for this field
-                    BLCAdmin.filterBuilders.runPreInitQueryBuilderFieldHandler(fields[i]);
+                    UCAdmin.filterBuilders.runPreInitQueryBuilderFieldHandler(fields[i]);
 
                     fields[i].unique = true;
 
@@ -614,7 +614,7 @@
             var config = {
                 plugins: {
                     //'unique-filter': null,
-                    'blc-admin-filter-builder': {
+                    'uc-admin-filter-builder': {
                         pk:filterData.pk,
                         removeConditionsLink: removeBtn
                     }
@@ -627,7 +627,7 @@
                 inputs_separator: "<span class='rule-val-sep'>and</span>",
                 filters: fields,
                 rules: filterData.rules && filterData.rules.length > 0 ? filterData : null,
-                operators: window['blcOperators'],
+                operators: window['ucOperators'],
                 select_placeholder: '~ Choose Attribute'
             };
             return config;
@@ -637,7 +637,7 @@
             if (hiddenId == undefined) {
                 hiddenId = $("#hidden-id").data('hiddenid');
             }
-            var filterBuilder = BLCAdmin.filterBuilders.getFilterBuilderByHiddenId(hiddenId);
+            var filterBuilder = UCAdmin.filterBuilders.getFilterBuilderByHiddenId(hiddenId);
 
             var $filterButton = $($('.filter-button[data-hiddenid=' + hiddenId + ']')[0]);
             var $tbody = $('.list-grid-table[data-hiddenid=' + hiddenId + ']:not([id$=-header])');
@@ -654,11 +654,11 @@
                 return;
             }
 
-            BLCAdmin.filterBuilders.setJSONValueOnField(filterBuilder);
+            UCAdmin.filterBuilders.setJSONValueOnField(filterBuilder);
 
             // Convert JSON to request params
             var filters = JSON.parse($('#' + hiddenId).val());
-            var inputs = BLCAdmin.filterBuilders.getFiltersAsURLParams(hiddenId);
+            var inputs = UCAdmin.filterBuilders.getFiltersAsURLParams(hiddenId);
 
             if (filters.data.length <= 0) {
                 var mainContent = $filterButton.closest('.main-content');
@@ -673,23 +673,23 @@
             $('body').trigger(urlEvent, [url, $tbody]);
             url = urlEvent.resultUrl || url;
 
-            BLC.ajax({
+            UC.ajax({
                 url: url,
                 type: "GET",
                 data: inputs
             }, function(data) {
                 if ($tbody.data('listgridtype') == 'main') {
                     // clear all url params
-                    $(BLCAdmin.history.getUrlParameters()).each(function(index, input) {
+                    $(UCAdmin.history.getUrlParameters()).each(function(index, input) {
                         for (var key in input) {
-                            BLCAdmin.history.replaceUrlParameter(key, null);
+                            UCAdmin.history.replaceUrlParameter(key, null);
                         }
                     });
                     // add back active filters
                     if (inputs.length) {
                         for (var i in inputs) {
                             var input = inputs[i];
-                            BLCAdmin.history.replaceUrlParameter(input.name, input.value);
+                            UCAdmin.history.replaceUrlParameter(input.name, input.value);
                         }
                     }
                 }
@@ -709,7 +709,7 @@
                         var parentId = container.find('.select-column').data('parentid');
 
                         // reload the most recent folder
-                        BLCAdmin.assetGrid.loadFolder(parentId, container.find('.select-column'));
+                        UCAdmin.assetGrid.loadFolder(parentId, container.find('.select-column'));
                     } else {
                         // hide the folder listgrid
                         container.find('.select-column').hide();
@@ -720,19 +720,19 @@
                         container.find('.asset-title').html("Showing filtered results").show();
                     }
 
-                    BLCAdmin.assetGrid.initialize($(assetGrid).find('.asset-grid-container'));
-                    BLCAdmin.listGrid.initialize($(assetListgrid));
+                    UCAdmin.assetGrid.initialize($(assetGrid).find('.asset-grid-container'));
+                    UCAdmin.listGrid.initialize($(assetListgrid));
                 } else {
                     $(data).find('div.listgrid-header-wrapper').each(function(i, el) {
-                        var $oldTable = BLCAdmin.listGrid.findRelatedTable($(el));
+                        var $oldTable = UCAdmin.listGrid.findRelatedTable($(el));
 
                         if ($oldTable.closest('.mCSB_container').length) {
-                            BLCAdmin.listGrid.replaceRelatedCollection($(el), null, {isRefresh: false});
+                            UCAdmin.listGrid.replaceRelatedCollection($(el), null, {isRefresh: false});
                         }
                     })
                 }
 
-                BLCAdmin.filterBuilders.runPostApplyFilterHandlers(data);
+                UCAdmin.filterBuilders.runPostApplyFilterHandlers(data);
             });
 
             $('.error-container').hide();
@@ -746,9 +746,9 @@
             var $tbody = $('.list-grid-table[data-hiddenid=' + hiddenId + ']:not([id$=-header])');
             if ($tbody.data('listgridtype') == 'main') {
                 // remove query string from URL
-                $(BLCAdmin.history.getUrlParameters()).each(function (index, input) {
+                $(UCAdmin.history.getUrlParameters()).each(function (index, input) {
                     for (var key in input) {
-                        BLCAdmin.history.replaceUrlParameter(key, null);
+                        UCAdmin.history.replaceUrlParameter(key, null);
                     }
                 });
             }
@@ -765,7 +765,7 @@
             var date = new Date(input);
             if (date != 'Invalid Date') {
                 //mm/dd/yy HH:mm
-                input = BLCAdmin.dates.getServerDate(input);
+                input = UCAdmin.dates.getServerDate(input);
             }
 
             switch(operator) {
@@ -861,7 +861,7 @@
         addExistingFilters: function(filterBuilder) {
             var hiddenId = filterBuilder.hiddenId;
             // check if there are any existing filters on the page
-            var filterData = BLCAdmin.filterBuilders.getEmptyFilterData();
+            var filterData = UCAdmin.filterBuilders.getEmptyFilterData();
             for (var i=0; i < filterBuilder.fields.length; i++) {
                 var field = jQuery.extend({}, filterBuilder.fields[i]);
                 if (typeof field.operators === 'string' ) {
@@ -869,9 +869,9 @@
                 }
 
                 // check for existing rules in the url
-                var queryString = BLCAdmin.filterBuilders.getQueryVariable(field.id);
+                var queryString = UCAdmin.filterBuilders.getQueryVariable(field.id);
                 // make sure its not modal
-                var modal = BLCAdmin.currentModal();
+                var modal = UCAdmin.currentModal();
 
                 if ((queryString != null) && (modal == undefined)) {
                     var numInputs = 1;
@@ -904,7 +904,7 @@
             if (filterData.rules.length > 0) {
                 if (!$filterButton.closest('.button-group').length) {
 
-                    $filterButton.text(BLCAdmin.messages.editFilter);
+                    $filterButton.text(UCAdmin.messages.editFilter);
                     $filterButton.removeClass('disabled').removeAttr('disabled');
 
                     var clearButton = $('<button>', {
@@ -924,9 +924,9 @@
                 }
                 $filterButton.closest('.main-content').find('.sticky-container .filter-text').show();
             } else {
-                if ($filterButton.text() !== BLCAdmin.messages.filter) {
+                if ($filterButton.text() !== UCAdmin.messages.filter) {
                     // change "edit filter" button back to "filter"
-                    $filterButton.text(BLCAdmin.messages.filter);
+                    $filterButton.text(UCAdmin.messages.filter);
                     $filterButton.insertBefore($filterButton.parent());
                     $filterButton.siblings('.button-group:visible').remove();
                     $filterButton.closest('.main-content').find('.sticky-container .filter-text').hide();
@@ -976,7 +976,7 @@
                         var ruleVal = JSON.parse(rule.value);
                         var arr = Array.isArray(ruleVal) ? ruleVal : [ruleVal];
                         var sectionKey = field.selectizeSectionKey;
-                        var url = BLC.servletContext + "/" + sectionKey + "/selectize?id=" + arr.join("|");
+                        var url = UC.servletContext + "/" + sectionKey + "/selectize?id=" + arr.join("|");
                         var data = $.ajax({
                             url: encodeURI(url),
                             async: false,
@@ -1006,7 +1006,7 @@
             if ($filterButton.length > 0) {
                 var hiddenId = $filterButton.data('hiddenid');
 
-                return BLCAdmin.filterBuilders.getFiltersAsURLParams(hiddenId);
+                return UCAdmin.filterBuilders.getFiltersAsURLParams(hiddenId);
             }
 
             return [];
@@ -1021,7 +1021,7 @@
                 var rules = filters.data[0].rules;
                 $(rules).each(function (i, e) {
                     if (e.value != '[]') {
-                        var input = {'name': e.id, 'value': BLCAdmin.filterBuilders.formatInput(e.value, e.operator)};
+                        var input = {'name': e.id, 'value': UCAdmin.filterBuilders.formatInput(e.value, e.operator)};
                         inputs.push(input);
                     }
                 });
@@ -1035,13 +1035,13 @@
      * Initialization handler to find all filter builders on the page and initialize them with
      * the appropriate fields and data (as specified by the container)
      */
-    BLCAdmin.addInitializationHandler(function($container) {
+    UCAdmin.addInitializationHandler(function($container) {
         //Add default pre-init and post-construct handlers (e.g. selectize)
-        BLCAdmin.filterBuilders.addPreInitQueryBuilderFieldHandler(BLCAdmin.filterBuilders.initBooleanRadioPreInitFieldHandler);
-        BLCAdmin.filterBuilders.addPreInitQueryBuilderFieldHandler(BLCAdmin.filterBuilders.initSelectizePreInitFieldHandler);
-        BLCAdmin.filterBuilders.addPostConstructQueryBuilderFieldHandler(BLCAdmin.filterBuilders.initSelectizePostConstructFieldHandler);
+        UCAdmin.filterBuilders.addPreInitQueryBuilderFieldHandler(UCAdmin.filterBuilders.initBooleanRadioPreInitFieldHandler);
+        UCAdmin.filterBuilders.addPreInitQueryBuilderFieldHandler(UCAdmin.filterBuilders.initSelectizePreInitFieldHandler);
+        UCAdmin.filterBuilders.addPostConstructQueryBuilderFieldHandler(UCAdmin.filterBuilders.initSelectizePostConstructFieldHandler);
 
-        BLCAdmin.addExcludedSelectizeSelector('.query-builder-filters-container *');
+        UCAdmin.addExcludedSelectizeSelector('.query-builder-filters-container *');
 
         //Initialize all filter builders on the page
         $container.find('.filter-builder-data').each(function(index, element) {
@@ -1051,23 +1051,23 @@
                 fields = $this.data('fields'),
                 data = $this.data('data'),
                 modal = $this.data('modal'),
-                filterBuilder = BLCAdmin.filterBuilders.addFilterBuilder(hiddenId, containerId, fields, data, modal);
+                filterBuilder = UCAdmin.filterBuilders.addFilterBuilder(hiddenId, containerId, fields, data, modal);
 
             //Create QueryBuilder Instances for all rule builders on the page
-            BLCAdmin.filterBuilders.initializeFilterBuilder($this.parent(), filterBuilder);
+            UCAdmin.filterBuilders.initializeFilterBuilder($this.parent(), filterBuilder);
 
-            BLCAdmin.filterBuilders.addExistingFilters(filterBuilder);
+            UCAdmin.filterBuilders.addExistingFilters(filterBuilder);
 
-            BLCAdmin.filterBuilders.updateAppliedFiltersView(filterBuilder);
+            UCAdmin.filterBuilders.updateAppliedFiltersView(filterBuilder);
         });
 
         ////Once all the query builders have been initialized - show or render the component based on its display type
         //$container.find('.filter-builder-required-field').each(function(index, element) {
         //    var filtersContainer = $($(this)).siblings('.query-builder-rules-container');
-        //    BLCAdmin.filterBuilders.showOrCreateMainRuleBuilder(filtersContainer);
+        //    UCAdmin.filterBuilders.showOrCreateMainRuleBuilder(filtersContainer);
         //});
     });
-})($, BLCAdmin);
+})($, UCAdmin);
 
 $(document).ready(function() {
 
@@ -1076,7 +1076,7 @@ $(document).ready(function() {
      */
     $('body').on('click', 'button.filter-apply-button', function () {
         // apply the filters
-        BLCAdmin.filterBuilders.applyFilters();
+        UCAdmin.filterBuilders.applyFilters();
 
         // mark this rule as read-only
         var el = $(this).parent().parent().parent();
@@ -1135,17 +1135,17 @@ $(document).ready(function() {
         el.find('.filter-text').css('padding-left', '0');
 
         // add the edit button
-        BLCAdmin.filterBuilders.getEditButton(el);
+        UCAdmin.filterBuilders.getEditButton(el);
 
         $('.filter-text').show();
     });
 
     function validateRule(filterText, operatorText, valueText) {
         var validationRegex = new RegExp(/<(.|\n)*?>/);
-        if (!operatorText) return BLCAdmin.messages.emptyOperatorValue;
-        if (!valueText || valueText === ' and ') return BLCAdmin.messages.emptyFilterValue;
+        if (!operatorText) return UCAdmin.messages.emptyOperatorValue;
+        if (!valueText || valueText === ' and ') return UCAdmin.messages.emptyFilterValue;
         if (validationRegex.test(valueText)) {
-            return BLCAdmin.messages.invalidFilterValue;
+            return UCAdmin.messages.invalidFilterValue;
         }
         return "";
     }
@@ -1170,14 +1170,14 @@ $(document).ready(function() {
      */
     $('body').on('click', 'button.set-modal-filter-builder', function () {
         var hiddenId = $('#hidden-id').data('hiddenid');
-        var filterBuilder = BLCAdmin.filterBuilders.getFilterBuilderByHiddenId(hiddenId);
-        BLCAdmin.filterBuilders.updateAppliedFiltersView(filterBuilder);
-        BLCAdmin.hideCurrentModal();
+        var filterBuilder = UCAdmin.filterBuilders.getFilterBuilderByHiddenId(hiddenId);
+        UCAdmin.filterBuilders.updateAppliedFiltersView(filterBuilder);
+        UCAdmin.hideCurrentModal();
     });
 
     $('body').on('click', '.remove-row', function() {
         // apply the filters
-        BLCAdmin.filterBuilders.applyFilters();
+        UCAdmin.filterBuilders.applyFilters();
     });
 
     $('body').on('click', '.edit-row', function() {
@@ -1231,7 +1231,7 @@ $(document).ready(function() {
         var $filterButton = $($(this)).siblings('.filter-button');
         var hiddenId = $filterButton.data('hiddenid');
 
-        BLCAdmin.filterBuilders.clearFilters(hiddenId);
+        UCAdmin.filterBuilders.clearFilters(hiddenId);
 
         // clear the search field
         $filterButton.closest('.listgrid-search').find('.custom-entity-search input').val('');
@@ -1241,17 +1241,17 @@ $(document).ready(function() {
         $filterButton.closest('.listgrid-search').find('.custom-asset-search button.asset-search-button').click();
 
         // apply the empty filters
-        BLCAdmin.filterBuilders.applyFilters(hiddenId);
+        UCAdmin.filterBuilders.applyFilters(hiddenId);
 
         // change "edit filter" button back to "filter"
-        $filterButton.text(BLCAdmin.messages.filter);
+        $filterButton.text(UCAdmin.messages.filter);
         $filterButton.insertBefore($filterButton.parent());
         $filterButton.siblings('.button-group').remove();
 
         $filterButton.closest('.main-content').find('.sticky-container .filter-text').hide();
 
-        var filterBuilder = BLCAdmin.filterBuilders.getFilterBuilderByHiddenId(hiddenId);
-        BLCAdmin.filterBuilders.updateAppliedFiltersView(filterBuilder);
+        var filterBuilder = UCAdmin.filterBuilders.getFilterBuilderByHiddenId(hiddenId);
+        UCAdmin.filterBuilders.updateAppliedFiltersView(filterBuilder);
     });
 
     /**
@@ -1272,7 +1272,7 @@ $(document).ready(function() {
         $modalContainer.attr('id', $modalContainer.attr('id') + '-modal');
         $modalContainer.empty();
 
-        var filterBuilder = BLCAdmin.filterBuilders.getFilterBuilder($modalContainer.attr('id'));
+        var filterBuilder = UCAdmin.filterBuilders.getFilterBuilder($modalContainer.attr('id'));
         if (filterBuilder) {
             var jsonVal = $.parseJSON($('#'+hiddenId).val());
             if (jsonVal.data.length > 0) {
@@ -1282,10 +1282,10 @@ $(document).ready(function() {
                             jsonVal.data[i].rules[j].value = $.parseJSON(jsonVal.data[i].rules[j].value);
                         }
                     }
-                    BLCAdmin.filterBuilders.constructQueryBuilder($modalContainer, jsonVal.data[i], filterBuilder.fields, filterBuilder);
+                    UCAdmin.filterBuilders.constructQueryBuilder($modalContainer, jsonVal.data[i], filterBuilder.fields, filterBuilder);
                 }
             } else {
-                BLCAdmin.filterBuilders.constructQueryBuilder($modalContainer, BLCAdmin.filterBuilders.getEmptyFilterData(),
+                UCAdmin.filterBuilders.constructQueryBuilder($modalContainer, UCAdmin.filterBuilders.getEmptyFilterData(),
                     filterBuilder.fields, filterBuilder);
             }
         }
@@ -1299,19 +1299,19 @@ $(document).ready(function() {
 
         $modalContainer.find('hr').remove();
 
-        var $modal = BLCAdmin.getModalSkeleton();
+        var $modal = UCAdmin.getModalSkeleton();
         //$modal.addClass('sm');
         $modal.find('.modal-header').find('h3').html('Filters Applied');
         $modal.find('.modal-header').find('.close').attr("onclick", "$('button.set-modal-filter-builder').click()");
         //$modal.find('.modal-header').append(addFilterBtn);
         $modal.find('.modal-body').append(hiddenInput);
         $modal.find('.modal-body').append($modalContainer);
-        $modal.find('.modal-footer').append(BLCAdmin.filterBuilders.getCloseModalFilterLink(hiddenId));
+        $modal.find('.modal-footer').append(UCAdmin.filterBuilders.getCloseModalFilterLink(hiddenId));
 
         $modal.find('.modal-body').find('select').each(function(i, el) {
             var el = $(el);
             if (el.hasClass('form-control')) {
-                el.removeClass('form-control').blSelectize();
+                el.removeClass('form-control').ucSelectize();
             }
 
             el.parent().parent().find('div.rule-filter-container > div > div.selectize-input').width("244px");
@@ -1367,11 +1367,11 @@ $(document).ready(function() {
             el.find('.filter-text').css('padding-left', '0');
 
             // add the edit button
-            BLCAdmin.filterBuilders.getEditButton(el);
+            UCAdmin.filterBuilders.getEditButton(el);
         });
 
-        BLCAdmin.showElementAsModal($modal, function() {
-            var modalFilterBuilder = BLCAdmin.filterBuilders.getFilterBuilder($modalContainer.attr('id'));
+        UCAdmin.showElementAsModal($modal, function() {
+            var modalFilterBuilder = UCAdmin.filterBuilders.getFilterBuilder($modalContainer.attr('id'));
             var hiddenId = modalFilterBuilder.hiddenId;
             modalFilterBuilder.removeAllQueryBuilders();
 
@@ -1406,9 +1406,9 @@ $(document).ready(function() {
                     }
                 }
             } else {
-                if ($filterButton.text() !== BLCAdmin.messages.filter) {
+                if ($filterButton.text() !== UCAdmin.messages.filter) {
                     // change "edit filter" button back to "filter"
-                    $filterButton.text(BLCAdmin.messages.filter);
+                    $filterButton.text(UCAdmin.messages.filter);
                     $filterButton.insertBefore($filterButton.parent());
                     $filterButton.siblings('.button-group:visible').remove();
                     $filterButton.closest('.main-content').find('.sticky-container .filter-text').hide();
@@ -1427,10 +1427,10 @@ $(document).ready(function() {
         if (el.is('select')) {
             if (el.hasClass('form-control')) {
                 var hiddenId = $('.modal-body').find('#hidden-id').data('hiddenid');
-                var filterBuilder = BLCAdmin.filterBuilders.getFilterBuilderByHiddenId(hiddenId);
+                var filterBuilder = UCAdmin.filterBuilders.getFilterBuilderByHiddenId(hiddenId);
                 $(filterBuilder.builders[0]).queryBuilder('updateDisabledFilters');
                 el.find('option[disabled]').remove();
-                el.removeClass('form-control').blSelectize();
+                el.removeClass('form-control').ucSelectize();
             }
 
             el.parent().parent().find('div.rule-filter-container > div > div.selectize-input').width("222px");

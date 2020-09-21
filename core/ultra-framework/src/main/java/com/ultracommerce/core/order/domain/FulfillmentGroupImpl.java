@@ -1,49 +1,49 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.order.domain;
+package com.ultracommerce.core.order.domain;
 
-import org.broadleafcommerce.common.copy.CreateResponse;
-import org.broadleafcommerce.common.copy.MultiTenantCopyContext;
-import org.broadleafcommerce.common.currency.util.BroadleafCurrencyUtils;
-import org.broadleafcommerce.common.currency.util.CurrencyCodeIdentifiable;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransform;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformMember;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformTypes;
-import org.broadleafcommerce.common.money.Money;
-import org.broadleafcommerce.common.presentation.AdminPresentation;
-import org.broadleafcommerce.common.presentation.AdminPresentationClass;
-import org.broadleafcommerce.common.presentation.AdminPresentationCollection;
-import org.broadleafcommerce.common.presentation.PopulateToOneFieldsEnum;
-import org.broadleafcommerce.common.presentation.client.SupportedFieldType;
-import org.broadleafcommerce.common.presentation.override.AdminPresentationMergeEntry;
-import org.broadleafcommerce.common.presentation.override.AdminPresentationMergeOverride;
-import org.broadleafcommerce.common.presentation.override.AdminPresentationMergeOverrides;
-import org.broadleafcommerce.common.presentation.override.PropertyType;
-import org.broadleafcommerce.core.offer.domain.CandidateFulfillmentGroupOffer;
-import org.broadleafcommerce.core.offer.domain.CandidateFulfillmentGroupOfferImpl;
-import org.broadleafcommerce.core.offer.domain.FulfillmentGroupAdjustment;
-import org.broadleafcommerce.core.offer.domain.FulfillmentGroupAdjustmentImpl;
-import org.broadleafcommerce.core.order.service.type.FulfillmentGroupStatusType;
-import org.broadleafcommerce.core.order.service.type.FulfillmentType;
-import org.broadleafcommerce.profile.core.domain.Address;
-import org.broadleafcommerce.profile.core.domain.AddressImpl;
-import org.broadleafcommerce.profile.core.domain.Phone;
-import org.broadleafcommerce.profile.core.domain.PhoneImpl;
+import com.ultracommerce.common.copy.CreateResponse;
+import com.ultracommerce.common.copy.MultiTenantCopyContext;
+import com.ultracommerce.common.currency.util.UltraCurrencyUtils;
+import com.ultracommerce.common.currency.util.CurrencyCodeIdentifiable;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransform;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransformMember;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransformTypes;
+import com.ultracommerce.common.money.Money;
+import com.ultracommerce.common.presentation.AdminPresentation;
+import com.ultracommerce.common.presentation.AdminPresentationClass;
+import com.ultracommerce.common.presentation.AdminPresentationCollection;
+import com.ultracommerce.common.presentation.PopulateToOneFieldsEnum;
+import com.ultracommerce.common.presentation.client.SupportedFieldType;
+import com.ultracommerce.common.presentation.override.AdminPresentationMergeEntry;
+import com.ultracommerce.common.presentation.override.AdminPresentationMergeOverride;
+import com.ultracommerce.common.presentation.override.AdminPresentationMergeOverrides;
+import com.ultracommerce.common.presentation.override.PropertyType;
+import com.ultracommerce.core.offer.domain.CandidateFulfillmentGroupOffer;
+import com.ultracommerce.core.offer.domain.CandidateFulfillmentGroupOfferImpl;
+import com.ultracommerce.core.offer.domain.FulfillmentGroupAdjustment;
+import com.ultracommerce.core.offer.domain.FulfillmentGroupAdjustmentImpl;
+import com.ultracommerce.core.order.service.type.FulfillmentGroupStatusType;
+import com.ultracommerce.core.order.service.type.FulfillmentType;
+import com.ultracommerce.profile.core.domain.Address;
+import com.ultracommerce.profile.core.domain.AddressImpl;
+import com.ultracommerce.profile.core.domain.Phone;
+import com.ultracommerce.profile.core.domain.PhoneImpl;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
@@ -71,8 +71,8 @@ import javax.persistence.Table;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "BLC_FULFILLMENT_GROUP")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "blOrderElements")
+@Table(name = "UC_FULFILLMENT_GROUP")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "ucOrderElements")
 @AdminPresentationMergeOverrides(
     {
         @AdminPresentationMergeOverride(name = "", mergeEntries =
@@ -133,10 +133,10 @@ public class FulfillmentGroupImpl implements FulfillmentGroup, CurrencyCodeIdent
     @GeneratedValue(generator = "FulfillmentGroupId")
     @GenericGenerator(
         name="FulfillmentGroupId",
-        strategy="org.broadleafcommerce.common.persistence.IdOverrideTableGenerator",
+        strategy="com.ultracommerce.common.persistence.IdOverrideTableGenerator",
         parameters = {
             @Parameter(name="segment_value", value="FulfillmentGroupImpl"),
-            @Parameter(name="entity_name", value="org.broadleafcommerce.core.order.domain.FulfillmentGroupImpl")
+            @Parameter(name="entity_name", value="com.ultracommerce.core.order.domain.FulfillmentGroupImpl")
         }
     )
     @Column(name = "FULFILLMENT_GROUP_ID")
@@ -183,8 +183,8 @@ public class FulfillmentGroupImpl implements FulfillmentGroup, CurrencyCodeIdent
 
     @Column(name = "TYPE")
     @AdminPresentation(friendlyName = "FulfillmentGroupImpl_FG_Type", order=Presentation.FieldOrder.TYPE,
-            fieldType=SupportedFieldType.BROADLEAF_ENUMERATION,
-            broadleafEnumeration="org.broadleafcommerce.core.order.service.type.FulfillmentType",
+            fieldType=SupportedFieldType.ULTRA_ENUMERATION,
+            ultraEnumeration="com.ultracommerce.core.order.service.type.FulfillmentType",
             prominent = true, gridOrder = 3000)
     protected String type;
 
@@ -242,8 +242,8 @@ public class FulfillmentGroupImpl implements FulfillmentGroup, CurrencyCodeIdent
     @Column(name = "STATUS")
     @Index(name="FG_STATUS_INDEX", columnNames={"STATUS"})
     @AdminPresentation(friendlyName = "FulfillmentGroupImpl_FG_Status", order=Presentation.FieldOrder.STATUS,
-            fieldType=SupportedFieldType.BROADLEAF_ENUMERATION,
-            broadleafEnumeration="org.broadleafcommerce.core.order.service.type.FulfillmentGroupStatusType",
+            fieldType=SupportedFieldType.ULTRA_ENUMERATION,
+            ultraEnumeration="com.ultracommerce.core.order.service.type.FulfillmentGroupStatusType",
             prominent = true, gridOrder = 4000)
     protected String status;
     
@@ -287,34 +287,34 @@ public class FulfillmentGroupImpl implements FulfillmentGroup, CurrencyCodeIdent
     
     @OneToMany(mappedBy = "fulfillmentGroup", targetEntity = FulfillmentGroupItemImpl.class, cascade = CascadeType.ALL,
             orphanRemoval = true)
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "blOrderElements")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "ucOrderElements")
     @AdminPresentationCollection(friendlyName="FulfillmentGroupImpl_Items",
             tab = Presentation.Tab.Name.Items, tabOrder = Presentation.Tab.Order.Items)
     protected List<FulfillmentGroupItem> fulfillmentGroupItems = new ArrayList<FulfillmentGroupItem>();
     
     @OneToMany(mappedBy = "fulfillmentGroup", targetEntity = FulfillmentGroupFeeImpl.class, cascade = { CascadeType.ALL },
             orphanRemoval = true)
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "blOrderElements")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "ucOrderElements")
     @AdminPresentationCollection(friendlyName="FulfillmentGroupImpl_Fees",
             tab = Presentation.Tab.Name.Pricing, tabOrder = Presentation.Tab.Order.Pricing)
     protected List<FulfillmentGroupFee> fulfillmentGroupFees = new ArrayList<FulfillmentGroupFee>();
         
     @OneToMany(mappedBy = "fulfillmentGroup", targetEntity = CandidateFulfillmentGroupOfferImpl.class, cascade = { CascadeType.ALL },
             orphanRemoval = true)
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "blOrderElements")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "ucOrderElements")
     protected List<CandidateFulfillmentGroupOffer> candidateOffers = new ArrayList<CandidateFulfillmentGroupOffer>();
 
     @OneToMany(mappedBy = "fulfillmentGroup", targetEntity = FulfillmentGroupAdjustmentImpl.class, cascade = { CascadeType.ALL },
             orphanRemoval = true)
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "blOrderElements")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "ucOrderElements")
     @AdminPresentationCollection(friendlyName="FulfillmentGroupImpl_Adjustments",
             tab = Presentation.Tab.Name.Advanced, tabOrder = Presentation.Tab.Order.Advanced)
     protected List<FulfillmentGroupAdjustment> fulfillmentGroupAdjustments = new ArrayList<FulfillmentGroupAdjustment>();
     
     @OneToMany(fetch = FetchType.LAZY, targetEntity = TaxDetailImpl.class, cascade = { CascadeType.ALL }, orphanRemoval = true)
-    @JoinTable(name = "BLC_FG_FG_TAX_XREF", joinColumns = @JoinColumn(name = "FULFILLMENT_GROUP_ID"),
+    @JoinTable(name = "UC_FG_FG_TAX_XREF", joinColumns = @JoinColumn(name = "FULFILLMENT_GROUP_ID"),
             inverseJoinColumns = @JoinColumn(name = "TAX_DETAIL_ID"))
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "blOrderElements")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "ucOrderElements")
     protected List<TaxDetail> taxes = new ArrayList<TaxDetail>();
 
     @Column(name = "SHIPPING_OVERRIDE")
@@ -440,7 +440,7 @@ public class FulfillmentGroupImpl implements FulfillmentGroup, CurrencyCodeIdent
     @Override
     public Money getRetailFulfillmentPrice() {
         return retailFulfillmentPrice == null ? null :
-                BroadleafCurrencyUtils.getMoney(retailFulfillmentPrice, getOrder().getCurrency());
+                UltraCurrencyUtils.getMoney(retailFulfillmentPrice, getOrder().getCurrency());
     }
 
     @Override
@@ -513,7 +513,7 @@ public class FulfillmentGroupImpl implements FulfillmentGroup, CurrencyCodeIdent
     
     @Override
     public Money getFulfillmentGroupAdjustmentsValue() {
-        Money adjustmentsValue = BroadleafCurrencyUtils.getMoney(BigDecimal.ZERO, getOrder().getCurrency());
+        Money adjustmentsValue = UltraCurrencyUtils.getMoney(BigDecimal.ZERO, getOrder().getCurrency());
         for (FulfillmentGroupAdjustment adjustment : fulfillmentGroupAdjustments) {
             if (!adjustment.isFutureCredit()) {
                 adjustmentsValue = adjustmentsValue.add(adjustment.getValue());
@@ -524,7 +524,7 @@ public class FulfillmentGroupImpl implements FulfillmentGroup, CurrencyCodeIdent
 
     @Override
     public Money getFutureCreditFulfillmentGroupAdjustmentsValue() {
-        Money adjustmentsValue = BroadleafCurrencyUtils.getMoney(BigDecimal.ZERO, getOrder().getCurrency());
+        Money adjustmentsValue = UltraCurrencyUtils.getMoney(BigDecimal.ZERO, getOrder().getCurrency());
         for (FulfillmentGroupAdjustment adjustment : getFutureCreditFulfillmentGroupAdjustments()) {
             adjustmentsValue = adjustmentsValue.add(adjustment.getValue());
         }
@@ -548,7 +548,7 @@ public class FulfillmentGroupImpl implements FulfillmentGroup, CurrencyCodeIdent
 
     @Override
     public Money getSaleFulfillmentPrice() {
-        return saleFulfillmentPrice == null ? null : BroadleafCurrencyUtils.getMoney(saleFulfillmentPrice,
+        return saleFulfillmentPrice == null ? null : UltraCurrencyUtils.getMoney(saleFulfillmentPrice,
                 getOrder().getCurrency());
     }
 
@@ -569,7 +569,7 @@ public class FulfillmentGroupImpl implements FulfillmentGroup, CurrencyCodeIdent
 
     @Override
     public Money getFulfillmentPrice() {
-        return fulfillmentPrice == null ? null : BroadleafCurrencyUtils.getMoney(fulfillmentPrice,
+        return fulfillmentPrice == null ? null : UltraCurrencyUtils.getMoney(fulfillmentPrice,
                 getOrder().getCurrency());
     }
 
@@ -600,7 +600,7 @@ public class FulfillmentGroupImpl implements FulfillmentGroup, CurrencyCodeIdent
 
     @Override
     public Money getTotalTax() {
-        return totalTax == null ? null : BroadleafCurrencyUtils.getMoney(totalTax, getOrder().getCurrency());
+        return totalTax == null ? null : UltraCurrencyUtils.getMoney(totalTax, getOrder().getCurrency());
     }
 
     @Override
@@ -610,7 +610,7 @@ public class FulfillmentGroupImpl implements FulfillmentGroup, CurrencyCodeIdent
     
     @Override
     public Money getTotalItemTax() {
-        return totalItemTax == null ? null : BroadleafCurrencyUtils.getMoney(totalItemTax, getOrder().getCurrency());
+        return totalItemTax == null ? null : UltraCurrencyUtils.getMoney(totalItemTax, getOrder().getCurrency());
     }
 
     @Override
@@ -620,7 +620,7 @@ public class FulfillmentGroupImpl implements FulfillmentGroup, CurrencyCodeIdent
 
     @Override
     public Money getTotalFeeTax() {
-        return totalFeeTax == null ? null : BroadleafCurrencyUtils.getMoney(totalFeeTax, getOrder().getCurrency());
+        return totalFeeTax == null ? null : UltraCurrencyUtils.getMoney(totalFeeTax, getOrder().getCurrency());
     }
 
     @Override
@@ -630,7 +630,7 @@ public class FulfillmentGroupImpl implements FulfillmentGroup, CurrencyCodeIdent
 
     @Override
     public Money getTotalFulfillmentGroupTax() {
-        return totalFulfillmentGroupTax == null ? null : BroadleafCurrencyUtils.getMoney(totalFulfillmentGroupTax,
+        return totalFulfillmentGroupTax == null ? null : UltraCurrencyUtils.getMoney(totalFulfillmentGroupTax,
                 getOrder().getCurrency());
     }
 
@@ -671,7 +671,7 @@ public class FulfillmentGroupImpl implements FulfillmentGroup, CurrencyCodeIdent
 
     @Override
     public Money getMerchandiseTotal() {
-        return merchandiseTotal == null ? null : BroadleafCurrencyUtils.getMoney(merchandiseTotal,
+        return merchandiseTotal == null ? null : UltraCurrencyUtils.getMoney(merchandiseTotal,
                 getOrder().getCurrency());
     }
 
@@ -682,7 +682,7 @@ public class FulfillmentGroupImpl implements FulfillmentGroup, CurrencyCodeIdent
 
     @Override
     public Money getTotal() {
-        return total == null ? null : BroadleafCurrencyUtils.getMoney(total, getOrder().getCurrency());
+        return total == null ? null : UltraCurrencyUtils.getMoney(total, getOrder().getCurrency());
     }
 
     @Override

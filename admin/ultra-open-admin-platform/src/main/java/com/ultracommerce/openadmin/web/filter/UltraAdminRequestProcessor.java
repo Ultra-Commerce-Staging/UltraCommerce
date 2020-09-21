@@ -1,53 +1,53 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.openadmin.web.filter;
+package com.ultracommerce.openadmin.web.filter;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.classloader.release.ThreadLocalManager;
-import org.broadleafcommerce.common.currency.domain.BroadleafRequestedCurrencyDto;
-import org.broadleafcommerce.common.exception.SiteNotFoundException;
-import org.broadleafcommerce.common.extension.ExtensionManager;
-import org.broadleafcommerce.common.extension.ExtensionResultHolder;
-import org.broadleafcommerce.common.locale.domain.Locale;
-import org.broadleafcommerce.common.sandbox.domain.SandBox;
-import org.broadleafcommerce.common.sandbox.domain.SandBoxType;
-import org.broadleafcommerce.common.sandbox.service.SandBoxService;
-import org.broadleafcommerce.common.security.service.StaleStateProtectionService;
-import org.broadleafcommerce.common.site.domain.Catalog;
-import org.broadleafcommerce.common.site.domain.Site;
-import org.broadleafcommerce.common.site.service.SiteService;
-import org.broadleafcommerce.common.util.BLCRequestUtils;
-import org.broadleafcommerce.common.util.DeployBehaviorUtil;
-import org.broadleafcommerce.common.web.AbstractBroadleafWebRequestProcessor;
-import org.broadleafcommerce.common.web.BroadleafCurrencyResolver;
-import org.broadleafcommerce.common.web.BroadleafLocaleResolver;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
-import org.broadleafcommerce.common.web.BroadleafSandBoxResolver;
-import org.broadleafcommerce.common.web.BroadleafSiteResolver;
-import org.broadleafcommerce.common.web.BroadleafTimeZoneResolver;
-import org.broadleafcommerce.common.web.DeployBehavior;
-import org.broadleafcommerce.common.web.ValidateProductionChangesState;
-import org.broadleafcommerce.openadmin.server.security.domain.AdminUser;
-import org.broadleafcommerce.openadmin.server.security.remote.SecurityVerifier;
-import org.broadleafcommerce.openadmin.server.security.service.AdminSecurityService;
+import com.ultracommerce.common.classloader.release.ThreadLocalManager;
+import com.ultracommerce.common.currency.domain.UltraRequestedCurrencyDto;
+import com.ultracommerce.common.exception.SiteNotFoundException;
+import com.ultracommerce.common.extension.ExtensionManager;
+import com.ultracommerce.common.extension.ExtensionResultHolder;
+import com.ultracommerce.common.locale.domain.Locale;
+import com.ultracommerce.common.sandbox.domain.SandBox;
+import com.ultracommerce.common.sandbox.domain.SandBoxType;
+import com.ultracommerce.common.sandbox.service.SandBoxService;
+import com.ultracommerce.common.security.service.StaleStateProtectionService;
+import com.ultracommerce.common.site.domain.Catalog;
+import com.ultracommerce.common.site.domain.Site;
+import com.ultracommerce.common.site.service.SiteService;
+import com.ultracommerce.common.util.UCRequestUtils;
+import com.ultracommerce.common.util.DeployBehaviorUtil;
+import com.ultracommerce.common.web.AbstractUltraWebRequestProcessor;
+import com.ultracommerce.common.web.UltraCurrencyResolver;
+import com.ultracommerce.common.web.UltraLocaleResolver;
+import com.ultracommerce.common.web.UltraRequestContext;
+import com.ultracommerce.common.web.UltraSandBoxResolver;
+import com.ultracommerce.common.web.UltraSiteResolver;
+import com.ultracommerce.common.web.UltraTimeZoneResolver;
+import com.ultracommerce.common.web.DeployBehavior;
+import com.ultracommerce.common.web.ValidateProductionChangesState;
+import com.ultracommerce.openadmin.server.security.domain.AdminUser;
+import com.ultracommerce.openadmin.server.security.remote.SecurityVerifier;
+import com.ultracommerce.openadmin.server.security.service.AdminSecurityService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
@@ -65,67 +65,67 @@ import javax.annotation.Resource;
 /**
  * 
  * @author Phillip Verheyden
- * @see {@link org.broadleafcommerce.common.web.BroadleafRequestFilter}
+ * @see {@link com.ultracommerce.common.web.UltraRequestFilter}
  */
-@Component("blAdminRequestProcessor")
-public class BroadleafAdminRequestProcessor extends AbstractBroadleafWebRequestProcessor {
+@Component("ucAdminRequestProcessor")
+public class UltraAdminRequestProcessor extends AbstractUltraWebRequestProcessor {
 
-    public static final String SANDBOX_REQ_PARAM = "blSandBoxId";
-    public static final String PROFILE_REQ_PARAM = "blProfileId";
-    public static final String CATALOG_REQ_PARAM = "blCatalogId";
+    public static final String SANDBOX_REQ_PARAM = "ucSandBoxId";
+    public static final String PROFILE_REQ_PARAM = "ucProfileId";
+    public static final String CATALOG_REQ_PARAM = "ucCatalogId";
 
     private static final String ADMIN_STRICT_VALIDATE_PRODUCTION_CHANGES_KEY = "admin.strict.validate.production.changes";
 
     protected final Log LOG = LogFactory.getLog(getClass());
 
-    @Resource(name = "blSiteResolver")
-    protected BroadleafSiteResolver siteResolver;
+    @Resource(name = "ucSiteResolver")
+    protected UltraSiteResolver siteResolver;
 
     @Resource(name = "messageSource")
     protected MessageSource messageSource;
     
-    @Resource(name = "blLocaleResolver")
-    protected BroadleafLocaleResolver localeResolver;
+    @Resource(name = "ucLocaleResolver")
+    protected UltraLocaleResolver localeResolver;
     
-    @Resource(name = "blAdminTimeZoneResolver")
-    protected BroadleafTimeZoneResolver broadleafTimeZoneResolver;
+    @Resource(name = "ucAdminTimeZoneResolver")
+    protected UltraTimeZoneResolver ultraTimeZoneResolver;
 
-    @Resource(name = "blCurrencyResolver")
-    protected BroadleafCurrencyResolver currencyResolver;
+    @Resource(name = "ucCurrencyResolver")
+    protected UltraCurrencyResolver currencyResolver;
 
-    @Resource(name = "blSandBoxService")
+    @Resource(name = "ucSandBoxService")
     protected SandBoxService sandBoxService;
 
-    @Resource(name = "blSiteService")
+    @Resource(name = "ucSiteService")
     protected SiteService siteService;
 
-    @Resource(name = "blAdminSecurityRemoteService")
+    @Resource(name = "ucAdminSecurityRemoteService")
     protected SecurityVerifier adminRemoteSecurityService;
     
-    @Resource(name = "blAdminSecurityService")
+    @Resource(name = "ucAdminSecurityService")
     protected AdminSecurityService adminSecurityService;
 
-    @Resource(name = "blDeployBehaviorUtil")
+    @Resource(name = "ucDeployBehaviorUtil")
     protected DeployBehaviorUtil deployBehaviorUtil;
     
     @Value("${" + ADMIN_STRICT_VALIDATE_PRODUCTION_CHANGES_KEY + ":true}")
     protected boolean adminStrictValidateProductionChanges = true;
     
-    @Resource(name="blEntityExtensionManagers")
+    @Resource(name="ucEntityExtensionManagers")
     protected Map<String, ExtensionManager<?>> entityExtensionManagers;
 
-    @Resource(name = "blAdminRequestProcessorExtensionManager")
+    @Resource(name = "ucAdminRequestProcessorExtensionManager")
     protected AdminRequestProcessorExtensionManager extensionManager;
 
-    @Resource(name = "blStaleStateProtectionService")
+    @Resource(name = "ucStaleStateProtectionService")
     protected StaleStateProtectionService staleStateProtectionService;
 
     @Override
     public void process(WebRequest request) throws SiteNotFoundException {
-        BroadleafRequestContext brc = BroadleafRequestContext.getBroadleafRequestContext();
+        UltraRequestContext brc = UltraRequestContext.getUltraRequestContext();
         if (brc == null) {
-            brc = new BroadleafRequestContext();
-            BroadleafRequestContext.setBroadleafRequestContext(brc);
+            brc = new UltraRequestContext();
+            UltraRequestContext.setUltraRequestContext(brc);
         }
 
         brc.getAdditionalProperties().putAll(entityExtensionManagers);
@@ -149,16 +149,16 @@ public class BroadleafAdminRequestProcessor extends AbstractBroadleafWebRequestP
         
         brc.setMessageSource(messageSource);
         
-        TimeZone timeZone = broadleafTimeZoneResolver.resolveTimeZone(request);
+        TimeZone timeZone = ultraTimeZoneResolver.resolveTimeZone(request);
         brc.setTimeZone(timeZone);
 
-        // Note: The currencyResolver will set the currency on the BroadleafRequestContext but 
-        // later modules (specifically PriceListRequestProcessor in BLC enterprise) may override based
+        // Note: The currencyResolver will set the currency on the UltraRequestContext but 
+        // later modules (specifically PriceListRequestProcessor in UC enterprise) may override based
         // on the desired currency.
-        BroadleafRequestedCurrencyDto dto = currencyResolver.resolveCurrency(request);
+        UltraRequestedCurrencyDto dto = currencyResolver.resolveCurrency(request);
         if (dto != null) {
-            brc.setBroadleafCurrency(dto.getCurrencyToUse());
-            brc.setRequestedBroadleafCurrency(dto.getRequestedCurrency());
+            brc.setUltraCurrency(dto.getCurrencyToUse());
+            brc.setRequestedUltraCurrency(dto.getRequestedCurrency());
         }
 
         AdminUser adminUser = adminRemoteSecurityService.getPersistentAdminUser();
@@ -173,11 +173,11 @@ public class BroadleafAdminRequestProcessor extends AbstractBroadleafWebRequestP
         brc.getAdditionalProperties().put(staleStateProtectionService.getStateVersionTokenParameter(), staleStateProtectionService.getStateVersionToken());
     }
 
-    protected void prepareProfile(WebRequest request, BroadleafRequestContext brc) {
+    protected void prepareProfile(WebRequest request, UltraRequestContext brc) {
         AdminUser adminUser = adminRemoteSecurityService.getPersistentAdminUser();
         if (adminUser == null) {
             //clear any profile
-            if (BLCRequestUtils.isOKtoUseSession(request)) {
+            if (UCRequestUtils.isOKtoUseSession(request)) {
                 request.removeAttribute(PROFILE_REQ_PARAM, WebRequest.SCOPE_SESSION);
             }
         } else {
@@ -195,7 +195,7 @@ public class BroadleafAdminRequestProcessor extends AbstractBroadleafWebRequestP
 
             if (profile == null) {
                 Long previouslySetProfileId = null;
-                if (BLCRequestUtils.isOKtoUseSession(request)) {
+                if (UCRequestUtils.isOKtoUseSession(request)) {
                     previouslySetProfileId = (Long) request.getAttribute(PROFILE_REQ_PARAM,
                         WebRequest.SCOPE_SESSION);
                 }
@@ -222,7 +222,7 @@ public class BroadleafAdminRequestProcessor extends AbstractBroadleafWebRequestP
             }
 
             if (profile != null) {
-                if (BLCRequestUtils.isOKtoUseSession(request)) {
+                if (UCRequestUtils.isOKtoUseSession(request)) {
                     request.setAttribute(PROFILE_REQ_PARAM, profile.getId(), WebRequest.SCOPE_SESSION);
                 }
                 brc.setCurrentProfile(profile);
@@ -230,11 +230,11 @@ public class BroadleafAdminRequestProcessor extends AbstractBroadleafWebRequestP
         }
     }
 
-    protected void prepareCatalog(WebRequest request, BroadleafRequestContext brc) {
+    protected void prepareCatalog(WebRequest request, UltraRequestContext brc) {
         AdminUser adminUser = adminRemoteSecurityService.getPersistentAdminUser();
         if (adminUser == null) {
             //clear any catalog
-            if (BLCRequestUtils.isOKtoUseSession(request)) {
+            if (UCRequestUtils.isOKtoUseSession(request)) {
                 request.removeAttribute(CATALOG_REQ_PARAM, WebRequest.SCOPE_SESSION);
             }
         } else {
@@ -252,7 +252,7 @@ public class BroadleafAdminRequestProcessor extends AbstractBroadleafWebRequestP
 
             if (catalog == null) {
                 Long previouslySetCatalogId = null;
-                if (BLCRequestUtils.isOKtoUseSession(request)) {
+                if (UCRequestUtils.isOKtoUseSession(request)) {
                     previouslySetCatalogId = (Long) request.getAttribute(CATALOG_REQ_PARAM,
                         WebRequest.SCOPE_SESSION);
                 }
@@ -279,7 +279,7 @@ public class BroadleafAdminRequestProcessor extends AbstractBroadleafWebRequestP
             }
 
             if (catalog != null) {
-                if (BLCRequestUtils.isOKtoUseSession(request)) {
+                if (UCRequestUtils.isOKtoUseSession(request)) {
                     request.setAttribute(CATALOG_REQ_PARAM, catalog.getId(), WebRequest.SCOPE_SESSION);
                 }
                 brc.setCurrentCatalog(catalog);
@@ -303,12 +303,12 @@ public class BroadleafAdminRequestProcessor extends AbstractBroadleafWebRequestP
         }
     }
 
-    protected void prepareSandBox(WebRequest request, BroadleafRequestContext brc) {
+    protected void prepareSandBox(WebRequest request, UltraRequestContext brc) {
         AdminUser adminUser = adminRemoteSecurityService.getPersistentAdminUser();
         if (adminUser == null) {
             //clear any sandbox
-            if (BLCRequestUtils.isOKtoUseSession(request)) {
-                request.removeAttribute(BroadleafSandBoxResolver.SANDBOX_ID_VAR, WebRequest.SCOPE_SESSION);
+            if (UCRequestUtils.isOKtoUseSession(request)) {
+                request.removeAttribute(UltraSandBoxResolver.SANDBOX_ID_VAR, WebRequest.SCOPE_SESSION);
             }
         } else {
             SandBox sandBox = null;
@@ -325,7 +325,7 @@ public class BroadleafAdminRequestProcessor extends AbstractBroadleafWebRequestP
                         }
                     }
                 }
-                if (BLCRequestUtils.isOKtoUseSession(request)) {
+                if (UCRequestUtils.isOKtoUseSession(request)) {
                     String token = request.getParameter(staleStateProtectionService.getStateVersionTokenParameter());
                     staleStateProtectionService.compareToken(token);
                     staleStateProtectionService.invalidateState(true);
@@ -334,8 +334,8 @@ public class BroadleafAdminRequestProcessor extends AbstractBroadleafWebRequestP
 
             if (sandBox == null) {
                 Long previouslySetSandBoxId = null;
-                if (BLCRequestUtils.isOKtoUseSession(request)) {
-                    previouslySetSandBoxId = (Long) request.getAttribute(BroadleafSandBoxResolver.SANDBOX_ID_VAR,
+                if (UCRequestUtils.isOKtoUseSession(request)) {
+                    previouslySetSandBoxId = (Long) request.getAttribute(UltraSandBoxResolver.SANDBOX_ID_VAR,
                         WebRequest.SCOPE_SESSION);
                 }
                 if (previouslySetSandBoxId != null) {
@@ -364,16 +364,16 @@ public class BroadleafAdminRequestProcessor extends AbstractBroadleafWebRequestP
 
             // If the user just changed sandboxes, we want to update the database record.
             Long previouslySetSandBoxId = null;
-            if (BLCRequestUtils.isOKtoUseSession(request)) {
-                previouslySetSandBoxId = (Long) request.getAttribute(BroadleafSandBoxResolver.SANDBOX_ID_VAR, WebRequest.SCOPE_SESSION);
+            if (UCRequestUtils.isOKtoUseSession(request)) {
+                previouslySetSandBoxId = (Long) request.getAttribute(UltraSandBoxResolver.SANDBOX_ID_VAR, WebRequest.SCOPE_SESSION);
             }
             if (previouslySetSandBoxId != null && !sandBox.getId().equals(previouslySetSandBoxId)) {
                 adminUser.setLastUsedSandBoxId(sandBox.getId());
                 adminUser = adminSecurityService.saveAdminUser(adminUser);
             }
 
-            if (BLCRequestUtils.isOKtoUseSession(request)) {
-                request.setAttribute(BroadleafSandBoxResolver.SANDBOX_ID_VAR, sandBox.getId(), WebRequest.SCOPE_SESSION);
+            if (UCRequestUtils.isOKtoUseSession(request)) {
+                request.setAttribute(UltraSandBoxResolver.SANDBOX_ID_VAR, sandBox.getId(), WebRequest.SCOPE_SESSION);
             }
             //We do this to prevent lazy init exceptions when this context/sandbox combination
             // is used in a different session that it was initiated in. see QA#2576

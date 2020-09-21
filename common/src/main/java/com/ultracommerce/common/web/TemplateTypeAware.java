@@ -1,23 +1,23 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.web;
+package com.ultracommerce.common.web;
 
-import org.broadleafcommerce.common.template.TemplateType;
+import com.ultracommerce.common.template.TemplateType;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -27,8 +27,8 @@ public interface TemplateTypeAware {
     /**
      * If a custom handler is written and it knows the eventual template name, then it should return the 
      * template name when this method is called.    This method will always be called after 
-     * {@link #getBroadleafHandlerInternal(HttpServletRequest)} and only if the Handler was able to handle the 
-     * request (e.g. it returns a non-null value from {@link #getBroadleafHandlerInternal(HttpServletRequest)}.  
+     * {@link #getUltraHandlerInternal(HttpServletRequest)} and only if the Handler was able to handle the 
+     * request (e.g. it returns a non-null value from {@link #getUltraHandlerInternal(HttpServletRequest)}.  
      * 
      * Listed as expected because the HandlerMapping is making a call before the controller logic has 
      * been processed.   The controller may send the user somewhere else (e.g. an error page, etc.) in which 
@@ -43,8 +43,8 @@ public interface TemplateTypeAware {
     /**
      * If a custom handler is written and it knows the eventual template name, then it should return the 
      * TemplateType when this method is called.    This method will always be called after 
-     * {@link #getBroadleafHandlerInternal(HttpServletRequest)} and only if the Handler was able to handle the 
-     * request (e.g. it returns a non-null value from {@link #getBroadleafHandlerInternal(HttpServletRequest)}.  
+     * {@link #getUltraHandlerInternal(HttpServletRequest)} and only if the Handler was able to handle the 
+     * request (e.g. it returns a non-null value from {@link #getUltraHandlerInternal(HttpServletRequest)}.  
      * 
      * @param request
      * @return

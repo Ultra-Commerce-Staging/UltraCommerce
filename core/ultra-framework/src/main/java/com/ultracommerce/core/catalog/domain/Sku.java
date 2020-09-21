@@ -1,35 +1,35 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.catalog.domain;
+package com.ultracommerce.core.catalog.domain;
 
-import org.broadleafcommerce.common.copy.MultiTenantCloneable;
-import org.broadleafcommerce.common.currency.domain.BroadleafCurrency;
-import org.broadleafcommerce.common.media.domain.Media;
-import org.broadleafcommerce.common.money.Money;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
-import org.broadleafcommerce.core.catalog.service.dynamic.DynamicSkuPrices;
-import org.broadleafcommerce.core.catalog.service.dynamic.SkuPricingConsiderationContext;
-import org.broadleafcommerce.core.inventory.service.InventoryService;
-import org.broadleafcommerce.core.inventory.service.type.InventoryType;
-import org.broadleafcommerce.core.order.domain.FulfillmentGroup;
-import org.broadleafcommerce.core.order.domain.FulfillmentOption;
-import org.broadleafcommerce.core.order.service.type.FulfillmentType;
-import org.broadleafcommerce.core.order.service.workflow.CheckAddAvailabilityActivity;
+import com.ultracommerce.common.copy.MultiTenantCloneable;
+import com.ultracommerce.common.currency.domain.UltraCurrency;
+import com.ultracommerce.common.media.domain.Media;
+import com.ultracommerce.common.money.Money;
+import com.ultracommerce.common.web.UltraRequestContext;
+import com.ultracommerce.core.catalog.service.dynamic.DynamicSkuPrices;
+import com.ultracommerce.core.catalog.service.dynamic.SkuPricingConsiderationContext;
+import com.ultracommerce.core.inventory.service.InventoryService;
+import com.ultracommerce.core.inventory.service.type.InventoryType;
+import com.ultracommerce.core.order.domain.FulfillmentGroup;
+import com.ultracommerce.core.order.domain.FulfillmentOption;
+import com.ultracommerce.core.order.service.type.FulfillmentType;
+import com.ultracommerce.core.order.service.workflow.CheckAddAvailabilityActivity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -632,7 +632,7 @@ public interface Sku extends Serializable, MultiTenantCloneable<Sku>, Indexable 
 
     /**
      * Returns the type of inventory for this sku
-     * @return the {@link org.broadleafcommerce.core.inventory.service.type.InventoryType} for this sku
+     * @return the {@link com.ultracommerce.core.inventory.service.type.InventoryType} for this sku
      */
     public InventoryType getInventoryType();
 
@@ -643,7 +643,7 @@ public interface Sku extends Serializable, MultiTenantCloneable<Sku>, Indexable 
     public void setInventoryType(InventoryType inventoryType);
     
     /**
-     * <p>Used in conjuction with {@link InventoryType#CHECK_QUANTITY} within the blAddItemWorkflow and blUpdateItemWorkflow.
+     * <p>Used in conjuction with {@link InventoryType#CHECK_QUANTITY} within the ucAddItemWorkflow and ucUpdateItemWorkflow.
      * This field is checked within the {@link CheckAddAvailabilityActivity} to determine if inventory is actually available
      * for this Sku.
      */
@@ -682,21 +682,21 @@ public interface Sku extends Serializable, MultiTenantCloneable<Sku>, Indexable 
      * 
      * @param currency
      */
-    public void setCurrency(BroadleafCurrency currency);
+    public void setCurrency(UltraCurrency currency);
 
     /**
      * <b>Note: When using dynamic pricing, this method is unreliable and should not be called outside of the 
-     * Broadleaf admin</b>  Instead, you should rely on the {@link BroadleafRequestContext#getBroadleafCurrency()} 
+     * Ultra admin</b>  Instead, you should rely on the {@link UltraRequestContext#getUltraCurrency()} 
      * instead of storing at the SKU level.
      * 
      * As such, for supported, enterprise installations, this method should always return null.
      * 
-     * This method was not deprecated as it may have some use in non-standard Broadleaf installations but
+     * This method was not deprecated as it may have some use in non-standard Ultra installations but
      * using its use is not suggested for most implementations. 
      * 
      * @return the currency for this sku
      */
-    public BroadleafCurrency getCurrency();
+    public UltraCurrency getCurrency();
 
     /**
      * Returns the Tax Code for this particular Entity.
@@ -726,7 +726,7 @@ public interface Sku extends Serializable, MultiTenantCloneable<Sku>, Indexable 
     public void setUpc(String upc);
 
     /**
-     * Intended to hold any unique identifier not tied to the Broadleaf Database Sequence Identifier.
+     * Intended to hold any unique identifier not tied to the Ultra Database Sequence Identifier.
      * For example, many implementations may integrate or import/export
      * data from other systems that manage their own unique identifiers.
      *

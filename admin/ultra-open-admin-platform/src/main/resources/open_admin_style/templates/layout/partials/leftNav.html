@@ -1,11 +1,11 @@
-<blc_admin:admin_module resultVar="adminMenu" ></blc_admin:admin_module>
+<uc_admin:admin_module resultVar="adminMenu" ></uc_admin:admin_module>
 
 <div class="side-nav">
     <ul>
         <li th:each="module : ${adminMenu.adminModules}" th:inline="text">
-            <a th:class="${'nav-section ' + module.icon}" th:href="@{${'/overview'}}" th:if="${module.icon == 'blc-icon-blc-leaf'}"></a>
+            <a th:class="${'nav-section ' + module.icon}" th:href="@{${'/overview'}}" th:if="${module.icon == 'uc-icon-uc-leaf'}"></a>
             <a th:class="${'nav-section ' + module.icon}" href="" th:attr="data-toggle=${'#' + module.moduleKey}"
-               th:unless="${module.icon == 'blc-icon-blc-leaf'}"></a>
+               th:unless="${module.icon == 'uc-icon-uc-leaf'}"></a>
         </li>
     </ul>
 </div>

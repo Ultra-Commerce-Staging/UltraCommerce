@@ -1,35 +1,35 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.config.domain;
+package com.ultracommerce.common.config.domain;
 
-import org.broadleafcommerce.common.audit.Auditable;
-import org.broadleafcommerce.common.audit.AuditableListener;
-import org.broadleafcommerce.common.config.service.type.ModuleConfigurationType;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransform;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformMember;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformTypes;
-import org.broadleafcommerce.common.persistence.ArchiveStatus;
-import org.broadleafcommerce.common.persistence.Status;
-import org.broadleafcommerce.common.presentation.AdminPresentation;
-import org.broadleafcommerce.common.presentation.RequiredOverride;
-import org.broadleafcommerce.common.presentation.client.SupportedFieldType;
-import org.broadleafcommerce.common.presentation.client.VisibilityEnum;
-import org.broadleafcommerce.common.util.DateUtil;
+import com.ultracommerce.common.audit.Auditable;
+import com.ultracommerce.common.audit.AuditableListener;
+import com.ultracommerce.common.config.service.type.ModuleConfigurationType;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransform;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransformMember;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransformTypes;
+import com.ultracommerce.common.persistence.ArchiveStatus;
+import com.ultracommerce.common.persistence.Status;
+import com.ultracommerce.common.presentation.AdminPresentation;
+import com.ultracommerce.common.presentation.RequiredOverride;
+import com.ultracommerce.common.presentation.client.SupportedFieldType;
+import com.ultracommerce.common.presentation.client.VisibilityEnum;
+import com.ultracommerce.common.util.DateUtil;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
@@ -56,10 +56,10 @@ import javax.persistence.Table;
  */
 
 @Entity
-@Table(name = "BLC_MODULE_CONFIGURATION")
+@Table(name = "UC_MODULE_CONFIGURATION")
 @EntityListeners(value = {AuditableListener.class})
 @Inheritance(strategy = InheritanceType.JOINED)
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE, region = "blConfigurationModuleElements")
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE, region = "ucConfigurationModuleElements")
 @DirectCopyTransform({
         @DirectCopyTransformMember(templateTokens = DirectCopyTransformTypes.MULTITENANT_SITE),
         @DirectCopyTransformMember(templateTokens = DirectCopyTransformTypes.MULTI_PHASE_ADD)
@@ -72,10 +72,10 @@ public abstract class AbstractModuleConfiguration implements ModuleConfiguration
     @GeneratedValue(generator = "ModuleConfigurationId")
     @GenericGenerator(
             name = "ModuleConfigurationId",
-            strategy = "org.broadleafcommerce.common.persistence.IdOverrideTableGenerator",
+            strategy = "com.ultracommerce.common.persistence.IdOverrideTableGenerator",
             parameters = {
                     @Parameter(name = "segment_value", value = "ModuleConfigurationImpl"),
-                    @Parameter(name = "entity_name", value = "org.broadleafcommerce.common.config.domain" +
+                    @Parameter(name = "entity_name", value = "com.ultracommerce.common.config.domain" +
                             ".AbstractModuleConfiguration")
             }
     )
@@ -112,8 +112,8 @@ public abstract class AbstractModuleConfiguration implements ModuleConfiguration
      */
     @Column(name = "CONFIG_TYPE", nullable = false)
     @AdminPresentation(friendlyName = "AbstractModuleConfiguration_Config_Type", order = 1000, gridOrder = 1,
-            prominent = true, fieldType = SupportedFieldType.BROADLEAF_ENUMERATION,
-            broadleafEnumeration = "org.broadleafcommerce.common.config.service.type.ModuleConfigurationType",
+            prominent = true, fieldType = SupportedFieldType.ULTRA_ENUMERATION,
+            ultraEnumeration = "com.ultracommerce.common.config.service.type.ModuleConfigurationType",
             requiredOverride = RequiredOverride.NOT_REQUIRED, readOnly = true, visibility = VisibilityEnum.FORM_HIDDEN)
     protected String configType;
 

@@ -1,27 +1,27 @@
 /*
  * #%L
- * BroadleafCommerce Profile Web
+ * UltraCommerce Profile Web
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.profile.web.core;
+package com.ultracommerce.profile.web.core;
 
-import org.broadleafcommerce.common.util.BLCRequestUtils;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
-import org.broadleafcommerce.profile.core.domain.Customer;
-import org.broadleafcommerce.profile.core.domain.CustomerPersistedEvent;
-import org.broadleafcommerce.profile.web.core.security.CustomerStateRequestProcessor;
+import com.ultracommerce.common.util.UCRequestUtils;
+import com.ultracommerce.common.web.UltraRequestContext;
+import com.ultracommerce.profile.core.domain.Customer;
+import com.ultracommerce.profile.core.domain.CustomerPersistedEvent;
+import com.ultracommerce.profile.web.core.security.CustomerStateRequestProcessor;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.WebRequest;
@@ -36,7 +36,7 @@ import org.springframework.web.context.request.WebRequest;
  *
  * @author Phillip Verheyden (phillipuniverse)
  */
-@Component("blCustomerStateRefresher")
+@Component("ucCustomerStateRefresher")
 public class CustomerStateRefresher implements ApplicationListener<CustomerPersistedEvent> {
 
     /**
@@ -54,11 +54,11 @@ public class CustomerStateRefresher implements ApplicationListener<CustomerPersi
         Customer dbCustomer = event.getCustomer();
 
         //if there is an active request, remove the session-based customer if it exists and update CustomerState
-        WebRequest request = BroadleafRequestContext.getBroadleafRequestContext().getWebRequest();
+        WebRequest request = UltraRequestContext.getUltraRequestContext().getWebRequest();
         if (request != null) {
             String customerAttribute = CustomerStateRequestProcessor.getAnonymousCustomerSessionAttributeName();
             String customerIdAttribute = CustomerStateRequestProcessor.getAnonymousCustomerIdSessionAttributeName();
-            if (BLCRequestUtils.isOKtoUseSession(request)) {
+            if (UCRequestUtils.isOKtoUseSession(request)) {
                 Customer sessionCustomer = (Customer) request.getAttribute(customerAttribute, WebRequest.SCOPE_SESSION);
                 //invalidate the session-based customer if it's there and the ID is the same as the Customer that has been
                 //persisted

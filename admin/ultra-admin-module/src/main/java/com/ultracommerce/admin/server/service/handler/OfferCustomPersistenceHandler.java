@@ -1,63 +1,63 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.admin.server.service.handler;
+package com.ultracommerce.admin.server.service.handler;
 
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.admin.server.service.extension.OfferCustomServiceExtensionManager;
-import org.broadleafcommerce.common.currency.domain.BroadleafCurrency;
-import org.broadleafcommerce.common.currency.util.BroadleafCurrencyUtils;
-import org.broadleafcommerce.common.exception.ExceptionHelper;
-import org.broadleafcommerce.common.exception.ServiceException;
-import org.broadleafcommerce.common.locale.domain.Locale;
-import org.broadleafcommerce.common.presentation.client.OperationType;
-import org.broadleafcommerce.common.presentation.client.SupportedFieldType;
-import org.broadleafcommerce.common.presentation.client.VisibilityEnum;
-import org.broadleafcommerce.common.sandbox.SandBoxHelper;
-import org.broadleafcommerce.common.time.SystemTime;
-import org.broadleafcommerce.common.util.DateUtil;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
-import org.broadleafcommerce.core.offer.domain.Offer;
-import org.broadleafcommerce.core.offer.domain.OfferAdminPresentation;
-import org.broadleafcommerce.core.offer.service.type.OfferItemRestrictionRuleType;
-import org.broadleafcommerce.openadmin.dto.BasicFieldMetadata;
-import org.broadleafcommerce.openadmin.dto.ClassMetadata;
-import org.broadleafcommerce.openadmin.dto.CriteriaTransferObject;
-import org.broadleafcommerce.openadmin.dto.DynamicResultSet;
-import org.broadleafcommerce.openadmin.dto.Entity;
-import org.broadleafcommerce.openadmin.dto.FieldMetadata;
-import org.broadleafcommerce.openadmin.dto.FilterAndSortCriteria;
-import org.broadleafcommerce.openadmin.dto.MergedPropertyType;
-import org.broadleafcommerce.openadmin.dto.PersistencePackage;
-import org.broadleafcommerce.openadmin.dto.PersistencePerspective;
-import org.broadleafcommerce.openadmin.dto.Property;
-import org.broadleafcommerce.openadmin.server.dao.DynamicEntityDao;
-import org.broadleafcommerce.openadmin.server.service.handler.ClassCustomPersistenceHandlerAdapter;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.EmptyFilterValues;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.InspectHelper;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.RecordHelper;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.criteria.FieldPath;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.criteria.FieldPathBuilder;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.criteria.FilterMapping;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.criteria.Restriction;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.criteria.predicate.PredicateProvider;
+import com.ultracommerce.admin.server.service.extension.OfferCustomServiceExtensionManager;
+import com.ultracommerce.common.currency.domain.UltraCurrency;
+import com.ultracommerce.common.currency.util.UltraCurrencyUtils;
+import com.ultracommerce.common.exception.ExceptionHelper;
+import com.ultracommerce.common.exception.ServiceException;
+import com.ultracommerce.common.locale.domain.Locale;
+import com.ultracommerce.common.presentation.client.OperationType;
+import com.ultracommerce.common.presentation.client.SupportedFieldType;
+import com.ultracommerce.common.presentation.client.VisibilityEnum;
+import com.ultracommerce.common.sandbox.SandBoxHelper;
+import com.ultracommerce.common.time.SystemTime;
+import com.ultracommerce.common.util.DateUtil;
+import com.ultracommerce.common.web.UltraRequestContext;
+import com.ultracommerce.core.offer.domain.Offer;
+import com.ultracommerce.core.offer.domain.OfferAdminPresentation;
+import com.ultracommerce.core.offer.service.type.OfferItemRestrictionRuleType;
+import com.ultracommerce.openadmin.dto.BasicFieldMetadata;
+import com.ultracommerce.openadmin.dto.ClassMetadata;
+import com.ultracommerce.openadmin.dto.CriteriaTransferObject;
+import com.ultracommerce.openadmin.dto.DynamicResultSet;
+import com.ultracommerce.openadmin.dto.Entity;
+import com.ultracommerce.openadmin.dto.FieldMetadata;
+import com.ultracommerce.openadmin.dto.FilterAndSortCriteria;
+import com.ultracommerce.openadmin.dto.MergedPropertyType;
+import com.ultracommerce.openadmin.dto.PersistencePackage;
+import com.ultracommerce.openadmin.dto.PersistencePerspective;
+import com.ultracommerce.openadmin.dto.Property;
+import com.ultracommerce.openadmin.server.dao.DynamicEntityDao;
+import com.ultracommerce.openadmin.server.service.handler.ClassCustomPersistenceHandlerAdapter;
+import com.ultracommerce.openadmin.server.service.persistence.module.EmptyFilterValues;
+import com.ultracommerce.openadmin.server.service.persistence.module.InspectHelper;
+import com.ultracommerce.openadmin.server.service.persistence.module.RecordHelper;
+import com.ultracommerce.openadmin.server.service.persistence.module.criteria.FieldPath;
+import com.ultracommerce.openadmin.server.service.persistence.module.criteria.FieldPathBuilder;
+import com.ultracommerce.openadmin.server.service.persistence.module.criteria.FilterMapping;
+import com.ultracommerce.openadmin.server.service.persistence.module.criteria.Restriction;
+import com.ultracommerce.openadmin.server.service.persistence.module.criteria.predicate.PredicateProvider;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -80,7 +80,7 @@ import javax.persistence.criteria.Predicate;
 /**
  * Created by Jon on 11/23/15.
  */
-@Component("blOfferCustomPersistenceHandler")
+@Component("ucOfferCustomPersistenceHandler")
 public class OfferCustomPersistenceHandler extends ClassCustomPersistenceHandlerAdapter {
 
     private static final Log LOG = LogFactory.getLog(OfferCustomPersistenceHandler.class);
@@ -99,10 +99,10 @@ public class OfferCustomPersistenceHandler extends ClassCustomPersistenceHandler
     protected boolean isActiveFilter = false;
 
 
-    @Resource(name = "blOfferCustomServiceExtensionManager")
+    @Resource(name = "ucOfferCustomServiceExtensionManager")
     protected OfferCustomServiceExtensionManager extensionManager;
 
-    @Resource(name="blSandBoxHelper")
+    @Resource(name="ucSandBoxHelper")
     protected SandBoxHelper sandBoxHelper;
 
     public OfferCustomPersistenceHandler() {
@@ -216,9 +216,9 @@ public class OfferCustomPersistenceHandler extends ClassCustomPersistenceHandler
             customCriteria = persistencePackage.getCustomCriteria()[0];
         }
 
-        Locale locale =  BroadleafRequestContext.getBroadleafRequestContext().getLocale();
-        BroadleafCurrency currency =  BroadleafRequestContext.getBroadleafRequestContext().getBroadleafCurrency();
-        NumberFormat nf = BroadleafCurrencyUtils.getNumberFormatFromCache(locale.getJavaLocale(), currency.getJavaCurrency());
+        Locale locale =  UltraRequestContext.getUltraRequestContext().getLocale();
+        UltraCurrency currency =  UltraRequestContext.getUltraRequestContext().getUltraCurrency();
+        NumberFormat nf = UltraCurrencyUtils.getNumberFormatFromCache(locale.getJavaLocale(), currency.getJavaCurrency());
 
         for (Entity entity : resultSet.getRecords()) {
             Property discountType = entity.findProperty("discountType");

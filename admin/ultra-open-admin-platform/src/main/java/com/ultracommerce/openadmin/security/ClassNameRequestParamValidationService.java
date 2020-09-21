@@ -1,23 +1,23 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.openadmin.security;
+package com.ultracommerce.openadmin.security;
 
-import org.broadleafcommerce.openadmin.dto.SectionCrumb;
+import com.ultracommerce.openadmin.dto.SectionCrumb;
 
 import java.util.List;
 import java.util.Map;
@@ -44,7 +44,7 @@ public interface ClassNameRequestParamValidationService {
      * Retrieve a fully qualified classname using a sectionKey. Will return the passed in sectionKey if not classname
      * is registered for it in the datastore. Since it's possible for no classname to be registered and for the
      * key to be a fully qualified classname itself, any unmatched sectionKey is confirmed against the whitelist. If found
-     * to be not valid, a {@link org.broadleafcommerce.openadmin.exception.SectionKeyValidationException} instance is
+     * to be not valid, a {@link com.ultracommerce.openadmin.exception.SectionKeyValidationException} instance is
      * thrown. If thrown from within a Spring MVC controller, this exception will result in an Http 404 status code
      * back to the requester.
      *
@@ -57,7 +57,7 @@ public interface ClassNameRequestParamValidationService {
      * Retrieve a list of section crumbs given a delimited string (usually harvested from the "sectionCrumbs" param on a
      * Http request). The SectionCrumb instances contains sectionKey information, and are therefore susceptible to the
      * same validation requirements as {@link #getClassNameForSection(String)}. If a sectionKey is found
-     * to be not valid, a {@link org.broadleafcommerce.openadmin.exception.SectionKeyValidationException} instance is
+     * to be not valid, a {@link com.ultracommerce.openadmin.exception.SectionKeyValidationException} instance is
      * thrown. If thrown from within a Spring MVC controller, this exception will result in an Http 404 status code
      * back to the requester.
      *

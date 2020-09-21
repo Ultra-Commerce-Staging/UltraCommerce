@@ -1,27 +1,27 @@
 /*
  * #%L
- * broadleaf-theme
+ * ultra-theme
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.web.resource.resolver;
+package com.ultracommerce.common.web.resource.resolver;
 
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.resource.GeneratedResource;
-import org.broadleafcommerce.common.web.BaseUrlResolver;
+import com.ultracommerce.common.resource.GeneratedResource;
+import com.ultracommerce.common.web.BaseUrlResolver;
 import org.springframework.core.Ordered;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
@@ -42,31 +42,31 @@ import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * A {@link ResourceResolver} that replaces the //BLC-SERVLET-CONTEXT and //BLC-SITE-BASEURL" 
- * tokens before serving the BLC.js file.
+ * A {@link ResourceResolver} that replaces the //UC-SERVLET-CONTEXT and //UC-SITE-BASEURL" 
+ * tokens before serving the UC.js file.
  * 
- * Works in conjunction with {@link BLCJSUrlPathResolver}
+ * Works in conjunction with {@link UCJSUrlPathResolver}
  * 
  * @since 4.0
  * 
  * @author Reggie Cole
  * @author Brian Polster
- * @since Broadleaf 4.0
+ * @since Ultra 4.0
  */
-@Component("blBLCJSResolver")
-public class BLCJSResourceResolver extends AbstractResourceResolver implements Ordered {
+@Component("ucUCJSResolver")
+public class UCJSResourceResolver extends AbstractResourceResolver implements Ordered {
 
-    protected static final Log LOG = LogFactory.getLog(BLCJSResourceResolver.class);
+    protected static final Log LOG = LogFactory.getLog(UCJSResourceResolver.class);
 
-    private static final String BLC_JS_NAME = "BLC.js";
+    private static final String UC_JS_NAME = "UC.js";
     protected static final Charset DEFAULT_CHARSET = Charset.forName("UTF-8");
 
-    @javax.annotation.Resource(name = "blBaseUrlResolver")
+    @javax.annotation.Resource(name = "ucBaseUrlResolver")
     BaseUrlResolver urlResolver;
 
-    private int order = BroadleafResourceResolverOrder.BLC_JS_RESOURCE_RESOLVER;
+    private int order = UltraResourceResolverOrder.UC_JS_RESOURCE_RESOLVER;
 
-    protected static final Pattern pattern = Pattern.compile("(\\S*)BLC((\\S{0})|([-]{1,2}[0-9]+)|([-]{1,2}[0-9]+(-[0-9]+)+)).js");
+    protected static final Pattern pattern = Pattern.compile("(\\S*)UC((\\S{0})|([-]{1,2}[0-9]+)|([-]{1,2}[0-9]+(-[0-9]+)+)).js");
 
 
     @Override
@@ -78,20 +78,20 @@ public class BLCJSResourceResolver extends AbstractResourceResolver implements O
     @Override
     protected Resource resolveResourceInternal(HttpServletRequest request, String requestPath,
             List<? extends Resource> locations, ResourceResolverChain chain) {
-        if (requestPath != null && requestPath.contains("BLC")) {
+        if (requestPath != null && requestPath.contains("UC")) {
             Matcher matcher = pattern.matcher(requestPath);
             if (matcher.find()) {
-                requestPath = matcher.group(1) + "BLC.js";
-                Resource resource = chain.resolveResource(request, "BLC.js", locations);
+                requestPath = matcher.group(1) + "UC.js";
+                Resource resource = chain.resolveResource(request, "UC.js", locations);
                 if (resource == null) {
-                    requestPath = matcher.group(1) + "BLC.js";
+                    requestPath = matcher.group(1) + "UC.js";
                     resource = chain.resolveResource(request, requestPath, locations);
                 }
 
                 try {
                     resource = convertResource(resource, requestPath);
                 } catch (IOException ioe) {
-                    LOG.error("Exception modifying " + BLC_JS_NAME, ioe);
+                    LOG.error("Exception modifying " + UC_JS_NAME, ioe);
                 }
                 return resource;
             }
@@ -106,11 +106,11 @@ public class BLCJSResourceResolver extends AbstractResourceResolver implements O
         String newContent = content;
         if (! StringUtils.isEmpty(content)) {
             HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-            newContent = newContent.replace("//BLC-SERVLET-CONTEXT", request.getContextPath());
+            newContent = newContent.replace("//UC-SERVLET-CONTEXT", request.getContextPath());
 
             String siteBaseUrl = urlResolver.getSiteBaseUrl();
             if (! StringUtils.isEmpty(siteBaseUrl)) {
-                newContent = newContent.replace("//BLC-SITE-BASEURL", siteBaseUrl);
+                newContent = newContent.replace("//UC-SITE-BASEURL", siteBaseUrl);
             }
         }
         

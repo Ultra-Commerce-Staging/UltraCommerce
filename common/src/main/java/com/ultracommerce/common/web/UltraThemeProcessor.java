@@ -1,27 +1,27 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.web;
+package com.ultracommerce.common.web;
 
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.classloader.release.ThreadLocalManager;
-import org.broadleafcommerce.common.site.domain.Theme;
+import com.ultracommerce.common.classloader.release.ThreadLocalManager;
+import com.ultracommerce.common.site.domain.Theme;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.WebRequest;
 
@@ -32,20 +32,20 @@ import javax.annotation.Resource;
 
 /**
  * @author Stanislav Fedorov
- * @see {@link BroadleafThemeResolverFilter}
+ * @see {@link UltraThemeResolverFilter}
  */
-@Component("blThemeProcessor")
-public class BroadleafThemeProcessor extends AbstractBroadleafWebRequestProcessor {
+@Component("ucThemeProcessor")
+public class UltraThemeProcessor extends AbstractUltraWebRequestProcessor {
 
     protected final Log LOG = LogFactory.getLog(getClass());
 
-    @Resource(name = "blThemeResolver")
-    protected BroadleafThemeResolver themeResolver;
+    @Resource(name = "ucThemeResolver")
+    protected UltraThemeResolver themeResolver;
 
     @Override
     public void process(WebRequest request) {
 
-        BroadleafRequestContext brc = BroadleafRequestContext.getBroadleafRequestContext();
+        UltraRequestContext brc = UltraRequestContext.getUltraRequestContext();
         Theme originalTheme = brc.getTheme();
 
         // Note that this must happen after the request context is set up as resolving a theme is dependent on site
@@ -54,7 +54,7 @@ public class BroadleafThemeProcessor extends AbstractBroadleafWebRequestProcesso
         //Track if the theme changed
         if (originalTheme != null && newTheme != null && ObjectUtils.compare(originalTheme.getId(), newTheme.getId()) != 0) {
             Map<String, Object> properties = brc.getAdditionalProperties();
-            properties.put(BroadleafThemeResolver.BRC_THEME_CHANGE_STATUS, true);
+            properties.put(UltraThemeResolver.BRC_THEME_CHANGE_STATUS, true);
         }
 
         brc.setTheme(newTheme);

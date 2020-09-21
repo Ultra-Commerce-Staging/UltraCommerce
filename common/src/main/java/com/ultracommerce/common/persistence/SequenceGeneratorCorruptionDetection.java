@@ -1,31 +1,31 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.persistence;
+package com.ultracommerce.common.persistence;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.service.PersistenceService;
-import org.broadleafcommerce.common.util.BLCNumberUtils;
-import org.broadleafcommerce.common.util.StreamCapableTransactionalOperationAdapter;
-import org.broadleafcommerce.common.util.StreamingTransactionCapableUtil;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
+import com.ultracommerce.common.service.PersistenceService;
+import com.ultracommerce.common.util.UCNumberUtils;
+import com.ultracommerce.common.util.StreamCapableTransactionalOperationAdapter;
+import com.ultracommerce.common.util.StreamingTransactionCapableUtil;
+import com.ultracommerce.common.web.UltraRequestContext;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.annotations.GenericGenerator;
@@ -51,18 +51,18 @@ import javax.persistence.metamodel.EntityType;
  *
  * @author Jeff Fischer
  */
-@Repository("blSequenceGeneratorCorruptionDetection")
+@Repository("ucSequenceGeneratorCorruptionDetection")
 public class SequenceGeneratorCorruptionDetection implements ApplicationListener<ContextRefreshedEvent> {
 
     private static final Log LOG = LogFactory.getLog(SequenceGeneratorCorruptionDetection.class);
 
-    @Resource(name = "blTargetModeMaps")
+    @Resource(name = "ucTargetModeMaps")
     protected List<Map<String, Map<String, Object>>> targetModeMaps;
 
-    @Resource(name="blPersistenceService")
+    @Resource(name="ucPersistenceService")
     protected PersistenceService persistenceService;
 
-    @Resource(name="blStreamingTransactionCapableUtil")
+    @Resource(name="ucStreamingTransactionCapableUtil")
     protected StreamingTransactionCapableUtil transUtil;
 
     @Value("${detect.sequence.generator.inconsistencies}")
@@ -115,7 +115,7 @@ public class SequenceGeneratorCorruptionDetection implements ApplicationListener
             String segmentColumnName = null;
             String valueColumnName = null;
             if (genericAnnot != null && genericAnnot.strategy().equals(IdOverrideTableGenerator.class.getName())) {
-                //This is a BLC style ID generator
+                //This is a UC style ID generator
                 for (Parameter param : genericAnnot.parameters()) {
                     if (param.name().equals("segment_value")) {
                         segmentValue = param.value();
@@ -185,10 +185,10 @@ public class SequenceGeneratorCorruptionDetection implements ApplicationListener
                 sb.append(" entity");
 
                 List results;
-                BroadleafRequestContext context = BroadleafRequestContext.getBroadleafRequestContext();
+                UltraRequestContext context = UltraRequestContext.getUltraRequestContext();
                 if (context == null) {
-                    context = new BroadleafRequestContext();
-                    BroadleafRequestContext.setBroadleafRequestContext(context);
+                    context = new UltraRequestContext();
+                    UltraRequestContext.setUltraRequestContext(context);
                 }
                 try {
                     context.setInternalIgnoreFilters(true);
@@ -199,7 +199,7 @@ public class SequenceGeneratorCorruptionDetection implements ApplicationListener
 
                 if (CollectionUtils.isNotEmpty(results) && results.get(0) != null) {
                     LOG.debug(String.format("Checking for sequence corruption on entity %s", segmentValue));
-                    Long maxEntityId = BLCNumberUtils.toLong(results.get(0));
+                    Long maxEntityId = UCNumberUtils.toLong(results.get(0));
                     if (maxEntityId >= maxSequenceId) {
                         String invalidSequenceDetectedMsg = String.format("The sequence value for %s in %s was found as %d (or an entry did not exist) but the actual max sequence in"
                             + " %s's table was found as %d", segmentValue, tableName, maxSequenceId, mappedClass.getName(), maxEntityId);
@@ -252,14 +252,14 @@ public class SequenceGeneratorCorruptionDetection implements ApplicationListener
                         } else {
                             LOG.error(invalidSequenceDetectedMsg);
                             String reason = "A data inconsistency has been detected between the " + tableName + " table and one or more entity tables for which it manages current max primary key values.\n" +
-                                    "The inconsistency was detected between the managed class (" + mappedClass.getName() + ") and the identifier (" + segmentValue + ") in " + tableName + ". Broadleaf\n" +
+                                    "The inconsistency was detected between the managed class (" + mappedClass.getName() + ") and the identifier (" + segmentValue + ") in " + tableName + ". Ultra\n" +
                                     "has stopped startup of the application in order to allow you to resolve the issue and avoid possible data corruption. If you wish to disable this detection, you may\n" +
                                     "set the 'detect.sequence.generator.inconsistencies' property to false in your application's common.properties or common-shared.properties. If you would like for this component\n" +
                                     "to autocorrect these problems by setting the sequence generator value to a value greater than the max entity id, then set the 'auto.correct.sequence.generator.inconsistencies'\n" +
                                     "property to true in your application's common.properties or common-shared.properties. If you would like to provide a default schema to be used to qualify table names used in the\n" +
                                     "queries for this detection, set the 'default.schema.sequence.generator' property in your application's common.properties or common-shared.properties. Also, if you are upgrading\n" +
-                                    "from 1.6 or below, please refer to http://docs.broadleafcommerce.org/current/1.6-to-2.0-Migration.html for important information regarding migrating your SEQUENCE_GENERATOR table.";
-                            LOG.error("Broadleaf Commerce failed to start", new RuntimeException(reason));
+                                    "from 1.6 or below, please refer to http://docs.ultracommerce.org/current/1.6-to-2.0-Migration.html for important information regarding migrating your SEQUENCE_GENERATOR table.";
+                            LOG.error("Ultra Commerce failed to start", new RuntimeException(reason));
                             System.exit(1);
                         }
                     }

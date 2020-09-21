@@ -1,33 +1,33 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
 
-package org.broadleafcommerce.core.web.expression;
+package com.ultracommerce.core.web.expression;
 
 import org.apache.commons.lang3.StringUtils;
-import org.broadleafcommerce.common.currency.util.BroadleafCurrencyUtils;
-import org.broadleafcommerce.common.money.Money;
-import org.broadleafcommerce.common.util.StringUtil;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
-import org.broadleafcommerce.common.web.expression.BroadleafVariableExpression;
-import org.broadleafcommerce.core.catalog.domain.Category;
-import org.broadleafcommerce.core.catalog.domain.Product;
-import org.broadleafcommerce.core.catalog.service.CatalogURLService;
-import org.broadleafcommerce.presentation.condition.ConditionalOnTemplating;
+import com.ultracommerce.common.currency.util.UltraCurrencyUtils;
+import com.ultracommerce.common.money.Money;
+import com.ultracommerce.common.util.StringUtil;
+import com.ultracommerce.common.web.UltraRequestContext;
+import com.ultracommerce.common.web.expression.UltraVariableExpression;
+import com.ultracommerce.core.catalog.domain.Category;
+import com.ultracommerce.core.catalog.domain.Product;
+import com.ultracommerce.core.catalog.service.CatalogURLService;
+import com.ultracommerce.presentation.condition.ConditionalOnTemplating;
 import org.springframework.stereotype.Component;
 
 import java.text.NumberFormat;
@@ -38,23 +38,23 @@ import javax.annotation.Resource;
  * Exposes "blc" to expressions to the Thymeleaf expression context.
  * 
  * This class is intended to be augmented using load time weaving by other modules
- * within Broadleaf.
+ * within Ultra.
  * 
  * It provides one function (getDate()) primarily just for testing purposes.   This can
  * be accessed with Thymeleaf as ${#blc.date()}
  * 
  * @author bpolster
  */
-@Component("blBLCVariableExpression")
+@Component("ucUCVariableExpression")
 @ConditionalOnTemplating
-public class BLCVariableExpression implements BroadleafVariableExpression {
+public class UCVariableExpression implements UltraVariableExpression {
     
     @Override
     public String getName() {
         return "blc";
     }
     
-    @Resource(name = "blCatalogURLService")
+    @Resource(name = "ucCatalogURLService")
     protected CatalogURLService catalogURLService;
 
     public String relativeURL(Category category) {
@@ -74,7 +74,7 @@ public class BLCVariableExpression implements BroadleafVariableExpression {
     }
 
     protected String getCurrentUrl() {
-        BroadleafRequestContext brc = BroadleafRequestContext.getBroadleafRequestContext();
+        UltraRequestContext brc = UltraRequestContext.getUltraRequestContext();
         String currentUrl = "";
         if (brc != null && brc.getRequest() != null) {
             currentUrl = brc.getRequest().getRequestURI();
@@ -97,9 +97,9 @@ public class BLCVariableExpression implements BroadleafVariableExpression {
         String sanitizedAmount = StringUtil.removeNonNumerics(amount);
         if (StringUtils.isNotEmpty(sanitizedAmount)) {
             price = new Money(sanitizedAmount);
-            BroadleafRequestContext brc = BroadleafRequestContext.getBroadleafRequestContext();
+            UltraRequestContext brc = UltraRequestContext.getUltraRequestContext();
             if (brc.getJavaLocale() != null) {
-                NumberFormat formatter = BroadleafCurrencyUtils.getNumberFormatFromCache(brc.getJavaLocale(), price.getCurrency());
+                NumberFormat formatter = UltraCurrencyUtils.getNumberFormatFromCache(brc.getJavaLocale(), price.getCurrency());
                 return formatter.format(price.getAmount());
             }
         }

@@ -1,46 +1,46 @@
 /*
  * #%L
- * BroadleafCommerce CMS Module
+ * UltraCommerce CMS Module
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.cms.admin.web.service;
+package com.ultracommerce.cms.admin.web.service;
 
-import org.broadleafcommerce.cms.file.service.StaticAssetService;
-import org.broadleafcommerce.cms.file.service.operation.StaticMapNamedOperationComponent;
-import org.broadleafcommerce.common.presentation.client.SupportedFieldType;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
-import org.broadleafcommerce.openadmin.web.form.component.ListGrid;
-import org.broadleafcommerce.openadmin.web.form.component.ListGridRecord;
-import org.broadleafcommerce.openadmin.web.form.component.MediaField;
-import org.broadleafcommerce.openadmin.web.form.entity.Field;
-import org.broadleafcommerce.openadmin.web.service.FormBuilderService;
+import com.ultracommerce.cms.file.service.StaticAssetService;
+import com.ultracommerce.cms.file.service.operation.StaticMapNamedOperationComponent;
+import com.ultracommerce.common.presentation.client.SupportedFieldType;
+import com.ultracommerce.common.web.UltraRequestContext;
+import com.ultracommerce.openadmin.web.form.component.ListGrid;
+import com.ultracommerce.openadmin.web.form.component.ListGridRecord;
+import com.ultracommerce.openadmin.web.form.component.MediaField;
+import com.ultracommerce.openadmin.web.form.entity.Field;
+import com.ultracommerce.openadmin.web.service.FormBuilderService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 
 
-@Service("blAssetFormBuilderService")
+@Service("ucAssetFormBuilderService")
 public class AssetFormBuilderServiceImpl implements AssetFormBuilderService {
     
-    @Resource(name = "blFormBuilderService")
+    @Resource(name = "ucFormBuilderService")
     protected FormBuilderService formBuilderService;
     
-    @Resource(name = "blStaticAssetService")
+    @Resource(name = "ucStaticAssetService")
     protected StaticAssetService staticAssetService;
     
-    @Resource(name = "blStaticMapNamedOperationComponent")
+    @Resource(name = "ucStaticMapNamedOperationComponent")
     protected StaticMapNamedOperationComponent operationMap;
  
     @Override
@@ -86,7 +86,7 @@ public class AssetFormBuilderServiceImpl implements AssetFormBuilderService {
             
             record.getHiddenFields().add(new Field()
                 .withName("servletContext")
-                .withValue(BroadleafRequestContext.getBroadleafRequestContext().getRequest().getContextPath()));
+                .withValue(UltraRequestContext.getUltraRequestContext().getRequest().getContextPath()));
             
             // Set the height value on this field
             mf.setHeight(operationMap.getNamedOperations().get("smallAdminThumbnail").get("resize-height-amount"));

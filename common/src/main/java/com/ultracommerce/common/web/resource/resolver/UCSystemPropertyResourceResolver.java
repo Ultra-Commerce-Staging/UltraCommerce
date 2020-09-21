@@ -1,28 +1,28 @@
 /*
  * #%L
- * broadleaf-theme
+ * ultra-theme
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.web.resource.resolver;
+package com.ultracommerce.common.web.resource.resolver;
 
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.resource.GeneratedResource;
-import org.broadleafcommerce.common.util.BLCSystemProperty;
-import org.broadleafcommerce.common.web.BaseUrlResolver;
+import com.ultracommerce.common.resource.GeneratedResource;
+import com.ultracommerce.common.util.UCSystemProperty;
+import com.ultracommerce.common.web.BaseUrlResolver;
 import org.springframework.core.Ordered;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
@@ -41,25 +41,25 @@ import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * A {@link ResourceResolver} that replaces system properties in BLC-system-property.js 
+ * A {@link ResourceResolver} that replaces system properties in UC-system-property.js 
  * 
  * @since 4.0
  * 
  * @author Reggie Cole
  * @author Brian Polster
- * @since Broadleaf 4.0
+ * @since Ultra 4.0
  */
-@Component("blSystemPropertyJSResolver")
-public class BLCSystemPropertyResourceResolver extends AbstractResourceResolver implements Ordered {
+@Component("ucSystemPropertyJSResolver")
+public class UCSystemPropertyResourceResolver extends AbstractResourceResolver implements Ordered {
 
-    protected static final Log LOG = LogFactory.getLog(BLCSystemPropertyResourceResolver.class);
+    protected static final Log LOG = LogFactory.getLog(UCSystemPropertyResourceResolver.class);
 
-    protected static final String BLC_SYSTEM_PROPERTY_FILE = "BLC-system-property.js";
+    protected static final String UC_SYSTEM_PROPERTY_FILE = "UC-system-property.js";
     protected static final Charset DEFAULT_CHARSET = Charset.forName("UTF-8");
 
-    private int order = BroadleafResourceResolverOrder.BLC_SYSTEM_PROPERTY_RESOURCE_RESOLVER;
+    private int order = UltraResourceResolverOrder.UC_SYSTEM_PROPERTY_RESOURCE_RESOLVER;
 
-    @javax.annotation.Resource(name = "blBaseUrlResolver")
+    @javax.annotation.Resource(name = "ucBaseUrlResolver")
     BaseUrlResolver urlResolver;
 
     @Override
@@ -74,11 +74,11 @@ public class BLCSystemPropertyResourceResolver extends AbstractResourceResolver 
 
         Resource resource = chain.resolveResource(request, requestPath, locations);
 
-        if (requestPath.equalsIgnoreCase(BLC_SYSTEM_PROPERTY_FILE)) {
+        if (requestPath.equalsIgnoreCase(UC_SYSTEM_PROPERTY_FILE)) {
             try {
                 resource = convertResource(resource, requestPath);
             } catch (IOException ioe) {
-                LOG.error("Exception modifying " + BLC_SYSTEM_PROPERTY_FILE, ioe);
+                LOG.error("Exception modifying " + UC_SYSTEM_PROPERTY_FILE, ioe);
             }
         }
 
@@ -91,7 +91,7 @@ public class BLCSystemPropertyResourceResolver extends AbstractResourceResolver 
         
         String newContent = content;
         if (! StringUtils.isEmpty(content)) {
-            String regexKey = "\\\"BLC_PROP:(.*)\\\"";
+            String regexKey = "\\\"UC_PROP:(.*)\\\"";
 
             Pattern p = Pattern.compile(regexKey);
             Matcher m = p.matcher(content);
@@ -99,7 +99,7 @@ public class BLCSystemPropertyResourceResolver extends AbstractResourceResolver 
                 String matchedPlaceholder = m.group(0);
                 String propertyName = m.group(1);
 
-                String propVal = BLCSystemProperty.resolveSystemProperty(propertyName);
+                String propVal = UCSystemProperty.resolveSystemProperty(propertyName);
                 if (propVal == null) {
                     propVal = "";
                 }

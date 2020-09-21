@@ -1,21 +1,21 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2020 Broadleaf Commerce
+ * Copyright (C) 2009 - 2020 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.extensibility.jpa.cache;
+package com.ultracommerce.common.extensibility.jpa.cache;
 
 
 import javassist.ClassPool;
@@ -30,8 +30,8 @@ import javassist.bytecode.annotation.StringMemberValue;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.extensibility.jpa.convert.BroadleafClassTransformer;
-import org.broadleafcommerce.common.extensibility.jpa.copy.AbstractClassTransformer;
+import com.ultracommerce.common.extensibility.jpa.convert.UltraClassTransformer;
+import com.ultracommerce.common.extensibility.jpa.copy.AbstractClassTransformer;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
@@ -53,12 +53,12 @@ import java.util.Properties;
  * 
  * <pre>
  * {@code
- * @Merge("blMergedClassTransformers")
+ * @Merge("ucMergedClassTransformers")
  * public RemoveCacheClassTransformer RemoveProductCache() {
  *     RemoveCacheClassTransformer transformer = new RemoveCacheClassTransformer("Remove Product Cache");
  *     List<String> cacheRegions = new ArrayList<String>();
- *     cacheRegions.add("blCustomerElements");
- *     cacheRegions.add("blOrderElements");
+ *     cacheRegions.add("ucCustomerElements");
+ *     cacheRegions.add("ucOrderElements");
  *     transformer.setCacheRegions(cacheRegions);
  *     return transformer;
  * }
@@ -70,7 +70,7 @@ import java.util.Properties;
  * @author Jeff Fischer
  * @author Daniel Colgrove
  */
-public class RemoveCacheClassTransformer extends AbstractClassTransformer implements BroadleafClassTransformer, BeanFactoryAware {
+public class RemoveCacheClassTransformer extends AbstractClassTransformer implements UltraClassTransformer, BeanFactoryAware {
 
     private static final Log logger = LogFactory.getLog(RemoveCacheClassTransformer.class);
 

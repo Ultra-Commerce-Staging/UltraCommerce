@@ -1,34 +1,34 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.catalog.domain;
+package com.ultracommerce.core.catalog.domain;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.broadleafcommerce.common.currency.domain.BroadleafCurrency;
-import org.broadleafcommerce.common.currency.domain.BroadleafCurrencyImpl;
-import org.broadleafcommerce.common.currency.util.BroadleafCurrencyUtils;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransform;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformMember;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformTypes;
-import org.broadleafcommerce.common.money.Money;
-import org.broadleafcommerce.common.presentation.AdminPresentation;
-import org.broadleafcommerce.common.presentation.client.SupportedFieldType;
-import org.broadleafcommerce.core.catalog.service.type.SkuFeeType;
+import com.ultracommerce.common.currency.domain.UltraCurrency;
+import com.ultracommerce.common.currency.domain.UltraCurrencyImpl;
+import com.ultracommerce.common.currency.util.UltraCurrencyUtils;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransform;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransformMember;
+import com.ultracommerce.common.extensibility.jpa.copy.DirectCopyTransformTypes;
+import com.ultracommerce.common.money.Money;
+import com.ultracommerce.common.presentation.AdminPresentation;
+import com.ultracommerce.common.presentation.client.SupportedFieldType;
+import com.ultracommerce.core.catalog.service.type.SkuFeeType;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
@@ -58,8 +58,8 @@ import javax.persistence.Table;
  */
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name="BLC_SKU_FEE")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region="blProducts")
+@Table(name="UC_SKU_FEE")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region="ucProducts")
 @DirectCopyTransform({
         @DirectCopyTransformMember(templateTokens = DirectCopyTransformTypes.SANDBOX, skipOverlaps=true)
 })
@@ -71,10 +71,10 @@ public class SkuFeeImpl implements SkuFee {
     @GeneratedValue(generator = "SkuFeeId")
     @GenericGenerator(
         name = "SkuFeeId",
-        strategy="org.broadleafcommerce.common.persistence.IdOverrideTableGenerator",
+        strategy="com.ultracommerce.common.persistence.IdOverrideTableGenerator",
         parameters = {
             @Parameter(name="segment_value", value="SkuFeeImpl"),
-            @Parameter(name = "entity_name", value = "org.broadleafcommerce.core.order.domain.SkuFeeImpl")
+            @Parameter(name = "entity_name", value = "com.ultracommerce.core.order.domain.SkuFeeImpl")
         }
     )
     @Column(name = "SKU_FEE_ID")
@@ -98,20 +98,20 @@ public class SkuFeeImpl implements SkuFee {
     protected String expression;
 
     @Column(name = "FEE_TYPE")
-    @AdminPresentation(fieldType=SupportedFieldType.BROADLEAF_ENUMERATION, broadleafEnumeration="org.broadleafcommerce.core.catalog.service.type.SkuFeeType")
+    @AdminPresentation(fieldType=SupportedFieldType.ULTRA_ENUMERATION, ultraEnumeration="com.ultracommerce.core.catalog.service.type.SkuFeeType")
     protected String feeType = SkuFeeType.FULFILLMENT.getType();
     
     @ManyToMany(fetch = FetchType.LAZY, targetEntity = SkuImpl.class)
-    @JoinTable(name = "BLC_SKU_FEE_XREF",
+    @JoinTable(name = "UC_SKU_FEE_XREF",
             joinColumns = @JoinColumn(name = "SKU_FEE_ID", referencedColumnName = "SKU_FEE_ID", nullable = true),
             inverseJoinColumns = @JoinColumn(name = "SKU_ID", referencedColumnName = "SKU_ID", nullable = true))
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region="blStandardElements")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region="ucStandardElements")
     protected List<Sku> skus;
     
-    @ManyToOne(targetEntity = BroadleafCurrencyImpl.class)
+    @ManyToOne(targetEntity = UltraCurrencyImpl.class)
     @JoinColumn(name = "CURRENCY_CODE")
     @AdminPresentation(friendlyName = "TaxDetailImpl_Currency_Code", order=1, group = "FixedPriceFulfillmentOptionImpl_Details", prominent=true)
-    protected BroadleafCurrency currency;
+    protected UltraCurrency currency;
 
 
 
@@ -148,7 +148,7 @@ public class SkuFeeImpl implements SkuFee {
 
     @Override
     public Money getAmount() {
-        return BroadleafCurrencyUtils.getMoney(amount, getCurrency());
+        return UltraCurrencyUtils.getMoney(amount, getCurrency());
     }
 
     @Override
@@ -196,11 +196,11 @@ public class SkuFeeImpl implements SkuFee {
         this.skus = skus;
     }
     @Override
-    public BroadleafCurrency getCurrency() {
+    public UltraCurrency getCurrency() {
         return currency;
     }
     @Override
-    public void setCurrency(BroadleafCurrency currency) {
+    public void setCurrency(UltraCurrency currency) {
         this.currency = currency;
     }
 

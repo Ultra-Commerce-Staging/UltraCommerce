@@ -1,28 +1,28 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.util;
+package com.ultracommerce.common.util;
 
 import org.apache.commons.collections4.map.LRUMap;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.persistence.EntityConfiguration;
-import org.broadleafcommerce.common.util.dao.DynamicDaoHelper;
+import com.ultracommerce.common.persistence.EntityConfiguration;
+import com.ultracommerce.common.util.dao.DynamicDaoHelper;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -36,9 +36,9 @@ import java.util.Map;
  *
  * @author Jeff Fischer
  */
-public class BLCFieldUtils {
+public class UCFieldUtils {
 
-    private static final Log LOG = LogFactory.getLog(BLCFieldUtils.class);
+    private static final Log LOG = LogFactory.getLog(UCFieldUtils.class);
     public static final Map<String,Object> FIELD_CACHE = new LRUMap<>(100000);
     public static final Object NULL_FIELD = new Object();
 
@@ -51,12 +51,12 @@ public class BLCFieldUtils {
      * Initialize the utility with required resources
      *
      * @param sessionFactory provides metadata about a domain class
-     * @param includeUnqualifiedPolymorphicEntities include polymorphic variations that were excluded with {@link org.broadleafcommerce.common.presentation.AdminPresentationClass#excludeFromPolymorphism()}
-     * @param useCache use the polymorphic type list cache in {@link org.broadleafcommerce.common.util.dao.DynamicDaoHelperImpl}
+     * @param includeUnqualifiedPolymorphicEntities include polymorphic variations that were excluded with {@link com.ultracommerce.common.presentation.AdminPresentationClass#excludeFromPolymorphism()}
+     * @param useCache use the polymorphic type list cache in {@link com.ultracommerce.common.util.dao.DynamicDaoHelperImpl}
      * @param entityConfiguration contains any explicitly defined entity types for the system
      * @param helper helper class for retrieving polymorphic types for a ceiling domain class
      */
-    public BLCFieldUtils(boolean includeUnqualifiedPolymorphicEntities,
+    public UCFieldUtils(boolean includeUnqualifiedPolymorphicEntities,
                          boolean useCache, EntityConfiguration entityConfiguration, DynamicDaoHelper helper) {
         this.includeUnqualifiedPolymorphicEntities = includeUnqualifiedPolymorphicEntities;
         this.useCache = useCache;

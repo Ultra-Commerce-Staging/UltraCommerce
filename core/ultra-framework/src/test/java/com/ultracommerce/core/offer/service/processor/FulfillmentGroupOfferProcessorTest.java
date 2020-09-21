@@ -1,66 +1,66 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.offer.service.processor;
+package com.ultracommerce.core.offer.service.processor;
 
 import junit.framework.TestCase;
 
-import org.broadleafcommerce.core.offer.dao.CustomerOfferDao;
-import org.broadleafcommerce.core.offer.dao.OfferCodeDao;
-import org.broadleafcommerce.core.offer.dao.OfferDao;
-import org.broadleafcommerce.core.offer.domain.CandidateFulfillmentGroupOffer;
-import org.broadleafcommerce.core.offer.domain.CandidateFulfillmentGroupOfferImpl;
-import org.broadleafcommerce.core.offer.domain.CandidateItemOffer;
-import org.broadleafcommerce.core.offer.domain.CandidateItemOfferImpl;
-import org.broadleafcommerce.core.offer.domain.FulfillmentGroupAdjustment;
-import org.broadleafcommerce.core.offer.domain.FulfillmentGroupAdjustmentImpl;
-import org.broadleafcommerce.core.offer.domain.Offer;
-import org.broadleafcommerce.core.offer.domain.OfferImpl;
-import org.broadleafcommerce.core.offer.domain.OfferQualifyingCriteriaXref;
-import org.broadleafcommerce.core.offer.domain.OrderItemAdjustment;
-import org.broadleafcommerce.core.offer.domain.OrderItemAdjustmentImpl;
-import org.broadleafcommerce.core.offer.service.OfferDataItemProvider;
-import org.broadleafcommerce.core.offer.service.OfferServiceImpl;
-import org.broadleafcommerce.core.offer.service.OfferServiceUtilities;
-import org.broadleafcommerce.core.offer.service.OfferServiceUtilitiesImpl;
-import org.broadleafcommerce.core.offer.service.discount.CandidatePromotionItems;
-import org.broadleafcommerce.core.offer.service.discount.domain.PromotableCandidateFulfillmentGroupOffer;
-import org.broadleafcommerce.core.offer.service.discount.domain.PromotableFulfillmentGroup;
-import org.broadleafcommerce.core.offer.service.discount.domain.PromotableItemFactoryImpl;
-import org.broadleafcommerce.core.offer.service.discount.domain.PromotableOfferUtility;
-import org.broadleafcommerce.core.offer.service.discount.domain.PromotableOfferUtilityImpl;
-import org.broadleafcommerce.core.offer.service.discount.domain.PromotableOrder;
-import org.broadleafcommerce.core.offer.service.discount.domain.PromotableOrderItem;
-import org.broadleafcommerce.core.offer.service.type.OfferDiscountType;
-import org.broadleafcommerce.core.order.dao.FulfillmentGroupItemDao;
-import org.broadleafcommerce.core.order.dao.OrderItemDao;
-import org.broadleafcommerce.core.order.domain.FulfillmentGroup;
-import org.broadleafcommerce.core.order.domain.FulfillmentGroupItem;
-import org.broadleafcommerce.core.order.domain.Order;
-import org.broadleafcommerce.core.order.domain.OrderItem;
-import org.broadleafcommerce.core.order.domain.OrderItemPriceDetail;
-import org.broadleafcommerce.core.order.domain.OrderMultishipOption;
-import org.broadleafcommerce.core.order.domain.OrderMultishipOptionImpl;
-import org.broadleafcommerce.core.order.service.FulfillmentGroupService;
-import org.broadleafcommerce.core.order.service.OrderItemService;
-import org.broadleafcommerce.core.order.service.OrderMultishipOptionService;
-import org.broadleafcommerce.core.order.service.OrderService;
-import org.broadleafcommerce.core.order.service.call.FulfillmentGroupItemRequest;
-import org.broadleafcommerce.profile.core.domain.Address;
+import com.ultracommerce.core.offer.dao.CustomerOfferDao;
+import com.ultracommerce.core.offer.dao.OfferCodeDao;
+import com.ultracommerce.core.offer.dao.OfferDao;
+import com.ultracommerce.core.offer.domain.CandidateFulfillmentGroupOffer;
+import com.ultracommerce.core.offer.domain.CandidateFulfillmentGroupOfferImpl;
+import com.ultracommerce.core.offer.domain.CandidateItemOffer;
+import com.ultracommerce.core.offer.domain.CandidateItemOfferImpl;
+import com.ultracommerce.core.offer.domain.FulfillmentGroupAdjustment;
+import com.ultracommerce.core.offer.domain.FulfillmentGroupAdjustmentImpl;
+import com.ultracommerce.core.offer.domain.Offer;
+import com.ultracommerce.core.offer.domain.OfferImpl;
+import com.ultracommerce.core.offer.domain.OfferQualifyingCriteriaXref;
+import com.ultracommerce.core.offer.domain.OrderItemAdjustment;
+import com.ultracommerce.core.offer.domain.OrderItemAdjustmentImpl;
+import com.ultracommerce.core.offer.service.OfferDataItemProvider;
+import com.ultracommerce.core.offer.service.OfferServiceImpl;
+import com.ultracommerce.core.offer.service.OfferServiceUtilities;
+import com.ultracommerce.core.offer.service.OfferServiceUtilitiesImpl;
+import com.ultracommerce.core.offer.service.discount.CandidatePromotionItems;
+import com.ultracommerce.core.offer.service.discount.domain.PromotableCandidateFulfillmentGroupOffer;
+import com.ultracommerce.core.offer.service.discount.domain.PromotableFulfillmentGroup;
+import com.ultracommerce.core.offer.service.discount.domain.PromotableItemFactoryImpl;
+import com.ultracommerce.core.offer.service.discount.domain.PromotableOfferUtility;
+import com.ultracommerce.core.offer.service.discount.domain.PromotableOfferUtilityImpl;
+import com.ultracommerce.core.offer.service.discount.domain.PromotableOrder;
+import com.ultracommerce.core.offer.service.discount.domain.PromotableOrderItem;
+import com.ultracommerce.core.offer.service.type.OfferDiscountType;
+import com.ultracommerce.core.order.dao.FulfillmentGroupItemDao;
+import com.ultracommerce.core.order.dao.OrderItemDao;
+import com.ultracommerce.core.order.domain.FulfillmentGroup;
+import com.ultracommerce.core.order.domain.FulfillmentGroupItem;
+import com.ultracommerce.core.order.domain.Order;
+import com.ultracommerce.core.order.domain.OrderItem;
+import com.ultracommerce.core.order.domain.OrderItemPriceDetail;
+import com.ultracommerce.core.order.domain.OrderMultishipOption;
+import com.ultracommerce.core.order.domain.OrderMultishipOptionImpl;
+import com.ultracommerce.core.order.service.FulfillmentGroupService;
+import com.ultracommerce.core.order.service.OrderItemService;
+import com.ultracommerce.core.order.service.OrderMultishipOptionService;
+import com.ultracommerce.core.order.service.OrderService;
+import com.ultracommerce.core.order.service.call.FulfillmentGroupItemRequest;
+import com.ultracommerce.profile.core.domain.Address;
 import org.easymock.EasyMock;
 import org.easymock.IAnswer;
 import java.math.BigDecimal;
@@ -93,7 +93,7 @@ public class FulfillmentGroupOfferProcessorTest extends TestCase {
 
     /**
      * Created to work around a dependency in FulfillmentGroupOfferProcessorImpl to a live application context and
-     * system properties service since it uses BLCSystemProperty
+     * system properties service since it uses UCSystemProperty
      * 
      * @author Phillip Verheyden (phillipuniverse)
      */

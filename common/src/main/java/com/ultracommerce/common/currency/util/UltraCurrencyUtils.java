@@ -1,24 +1,24 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.currency.util;
+package com.ultracommerce.common.currency.util;
 
-import org.broadleafcommerce.common.currency.domain.BroadleafCurrency;
-import org.broadleafcommerce.common.money.Money;
+import com.ultracommerce.common.currency.domain.UltraCurrency;
+import com.ultracommerce.common.money.Money;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -34,15 +34,15 @@ import java.util.concurrent.ConcurrentHashMap;
  * Utility methods for common currency operations
  *
  * @author Phillip Verheyden
- * @see {@link BroadleafCurrency}
+ * @see {@link UltraCurrency}
  */
-public class BroadleafCurrencyUtils {
+public class UltraCurrencyUtils {
 
     protected static final Map<String, NumberFormat> FORMAT_CACHE = new ConcurrentHashMap<String, NumberFormat>();
 
     public static final MathContext ROUND_FLOOR_MATH_CONTEXT = new MathContext(0, RoundingMode.FLOOR);
 
-    public static Money getMoney(BigDecimal amount, BroadleafCurrency currency) {
+    public static Money getMoney(BigDecimal amount, UltraCurrency currency) {
         if (amount == null) {
             return null;
         }
@@ -58,7 +58,7 @@ public class BroadleafCurrencyUtils {
         return getMoney(amount, null);
     }
 
-    public static Money getMoney(BroadleafCurrency currency) {
+    public static Money getMoney(UltraCurrency currency) {
         if (currency != null) {
             return new Money(0, currency.getCurrencyCode());
         } else {
@@ -73,7 +73,7 @@ public class BroadleafCurrencyUtils {
         return (money.getCurrency() == null) ? Money.defaultCurrency() : money.getCurrency();
     }
 
-    public static Currency getCurrency(BroadleafCurrency currency) {
+    public static Currency getCurrency(UltraCurrency currency) {
         return (currency == null) ? Money.defaultCurrency() : Currency.getInstance(currency.getCurrencyCode());
     }
 
@@ -84,7 +84,7 @@ public class BroadleafCurrencyUtils {
      * @return
      */
     public static Money getUnitAmount(Money difference) {
-        Currency currency = BroadleafCurrencyUtils.getCurrency(difference);
+        Currency currency = UltraCurrencyUtils.getCurrency(difference);
         BigDecimal divisor = new BigDecimal(Math.pow(10, currency.getDefaultFractionDigits()));
         BigDecimal unitAmount = new BigDecimal("1").divide(divisor);
 
@@ -97,11 +97,11 @@ public class BroadleafCurrencyUtils {
     /**
      * Returns the unit amount (e.g. .01 for US and all other 2 decimal currencies)
      *
-     * @param blCurrency
+     * @param ucCurrency
      * @return
      */
-    public static Money getUnitAmount(BroadleafCurrency blCurrency) {
-        Currency currency = getCurrency(blCurrency);
+    public static Money getUnitAmount(UltraCurrency ucCurrency) {
+        Currency currency = getCurrency(ucCurrency);
         BigDecimal divisor = new BigDecimal(Math.pow(10, currency.getDefaultFractionDigits()));
         BigDecimal unitAmount = new BigDecimal("1").divide(divisor);
         return new Money(unitAmount, currency);

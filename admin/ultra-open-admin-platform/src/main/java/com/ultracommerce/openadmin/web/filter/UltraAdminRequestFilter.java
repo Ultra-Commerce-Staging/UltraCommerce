@@ -1,38 +1,38 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.openadmin.web.filter;
+package com.ultracommerce.openadmin.web.filter;
 
 import org.apache.commons.collections4.iterators.IteratorEnumeration;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.exception.ExceptionHelper;
-import org.broadleafcommerce.common.exception.SiteNotFoundException;
-import org.broadleafcommerce.common.persistence.TargetModeType;
-import org.broadleafcommerce.common.security.service.StaleStateProtectionService;
-import org.broadleafcommerce.common.security.service.StaleStateProtectionServiceImpl;
-import org.broadleafcommerce.common.security.service.StaleStateServiceException;
-import org.broadleafcommerce.common.web.BroadleafSiteResolver;
-import org.broadleafcommerce.common.web.BroadleafWebRequestProcessor;
-import org.broadleafcommerce.common.web.filter.FilterOrdered;
-import org.broadleafcommerce.openadmin.security.ClassNameRequestParamValidationService;
-import org.broadleafcommerce.openadmin.server.service.persistence.Persistable;
-import org.broadleafcommerce.openadmin.server.service.persistence.PersistenceThreadManager;
+import com.ultracommerce.common.exception.ExceptionHelper;
+import com.ultracommerce.common.exception.SiteNotFoundException;
+import com.ultracommerce.common.persistence.TargetModeType;
+import com.ultracommerce.common.security.service.StaleStateProtectionService;
+import com.ultracommerce.common.security.service.StaleStateProtectionServiceImpl;
+import com.ultracommerce.common.security.service.StaleStateServiceException;
+import com.ultracommerce.common.web.UltraSiteResolver;
+import com.ultracommerce.common.web.UltraWebRequestProcessor;
+import com.ultracommerce.common.web.filter.FilterOrdered;
+import com.ultracommerce.openadmin.security.ClassNameRequestParamValidationService;
+import com.ultracommerce.openadmin.server.service.persistence.Persistable;
+import com.ultracommerce.openadmin.server.service.persistence.PersistenceThreadManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -51,29 +51,29 @@ import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Responsible for setting the necessary attributes on the BroadleafRequestContext
+ * Responsible for setting the necessary attributes on the UltraRequestContext
  * 
  * @author Andre Azzolini (apazzolini)
  */
-@Component("blAdminRequestFilter")
-public class BroadleafAdminRequestFilter extends AbstractBroadleafAdminRequestFilter {
+@Component("ucAdminRequestFilter")
+public class UltraAdminRequestFilter extends AbstractUltraAdminRequestFilter {
 
-    private final Log LOG = LogFactory.getLog(BroadleafAdminRequestFilter.class);
-
-    @Autowired
-    @Qualifier("blAdminRequestProcessor")
-    protected BroadleafWebRequestProcessor requestProcessor;
+    private final Log LOG = LogFactory.getLog(UltraAdminRequestFilter.class);
 
     @Autowired
-    @Qualifier("blPersistenceThreadManager")
+    @Qualifier("ucAdminRequestProcessor")
+    protected UltraWebRequestProcessor requestProcessor;
+
+    @Autowired
+    @Qualifier("ucPersistenceThreadManager")
     protected PersistenceThreadManager persistenceThreadManager;
 
     @Autowired
-    @Qualifier("blClassNameRequestParamValidationService")
+    @Qualifier("ucClassNameRequestParamValidationService")
     protected ClassNameRequestParamValidationService validationService;
 
     @Autowired
-    @Qualifier("blStaleStateProtectionService")
+    @Qualifier("ucStaleStateProtectionService")
     protected StaleStateProtectionService staleStateProtectionService;
 
     @Override
@@ -100,9 +100,9 @@ public class BroadleafAdminRequestFilter extends AbstractBroadleafAdminRequestFi
                         requestProcessor.process(new ServletWebRequest(request, response));
                         if (!staleStateProtectionService.sendRedirectOnStateChange(
                                 response,
-                                BroadleafAdminRequestProcessor.SANDBOX_REQ_PARAM,
-                                BroadleafAdminRequestProcessor.CATALOG_REQ_PARAM,
-                                BroadleafAdminRequestProcessor.PROFILE_REQ_PARAM
+                                UltraAdminRequestProcessor.SANDBOX_REQ_PARAM,
+                                UltraAdminRequestProcessor.CATALOG_REQ_PARAM,
+                                UltraAdminRequestProcessor.PROFILE_REQ_PARAM
                         )) {
                             filterChain.doFilter(request, response);
                         }
@@ -135,7 +135,7 @@ public class BroadleafAdminRequestFilter extends AbstractBroadleafAdminRequestFi
         params.put("ceilingEntity", ceilingEntity);
         params.put("ceilingEntityFullyQualifiedClassname", ceilingEntityFullyQualifiedClassname);
         params.put("__originalType", originalType);
-        return validationService.validateClassNameParams(params, "blPU");
+        return validationService.validateClassNameParams(params, "ucPU");
     }
 
     /**
@@ -149,11 +149,11 @@ public class BroadleafAdminRequestFilter extends AbstractBroadleafAdminRequestFi
     public void forwardToConflictDestination(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
         response.setStatus(HttpServletResponse.SC_CONFLICT);
         final Map reducedMap = new LinkedHashMap(request.getParameterMap());
-        reducedMap.remove(BroadleafAdminRequestProcessor.CATALOG_REQ_PARAM);
-        reducedMap.remove(BroadleafAdminRequestProcessor.PROFILE_REQ_PARAM);
-        reducedMap.remove(BroadleafAdminRequestProcessor.SANDBOX_REQ_PARAM);
+        reducedMap.remove(UltraAdminRequestProcessor.CATALOG_REQ_PARAM);
+        reducedMap.remove(UltraAdminRequestProcessor.PROFILE_REQ_PARAM);
+        reducedMap.remove(UltraAdminRequestProcessor.SANDBOX_REQ_PARAM);
         reducedMap.remove(StaleStateProtectionServiceImpl.STATEVERSIONTOKENPARAMETER);
-        reducedMap.remove(BroadleafSiteResolver.SELECTED_SITE_URL_PARAM);
+        reducedMap.remove(UltraSiteResolver.SELECTED_SITE_URL_PARAM);
 
         final HttpServletRequestWrapper wrapper = new HttpServletRequestWrapper(request) {
             @Override

@@ -1,43 +1,43 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.offer.service.processor;
+package com.ultracommerce.core.offer.service.processor;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.NullComparator;
 import org.apache.commons.collections.comparators.ReverseComparator;
-import org.broadleafcommerce.common.currency.domain.BroadleafCurrency;
-import org.broadleafcommerce.common.currency.util.BroadleafCurrencyUtils;
-import org.broadleafcommerce.common.money.BankersRounding;
-import org.broadleafcommerce.common.money.Money;
-import org.broadleafcommerce.common.util.BLCSystemProperty;
-import org.broadleafcommerce.core.offer.domain.Offer;
-import org.broadleafcommerce.core.offer.domain.OfferOfferRuleXref;
-import org.broadleafcommerce.core.offer.domain.OfferRule;
-import org.broadleafcommerce.core.offer.service.discount.CandidatePromotionItems;
-import org.broadleafcommerce.core.offer.service.discount.FulfillmentGroupOfferPotential;
-import org.broadleafcommerce.core.offer.service.discount.domain.PromotableCandidateFulfillmentGroupOffer;
-import org.broadleafcommerce.core.offer.service.discount.domain.PromotableFulfillmentGroup;
-import org.broadleafcommerce.core.offer.service.discount.domain.PromotableFulfillmentGroupAdjustment;
-import org.broadleafcommerce.core.offer.service.discount.domain.PromotableOfferUtility;
-import org.broadleafcommerce.core.offer.service.discount.domain.PromotableOrder;
-import org.broadleafcommerce.core.offer.service.discount.domain.PromotableOrderItem;
-import org.broadleafcommerce.core.offer.service.type.OfferRuleType;
-import org.broadleafcommerce.core.order.domain.FulfillmentGroup;
+import com.ultracommerce.common.currency.domain.UltraCurrency;
+import com.ultracommerce.common.currency.util.UltraCurrencyUtils;
+import com.ultracommerce.common.money.BankersRounding;
+import com.ultracommerce.common.money.Money;
+import com.ultracommerce.common.util.UCSystemProperty;
+import com.ultracommerce.core.offer.domain.Offer;
+import com.ultracommerce.core.offer.domain.OfferOfferRuleXref;
+import com.ultracommerce.core.offer.domain.OfferRule;
+import com.ultracommerce.core.offer.service.discount.CandidatePromotionItems;
+import com.ultracommerce.core.offer.service.discount.FulfillmentGroupOfferPotential;
+import com.ultracommerce.core.offer.service.discount.domain.PromotableCandidateFulfillmentGroupOffer;
+import com.ultracommerce.core.offer.service.discount.domain.PromotableFulfillmentGroup;
+import com.ultracommerce.core.offer.service.discount.domain.PromotableFulfillmentGroupAdjustment;
+import com.ultracommerce.core.offer.service.discount.domain.PromotableOfferUtility;
+import com.ultracommerce.core.offer.service.discount.domain.PromotableOrder;
+import com.ultracommerce.core.offer.service.discount.domain.PromotableOrderItem;
+import com.ultracommerce.core.offer.service.type.OfferRuleType;
+import com.ultracommerce.core.order.domain.FulfillmentGroup;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -53,7 +53,7 @@ import java.util.Map;
  * @author jfischer
  * 
  */
-@Service("blFulfillmentGroupOfferProcessor")
+@Service("ucFulfillmentGroupOfferProcessor")
 public class FulfillmentGroupOfferProcessorImpl extends OrderOfferProcessorImpl implements FulfillmentGroupOfferProcessor {
 
     public FulfillmentGroupOfferProcessorImpl(PromotableOfferUtility promotableOfferUtility) {
@@ -111,12 +111,12 @@ public class FulfillmentGroupOfferProcessorImpl extends OrderOfferProcessorImpl 
      * @return
      */
     protected boolean getQualifyGroupAcrossAllOrderItems(PromotableFulfillmentGroup fg) {
-        return BLCSystemProperty.resolveBooleanSystemProperty("promotion.fulfillmentgroup.qualifyAcrossAllOrderItems", false);
+        return UCSystemProperty.resolveBooleanSystemProperty("promotion.fulfillmentgroup.qualifyAcrossAllOrderItems", false);
     }
 
     @Override
     public void calculateFulfillmentGroupTotal(PromotableOrder order) {
-        Money totalFulfillmentCharges = BroadleafCurrencyUtils.getMoney(BigDecimal.ZERO, order.getOrderCurrency());
+        Money totalFulfillmentCharges = UltraCurrencyUtils.getMoney(BigDecimal.ZERO, order.getOrderCurrency());
         for (PromotableFulfillmentGroup fulfillmentGroupMember : order.getFulfillmentGroups()) {
             FulfillmentGroup fulfillmentGroup = fulfillmentGroupMember.getFulfillmentGroup();
             Money fulfillmentCharges;
@@ -191,7 +191,7 @@ public class FulfillmentGroupOfferProcessorImpl extends OrderOfferProcessorImpl 
             if (fgOffers.size() >= 1) {
                 for (PromotableCandidateFulfillmentGroupOffer candidate : fgOffers) {
                     if (potential.getTotalSavings().getAmount().equals(BankersRounding.zeroAmount())) {
-                        BroadleafCurrency currency = order.getOrderCurrency();
+                        UltraCurrency currency = order.getOrderCurrency();
                         if (currency != null) {
                             potential.setTotalSavings(new Money(BigDecimal.ZERO, currency.getCurrencyCode()));
                         } else {
@@ -263,7 +263,7 @@ public class FulfillmentGroupOfferProcessorImpl extends OrderOfferProcessorImpl 
 
     protected boolean compareAndAdjustFulfillmentGroupOffers(PromotableOrder order, boolean fgOfferApplied) {
         Money regularOrderDiscountShippingTotal =
-                BroadleafCurrencyUtils.getMoney(BigDecimal.ZERO, order.getOrderCurrency());
+                UltraCurrencyUtils.getMoney(BigDecimal.ZERO, order.getOrderCurrency());
         regularOrderDiscountShippingTotal =
                 regularOrderDiscountShippingTotal.add(order.calculateSubtotalWithoutAdjustments());
         for (PromotableFulfillmentGroup fg : order.getFulfillmentGroups()) {
@@ -271,7 +271,7 @@ public class FulfillmentGroupOfferProcessorImpl extends OrderOfferProcessorImpl 
                     regularOrderDiscountShippingTotal.add(fg.getFinalizedPriceWithAdjustments());
         }
 
-        Money discountOrderRegularShippingTotal = BroadleafCurrencyUtils.getMoney(BigDecimal.ZERO, order.getOrderCurrency());
+        Money discountOrderRegularShippingTotal = UltraCurrencyUtils.getMoney(BigDecimal.ZERO, order.getOrderCurrency());
         discountOrderRegularShippingTotal = discountOrderRegularShippingTotal.add(order.calculateSubtotalWithAdjustments());
         for (PromotableFulfillmentGroup fg : order.getFulfillmentGroups()) {
             discountOrderRegularShippingTotal = discountOrderRegularShippingTotal.add(fg.calculatePriceWithoutAdjustments());

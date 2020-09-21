@@ -1,37 +1,37 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.payment.domain;
+package com.ultracommerce.core.payment.domain;
 
-import org.broadleafcommerce.common.copy.CreateResponse;
-import org.broadleafcommerce.common.copy.MultiTenantCopyContext;
-import org.broadleafcommerce.common.currency.util.BroadleafCurrencyUtils;
-import org.broadleafcommerce.common.money.Money;
-import org.broadleafcommerce.common.payment.PaymentTransactionType;
-import org.broadleafcommerce.common.persistence.ArchiveStatus;
-import org.broadleafcommerce.common.presentation.AdminPresentation;
-import org.broadleafcommerce.common.presentation.AdminPresentationMap;
-import org.broadleafcommerce.common.presentation.AdminPresentationToOneLookup;
-import org.broadleafcommerce.common.presentation.client.SupportedFieldType;
-import org.broadleafcommerce.common.presentation.client.UnspecifiedBooleanType;
-import org.broadleafcommerce.common.presentation.override.AdminPresentationMergeEntry;
-import org.broadleafcommerce.common.presentation.override.AdminPresentationMergeOverride;
-import org.broadleafcommerce.common.presentation.override.AdminPresentationMergeOverrides;
-import org.broadleafcommerce.common.presentation.override.PropertyType;
+import com.ultracommerce.common.copy.CreateResponse;
+import com.ultracommerce.common.copy.MultiTenantCopyContext;
+import com.ultracommerce.common.currency.util.UltraCurrencyUtils;
+import com.ultracommerce.common.money.Money;
+import com.ultracommerce.common.payment.PaymentTransactionType;
+import com.ultracommerce.common.persistence.ArchiveStatus;
+import com.ultracommerce.common.presentation.AdminPresentation;
+import com.ultracommerce.common.presentation.AdminPresentationMap;
+import com.ultracommerce.common.presentation.AdminPresentationToOneLookup;
+import com.ultracommerce.common.presentation.client.SupportedFieldType;
+import com.ultracommerce.common.presentation.client.UnspecifiedBooleanType;
+import com.ultracommerce.common.presentation.override.AdminPresentationMergeEntry;
+import com.ultracommerce.common.presentation.override.AdminPresentationMergeOverride;
+import com.ultracommerce.common.presentation.override.AdminPresentationMergeOverrides;
+import com.ultracommerce.common.presentation.override.PropertyType;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.MapKeyType;
@@ -64,8 +64,8 @@ import javax.persistence.Table;
  */
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "BLC_ORDER_PAYMENT_TRANSACTION")
-@SQLDelete(sql="UPDATE BLC_ORDER_PAYMENT_TRANSACTION SET ARCHIVED = 'Y' WHERE PAYMENT_TRANSACTION_ID = ?")
+@Table(name = "UC_ORDER_PAYMENT_TRANSACTION")
+@SQLDelete(sql="UPDATE UC_ORDER_PAYMENT_TRANSACTION SET ARCHIVED = 'Y' WHERE PAYMENT_TRANSACTION_ID = ?")
 @AdminPresentationMergeOverrides(
     {
         @AdminPresentationMergeOverride(name = "", mergeEntries =
@@ -81,10 +81,10 @@ public class PaymentTransactionImpl implements PaymentTransaction {
     @GeneratedValue(generator = "PaymentTransactionId")
     @GenericGenerator(
         name="PaymentTransactionId",
-        strategy="org.broadleafcommerce.common.persistence.IdOverrideTableGenerator",
+        strategy="com.ultracommerce.common.persistence.IdOverrideTableGenerator",
         parameters = {
             @Parameter(name="segment_value", value="PaymentTransactionImpl"),
-            @Parameter(name="entity_name", value="org.broadleafcommerce.core.payment.domain.PaymentTransactionImpl")
+            @Parameter(name="entity_name", value="com.ultracommerce.core.payment.domain.PaymentTransactionImpl")
         }
     )
     @Column(name = "PAYMENT_TRANSACTION_ID")
@@ -92,8 +92,8 @@ public class PaymentTransactionImpl implements PaymentTransaction {
 
     @Column(name = "TRANSACTION_TYPE")
     @AdminPresentation(friendlyName = "PaymentTransactionImpl_Type",
-            fieldType = SupportedFieldType.BROADLEAF_ENUMERATION,
-            broadleafEnumeration = "org.broadleafcommerce.common.payment.PaymentTransactionType",
+            fieldType = SupportedFieldType.ULTRA_ENUMERATION,
+            ultraEnumeration = "com.ultracommerce.common.payment.PaymentTransactionType",
             prominent = true, gridOrder = 1000)
     protected String type;
 
@@ -144,7 +144,7 @@ public class PaymentTransactionImpl implements PaymentTransaction {
     @Lob
     @Type(type = "org.hibernate.type.MaterializedClobType")
     @Column(name="FIELD_VALUE", length = Integer.MAX_VALUE - 1)
-    @CollectionTable(name="BLC_TRANS_ADDITNL_FIELDS", joinColumns=@JoinColumn(name="PAYMENT_TRANSACTION_ID"))
+    @CollectionTable(name="UC_TRANS_ADDITNL_FIELDS", joinColumns=@JoinColumn(name="PAYMENT_TRANSACTION_ID"))
     @BatchSize(size = 50)
     @AdminPresentationMap(friendlyName = "PaymentTransactionImpl_Additional_Fields", isSimpleValue = UnspecifiedBooleanType.TRUE,
         forceFreeFormKeys = true, keyPropertyFriendlyName = "PaymentTransactionImpl_Additional_Fields_Name"
@@ -200,7 +200,7 @@ public class PaymentTransactionImpl implements PaymentTransaction {
 
     @Override
     public Money getAmount() {
-        return amount == null ? BroadleafCurrencyUtils.getMoney(BigDecimal.ZERO, getOrderPayment().getCurrency()) : BroadleafCurrencyUtils.getMoney(amount, getOrderPayment().getCurrency());
+        return amount == null ? UltraCurrencyUtils.getMoney(BigDecimal.ZERO, getOrderPayment().getCurrency()) : UltraCurrencyUtils.getMoney(amount, getOrderPayment().getCurrency());
     }
 
     @Override

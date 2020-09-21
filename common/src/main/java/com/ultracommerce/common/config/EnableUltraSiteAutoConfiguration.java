@@ -1,24 +1,24 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2017 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.config;
+package com.ultracommerce.common.config;
 
-import org.broadleafcommerce.common.config.EnableBroadleafSiteAutoConfiguration.BroadleafSiteAutoConfigurationOverrides;
-import org.broadleafcommerce.common.extensibility.FrameworkXmlBeanDefinitionReader;
+import com.ultracommerce.common.config.EnableUltraSiteAutoConfiguration.UltraSiteAutoConfigurationOverrides;
+import com.ultracommerce.common.extensibility.FrameworkXmlBeanDefinitionReader;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.ImportResource;
@@ -33,8 +33,8 @@ import javax.servlet.ServletContainerInitializer;
 
 /**
  * <p>
- * Bootstraps Broadleaf customer-facing configuration XML for both servlet and non-servlet beans in use with a traditional MVC application. If you are deploying Broadleaf in a
- * REST-API-only capacity or any other way then this annotation is probably not for you, and instead just {@link EnableBroadleafSiteRootAutoConfiguration}
+ * Bootstraps Ultra customer-facing configuration XML for both servlet and non-servlet beans in use with a traditional MVC application. If you are deploying Ultra in a
+ * REST-API-only capacity or any other way then this annotation is probably not for you, and instead just {@link EnableUltraSiteRootAutoConfiguration}
  * is sufficient. If you have a customized {@link ServletContainerInitializer}
  * with a servlet-specific {@link ApplicationContext}, this annotation should only be placed on an {@literal @}Configuration class within
  * <b>that</b> servlet-specific {@lnk ApplicationContext}. If this is not the case and no servlet-specific {@link ApplicationContext} exists in your
@@ -45,8 +45,8 @@ import javax.servlet.ServletContainerInitializer;
  * public class MyApplication extends SpringBootServletInitializer {
  * 
  *     {@literal @}Configuration
- *     {@literal @}EnableBroadleafSiteAutoConfiguration
- *     public static class BroadleafConfiguration { }
+ *     {@literal @}EnableUltraSiteAutoConfiguration
+ *     public static class UltraConfiguration { }
  *     
  *     public static void main(String[] args) {
  *         SpringApplication.run(ApiApplication.class, args);
@@ -72,21 +72,21 @@ import javax.servlet.ServletContainerInitializer;
  * @author Philip Baggett (pbaggett)
  * @author Phillip Verheyden (phillipuniverse)
  * @author Nick Crum (ncrum)
- * @see EnableBroadleafSiteRootAutoConfiguration
- * @see EnableBroadleafSiteServletAutoConfiguration
- * @see EnableBroadleafAutoConfiguration
+ * @see EnableUltraSiteRootAutoConfiguration
+ * @see EnableUltraSiteServletAutoConfiguration
+ * @see EnableUltraAutoConfiguration
  * @since 5.2
  */
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Import({
-    EnableBroadleafSiteRootAutoConfiguration.BroadleafSiteRootAutoConfiguration.class,
-    EnableBroadleafSiteServletAutoConfiguration.BroadleafSiteServletAutoConfiguration.class,
-    BroadleafSiteAutoConfigurationOverrides.class
+    EnableUltraSiteRootAutoConfiguration.UltraSiteRootAutoConfiguration.class,
+    EnableUltraSiteServletAutoConfiguration.UltraSiteServletAutoConfiguration.class,
+    UltraSiteAutoConfigurationOverrides.class
 })
-public @interface EnableBroadleafSiteAutoConfiguration {
+public @interface EnableUltraSiteAutoConfiguration {
     
     @ImportResource("classpath:/override-contexts/site-root-autoconfiguration-overrides.xml")
-    class BroadleafSiteAutoConfigurationOverrides { }
+    class UltraSiteAutoConfigurationOverrides { }
 }

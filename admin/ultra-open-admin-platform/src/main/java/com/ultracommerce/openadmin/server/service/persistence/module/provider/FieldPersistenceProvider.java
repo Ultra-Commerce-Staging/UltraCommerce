@@ -1,30 +1,30 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.openadmin.server.service.persistence.module.provider;
+package com.ultracommerce.openadmin.server.service.persistence.module.provider;
 
-import org.broadleafcommerce.openadmin.dto.FieldMetadata;
-import org.broadleafcommerce.openadmin.dto.Property;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.criteria.FilterMapping;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.provider.request.AddFilterPropertiesRequest;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.provider.request.AddSearchMappingRequest;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.provider.request.ExtractValueRequest;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.provider.request.PopulateValueRequest;
-import org.broadleafcommerce.openadmin.server.service.type.MetadataProviderResponse;
+import com.ultracommerce.openadmin.dto.FieldMetadata;
+import com.ultracommerce.openadmin.dto.Property;
+import com.ultracommerce.openadmin.server.service.persistence.module.criteria.FilterMapping;
+import com.ultracommerce.openadmin.server.service.persistence.module.provider.request.AddFilterPropertiesRequest;
+import com.ultracommerce.openadmin.server.service.persistence.module.provider.request.AddSearchMappingRequest;
+import com.ultracommerce.openadmin.server.service.persistence.module.provider.request.ExtractValueRequest;
+import com.ultracommerce.openadmin.server.service.persistence.module.provider.request.PopulateValueRequest;
+import com.ultracommerce.openadmin.server.service.type.MetadataProviderResponse;
 import org.springframework.core.Ordered;
 
 import java.io.Serializable;
@@ -36,16 +36,16 @@ import java.util.Map;
  * are being requested or set for the admin. This includes any special translations or transformations required to get
  * from the string representation in the admin back to the field on a Hibernate entity - and the reverse. Providers are
  * typically added in response to new admin presentation annotation support that requires special persistence behavior.
- * Note, {@link FieldPersistenceProvider} instances are part of {@link org.broadleafcommerce.openadmin.server.service.persistence.module.BasicPersistenceModule},
+ * Note, {@link FieldPersistenceProvider} instances are part of {@link com.ultracommerce.openadmin.server.service.persistence.module.BasicPersistenceModule},
  * and therefore relate to variations on persistence of basic fields. Implementers should generally
  * extend {@link FieldPersistenceProviderAdapter}.
  *
- * @see org.broadleafcommerce.openadmin.server.service.persistence.module.PersistenceModule
+ * @see com.ultracommerce.openadmin.server.service.persistence.module.PersistenceModule
  * @author Jeff Fischer
  */
 public interface FieldPersistenceProvider extends Ordered {
 
-    //standard ordering constants for BLC providers
+    //standard ordering constants for UC providers
     public static final int BASIC = Integer.MAX_VALUE;
     /**
      * The {@link MediaFieldPersistenceProvider} MUST come prior to the normal Map field provider since they can both

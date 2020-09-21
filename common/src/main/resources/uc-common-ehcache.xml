@@ -1,18 +1,18 @@
 <!--
   #%L
-  BroadleafCommerce Common Libraries
+  UltraCommerce Common Libraries
   %%
-  Copyright (C) 2009 - 2016 Broadleaf Commerce
+  Copyright (C) 2009 - 2016 Ultra Commerce
   %%
-  Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
-  (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
-  unless the restrictions on use therein are violated and require payment to Broadleaf in which case
-  the Broadleaf End User License Agreement (EULA), Version 1.1
-  (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+  Licensed under the Ultra Fair Use License Agreement, Version 1.0
+  (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+  unless the restrictions on use therein are violated and require payment to Ultra in which case
+  the Ultra End User License Agreement (EULA), Version 1.1
+  (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
   shall apply.
   
   Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
-  between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+  between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
   #L%
   -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -30,7 +30,7 @@
     <cache-template name="hydratedCacheTemplate">
         <listeners>
             <listener>
-                <class>org.broadleafcommerce.common.cache.engine.EhcacheHydratedCacheEventListener</class>
+                <class>com.ultracommerce.common.cache.engine.EhcacheHydratedCacheEventListener</class>
                 <event-firing-mode>SYNCHRONOUS</event-firing-mode>
                 <event-ordering-mode>ORDERED</event-ordering-mode>
                 <events-to-fire-on>CREATED</events-to-fire-on>
@@ -59,49 +59,49 @@
         <heap>1000</heap>
     </cache>
      
-    <cache alias="blStandardElements" uses-template="hydratedCacheTemplate">
+    <cache alias="ucStandardElements" uses-template="hydratedCacheTemplate">
         <expiry>
             <ttl>86400</ttl>
         </expiry>
         <heap>100000</heap>
     </cache>
     
-    <cache alias="blProducts" uses-template="hydratedCacheTemplate">
+    <cache alias="ucProducts" uses-template="hydratedCacheTemplate">
         <expiry>
             <ttl>86400</ttl>
         </expiry>
         <heap>100000</heap>
     </cache>
            
-    <cache alias="blProductUrlCache">
+    <cache alias="ucProductUrlCache">
         <expiry>
             <ttl>3600</ttl>
         </expiry>
         <heap>1000</heap>
     </cache>
     
-    <cache alias="blCategories" uses-template="hydratedCacheTemplate">
+    <cache alias="ucCategories" uses-template="hydratedCacheTemplate">
         <expiry>
             <ttl>86400</ttl>
         </expiry>
         <heap>100000</heap>
     </cache>
 
-    <cache alias="blCategoryUrlCache">
+    <cache alias="ucCategoryUrlCache">
         <expiry>
             <ttl>3600</ttl>
         </expiry>
         <heap>1000</heap>
     </cache>
 
-    <cache alias="blOffers" uses-template="hydratedCacheTemplate">
+    <cache alias="ucOffers" uses-template="hydratedCacheTemplate">
         <expiry>
             <ttl>86400</ttl>
         </expiry>
         <heap>100000</heap>
     </cache>
 
-    <cache alias="blInventoryElements">
+    <cache alias="ucInventoryElements">
         <expiry>
             <ttl>60</ttl>
         </expiry>
@@ -136,14 +136,14 @@
         <heap>1000</heap>
     </cache>
 
-    <cache alias="blOrderElements">
+    <cache alias="ucOrderElements">
         <expiry>
             <ttl>600</ttl>
         </expiry>
         <heap>100000</heap>
     </cache>
 
-     <cache alias="blCustomerElements">
+     <cache alias="ucCustomerElements">
          <expiry>
             <ttl>600</ttl>
         </expiry>
@@ -171,14 +171,14 @@
          <heap>100</heap>
      </cache>
 
-     <cache alias="blTemplateElements">
+     <cache alias="ucTemplateElements">
          <expiry>
             <ttl>3600</ttl>
          </expiry>
          <heap>1000</heap>
      </cache>
 
-    <cache alias="blTranslationElements">
+    <cache alias="ucTranslationElements">
         <expiry>
             <ttl>3600</ttl>
         </expiry>
@@ -186,14 +186,14 @@
     </cache>
 
     <!-- The translation cache is evicted manually by the indexing process, never expire it -->
-    <cache alias="blBatchTranslationCache">
+    <cache alias="ucBatchTranslationCache">
         <expiry>
             <none/>
         </expiry>
         <heap>10000</heap>
     </cache>
 
-    <cache alias="blConfigurationModuleElements">
+    <cache alias="ucConfigurationModuleElements">
         <expiry>
             <ttl>600</ttl>
         </expiry>
@@ -207,77 +207,77 @@
         <heap>1000</heap>
     </cache>
 
-    <cache alias="blSystemPropertyElements">
+    <cache alias="ucSystemPropertyElements">
         <expiry>
             <ttl>600</ttl>
         </expiry>
         <heap>1000</heap>
     </cache>
 
-    <cache alias="blSystemPropertyNullCheckCache">
+    <cache alias="ucSystemPropertyNullCheckCache">
         <expiry>
             <ttl>600</ttl>
         </expiry>
         <heap>1000</heap>
     </cache>
 
-    <cache alias="blBundleElements">
+    <cache alias="ucBundleElements">
         <expiry>
             <ttl>86400</ttl>
         </expiry>
         <heap>1000</heap>
     </cache>
 
-    <cache alias="blResourceCacheElements">
+    <cache alias="ucResourceCacheElements">
         <expiry>
             <ttl>86400</ttl>
         </expiry>
         <heap>1000</heap>
     </cache>
 
-    <cache alias="blResourceTransformerCacheElements">
+    <cache alias="ucResourceTransformerCacheElements">
         <expiry>
             <ttl>86400</ttl>
         </expiry>
         <heap>1000</heap>
     </cache>
 
-    <cache alias="blSandBoxElements">
+    <cache alias="ucSandBoxElements">
         <expiry>
             <ttl>3</ttl>
         </expiry>
         <heap>2000</heap>
     </cache>
 
-    <cache alias="query.blSandBoxElements">
+    <cache alias="query.ucSandBoxElements">
         <expiry>
             <ttl>3</ttl>
         </expiry>
         <heap>500</heap>
     </cache>
 
-    <cache alias="blSecurityElements">
+    <cache alias="ucSecurityElements">
         <expiry>
             <ttl>86400</ttl>
         </expiry>
         <heap>1000</heap>
     </cache>
 
-    <cache alias="blSiteElements">
+    <cache alias="ucSiteElements">
         <expiry>
             <ttl>3600</ttl>
         </expiry>
         <heap>5000</heap>
     </cache>
 
-    <cache alias="blSiteElementsQuery">
+    <cache alias="ucSiteElementsQuery">
         <expiry>
             <ttl>3600</ttl>
         </expiry>
         <heap>1000</heap>
     </cache>
     
-    <cache alias="blProductOverrideCache" >
+    <cache alias="ucProductOverrideCache" >
         <expiry>
              <none/>
          </expiry>

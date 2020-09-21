@@ -1,38 +1,38 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.i18n.service;
+package com.ultracommerce.common.i18n.service;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.cache.StatisticsService;
-import org.broadleafcommerce.common.extension.ExtensionResultHolder;
-import org.broadleafcommerce.common.extension.ItemStatus;
-import org.broadleafcommerce.common.extension.ResultType;
-import org.broadleafcommerce.common.extension.StandardCacheItem;
-import org.broadleafcommerce.common.i18n.dao.TranslationDao;
-import org.broadleafcommerce.common.i18n.domain.TranslatedEntity;
-import org.broadleafcommerce.common.i18n.domain.Translation;
-import org.broadleafcommerce.common.i18n.domain.TranslationImpl;
-import org.broadleafcommerce.common.locale.service.LocaleService;
-import org.broadleafcommerce.common.locale.util.LocaleUtil;
-import org.broadleafcommerce.common.sandbox.SandBoxHelper;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
+import com.ultracommerce.common.cache.StatisticsService;
+import com.ultracommerce.common.extension.ExtensionResultHolder;
+import com.ultracommerce.common.extension.ItemStatus;
+import com.ultracommerce.common.extension.ResultType;
+import com.ultracommerce.common.extension.StandardCacheItem;
+import com.ultracommerce.common.i18n.dao.TranslationDao;
+import com.ultracommerce.common.i18n.domain.TranslatedEntity;
+import com.ultracommerce.common.i18n.domain.Translation;
+import com.ultracommerce.common.i18n.domain.TranslationImpl;
+import com.ultracommerce.common.locale.service.LocaleService;
+import com.ultracommerce.common.locale.util.LocaleUtil;
+import com.ultracommerce.common.sandbox.SandBoxHelper;
+import com.ultracommerce.common.web.UltraRequestContext;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,23 +47,23 @@ import javax.annotation.Resource;
 import javax.cache.Cache;
 import javax.cache.CacheManager;
 
-@Service("blTranslationService")
+@Service("ucTranslationService")
 public class TranslationServiceImpl implements TranslationService, TranslationSupport {
 
     protected static final Log LOG = LogFactory.getLog(TranslationServiceImpl.class);
     private static final Translation DELETED_TRANSLATION = new TranslationImpl();
-    private static final String TRANSLATION_CACHE_NAME = "blTranslationElements";
+    private static final String TRANSLATION_CACHE_NAME = "ucTranslationElements";
     
-    @Resource(name = "blTranslationDao")
+    @Resource(name = "ucTranslationDao")
     protected TranslationDao dao;
 
-    @Resource(name="blStatisticsService")
+    @Resource(name="ucStatisticsService")
     protected StatisticsService statisticsService;
 
-    @Resource(name="blSandBoxHelper")
+    @Resource(name="ucSandBoxHelper")
     protected SandBoxHelper sandBoxHelper;
     
-    @Resource(name="blTranslationServiceExtensionManager")
+    @Resource(name="ucTranslationServiceExtensionManager")
     protected TranslationServiceExtensionManager extensionManager;
 
     /**
@@ -83,28 +83,28 @@ public class TranslationServiceImpl implements TranslationService, TranslationSu
     @Value("${returnBlankTranslationForNotDefaultLocale:false}")
     protected boolean returnBlankTranslationForNotDefaultLocale;
 
-    @Resource(name = "blTranslationExceptionProperties")
+    @Resource(name = "ucTranslationExceptionProperties")
     protected List<String> translationExceptionProperties = new ArrayList<String>();
 
-    @Resource(name = "blLocaleService")
+    @Resource(name = "ucLocaleService")
     protected LocaleService localeService;
 
     @Resource
     protected List<TranslationOverrideStrategy> strategies;
     
-    @Resource(name = "blCacheManager")
+    @Resource(name = "ucCacheManager")
     protected CacheManager cacheManager;
     
     protected Cache<String, Object> cache;
     
     @Override
-    @Transactional("blTransactionManager")
+    @Transactional("ucTransactionManager")
     public Translation save(Translation translation) {
         return dao.save(translation);
     }
     
     @Override
-    @Transactional("blTransactionManager")
+    @Transactional("ucTransactionManager")
     public Translation save(String entityType, String entityId, String fieldName, String localeCode, 
             String translatedValue) {
         TranslatedEntity te = getAssignableEntityType(entityType);
@@ -129,7 +129,7 @@ public class TranslationServiceImpl implements TranslationService, TranslationSu
     }
     
     @Override
-    @Transactional("blTransactionManager")
+    @Transactional("ucTransactionManager")
     public Translation update(Long translationId, String localeCode, String translatedValue) {
         Translation t = dao.readTranslationById(translationId);
         
@@ -145,7 +145,7 @@ public class TranslationServiceImpl implements TranslationService, TranslationSu
     }
     
     @Override
-    @Transactional("blTransactionManager")
+    @Transactional("ucTransactionManager")
     public void deleteTranslationById(Long translationId) {
         Translation t = dao.readTranslationById(translationId);
         dao.delete(t);
@@ -210,7 +210,7 @@ public class TranslationServiceImpl implements TranslationService, TranslationSu
             extensionManager.getProxy().isValidState(response);
             isValidForCache = response.getResult();
         }
-        if (!BroadleafRequestContext.getBroadleafRequestContext().isProductionSandBox() || !isValidForCache) {
+        if (!UltraRequestContext.getUltraRequestContext().isProductionSandBox() || !isValidForCache) {
             Translation translation = dao.readTranslation(entityType, entityId, property, localeCode, localeCountryCode,
                     ResultType.CATALOG_ONLY);
             if (translation != null) {
@@ -230,7 +230,7 @@ public class TranslationServiceImpl implements TranslationService, TranslationSu
      * @return Whether translations should be gathered for the provided locale.
      */
     protected boolean shouldTranslateLocale(String localeCode) {
-        org.broadleafcommerce.common.locale.domain.Locale locale = localeService.findLocaleByCode(localeCode);
+        com.ultracommerce.common.locale.domain.Locale locale = localeService.findLocaleByCode(localeCode);
 
         if (locale == null) {
             throw new IllegalArgumentException("A locale could not be found for the provided localeCode: "+ localeCode);
@@ -241,7 +241,7 @@ public class TranslationServiceImpl implements TranslationService, TranslationSu
 
     @Override
     public void removeTranslationFromCache(Translation translation) {
-        if (BroadleafRequestContext.getBroadleafRequestContext().isProductionSandBox()) {
+        if (UltraRequestContext.getUltraRequestContext().isProductionSandBox()) {
             ResultType resultType = ResultType.STANDARD;
             if (extensionManager != null) {
                 ExtensionResultHolder<ResultType> response = new ExtensionResultHolder<ResultType>();
@@ -451,7 +451,7 @@ public class TranslationServiceImpl implements TranslationService, TranslationSu
 
     @Override
     public int getThresholdForFullCache() {
-        if (BroadleafRequestContext.getBroadleafRequestContext().isProductionSandBox()) {
+        if (UltraRequestContext.getUltraRequestContext().isProductionSandBox()) {
             return thresholdForFullCache;
         } else {
             // don't cache when not in a SandBox
@@ -466,7 +466,7 @@ public class TranslationServiceImpl implements TranslationService, TranslationSu
 
     @Override
     public int getTemplateThresholdForFullCache() {
-        if (BroadleafRequestContext.getBroadleafRequestContext().isProductionSandBox()) {
+        if (UltraRequestContext.getUltraRequestContext().isProductionSandBox()) {
             return templateThresholdForFullCache;
         } else {
             // don't cache when not in a SandBox
@@ -522,7 +522,7 @@ public class TranslationServiceImpl implements TranslationService, TranslationSu
     }
 
     /**
-     * Returns true if the passed in locale's language matches the Broadleaf default locale.
+     * Returns true if the passed in locale's language matches the Ultra default locale.
      * @param locale
      * @return
      */

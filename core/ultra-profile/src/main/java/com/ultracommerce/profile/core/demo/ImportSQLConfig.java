@@ -1,27 +1,27 @@
 /*
  * #%L
- * BroadleafCommerce Profile
+ * UltraCommerce Profile
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.profile.core.demo;
+package com.ultracommerce.profile.core.demo;
 
-import org.broadleafcommerce.common.demo.AutoImportPersistenceUnit;
-import org.broadleafcommerce.common.demo.AutoImportSql;
-import org.broadleafcommerce.common.demo.AutoImportStage;
-import org.broadleafcommerce.common.demo.DemoCondition;
-import org.broadleafcommerce.common.demo.ImportCondition;
+import com.ultracommerce.common.demo.AutoImportPersistenceUnit;
+import com.ultracommerce.common.demo.AutoImportSql;
+import com.ultracommerce.common.demo.AutoImportStage;
+import com.ultracommerce.common.demo.DemoCondition;
+import com.ultracommerce.common.demo.ImportCondition;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
@@ -29,14 +29,14 @@ import org.springframework.context.annotation.Configuration;
 /**
  * @author Jeff Fischer
  */
-@Configuration("blProfileData")
+@Configuration("ucProfileData")
 @Conditional(ImportCondition.class)
 public class ImportSQLConfig {
 
     @Bean
     @Conditional(DemoCondition.class)
-    public AutoImportSql blProfileBasicData() {
-        return new AutoImportSql(AutoImportPersistenceUnit.BL_PU,"config/bc/sql/demo/load_code_tables.sql", AutoImportStage.PRIMARY_PRE_BASIC_DATA);
+    public AutoImportSql ucProfileBasicData() {
+        return new AutoImportSql(AutoImportPersistenceUnit.UL_PU,"config/bc/sql/demo/load_code_tables.sql", AutoImportStage.PRIMARY_PRE_BASIC_DATA);
     }
 
 }

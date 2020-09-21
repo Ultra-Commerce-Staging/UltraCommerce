@@ -1,21 +1,21 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.test.common.rule;
+package com.ultracommerce.test.common.rule;
 
 import org.apache.commons.exec.CommandLine;
 import org.apache.commons.exec.DefaultExecutor;
@@ -23,12 +23,12 @@ import org.apache.commons.exec.Executor;
 import org.apache.commons.exec.PumpStreamHandler;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.RequestDTO;
-import org.broadleafcommerce.common.RequestDTOImpl;
-import org.broadleafcommerce.common.locale.domain.Locale;
-import org.broadleafcommerce.common.locale.domain.LocaleImpl;
-import org.broadleafcommerce.common.rule.MvelHelper;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
+import com.ultracommerce.common.RequestDTO;
+import com.ultracommerce.common.RequestDTOImpl;
+import com.ultracommerce.common.locale.domain.Locale;
+import com.ultracommerce.common.locale.domain.LocaleImpl;
+import com.ultracommerce.common.rule.MvelHelper;
+import com.ultracommerce.common.web.UltraRequestContext;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -102,15 +102,15 @@ public class MvelHelperTest extends TestCase {
      */
     @SuppressWarnings({ "rawtypes", "unchecked" })
     public void testRequestMapProperty() {
-        BroadleafRequestContext.setBroadleafRequestContext(new BroadleafRequestContext());
+        UltraRequestContext.setUltraRequestContext(new UltraRequestContext());
         RequestDTO dto = new RequestDTOImpl();
-        dto.getProperties().put("blcSearchTerm", "hot");
+        dto.getProperties().put("ucSearchTerm", "hot");
 
         Map parameters = new HashMap();
         parameters.put("request", dto);
 
         // If the "key" property doesn't contain an underscore, the expression returns true
-        boolean result = MvelHelper.evaluateRule("request.properties['blcSearchTerm'] == 'hot'", parameters);
+        boolean result = MvelHelper.evaluateRule("request.properties['ucSearchTerm'] == 'hot'", parameters);
         assertTrue(result);
     }
     /**

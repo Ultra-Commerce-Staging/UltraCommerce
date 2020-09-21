@@ -1,30 +1,30 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.order.domain;
+package com.ultracommerce.core.order.domain;
 
-import org.broadleafcommerce.common.audit.Auditable;
-import org.broadleafcommerce.common.copy.MultiTenantCloneable;
-import org.broadleafcommerce.common.money.Money;
-import org.broadleafcommerce.core.catalog.domain.Category;
-import org.broadleafcommerce.core.offer.domain.CandidateItemOffer;
-import org.broadleafcommerce.core.offer.domain.OrderItemAdjustment;
-import org.broadleafcommerce.core.offer.domain.ProratedOrderItemAdjustment;
-import org.broadleafcommerce.core.order.service.type.OrderItemType;
+import com.ultracommerce.common.audit.Auditable;
+import com.ultracommerce.common.copy.MultiTenantCloneable;
+import com.ultracommerce.common.money.Money;
+import com.ultracommerce.core.catalog.domain.Category;
+import com.ultracommerce.core.offer.domain.CandidateItemOffer;
+import com.ultracommerce.core.offer.domain.OrderItemAdjustment;
+import com.ultracommerce.core.offer.domain.ProratedOrderItemAdjustment;
+import com.ultracommerce.core.order.service.type.OrderItemType;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
@@ -38,7 +38,7 @@ public interface OrderItem extends Serializable, Cloneable, MultiTenantCloneable
     Long getId();
 
     /**
-     * Sets the unique id of the OrderItem.   Typically left null for new items and Broadleaf will
+     * Sets the unique id of the OrderItem.   Typically left null for new items and Ultra will
      * set using the next sequence number.
      * @param id
      */
@@ -111,7 +111,7 @@ public interface OrderItem extends Serializable, Cloneable, MultiTenantCloneable
      *  {@link #setSalePriceOverride(true)}
      *      
      * Typically for {@link DiscreteOrderItem}s, the prices will be set with a call to {@link #updateSaleAndRetailPrices()}
-     * which will use the Broadleaf dynamic pricing engine or the values directly tied to the SKU.
+     * which will use the Ultra dynamic pricing engine or the values directly tied to the SKU.
      * 
      * @param salePrice
      */
@@ -221,7 +221,7 @@ public interface OrderItem extends Serializable, Cloneable, MultiTenantCloneable
     void setCandidateItemOffers(List<CandidateItemOffer> candidateItemOffers);
 
     /**    
-     * Returns item level adjustment for versions of Broadleaf Commerce prior to 2.3.0 which replaced
+     * Returns item level adjustment for versions of Ultra Commerce prior to 2.3.0 which replaced
      * this concept with OrderItemPriceDetail adjustments.
      * @return a List of OrderItemAdjustment
      */
@@ -458,7 +458,7 @@ public interface OrderItem extends Serializable, Cloneable, MultiTenantCloneable
      * For example, if the item has a 2 items priced at $10 a piece and a 10% discount applies to both
      * quantities.    This method would return $2. 
      * 
-     * See {@link org.broadleafcommerce.core.offer.domain.Offer#getAdjustmentType()} for more info on future credit
+     * See {@link com.ultracommerce.core.offer.domain.Offer#getAdjustmentType()} for more info on future credit
      *
      * @return
      */
@@ -467,7 +467,7 @@ public interface OrderItem extends Serializable, Cloneable, MultiTenantCloneable
     /**
      * Returns the total for future credit item level adjustments.
      * 
-     * See {@link org.broadleafcommerce.core.offer.domain.Offer#getAdjustmentType()} for more info on future credit
+     * See {@link com.ultracommerce.core.offer.domain.Offer#getAdjustmentType()} for more info on future credit
      * 
      * @param includeChildren
      * @return

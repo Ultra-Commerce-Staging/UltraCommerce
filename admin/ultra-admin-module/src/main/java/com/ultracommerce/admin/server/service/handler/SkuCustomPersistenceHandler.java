@@ -1,22 +1,22 @@
 /*
  * #%L
- * BroadleafCommerce Admin Module
+ * UltraCommerce Admin Module
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
 
-package org.broadleafcommerce.admin.server.service.handler;
+package com.ultracommerce.admin.server.service.handler;
 
 import static com.google.common.base.CharMatcher.DIGIT;
 
@@ -28,55 +28,55 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.admin.server.service.SkuMetadataCacheService;
-import org.broadleafcommerce.common.exception.ServiceException;
-import org.broadleafcommerce.common.presentation.client.LookupType;
-import org.broadleafcommerce.common.presentation.client.OperationType;
-import org.broadleafcommerce.common.presentation.client.PersistencePerspectiveItemType;
-import org.broadleafcommerce.common.presentation.client.SupportedFieldType;
-import org.broadleafcommerce.common.presentation.client.VisibilityEnum;
-import org.broadleafcommerce.common.sandbox.SandBoxHelper;
-import org.broadleafcommerce.common.util.BLCCollectionUtils;
-import org.broadleafcommerce.common.util.StringUtil;
-import org.broadleafcommerce.common.util.TypedTransformer;
-import org.broadleafcommerce.common.util.dao.DynamicDaoHelperImpl;
-import org.broadleafcommerce.core.catalog.domain.Product;
-import org.broadleafcommerce.core.catalog.domain.ProductBundle;
-import org.broadleafcommerce.core.catalog.domain.ProductImpl;
-import org.broadleafcommerce.core.catalog.domain.ProductOption;
-import org.broadleafcommerce.core.catalog.domain.ProductOptionImpl;
-import org.broadleafcommerce.core.catalog.domain.ProductOptionValue;
-import org.broadleafcommerce.core.catalog.domain.ProductOptionValueImpl;
-import org.broadleafcommerce.core.catalog.domain.Sku;
-import org.broadleafcommerce.core.catalog.domain.SkuImpl;
-import org.broadleafcommerce.core.catalog.domain.SkuProductOptionValueXref;
-import org.broadleafcommerce.core.catalog.domain.SkuProductOptionValueXrefImpl;
-import org.broadleafcommerce.core.catalog.service.CatalogService;
-import org.broadleafcommerce.openadmin.dto.BasicFieldMetadata;
-import org.broadleafcommerce.openadmin.dto.ClassMetadata;
-import org.broadleafcommerce.openadmin.dto.CriteriaTransferObject;
-import org.broadleafcommerce.openadmin.dto.DynamicResultSet;
-import org.broadleafcommerce.openadmin.dto.Entity;
-import org.broadleafcommerce.openadmin.dto.FieldMetadata;
-import org.broadleafcommerce.openadmin.dto.FilterAndSortCriteria;
-import org.broadleafcommerce.openadmin.dto.MergedPropertyType;
-import org.broadleafcommerce.openadmin.dto.PersistencePackage;
-import org.broadleafcommerce.openadmin.dto.PersistencePerspective;
-import org.broadleafcommerce.openadmin.dto.Property;
-import org.broadleafcommerce.openadmin.dto.SectionCrumb;
-import org.broadleafcommerce.openadmin.server.dao.DynamicEntityDao;
-import org.broadleafcommerce.openadmin.server.service.handler.CustomPersistenceHandlerAdapter;
-import org.broadleafcommerce.openadmin.server.service.persistence.PersistenceManager;
-import org.broadleafcommerce.openadmin.server.service.persistence.PersistenceManagerFactory;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.InspectHelper;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.PersistenceModule;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.RecordHelper;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.criteria.CriteriaTranslator;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.criteria.FieldPath;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.criteria.FieldPathBuilder;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.criteria.FilterMapping;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.criteria.Restriction;
-import org.broadleafcommerce.openadmin.server.service.persistence.module.criteria.predicate.PredicateProvider;
+import com.ultracommerce.admin.server.service.SkuMetadataCacheService;
+import com.ultracommerce.common.exception.ServiceException;
+import com.ultracommerce.common.presentation.client.LookupType;
+import com.ultracommerce.common.presentation.client.OperationType;
+import com.ultracommerce.common.presentation.client.PersistencePerspectiveItemType;
+import com.ultracommerce.common.presentation.client.SupportedFieldType;
+import com.ultracommerce.common.presentation.client.VisibilityEnum;
+import com.ultracommerce.common.sandbox.SandBoxHelper;
+import com.ultracommerce.common.util.UCCollectionUtils;
+import com.ultracommerce.common.util.StringUtil;
+import com.ultracommerce.common.util.TypedTransformer;
+import com.ultracommerce.common.util.dao.DynamicDaoHelperImpl;
+import com.ultracommerce.core.catalog.domain.Product;
+import com.ultracommerce.core.catalog.domain.ProductBundle;
+import com.ultracommerce.core.catalog.domain.ProductImpl;
+import com.ultracommerce.core.catalog.domain.ProductOption;
+import com.ultracommerce.core.catalog.domain.ProductOptionImpl;
+import com.ultracommerce.core.catalog.domain.ProductOptionValue;
+import com.ultracommerce.core.catalog.domain.ProductOptionValueImpl;
+import com.ultracommerce.core.catalog.domain.Sku;
+import com.ultracommerce.core.catalog.domain.SkuImpl;
+import com.ultracommerce.core.catalog.domain.SkuProductOptionValueXref;
+import com.ultracommerce.core.catalog.domain.SkuProductOptionValueXrefImpl;
+import com.ultracommerce.core.catalog.service.CatalogService;
+import com.ultracommerce.openadmin.dto.BasicFieldMetadata;
+import com.ultracommerce.openadmin.dto.ClassMetadata;
+import com.ultracommerce.openadmin.dto.CriteriaTransferObject;
+import com.ultracommerce.openadmin.dto.DynamicResultSet;
+import com.ultracommerce.openadmin.dto.Entity;
+import com.ultracommerce.openadmin.dto.FieldMetadata;
+import com.ultracommerce.openadmin.dto.FilterAndSortCriteria;
+import com.ultracommerce.openadmin.dto.MergedPropertyType;
+import com.ultracommerce.openadmin.dto.PersistencePackage;
+import com.ultracommerce.openadmin.dto.PersistencePerspective;
+import com.ultracommerce.openadmin.dto.Property;
+import com.ultracommerce.openadmin.dto.SectionCrumb;
+import com.ultracommerce.openadmin.server.dao.DynamicEntityDao;
+import com.ultracommerce.openadmin.server.service.handler.CustomPersistenceHandlerAdapter;
+import com.ultracommerce.openadmin.server.service.persistence.PersistenceManager;
+import com.ultracommerce.openadmin.server.service.persistence.PersistenceManagerFactory;
+import com.ultracommerce.openadmin.server.service.persistence.module.InspectHelper;
+import com.ultracommerce.openadmin.server.service.persistence.module.PersistenceModule;
+import com.ultracommerce.openadmin.server.service.persistence.module.RecordHelper;
+import com.ultracommerce.openadmin.server.service.persistence.module.criteria.CriteriaTranslator;
+import com.ultracommerce.openadmin.server.service.persistence.module.criteria.FieldPath;
+import com.ultracommerce.openadmin.server.service.persistence.module.criteria.FieldPathBuilder;
+import com.ultracommerce.openadmin.server.service.persistence.module.criteria.FilterMapping;
+import com.ultracommerce.openadmin.server.service.persistence.module.criteria.Restriction;
+import com.ultracommerce.openadmin.server.service.persistence.module.criteria.predicate.PredicateProvider;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -103,7 +103,7 @@ import javax.persistence.criteria.Predicate;
  * @author Phillip Verheyden
  *
  */
-@Component("blSkuCustomPersistenceHandler")
+@Component("ucSkuCustomPersistenceHandler")
 public class SkuCustomPersistenceHandler extends CustomPersistenceHandlerAdapter {
 
     private static final Log LOG = LogFactory.getLog(SkuCustomPersistenceHandler.class);
@@ -114,13 +114,13 @@ public class SkuCustomPersistenceHandler extends CustomPersistenceHandlerAdapter
     @Value("${use.to.one.lookup.sku.product.option.value:false}")
     protected boolean useToOneLookupSkuProductOptionValue = false;
 
-    @Resource(name ="blSkuMetadataCacheService")
+    @Resource(name ="ucSkuMetadataCacheService")
     protected SkuMetadataCacheService skuMetadataCacheService;
 
-    @Resource(name="blAdornedTargetListPersistenceModule")
+    @Resource(name="ucAdornedTargetListPersistenceModule")
     protected PersistenceModule adornedPersistenceModule;
 
-    @Resource(name = "blSkuCustomPersistenceHandlerExtensionManager")
+    @Resource(name = "ucSkuCustomPersistenceHandlerExtensionManager")
     protected SkuCustomPersistenceHandlerExtensionManager extensionManager;
 
     /**
@@ -131,16 +131,16 @@ public class SkuCustomPersistenceHandler extends CustomPersistenceHandlerAdapter
     public static String CONSOLIDATED_PRODUCT_OPTIONS_FIELD_NAME = "consolidatedProductOptions";
     public static String CONSOLIDATED_PRODUCT_OPTIONS_DELIMETER = "; ";
 
-    @Resource(name="blCatalogService")
+    @Resource(name="ucCatalogService")
     protected CatalogService catalogService;
 
-    @PersistenceContext(unitName = "blPU")
+    @PersistenceContext(unitName = "ucPU")
     protected EntityManager em;
 
-    @Resource(name = "blCriteriaTranslator")
+    @Resource(name = "ucCriteriaTranslator")
     protected CriteriaTranslator criteriaTranslator;
 
-    @Resource(name = "blSandBoxHelper")
+    @Resource(name = "ucSandBoxHelper")
     protected SandBoxHelper sandBoxHelper;
 
     @Override
@@ -324,7 +324,7 @@ public class SkuCustomPersistenceHandler extends CustomPersistenceHandlerAdapter
         metadata.setExplicitFieldType(SupportedFieldType.UNKNOWN);
         metadata.setProminent(true);
         metadata.setVisibility(VisibilityEnum.FORM_HIDDEN);
-        metadata.setBroadleafEnumeration("");
+        metadata.setUltraEnumeration("");
         metadata.setReadOnly(true);
         metadata.setRequiredOverride(false);
         metadata.setGridOrder(Integer.MAX_VALUE);
@@ -424,7 +424,7 @@ public class SkuCustomPersistenceHandler extends CustomPersistenceHandlerAdapter
             metadata.setExplicitFieldType(SupportedFieldType.UNKNOWN);
             metadata.setProminent(false);
             metadata.setVisibility(VisibilityEnum.FORM_EXPLICITLY_SHOWN);
-            metadata.setBroadleafEnumeration("");
+            metadata.setUltraEnumeration("");
             metadata.setReadOnly(false);
             metadata.setRequiredOverride(BooleanUtils.isFalse(option.getRequired()));
 
@@ -534,7 +534,7 @@ public class SkuCustomPersistenceHandler extends CustomPersistenceHandlerAdapter
             Sku sku = (Sku) records.get(i);
             Entity entity = payload[i];
 
-            List<ProductOptionValue> optionValues = BLCCollectionUtils.collectList(sku.getProductOptionValueXrefs(), new TypedTransformer<ProductOptionValue>() {
+            List<ProductOptionValue> optionValues = UCCollectionUtils.collectList(sku.getProductOptionValueXrefs(), new TypedTransformer<ProductOptionValue>() {
                 @Override
                 public ProductOptionValue transform(Object input) {
                     return ((SkuProductOptionValueXref) input).getProductOptionValue();
@@ -591,7 +591,7 @@ public class SkuCustomPersistenceHandler extends CustomPersistenceHandlerAdapter
         }
 
         for (String criteria : pkg.getCustomCriteria()) {
-            if ("owningClass=org.broadleafcommerce.core.catalog.domain.SkuBundleItemImpl".equals(criteria)) {
+            if ("owningClass=com.ultracommerce.core.catalog.domain.SkuBundleItemImpl".equals(criteria)) {
                 owningClassMatch = true;
             } else if ("requestingField=sku".equals(criteria)) {
                 requestingFieldMatch = true;

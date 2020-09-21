@@ -1,26 +1,26 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.web.expression;
+package com.ultracommerce.common.web.expression;
 
-import org.broadleafcommerce.common.config.domain.SystemProperty;
-import org.broadleafcommerce.common.util.BLCSystemProperty;
-import org.broadleafcommerce.common.web.processor.ConfigVariableProcessor;
-import org.broadleafcommerce.presentation.condition.ConditionalOnTemplating;
+import com.ultracommerce.common.config.domain.SystemProperty;
+import com.ultracommerce.common.util.UCSystemProperty;
+import com.ultracommerce.common.web.processor.ConfigVariableProcessor;
+import com.ultracommerce.presentation.condition.ConditionalOnTemplating;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -38,9 +38,9 @@ import javax.servlet.http.HttpServletRequest;
  * @author Andre Azzolini (apazzolini)
  * @see {@link ConfigVariableProcessor}
  */
-@Component("blPropertiesVariableExpression")
+@Component("ucPropertiesVariableExpression")
 @ConditionalOnTemplating
-public class PropertiesVariableExpression implements BroadleafVariableExpression {
+public class PropertiesVariableExpression implements UltraVariableExpression {
     
     @Override
     public String getName() {
@@ -48,19 +48,19 @@ public class PropertiesVariableExpression implements BroadleafVariableExpression
     }
     
     public String get(String propertyName) {
-        return BLCSystemProperty.resolveSystemProperty(propertyName);
+        return UCSystemProperty.resolveSystemProperty(propertyName);
     }
 
     public int getAsInt(String propertyName) {
-        return BLCSystemProperty.resolveIntSystemProperty(propertyName);
+        return UCSystemProperty.resolveIntSystemProperty(propertyName);
     }
     
     public boolean getAsBoolean(String propertyName) {
-        return BLCSystemProperty.resolveBooleanSystemProperty(propertyName); 
+        return UCSystemProperty.resolveBooleanSystemProperty(propertyName); 
     }
     
     public long getAsLong(String propertyName) {
-        return BLCSystemProperty.resolveLongSystemProperty(propertyName); 
+        return UCSystemProperty.resolveLongSystemProperty(propertyName); 
     }
     
     /**
@@ -70,7 +70,7 @@ public class PropertiesVariableExpression implements BroadleafVariableExpression
     public boolean getForceShowIdColumns() {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
 
-        boolean forceShow = BLCSystemProperty.resolveBooleanSystemProperty("listGrid.forceShowIdColumns");
+        boolean forceShow = UCSystemProperty.resolveBooleanSystemProperty("listGrid.forceShowIdColumns");
         forceShow = forceShow || "true".equals(request.getParameter("showIds"));
         
         return forceShow;

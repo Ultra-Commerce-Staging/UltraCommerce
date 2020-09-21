@@ -1,24 +1,24 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.openadmin.dto;
+package com.ultracommerce.openadmin.dto;
 
 import org.apache.commons.lang.ArrayUtils;
-import org.broadleafcommerce.common.presentation.client.PersistencePerspectiveItemType;
+import com.ultracommerce.common.presentation.client.PersistencePerspectiveItemType;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -132,7 +132,7 @@ public class PersistencePerspective implements Serializable {
      * Retrieve the list of fields to exclude from the admin presentation.
      * Implementations should use the excluded property of the AdminPresentation
      * annotation instead, or use an AdminPresentationOverride if re-enabling a
-     * Broadleaf field is desired. If multiple datasources point to the same
+     * Ultra field is desired. If multiple datasources point to the same
      * entity, but different exclusion behavior is required, a custom persistence
      * handler may be employed with different inspect method implementations to
      * account for the variations.
@@ -148,7 +148,7 @@ public class PersistencePerspective implements Serializable {
      * Set the list of fields to exclude from the admin presentation.
      * Implementations should use the excluded property of the AdminPresentation
      * annotation instead, or use an AdminPresentationOverride if re-enabling a
-     * Broadleaf field is desired. If multiple datasources point to the same
+     * Ultra field is desired. If multiple datasources point to the same
      * entity, but different exclusion behavior is required, a custom persistence
      * handler may be employed with different inspect method implementations to
      * account for the variations.

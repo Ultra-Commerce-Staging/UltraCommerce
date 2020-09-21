@@ -1,23 +1,23 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.util;
+package com.ultracommerce.common.util;
 
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
+import com.ultracommerce.common.web.UltraRequestContext;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -32,14 +32,14 @@ import org.springframework.stereotype.Service;
  * 
  * @author Andre Azzolini (apazzolini)
  */
-@Service("blBLCMessageUtils")
-public class BLCMessageUtils implements ApplicationContextAware {
+@Service("ucUCMessageUtils")
+public class UCMessageUtils implements ApplicationContextAware {
 
     protected static ApplicationContext applicationContext;
     
     /**
      * Returns the message requested by the code with no arguments and the currently set Java Locale on 
-     * the {@link BroadleafRequestContext} as returned by {@link BroadleafRequestContext#getJavaLocale()}
+     * the {@link UltraRequestContext} as returned by {@link UltraRequestContext#getJavaLocale()}
      * 
      * @param code
      * @return the message
@@ -50,13 +50,13 @@ public class BLCMessageUtils implements ApplicationContextAware {
     
     /**
      * Returns the message requested by the code with the specified arguments and the currently set Java Locale on 
-     * the {@link BroadleafRequestContext} as returned by {@link BroadleafRequestContext#getJavaLocale()}
+     * the {@link UltraRequestContext} as returned by {@link UltraRequestContext#getJavaLocale()}
      * 
      * @param code
      * @return the message
      */
     public static String getMessage(String code, Object... args) {
-        BroadleafRequestContext brc = BroadleafRequestContext.getBroadleafRequestContext();
+        UltraRequestContext brc = UltraRequestContext.getUltraRequestContext();
         return getMessageSource().getMessage(code, args, brc.getJavaLocale());
     }
     
@@ -69,7 +69,7 @@ public class BLCMessageUtils implements ApplicationContextAware {
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        BLCMessageUtils.applicationContext = applicationContext;
+        UCMessageUtils.applicationContext = applicationContext;
     }
 
 }

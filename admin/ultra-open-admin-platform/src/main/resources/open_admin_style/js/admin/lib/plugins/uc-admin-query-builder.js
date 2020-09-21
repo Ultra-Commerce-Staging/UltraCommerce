@@ -1,29 +1,29 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
 /**
- * A BLC Admin plugin for the jQuery Query Builder
+ * A UC Admin plugin for the jQuery Query Builder
  * that customizes the component to handle complex rules containing an item quantity
  * as well as simple rules while augmenting the default styles to support
  * Admin UX concepts and styles
  * @author Elbert Bautista (elbertbautista)
  */
 
-$.fn.queryBuilder.define('blc-admin-query-builder', function(options) {
+$.fn.queryBuilder.define('uc-admin-query-builder', function(options) {
 
     /**
      * Custom callback to handle the custom group condition radio buttons (ALL/ANY)
@@ -121,7 +121,7 @@ $.fn.queryBuilder.define('blc-admin-query-builder', function(options) {
             });
 
             //Add a remove condition button - only for
-            //org.broadleafcommerce.common.presentation.client.SupportedFieldType.RULE_WITH_QUANTITY
+            //com.ultracommerce.common.presentation.client.SupportedFieldType.RULE_WITH_QUANTITY
             if (options.removeConditionsLink) {
                 $h.find('.group-actions').each(function(){
                     $(this).append(options.removeConditionsLink);
@@ -201,7 +201,7 @@ $.fn.queryBuilder.define('blc-admin-query-builder', function(options) {
                 attrId = attrId.slice(0, -('-modal'.length));
             }
             var hiddenId = $('#'+attrId).next('.rule-builder-data').data('hiddenid');
-            var ruleBuilder = BLCAdmin.ruleBuilders.getRuleBuilderByHiddenId(hiddenId);
+            var ruleBuilder = UCAdmin.ruleBuilders.getRuleBuilderByHiddenId(hiddenId);
 
             var origVal = ruleBuilder.builders[0].queryBuilder('getRules', { displayErrors : ruleBuilder.displayErrors });
             $ruleBuilderContainer.attr('data-orig-val', origVal);
@@ -216,8 +216,8 @@ $.fn.queryBuilder.define('blc-admin-query-builder', function(options) {
         var newVal = h.builder.getRules();
         var origVal = $ruleBuilderContainer.attr('data-orig-val');
 
-        if (BLCAdmin.entityForm.status) {
-            BLCAdmin.entityForm.status.updateEntityFormChangeMap(id, origVal, newVal);
+        if (UCAdmin.entityForm.status) {
+            UCAdmin.entityForm.status.updateEntityFormChangeMap(id, origVal, newVal);
         }
     });
 

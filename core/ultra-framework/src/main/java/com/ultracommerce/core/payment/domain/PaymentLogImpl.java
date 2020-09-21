@@ -1,31 +1,31 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.payment.domain;
+package com.ultracommerce.core.payment.domain;
 
-import org.broadleafcommerce.common.currency.domain.BroadleafCurrency;
-import org.broadleafcommerce.common.currency.domain.BroadleafCurrencyImpl;
-import org.broadleafcommerce.common.currency.util.BroadleafCurrencyUtils;
-import org.broadleafcommerce.common.money.Money;
-import org.broadleafcommerce.common.payment.PaymentLogEventType;
-import org.broadleafcommerce.common.payment.PaymentTransactionType;
-import org.broadleafcommerce.common.presentation.AdminPresentation;
-import org.broadleafcommerce.profile.core.domain.Customer;
-import org.broadleafcommerce.profile.core.domain.CustomerImpl;
+import com.ultracommerce.common.currency.domain.UltraCurrency;
+import com.ultracommerce.common.currency.domain.UltraCurrencyImpl;
+import com.ultracommerce.common.currency.util.UltraCurrencyUtils;
+import com.ultracommerce.common.money.Money;
+import com.ultracommerce.common.payment.PaymentLogEventType;
+import com.ultracommerce.common.payment.PaymentTransactionType;
+import com.ultracommerce.common.presentation.AdminPresentation;
+import com.ultracommerce.profile.core.domain.Customer;
+import com.ultracommerce.profile.core.domain.CustomerImpl;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Index;
 import org.hibernate.annotations.Parameter;
@@ -51,7 +51,7 @@ import javax.persistence.TemporalType;
 @Deprecated
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "BLC_PAYMENT_LOG")
+@Table(name = "UC_PAYMENT_LOG")
 public class PaymentLogImpl implements PaymentLog {
 
     private static final long serialVersionUID = 1L;
@@ -60,10 +60,10 @@ public class PaymentLogImpl implements PaymentLog {
     @GeneratedValue(generator = "PaymentLogId")
     @GenericGenerator(
         name="PaymentLogId",
-        strategy="org.broadleafcommerce.common.persistence.IdOverrideTableGenerator",
+        strategy="com.ultracommerce.common.persistence.IdOverrideTableGenerator",
         parameters = {
             @Parameter(name="segment_value", value="PaymentLogImpl"),
-            @Parameter(name="entity_name", value="org.broadleafcommerce.core.payment.domain.PaymentLogImpl")
+            @Parameter(name="entity_name", value="com.ultracommerce.core.payment.domain.PaymentLogImpl")
         }
     )
     @Column(name = "PAYMENT_LOG_ID")
@@ -116,10 +116,10 @@ public class PaymentLogImpl implements PaymentLog {
     @AdminPresentation(friendlyName = "PaymentLogImpl_Amount", order = 2, group = "PaymentLogImpl_Payment_Log", readOnly = true)
     protected BigDecimal amountPaid;
 
-    @ManyToOne(targetEntity = BroadleafCurrencyImpl.class)
+    @ManyToOne(targetEntity = UltraCurrencyImpl.class)
     @JoinColumn(name = "CURRENCY_CODE")
     @AdminPresentation(friendlyName = "PaymentLogImpl_currency", order = 2, group = "PaymentLogImpl_Payment_Log", readOnly = true)
-    protected BroadleafCurrency currency;
+    protected UltraCurrency currency;
     
     
     @Override
@@ -228,7 +228,7 @@ public class PaymentLogImpl implements PaymentLog {
 
     @Override
     public Money getAmountPaid() {
-        return BroadleafCurrencyUtils.getMoney(amountPaid, currency);
+        return UltraCurrencyUtils.getMoney(amountPaid, currency);
     }
 
     @Override
@@ -237,12 +237,12 @@ public class PaymentLogImpl implements PaymentLog {
     }
 
     @Override
-    public BroadleafCurrency getCurrency() {
+    public UltraCurrency getCurrency() {
         return currency;
     }
 
     @Override
-    public void setCurrency(BroadleafCurrency currency) {
+    public void setCurrency(UltraCurrency currency) {
         this.currency = currency;
     }
 

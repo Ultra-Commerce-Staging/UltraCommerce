@@ -1,24 +1,24 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.openadmin.web.rulebuilder.enums;
+package com.ultracommerce.openadmin.web.rulebuilder.enums;
 
 import org.apache.commons.lang3.reflect.FieldUtils;
-import org.broadleafcommerce.common.BroadleafEnumerationType;
+import com.ultracommerce.common.UltraEnumerationType;
 
 import java.util.Map;
 import java.util.Map.Entry;
@@ -41,13 +41,13 @@ public abstract class AbstractRuleBuilderEnumOptionsExtensionListener implements
     
     public String getOptionValues() {
         StringBuilder sb = new StringBuilder();
-        for (Entry<String, Class<? extends BroadleafEnumerationType>> entry : getValuesToGenerate().entrySet()) {
+        for (Entry<String, Class<? extends UltraEnumerationType>> entry : getValuesToGenerate().entrySet()) {
             try {
                 sb.append("var ").append(entry.getKey()).append(" = [");
                 
                 int i = 0;
-                Map<String, ? extends BroadleafEnumerationType> types = getTypes(entry.getValue());
-                for (Entry<String, ? extends BroadleafEnumerationType> entry2 : types.entrySet()) {
+                Map<String, ? extends UltraEnumerationType> types = getTypes(entry.getValue());
+                for (Entry<String, ? extends UltraEnumerationType> entry2 : types.entrySet()) {
                     sb.append("{\"" + entry2.getValue().getType() + "\": \"" + entry2.getValue().getFriendlyType() + "\"}");
                     if (++i < types.size()) {
                         sb.append(", ");
@@ -62,9 +62,9 @@ public abstract class AbstractRuleBuilderEnumOptionsExtensionListener implements
     }
     
     @SuppressWarnings("unchecked")
-    protected Map<String, ? extends BroadleafEnumerationType> getTypes(Class<? extends BroadleafEnumerationType> clazz) {
+    protected Map<String, ? extends UltraEnumerationType> getTypes(Class<? extends UltraEnumerationType> clazz) {
         try {
-            return (Map<String, ? extends BroadleafEnumerationType>) FieldUtils.readStaticField(clazz, "TYPES", true);
+            return (Map<String, ? extends UltraEnumerationType>) FieldUtils.readStaticField(clazz, "TYPES", true);
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e);
         }
@@ -73,6 +73,6 @@ public abstract class AbstractRuleBuilderEnumOptionsExtensionListener implements
     /**
      * @return a map representing the various values that this extension listener should generate
      */
-    protected abstract Map<String, Class<? extends BroadleafEnumerationType>> getValuesToGenerate();
+    protected abstract Map<String, Class<? extends UltraEnumerationType>> getValuesToGenerate();
 
 }

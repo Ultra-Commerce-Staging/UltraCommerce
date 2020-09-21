@@ -1,30 +1,30 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.service;
+package com.ultracommerce.common.service;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.persistence.EntityConfiguration;
-import org.broadleafcommerce.common.persistence.TargetModeType;
-import org.broadleafcommerce.common.util.StreamCapableTransactionalOperationAdapter;
-import org.broadleafcommerce.common.util.StreamingTransactionCapableUtil;
-import org.broadleafcommerce.common.util.dao.DynamicDaoHelperImpl;
+import com.ultracommerce.common.persistence.EntityConfiguration;
+import com.ultracommerce.common.persistence.TargetModeType;
+import com.ultracommerce.common.util.StreamCapableTransactionalOperationAdapter;
+import com.ultracommerce.common.util.StreamingTransactionCapableUtil;
+import com.ultracommerce.common.util.dao.DynamicDaoHelperImpl;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
@@ -46,11 +46,11 @@ import javax.persistence.metamodel.EntityType;
  *  based on a class and {@link TargetModeType}. This functionality is
  *  especially useful when multiple {@link javax.persistence.PersistenceUnit}s are in use.
  *
- * Note: All "default" items reference blPU, which is used to manage most Broadleaf entities in the Admin.
+ * Note: All "default" items reference ucPU, which is used to manage most Ultra entities in the Admin.
  *
  * @author Chris Kittrell (ckittrell)
  */
-@Service("blPersistenceService")
+@Service("ucPersistenceService")
 public class PersistenceServiceImpl implements PersistenceService, SmartLifecycle {
 
     protected static final Log LOG = LogFactory.getLog(PersistenceServiceImpl.class);
@@ -58,16 +58,16 @@ public class PersistenceServiceImpl implements PersistenceService, SmartLifecycl
     protected static final String ENTITY_MANAGER_KEY = "entityManager";
     protected static final String TRANSACTION_MANAGER_KEY = "transactionManager";
 
-    @Resource (name = "blEntityConfiguration")
+    @Resource (name = "ucEntityConfiguration")
     protected EntityConfiguration entityConfiguration;
 
-    @Resource(name = "blTargetModeMaps")
+    @Resource(name = "ucTargetModeMaps")
     protected List<Map<String, Map<String, Object>>> targetModeMaps;
 
-    @Resource(name = "blDefaultTargetModeMap")
+    @Resource(name = "ucDefaultTargetModeMap")
     protected Map<String, Map<String, Object>> defaultTargetModeMap;
 
-    @Resource(name="blStreamingTransactionCapableUtil")
+    @Resource(name="ucStreamingTransactionCapableUtil")
     protected StreamingTransactionCapableUtil transUtil;
 
     @Autowired

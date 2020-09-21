@@ -1,38 +1,38 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.catalog.service;
+package com.ultracommerce.core.catalog.service;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.file.service.BroadleafFileUtils;
-import org.broadleafcommerce.common.sitemap.domain.SiteMapGeneratorConfiguration;
-import org.broadleafcommerce.common.sitemap.service.SiteMapBuilder;
-import org.broadleafcommerce.common.sitemap.service.SiteMapGenerator;
-import org.broadleafcommerce.common.sitemap.service.type.SiteMapGeneratorType;
-import org.broadleafcommerce.common.sitemap.wrapper.SiteMapImageWrapper;
-import org.broadleafcommerce.common.sitemap.wrapper.SiteMapURLWrapper;
-import org.broadleafcommerce.common.web.util.BroadleafUrlParamUtils;
-import org.broadleafcommerce.core.catalog.dao.CategoryDao;
-import org.broadleafcommerce.core.catalog.domain.Category;
-import org.broadleafcommerce.core.catalog.domain.CategoryMediaXref;
-import org.broadleafcommerce.core.catalog.domain.CategorySiteMapGeneratorConfiguration;
-import org.broadleafcommerce.core.util.service.BroadleafSitemapUtils;
+import com.ultracommerce.common.file.service.UltraFileUtils;
+import com.ultracommerce.common.sitemap.domain.SiteMapGeneratorConfiguration;
+import com.ultracommerce.common.sitemap.service.SiteMapBuilder;
+import com.ultracommerce.common.sitemap.service.SiteMapGenerator;
+import com.ultracommerce.common.sitemap.service.type.SiteMapGeneratorType;
+import com.ultracommerce.common.sitemap.wrapper.SiteMapImageWrapper;
+import com.ultracommerce.common.sitemap.wrapper.SiteMapURLWrapper;
+import com.ultracommerce.common.web.util.UltraUrlParamUtils;
+import com.ultracommerce.core.catalog.dao.CategoryDao;
+import com.ultracommerce.core.catalog.domain.Category;
+import com.ultracommerce.core.catalog.domain.CategoryMediaXref;
+import com.ultracommerce.core.catalog.domain.CategorySiteMapGeneratorConfiguration;
+import com.ultracommerce.core.util.service.UltraSitemapUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
@@ -47,14 +47,14 @@ import javax.annotation.Resource;
  * 
  * @author Joshua Skorton (jskorton)
  */
-@Component("blCategorySiteMapGenerator")
+@Component("ucCategorySiteMapGenerator")
 public class CategorySiteMapGenerator implements SiteMapGenerator {
 
     protected static final Log LOG = LogFactory.getLog(CategorySiteMapGenerator.class);
 
     protected Environment env;
 
-    @Resource(name = "blCategoryDao")
+    @Resource(name = "ucCategoryDao")
     protected CategoryDao categoryDao;
 
     @Value("${category.site.map.generator.row.limit}")
@@ -137,7 +137,7 @@ public class CategorySiteMapGenerator implements SiteMapGenerator {
         for (CategoryMediaXref categoryMediaXref : category.getCategoryMediaXref().values()) {
             SiteMapImageWrapper siteMapImage = new SiteMapImageWrapper();
 
-            siteMapImage.setLoc(BroadleafSitemapUtils.generateImageUrl(siteMapBuilder, categoryMediaXref.getMedia()));
+            siteMapImage.setLoc(UltraSitemapUtils.generateImageUrl(siteMapBuilder, categoryMediaXref.getMedia()));
 
             siteMapUrl.addImage(siteMapImage);
         }
@@ -150,10 +150,10 @@ public class CategorySiteMapGenerator implements SiteMapGenerator {
     }
 
     protected String generateUrl(SiteMapBuilder siteMapBuilder, Category category, int pageNumber) {
-        String categoryUrl = BroadleafFileUtils.appendUnixPaths(siteMapBuilder.getBaseUrl(), category.getUrl());
+        String categoryUrl = UltraFileUtils.appendUnixPaths(siteMapBuilder.getBaseUrl(), category.getUrl());
 
         String categoryPaginationParam = getCategoryPaginationParam();
-        categoryUrl = BroadleafUrlParamUtils.addPaginationParam(categoryUrl, categoryPaginationParam, pageNumber);
+        categoryUrl = UltraUrlParamUtils.addPaginationParam(categoryUrl, categoryPaginationParam, pageNumber);
 
         return categoryUrl;
     }

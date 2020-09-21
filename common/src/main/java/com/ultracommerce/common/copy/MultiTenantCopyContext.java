@@ -1,35 +1,35 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.common.copy;
+package com.ultracommerce.common.copy;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import org.apache.commons.lang.ArrayUtils;
-import org.broadleafcommerce.common.exception.ExceptionHelper;
-import org.broadleafcommerce.common.extension.ExtensionResultHolder;
-import org.broadleafcommerce.common.extension.ExtensionResultStatusType;
-import org.broadleafcommerce.common.persistence.Status;
-import org.broadleafcommerce.common.service.GenericEntityService;
-import org.broadleafcommerce.common.site.domain.Catalog;
-import org.broadleafcommerce.common.site.domain.Site;
-import org.broadleafcommerce.common.util.tenant.IdentityExecutionUtils;
-import org.broadleafcommerce.common.util.tenant.IdentityOperation;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
+import com.ultracommerce.common.exception.ExceptionHelper;
+import com.ultracommerce.common.extension.ExtensionResultHolder;
+import com.ultracommerce.common.extension.ExtensionResultStatusType;
+import com.ultracommerce.common.persistence.Status;
+import com.ultracommerce.common.service.GenericEntityService;
+import com.ultracommerce.common.site.domain.Catalog;
+import com.ultracommerce.common.site.domain.Site;
+import com.ultracommerce.common.util.tenant.IdentityExecutionUtils;
+import com.ultracommerce.common.util.tenant.IdentityOperation;
+import com.ultracommerce.common.web.UltraRequestContext;
 
 import javax.persistence.Embeddable;
 import java.lang.reflect.Field;
@@ -41,7 +41,7 @@ import java.util.Map;
 
 public class MultiTenantCopyContext {
 
-    public static final String[] BROADLEAF_PACKAGE_PREFIXES = {"org.broadleafcommerce","com.broadleafcommerce"};
+    public static final String[] ULTRA_PACKAGE_PREFIXES = {"com.ultracommerce","com.ultracommerce"};
 
     protected Catalog fromCatalog;
     protected Catalog toCatalog;
@@ -54,7 +54,7 @@ public class MultiTenantCopyContext {
     protected GenericEntityService genericEntityService;
     protected List<DeferredOperation> deferredOperations = new ArrayList<DeferredOperation>();
     /**
-     * hints used to fine tune copying - generally support for hints is included in {@link MultiTenantCloneable#createOrRetrieveCopyInstance(org.broadleafcommerce.common.copy.MultiTenantCopyContext)} implementations.
+     * hints used to fine tune copying - generally support for hints is included in {@link MultiTenantCloneable#createOrRetrieveCopyInstance(com.ultracommerce.common.copy.MultiTenantCopyContext)} implementations.
      */
     protected Map<String, String> copyHints = new HashMap<String, String>();
     protected Boolean isForDuplicate = false;
@@ -129,7 +129,7 @@ public class MultiTenantCopyContext {
     }
 
     /**
-     * Create a new instance of the polymorphic entity type - could be an extended type outside of Broadleaf.
+     * Create a new instance of the polymorphic entity type - could be an extended type outside of Ultra.
      *
      * @param instance the object instance for the actual entity type (could be extended)
      * @param <G>
@@ -138,7 +138,7 @@ public class MultiTenantCopyContext {
      */
     public <G> CreateResponse<G> createOrRetrieveCopyInstance(Object instance) throws CloneNotSupportedException {
         CreateResponse<G> createResponse;
-        BroadleafRequestContext context = setupContext();
+        UltraRequestContext context = setupContext();
         validateOriginal(instance);
         Class<?> instanceClass = instance.getClass();
         createResponse = handleEmbedded(instanceClass);
@@ -204,7 +204,7 @@ public class MultiTenantCopyContext {
 
     /**
      * Provides a place for the caller to provide generic information to inform the copy operation. It's still up
-     * to the entity implementation of {@link MultiTenantCloneable#createOrRetrieveCopyInstance(org.broadleafcommerce.common.copy.MultiTenantCopyContext)}
+     * to the entity implementation of {@link MultiTenantCloneable#createOrRetrieveCopyInstance(com.ultracommerce.common.copy.MultiTenantCopyContext)}
      * to actually harvest and utilize the information in some meaningful way.
      *
      * @return
@@ -247,14 +247,14 @@ public class MultiTenantCopyContext {
         // }
     }
 
-    protected void tearDownContext(BroadleafRequestContext context) {
+    protected void tearDownContext(UltraRequestContext context) {
         context.setCurrentCatalog(getFromCatalog());
         context.setCurrentProfile(getFromSite());
         context.setSite(getFromSite());
     }
 
-    protected BroadleafRequestContext setupContext() {
-        BroadleafRequestContext context = BroadleafRequestContext.getBroadleafRequestContext();
+    protected UltraRequestContext setupContext() {
+        UltraRequestContext context = UltraRequestContext.getUltraRequestContext();
         context.setCurrentCatalog(getToCatalog());
         context.setCurrentProfile(getToSite());
         context.setSite(getToSite());
@@ -273,7 +273,7 @@ public class MultiTenantCopyContext {
         return response;
     }
 
-    protected <G> CreateResponse<G> handleStandardEntity(Object instance, BroadleafRequestContext context, Class<?> instanceClass) throws CloneNotSupportedException {
+    protected <G> CreateResponse<G> handleStandardEntity(Object instance, UltraRequestContext context, Class<?> instanceClass) throws CloneNotSupportedException {
         CreateResponse<G> createResponse;
         Long originalId = getIdentifier(instance);
         Object previousClone = getPreviousClone(instanceClass, originalId);
@@ -330,7 +330,7 @@ public class MultiTenantCopyContext {
     }
 
     /**
-     * Detects whether or not the current cloned entity is an extension of an entity in Broadleaf, and if so, if the
+     * Detects whether or not the current cloned entity is an extension of an entity in Ultra, and if so, if the
      * extension itself does not implement clone.
      *
      * @param cloned the cloned entity instance
@@ -344,14 +344,14 @@ public class MultiTenantCopyContext {
             throw ExceptionHelper.refineException(e);
         }
         boolean cloneMethodLocal = false;
-        for (String prefix : BROADLEAF_PACKAGE_PREFIXES) {
+        for (String prefix : ULTRA_PACKAGE_PREFIXES) {
             if (cloneMethod.getDeclaringClass().getName().startsWith(prefix)) {
                 cloneMethodLocal = true;
                 break;
             }
         }
         boolean cloneClassLocal = false;
-        for (String prefix : BROADLEAF_PACKAGE_PREFIXES) {
+        for (String prefix : ULTRA_PACKAGE_PREFIXES) {
             if (cloned.getClass().getName().startsWith(prefix)) {
                 cloneClassLocal = true;
                 break;

@@ -1,25 +1,25 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * UltraCommerce Open Admin Platform
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.openadmin.spec
+package com.ultracommerce.openadmin.spec
 
-import org.broadleafcommerce.openadmin.web.rulebuilder.BLCOperator
-import org.broadleafcommerce.openadmin.web.rulebuilder.statement.Expression
-import org.broadleafcommerce.openadmin.web.rulebuilder.statement.PhraseTranslator
+import com.ultracommerce.openadmin.web.rulebuilder.UCOperator
+import com.ultracommerce.openadmin.web.rulebuilder.statement.Expression
+import com.ultracommerce.openadmin.web.rulebuilder.statement.PhraseTranslator
 import spock.lang.Specification
 
 
@@ -38,7 +38,7 @@ class PhraseTranslatorSpec extends Specification {
 
         then: "The correct expression is produced"
         expression.field.equals("product.getProductAttributes()---myboolean");
-        expression.operator.equals(BLCOperator.EQUALS);
+        expression.operator.equals(UCOperator.EQUALS);
         expression.value.equals("true");
     }
 
@@ -52,7 +52,7 @@ class PhraseTranslatorSpec extends Specification {
 
         then: "The correct expression is produced"
         expression.field.equals("product.getProductAttributes()---mymoney");
-        expression.operator.equals(BLCOperator.GREATER_THAN);
+        expression.operator.equals(UCOperator.GREATER_THAN);
         expression.value.equals("0");
     }
 
@@ -66,7 +66,7 @@ class PhraseTranslatorSpec extends Specification {
 
         then: "The correct expression is produced"
         expression.field.equals("product.getProductAttributes()---myenum");
-        expression.operator.equals(BLCOperator.COLLECTION_IN);
+        expression.operator.equals(UCOperator.COLLECTION_IN);
         expression.value.equals("[\"test1\",\"test2\"]");
     }
 
@@ -80,7 +80,7 @@ class PhraseTranslatorSpec extends Specification {
 
         then: "The correct expression is produced"
         expression.field.equals("product.getProductAttributes()---myenum");
-        expression.operator.equals(BLCOperator.COLLECTION_IN);
+        expression.operator.equals(UCOperator.COLLECTION_IN);
         expression.value.equals("[\"test1\",\"test2\"]");
     }
 
@@ -94,7 +94,7 @@ class PhraseTranslatorSpec extends Specification {
 
         then: "The correct expression is produced"
         expression.field.equals("product.getProductAttributes()---myenum");
-        expression.operator.equals(BLCOperator.COLLECTION_IN);
+        expression.operator.equals(UCOperator.COLLECTION_IN);
         expression.value.equals("[\"test1\",\"test2\"]");
     }
 
@@ -108,7 +108,7 @@ class PhraseTranslatorSpec extends Specification {
 
         then: "The correct expression is produced"
         expression.field.equals("localeCode");
-        expression.operator.equals(BLCOperator.ICONTAINS);
+        expression.operator.equals(UCOperator.ICONTAINS);
         expression.value.equals("MX");
     }
 
@@ -122,7 +122,7 @@ class PhraseTranslatorSpec extends Specification {
 
         then: "The correct expression is produced"
         expression.field.equals("localeCode");
-        expression.operator.equals(BLCOperator.ICONTAINS);
+        expression.operator.equals(UCOperator.ICONTAINS);
         expression.value.equals("MX");
     }
 

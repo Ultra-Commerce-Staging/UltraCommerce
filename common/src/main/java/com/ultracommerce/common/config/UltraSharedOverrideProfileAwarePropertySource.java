@@ -1,24 +1,24 @@
 /*
  * #%L
- * BroadleafCommerce Common Libraries
+ * UltraCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
 /**
  * 
  */
-package org.broadleafcommerce.common.config;
+package com.ultracommerce.common.config;
 
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
@@ -53,21 +53,21 @@ import org.springframework.core.io.ClassPathResource;
  * </ul>
  *  
  * <p>
- * Note that this is largely created to support existing Broadleaf implementations for versions older than 5.2. Assuming that you are on Spring Boot, you should look to
+ * Note that this is largely created to support existing Ultra implementations for versions older than 5.2. Assuming that you are on Spring Boot, you should look to
  * use {@code application.properties} variants from <a href="http://docs.spring.io/autorepo/docs/spring-boot/current/reference/html/boot-features-external-config.html#boot-features-external-config">
  * the Spring Boot documentation</a>
  * 
  * <p>
  * There is generally only a single one of these sources registered in the application, the {@link DefaultRuntimeEnvironmentProfileAwarePropertySource}. If multiple of them
  * are registered, they are ordered based on {@link #getOrder()} and <i>all</i> properties are added to the {@link Environment} prior to moving to the next
- * {@link BroadleafSharedOverrideProfileAwarePropertySource}. To register your own version (again, not necessarily recommended) add this as an entry in a {@code META-INF/spring.factories} file:
+ * {@link UltraSharedOverrideProfileAwarePropertySource}. To register your own version (again, not necessarily recommended) add this as an entry in a {@code META-INF/spring.factories} file:
  * 
  * <pre>
- * org.broadleafcommerce.common.config.BroadleafSharedOverrideProfileAwarePropertySource=org.broadleafcommerce.common.config.SomeCustomizedProfileAwarePropertySource
+ * com.ultracommerce.common.config.UltraSharedOverrideProfileAwarePropertySource=com.ultracommerce.common.config.SomeCustomizedProfileAwarePropertySource
  * </pre>
  * 
  * <p>
- * Properties registered via this {@link BroadleafSharedOverrideProfileAwarePropertySource} is functionally equivalent to registering them via {@link PropertySource} and have the same ordering
+ * Properties registered via this {@link UltraSharedOverrideProfileAwarePropertySource} is functionally equivalent to registering them via {@link PropertySource} and have the same ordering
  * semantics as
  * <a href="http://docs.spring.io/autorepo/docs/spring-boot/current/reference/html/boot-features-external-config.html#boot-features-external-config">"{@literal @}PropertySource annotations on your {@literal @}Configuration classes</a>.
  * An important distinction is that these sources <i>have a higher priority</i> than any {@link PropertySource} annotations on {@literal @}Configuration classes.
@@ -78,10 +78,10 @@ import org.springframework.core.io.ClassPathResource;
  * @author Phillip Verheyden (phillipuniverse)
  * @since 5.2
  * @see {@link DefaultRuntimeEnvironmentProfileAwarePropertySource}
- * @see {@link BroadleafEnvironmentConfiguringApplicationListener}
+ * @see {@link UltraEnvironmentConfiguringApplicationListener}
  * @see {@link FrameworkCommonClasspathPropertySource}
  */
-public interface BroadleafSharedOverrideProfileAwarePropertySource {
+public interface UltraSharedOverrideProfileAwarePropertySource {
 
     public static final int DEFAULT_ORDER = 100;
     

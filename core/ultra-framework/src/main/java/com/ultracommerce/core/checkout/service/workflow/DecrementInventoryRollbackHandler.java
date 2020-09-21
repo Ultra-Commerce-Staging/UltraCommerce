@@ -1,32 +1,32 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * UltraCommerce Framework
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2016 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.core.checkout.service.workflow;
+package com.ultracommerce.core.checkout.service.workflow;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.util.StringUtil;
-import org.broadleafcommerce.core.catalog.domain.Sku;
-import org.broadleafcommerce.core.inventory.service.ContextualInventoryService;
-import org.broadleafcommerce.core.inventory.service.InventoryUnavailableException;
-import org.broadleafcommerce.core.workflow.Activity;
-import org.broadleafcommerce.core.workflow.ProcessContext;
-import org.broadleafcommerce.core.workflow.state.RollbackFailureException;
-import org.broadleafcommerce.core.workflow.state.RollbackHandler;
+import com.ultracommerce.common.util.StringUtil;
+import com.ultracommerce.core.catalog.domain.Sku;
+import com.ultracommerce.core.inventory.service.ContextualInventoryService;
+import com.ultracommerce.core.inventory.service.InventoryUnavailableException;
+import com.ultracommerce.core.workflow.Activity;
+import com.ultracommerce.core.workflow.ProcessContext;
+import com.ultracommerce.core.workflow.state.RollbackFailureException;
+import com.ultracommerce.core.workflow.state.RollbackHandler;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -39,17 +39,17 @@ import javax.annotation.Resource;
  * 
  * @author Phillip Verheyden (phillipuniverse)
  */
-@Component("blDecrementInventoryRollbackHandler")
+@Component("ucDecrementInventoryRollbackHandler")
 public class DecrementInventoryRollbackHandler implements RollbackHandler<ProcessContext<CheckoutSeed>>{
 
     private static final Log LOG = LogFactory.getLog(DecrementInventoryRollbackHandler.class);
     
-    public static final String ROLLBACK_BLC_INVENTORY_DECREMENTED = "ROLLBACK_BLC_INVENTORY_DECREMENTED";
-    public static final String ROLLBACK_BLC_INVENTORY_INCREMENTED = "ROLLBACK_BLC_INVENTORY_INCREMENTED";
-    public static final String ROLLBACK_BLC_ORDER_ID = "ROLLBACK_BLC_ORDER_ID";
-    public static final String EXTENDED_ROLLBACK_STATE = "BLC_EXTENDED_ROLLBACK_STATE";
+    public static final String ROLLBACK_UC_INVENTORY_DECREMENTED = "ROLLBACK_UC_INVENTORY_DECREMENTED";
+    public static final String ROLLBACK_UC_INVENTORY_INCREMENTED = "ROLLBACK_UC_INVENTORY_INCREMENTED";
+    public static final String ROLLBACK_UC_ORDER_ID = "ROLLBACK_UC_ORDER_ID";
+    public static final String EXTENDED_ROLLBACK_STATE = "UC_EXTENDED_ROLLBACK_STATE";
 
-    @Resource(name = "blInventoryService")
+    @Resource(name = "ucInventoryService")
     protected ContextualInventoryService inventoryService;
     
     @Override
@@ -59,14 +59,14 @@ public class DecrementInventoryRollbackHandler implements RollbackHandler<Proces
         if (shouldExecute(activity, processContext, stateConfiguration)) {
 
             String orderId = "(Not Known)";
-            if (stateConfiguration.get(ROLLBACK_BLC_ORDER_ID) != null) {
-                orderId = String.valueOf(stateConfiguration.get(ROLLBACK_BLC_ORDER_ID));
+            if (stateConfiguration.get(ROLLBACK_UC_ORDER_ID) != null) {
+                orderId = String.valueOf(stateConfiguration.get(ROLLBACK_UC_ORDER_ID));
             }
             
             @SuppressWarnings("unchecked")
-            Map<Sku, Integer> inventoryToIncrement = (Map<Sku, Integer>) stateConfiguration.get(ROLLBACK_BLC_INVENTORY_DECREMENTED);
+            Map<Sku, Integer> inventoryToIncrement = (Map<Sku, Integer>) stateConfiguration.get(ROLLBACK_UC_INVENTORY_DECREMENTED);
             @SuppressWarnings("unchecked")
-            Map<Sku, Integer> inventoryToDecrement = (Map<Sku, Integer>) stateConfiguration.get(ROLLBACK_BLC_INVENTORY_INCREMENTED);
+            Map<Sku, Integer> inventoryToDecrement = (Map<Sku, Integer>) stateConfiguration.get(ROLLBACK_UC_INVENTORY_INCREMENTED);
             
             Map<String, Object> contextualInformation = new HashMap<>();
             contextualInformation.put(ContextualInventoryService.ROLLBACK_STATE_KEY, stateConfiguration.get(EXTENDED_ROLLBACK_STATE));
@@ -114,8 +114,8 @@ public class DecrementInventoryRollbackHandler implements RollbackHandler<Proces
      */
     protected boolean shouldExecute(Activity<? extends ProcessContext<CheckoutSeed>> activity, ProcessContext<CheckoutSeed> processContext, Map<String, Object> stateConfiguration) {
         return stateConfiguration != null && (
-                stateConfiguration.get(ROLLBACK_BLC_INVENTORY_DECREMENTED) != null ||
-                stateConfiguration.get(ROLLBACK_BLC_INVENTORY_INCREMENTED) != null ||
+                stateConfiguration.get(ROLLBACK_UC_INVENTORY_DECREMENTED) != null ||
+                stateConfiguration.get(ROLLBACK_UC_INVENTORY_INCREMENTED) != null ||
                 stateConfiguration.get(EXTENDED_ROLLBACK_STATE) != null
              );
     }

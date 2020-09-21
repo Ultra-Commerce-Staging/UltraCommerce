@@ -35,9 +35,9 @@
         <project.uri>${project.baseUri}</project.uri>
         <groovy.version>2.4.15</groovy.version>
         <gpg.plugin.version>1.6</gpg.plugin.version>
-        <ultracommerce-presentation.version>1.1.2-SNAPSHOT</ultracommerce-presentation.version>
+        <ultracommerce-presentation.version>1.1.2-GA</ultracommerce-presentation.version>
         <lombok.version>1.18.4</lombok.version>
-        <database.starter.version>2.0.2-SNAPSHOT</database.starter.version>
+        <database.starter.version>2.0.2-GA</database.starter.version>
         <closure.compiler.version>v20180506</closure.compiler.version>
         <hibernate.version>5.3.15.Final</hibernate.version>
         <hibernate-validator.version>6.0.18.Final</hibernate-validator.version>
